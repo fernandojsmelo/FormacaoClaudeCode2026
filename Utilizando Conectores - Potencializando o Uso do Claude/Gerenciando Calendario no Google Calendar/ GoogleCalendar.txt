@@ -1,0 +1,52 @@
+Mostre o calendário e próximos eventos no Google calendar
+
+
+Ferramentas carregadas, usou a integração Google Calendar
+Ferramentas carregadas, usou a integração Google Calendar
+Não encontrei nenhum evento nos próximos 30 dias (26/08 a 26/09) na sua agenda — ela está vazia nesse período.
+
+Quer que eu:
+
+amplie o período de busca (ex: próximos 3 meses)?
+confira algum termo específico (ex: eventos relacionados às suas [[ferias-setembro-2026]])?
+próximos 3 meses)
+
+
+Usou a integração Google Calendar
+Usou a integração Google Calendar
+Continua vazio: nenhum evento cadastrado entre 26/08 e 26/11/2026 na sua agenda principal.
+
+Se você tem um evento que esperava ver aí, pode ser que esteja em outra agenda (não a principal) ou ainda não tenha sido criado. Quer que eu crie algum evento agora — por exemplo, algo relacionado às suas [[ferias-setembro-2026]]?
+
+Crie um evento em 3 dias para encontro presencial Claude Code Day em Teresina-Pi
+
+
+Creates a calendar event.
+Creates a calendar event.
+Evento criado: Claude Code Day - Encontro presencial, no dia 29/08/2026, das 14h às 17h, em Teresina-PI.
+
+Coloquei horário padrão (14h-17h) já que você não especificou — se quiser ajustar para outro horário, é só me avisar.
+
+me de 3 sugestões com google calendar
+
+Aqui vão 3 sugestões de uso do Google Calendar que podem ajudar no seu dia a dia:
+
+Lembrete automático antes do Claude Code Day — Posso adicionar um lembrete extra (ex: 1 dia antes) para o evento em Teresina, além do padrão de 30 minutos.
+Bloco de "foco" para preparar o evento — Criar um evento do tipo Focus Time nos dias anteriores para separar tempo para se preparar (materiais, deslocamento, etc.).
+Agenda das férias de setembro — Já que você tem planejamento de férias de 10 dias em setembro (Florianópolis e Curitiba), posso lançar os blocos de datas no calendário para você visualizar tudo junto com os outros compromissos.
+Quer que eu crie algum desses agora?
+
+Lembrete automático antes do Claude Code Day
+
+
+Searched available tools
+Searched available tools
+Vou adicionar um lembrete extra de 1 dia antes (além do padrão de 30 minutos) no evento do Claude Code Day.
+
+
+Updates a calendar event.
+Updates a calendar event.
+Pronto! Agora o evento tem dois lembretes:
+
+1 dia antes (28/08, 14h) — para você se preparar com antecedência
+30 minutos antes (29/08, 13h30) — lembrete de última hora
