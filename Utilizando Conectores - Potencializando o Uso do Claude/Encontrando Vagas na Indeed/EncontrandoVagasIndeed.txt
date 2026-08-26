@@ -1,0 +1,50 @@
+De acordo com esse currículum traga as oportunidades próximas e essas na plataforma do Indeed. use o conector no Claude.
+
+
+Searching connectors
+Searching connectors
+Encontrei o Indeed disponível como conector — é só escolher para eu buscar as vagas de TI perto de Teresina com base no seu perfil.
+
+Escolha uma das opções acima para eu buscar as vagas de TI (analista/programador) perto de Teresina-PI.
+
+Use Indeed for this
+
+
+Usou a integração Indeed, ferramentas carregadas
+Usou a integração Indeed, ferramentas carregadas
+Com base no seu perfil (programador pleno, experiência em desenvolvimento de aplicações, PostgreSQL, Python/Django), encontrei essas oportunidades em Teresina-PI no Indeed:
+
+Vagas de desenvolvimento/programação:
+
+Desenvolvedor Full Stack Júnior - Solnascente Motos — sem experiência exigida
+Desenvolvedor(a) Full Stack - Teresina — Talent Gestão de Pessoas
+Analista de Programação - Web Design — Sistema de Locação Contábil
+Java Spring Boot Junior Developer - Remoto — BairesDev
+Desenvolvedor de Sistemas - DG — Drogaria Globo
+Analista de Desenvolvimento de Sistemas Pleno — FADEX (bate bem com seu nível de "Programador Pleno")
+Vagas de suporte/infraestrutura de TI (alinhadas com sua experiência anterior em manutenção):
+
+Analista de Suporte de TI — Meet Recrutamento (Autônomo/PJ)
+Analista de Infraestrutura e Suporte de Segurança Eletrônica — Security 24H
+Estágio em Tecnologia da Informação (TI) — FADEX
+Os destaques são a vaga de Analista de Desenvolvimento de Sistemas Pleno e a de Desenvolvedor Full Stack, já que combinam com sua experiência em análise de sistemas e desenvolvimento de aplicações. Quer que eu veja os detalhes completos de alguma delas?
+
+sim. e depois gere um PDF do resultado
+
+
+Usou a integração Indeed
+Usou a integração Indeed
+Aqui estão os detalhes das duas vagas em destaque:
+
+Analista de Desenvolvimento de Sistemas Pleno — FADEX
+Foco em desenvolvimento, manutenção e evolução de sistemas, levantamento de requisitos, integrações via API, administração de banco de dados e documentação técnica. Bate diretamente com sua experiência em Análise de Sistemas e Desenvolvimento de Aplicações na Claudino S/A.
+
+Desenvolvedor(a) Full Stack — Talent Gestão de Pessoas
+Stack: PHP (CodeIgniter, Doctrine), MySQL, React e React Native. Presencial, 44h/semana, R$ 6.000,00, regime PJ. Exige experiência full stack — pode pedir reforço em React caso não tenha experiência recente nessa stack.
+
+Agora vou gerar o PDF com o resultado completo da busca.
+
+
+Executou 3 comandos, visualizou um arquivo, criou um arquivo
+Executou 3 comandos, visualizou um arquivo, criou um arquivo
+Pronto! O PDF reúne as vagas em destaque (com descrição completa), as demais vagas de desenvolvimento e as de suporte/infraestrutura, todas com links diretos para candidatura no Indeed.
