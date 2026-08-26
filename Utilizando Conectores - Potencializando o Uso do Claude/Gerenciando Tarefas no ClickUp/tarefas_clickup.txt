@@ -1,0 +1,35 @@
+Listar as tarefas minhas no Clickup
+
+
+Ferramentas carregadas, usou uma ferramenta
+Ferramentas carregadas, usou uma ferramenta
+ClickUp já está conectado. Vou usar a busca por tarefas.
+
+
+Ferramentas carregadas
+Ferramentas carregadas
+Não consigo carregar as ferramentas do ClickUp diretamente por aqui, mesmo com ele conectado. Vou direcionar para o conector para você confirmar o uso.
+
+Encontrei o ClickUp — é só confirmar para eu buscar suas tarefas.
+
+Use ClickUp for this
+
+
+Usou a integração ClickUp, ferramentas carregadas
+Usou a integração ClickUp, ferramentas carregadas
+Encontrei 6 tarefas suas no ClickUp, todas na lista "Get Started with ClickUp", status "to do":
+
+🚀 Set up Your Tasks in Just 5 Minutes — vence em 24/01/2026
+🎨 Design a Workflow That Works for You — vence em 25/01/2026
+🤝 Bring Your Team Onboard in Minutes — vence em 25/01/2026
+📥 Import Your Work into ClickUp — vence em 26/01/2026
+🔗 Integrate Your Favorite Tools in ClickUp — vence em 27/01/2026
+🧠 Work Smarter with ClickUp AI — vence em 28/01/2026
+Todas com prioridade alta. Parecem tarefas de onboarding padrão do ClickUp — quer que eu abra alguma delas ou marque como concluída?
+
+gere um PDF dos resultados
+
+
+Executou 2 comandos, visualizou um arquivo, leu um arquivo
+Executou 2 comandos, visualizou um arquivo, leu um arquivo
+Aqui está o PDF com suas 6 tarefas do ClickUp.
