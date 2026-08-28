@@ -65,6 +65,27 @@
     <div class="chart-wrapper">
       <canvas id="frequency-chart" height="280"></canvas>
     </div>
+
+    <div class="feedback">
+      <button id="feedback-toggle-btn" type="button" class="button-secondary" aria-expanded="false" aria-controls="feedback-panel">
+        Dar feedback
+      </button>
+
+      <div class="input-group" id="feedback-panel" hidden>
+        <label for="feedback-input">O que você achou da aplicação?</label>
+        <textarea
+          id="feedback-input"
+          maxlength="500"
+          placeholder="Conte o que funcionou bem ou o que poderia melhorar..."
+        ></textarea>
+        <span id="feedback-char-count" class="char-count">0 / 500</span>
+        <p id="feedback-error" class="error-message" role="alert" hidden></p>
+        <p id="feedback-success" class="success-message" role="status" hidden>
+          Obrigado pelo seu feedback!
+        </p>
+        <button id="feedback-submit-btn" type="button">Enviar feedback</button>
+      </div>
+    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>

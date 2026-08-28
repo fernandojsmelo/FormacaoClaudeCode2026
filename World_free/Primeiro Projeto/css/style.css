@@ -5,6 +5,7 @@
   --border: #d0d0d0;
   --accent: #2b6cb0;
   --error: #c53030;
+  --success: #2f855a;
   --row-alt: #f7f7f7;
 }
 
@@ -15,6 +16,7 @@
     --border: #3a3a3a;
     --accent: #63b3ed;
     --error: #fc8181;
+    --success: #68d391;
     --row-alt: #242424;
   }
 }
@@ -127,6 +129,21 @@ textarea {
 
 .empty-state {
   opacity: 0.7;
+}
+
+.success-message {
+  margin: 0 0 1rem;
+  color: var(--success);
+}
+
+.feedback {
+  margin-top: 2rem;
+}
+
+.button-secondary {
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--border);
 }
 
 textarea:focus-visible,

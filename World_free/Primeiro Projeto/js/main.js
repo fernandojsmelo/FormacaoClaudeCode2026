@@ -1,5 +1,6 @@
 import { countWordFrequency, sortByFrequency } from './wordFrequency.js';
 import { renderChart, clearChart } from './chart.js';
+import { validateFeedback, MAX_FEEDBACK_CHARS } from './feedback.js';
 
 const textInput = document.getElementById('text-input');
 const charCount = document.getElementById('char-count');
@@ -14,10 +15,18 @@ const urlInput = document.getElementById('url-input');
 const loadUrlBtn = document.getElementById('load-url-btn');
 const urlError = document.getElementById('url-error');
 const modeRadios = document.querySelectorAll('input[name="input-mode"]');
+const feedbackToggleBtn = document.getElementById('feedback-toggle-btn');
+const feedbackPanel = document.getElementById('feedback-panel');
+const feedbackInput = document.getElementById('feedback-input');
+const feedbackCharCount = document.getElementById('feedback-char-count');
+const feedbackSubmitBtn = document.getElementById('feedback-submit-btn');
+const feedbackError = document.getElementById('feedback-error');
+const feedbackSuccess = document.getElementById('feedback-success');
 
 const MAX_CHARS = 2048;
 const CHAR_WARNING_THRESHOLD = 0.9;
 const API_BASE_URL = 'http://localhost:3000';
+const FEEDBACK_STORAGE_KEY = 'word-frequency-feedback';
 
 textInput.addEventListener('input', () => {
   const length = textInput.value.length;
@@ -106,4 +115,37 @@ function pulseButton() {
   // Força reflow para permitir reiniciar a animação em cliques consecutivos.
   void translateBtn.offsetWidth;
   translateBtn.classList.add('is-active');
+}
+
+feedbackToggleBtn.addEventListener('click', () => {
+  const isHidden = feedbackPanel.hidden;
+  feedbackPanel.hidden = !isHidden;
+  feedbackToggleBtn.setAttribute('aria-expanded', String(isHidden));
+});
+
+feedbackInput.addEventListener('input', () => {
+  feedbackCharCount.textContent = `${feedbackInput.value.length} / ${MAX_FEEDBACK_CHARS}`;
+});
+
+feedbackSubmitBtn.addEventListener('click', () => {
+  feedbackSuccess.hidden = true;
+  const { valid, error } = validateFeedback(feedbackInput.value);
+
+  if (!valid) {
+    feedbackError.textContent = error;
+    feedbackError.hidden = false;
+    return;
+  }
+
+  feedbackError.hidden = true;
+  saveFeedback(feedbackInput.value.trim());
+  feedbackInput.value = '';
+  feedbackCharCount.textContent = `0 / ${MAX_FEEDBACK_CHARS}`;
+  feedbackSuccess.hidden = false;
+});
+
+function saveFeedback(text) {
+  const stored = JSON.parse(localStorage.getItem(FEEDBACK_STORAGE_KEY) || '[]');
+  stored.push({ text, submittedAt: new Date().toISOString() });
+  localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(stored));
 }
