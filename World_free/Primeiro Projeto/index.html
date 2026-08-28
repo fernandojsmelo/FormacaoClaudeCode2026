@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Frequency</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>Word Frequency</h1>
+
+    <div class="input-mode" role="radiogroup" aria-label="Fonte do texto">
+      <label>
+        <input type="radio" name="input-mode" id="mode-text" value="text" checked />
+        Texto
+      </label>
+      <label>
+        <input type="radio" name="input-mode" id="mode-url" value="url" />
+        URL
+      </label>
+    </div>
+
+    <div class="input-group" id="text-input-group">
+      <label for="text-input">Texto</label>
+      <textarea
+        id="text-input"
+        maxlength="2048"
+        placeholder="Cole ou digite um texto (máximo de 2048 caracteres)..."
+      ></textarea>
+      <span id="char-count" class="char-count">0 / 2048</span>
+    </div>
+
+    <div class="input-group" id="url-input-group" hidden>
+      <label for="url-input">URL da página</label>
+      <div class="url-row">
+        <input type="url" id="url-input" placeholder="https://exemplo.com/artigo" />
+        <button id="load-url-btn" type="button">Carregar</button>
+      </div>
+      <p id="url-error" class="error-message" role="alert" hidden></p>
+    </div>
+
+    <p id="error-message" class="error-message" role="alert" hidden>
+      Por favor, insira um texto antes de clicar em "Translate".
+    </p>
+
+    <p id="empty-state" class="empty-state" role="status" hidden>
+      Nenhuma palavra encontrada no texto informado.
+    </p>
+
+    <button id="translate-btn" type="button">Translate</button>
+
+    <div class="table-wrapper">
+      <table id="frequency-table">
+        <thead>
+          <tr>
+            <th>Palavra</th>
+            <th>Frequência</th>
+          </tr>
+        </thead>
+        <tbody id="frequency-table-body"></tbody>
+      </table>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas id="frequency-chart" height="280"></canvas>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
