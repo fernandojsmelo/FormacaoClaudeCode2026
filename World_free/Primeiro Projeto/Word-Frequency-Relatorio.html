@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Word Frequency — Relatório de Projeto</title>
+<style>
+  @page { size: A4; margin: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1f27;
+    --fg-muted: #5a6472;
+    --border: #e2e6ec;
+    --bg-alt: #f6f8fa;
+    --accent: #2b6cb0;
+    --accent-dark: #1c4a7a;
+    --accent-bg: #eaf2fa;
+    --success: #2f855a;
+    --success-bg: #e7f6ee;
+    --bonus: #b06a1f;
+    --bonus-bg: #fbf0e0;
+    --code-bg: #0f1b2d;
+    --code-fg: #dbe6f1;
+    --code-accent: #7fb8e8;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #d9dee4;
+    font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+    color: var(--fg);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: var(--bg);
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  .page-body {
+    padding: 16mm 18mm 14mm;
+  }
+
+  h1, h2, h3, .mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    height: 297mm;
+    background: linear-gradient(150deg, #142c4d 0%, #1d4a7a 45%, #4f95cc 100%);
+    color: #fff;
+    padding: 26mm 20mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .cover .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .cover .chip {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+
+  .cover .kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 18px;
+  }
+
+  .cover h1 {
+    font-size: 46px;
+    font-weight: 700;
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .cover p.lead {
+    font-size: 14.5px;
+    line-height: 1.6;
+    max-width: 460px;
+    opacity: 0.92;
+    margin: 0 0 26px;
+  }
+
+  .cover .meta {
+    display: flex;
+    gap: 48px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    font-size: 11.5px;
+    opacity: 0.9;
+  }
+
+  .cover .meta strong { display: block; font-weight: 400; }
+
+  /* ---------- Section header ---------- */
+  .section-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section-num {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-head h2 {
+    font-size: 21px;
+    margin: 0 0 3px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-head .subtitle {
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+
+  p { font-size: 12px; line-height: 1.65; }
+
+  .callout {
+    background: var(--accent-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 11.5px;
+    line-height: 1.6;
+    margin: 14px 0;
+    color: #1a3a5c;
+  }
+
+  .callout.result {
+    background: #eef4f1;
+    border-left-color: var(--success);
+    color: #1e4432;
+  }
+
+  h3.subhead {
+    font-size: 13.5px;
+    margin: 20px 0 8px;
+  }
+
+  code, .code-inline {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 11px;
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    white-space: pre;
+    margin: 10px 0;
+  }
+
+  .code-block .cmt { color: #7c8a9c; }
+  .code-block .tree-label { color: var(--code-accent); }
+
+  /* ---------- Two column feature grid ---------- */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .card h4 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12.5px;
+    margin: 0 0 10px;
+  }
+
+  .pill {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  .pill.success { background: var(--success-bg); color: var(--success); }
+  .pill.bonus { background: var(--bonus-bg); color: var(--bonus); }
+
+  .card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 11.5px;
+    line-height: 1.75;
+  }
+
+  .card ul li::marker { color: var(--success); }
+
+  /* ---------- Table ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 11px;
+  }
+
+  th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    color: var(--fg-muted);
+    background: var(--bg-alt);
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  /* ---------- Phase timeline ---------- */
+  .timeline { position: relative; margin: 16px 0; }
+
+  .phase {
+    position: relative;
+    padding-left: 34px;
+    padding-bottom: 16px;
+    border-left: 2px solid var(--border);
+    margin-left: 13px;
+  }
+
+  .phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+
+  .phase .dot {
+    position: absolute;
+    left: -15px;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phase-box {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+
+  .phase-box .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .phase-box .top-row h4 {
+    font-size: 12.5px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .phase-box .desc {
+    font-size: 11px;
+    color: var(--fg-muted);
+    margin: 0 0 8px;
+  }
+
+  .phase-box ul { margin: 0; padding-left: 16px; font-size: 11px; line-height: 1.7; }
+
+  /* ---------- Feature icon cards (landing section) ---------- */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  .icon-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .icon-card .badge-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .icon-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  .icon-swatch svg { width: 13px; height: 13px; }
+
+  .icon-card h4 { font-size: 11.5px; margin: 0; }
+  .icon-card p { font-size: 10.5px; color: var(--fg-muted); margin: 4px 0 0 28px; line-height: 1.55; }
+
+  .stack-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+
+  .stack-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .checklist { margin: 10px 0; padding-left: 0; list-style: none; }
+  .checklist li {
+    font-size: 11.5px;
+    line-height: 1.7;
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .checklist li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 700;
+  }
+
+  .footer-row {
+    position: absolute;
+    bottom: 10mm;
+    left: 18mm;
+    right: 18mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5px;
+    color: var(--fg-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- PAGE 1 — COVER -->
+  <div class="page cover">
+    <div class="kicker">Relatório de Projeto · Desenvolvimento de Software</div>
+    <h1>Word Frequency</h1>
+    <p class="lead">
+      Documentação técnica completa do projeto: da especificação inicial à entrega das seis
+      fases de desenvolvimento, dos dois recursos bônus (gráfico e análise por URL) e da
+      landing page explicativa adicionada posteriormente.
+    </p>
+    <div class="chips">
+      <span class="chip">Tier 1 · Iniciante</span>
+      <span class="chip">HTML · CSS · JavaScript</span>
+      <span class="chip">Node.js + Express</span>
+      <span class="chip">+ Landing Page</span>
+    </div>
+    <div class="meta">
+      <div><strong>Documento gerado em</strong>31 de agosto de 2026 (revisão 2)</div>
+      <div><strong>Status</strong>Todas as fases concluídas + landing page</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 — VISÃO GERAL -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">1</span>
+        <div>
+          <h2>Visão Geral do Projeto</h2>
+          <div class="subtitle">O que é o Word Frequency e qual problema ele resolve.</div>
+        </div>
+      </div>
+
+      <p>
+        O <strong>Word Frequency</strong> é uma aplicação classificada como <strong>Tier 1
+        (Iniciante)</strong>, cujo objetivo é calcular a frequência de palavras em um bloco de
+        texto. O usuário informa um texto — digitado ou colado, com até
+        <strong>2048 caracteres</strong> — clica no botão <code>Translate</code> e recebe uma
+        tabela com cada palavra única encontrada e o número de vezes que ela aparece, ordenada
+        da mais para a menos frequente.
+      </p>
+
+      <p>
+        Esse tipo de cálculo é a base do modelo <em>Bag of Words</em>, técnica amplamente usada
+        em busca, ordenação e análise semântica de texto — o projeto serve como uma introdução
+        prática a esses conceitos.
+      </p>
+
+      <div class="callout">
+        Além do escopo obrigatório, o projeto foi estendido com dois recursos bônus previstos na
+        especificação original: visualização gráfica dos dados e análise de texto extraído
+        diretamente de uma URL. Posteriormente, uma <strong>landing page</strong> foi criada para
+        apresentar a funcionalidade do projeto antes de o visitante abrir a aplicação (ver seção 8).
+      </div>
+
+      <h3 class="subhead">Origem da especificação</h3>
+      <p>
+        O projeto partiu de um documento de especificação (<code>App.md</code>) contendo as
+        histórias de usuário obrigatórias e os recursos bônus sugeridos. A partir dele foi criado
+        um guia de desenvolvimento (<code>CLAUDE.md</code>) definindo stack, fases, estrutura de
+        pastas, comandos e convenções de código — usado como referência durante toda a
+        implementação.
+      </p>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>2</span></div>
+  </div>
+
+  <!-- PAGE 3 — FUNCIONALIDADES -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">2</span>
+        <div>
+          <h2>Funcionalidades</h2>
+          <div class="subtitle">Tudo o que foi especificado — e o que foi entregue.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>Obrigatórias <span class="pill success">100% ENTREGUE</span></h4>
+          <ul>
+            <li>Caixa de texto, botão "Translate" e tabela de frequência visíveis na tela</li>
+            <li>Entrada de texto grande, com limite de 2048 caracteres</li>
+            <li>Análise disparada ao clicar em "Translate"</li>
+            <li>Mensagem de erro quando o campo está vazio</li>
+            <li>Tabela populada com palavra + contagem de ocorrências</li>
+            <li>Tabela ordenada em ordem decrescente de frequência</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Bônus <span class="pill success">100% ENTREGUE</span></h4>
+          <ul>
+            <li>Representação gráfica da frequência (column chart com Chart.js)</li>
+            <li>Análise de conteúdo a partir de uma URL informada pelo usuário, via backend dedicado</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="subhead">Refinamentos de UX adicionados</h3>
+      <p>
+        Durante a fase de polimento, foram incorporados tratamentos que não estavam explícitos
+        nas histórias de usuário, mas evitam experiências confusas:
+      </p>
+      <ul style="font-size:11.5px; line-height:1.8;">
+        <li>Mensagem dedicada para quando o texto é válido mas não contém nenhuma palavra reconhecível (ex.: apenas pontuação)</li>
+        <li>Aviso visual quando o texto se aproxima do limite de 2048 caracteres</li>
+        <li>Feedback visual (animação) ao clicar em "Translate" e ao inserir novas linhas na tabela</li>
+        <li>Suporte a tema claro/escuro automático, seguindo a preferência do sistema</li>
+        <li>Atributos de acessibilidade (<code>role="alert"</code>, <code>role="status"</code>) para leitores de tela</li>
+      </ul>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>3</span></div>
+  </div>
+
+  <!-- PAGE 4 — STACK TECNOLÓGICA -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">3</span>
+        <div>
+          <h2>Stack Tecnológica</h2>
+          <div class="subtitle">Ferramentas escolhidas e o motivo de cada escolha.</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Camada</th><th>Tecnologia</th><th>Motivo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Front-end</strong></td><td><code>HTML + CSS + JavaScript vanilla</code></td><td>Aplicação simples, sem estado complexo — dispensa framework e build step nas fases 1 a 4.</td></tr>
+          <tr><td><strong>Gráfico</strong></td><td><code>Chart.js</code> (via CDN)</td><td>Biblioteca leve, cobre bar/column chart sem exigir bundler.</td></tr>
+          <tr><td><strong>Backend</strong></td><td><code>Node.js + Express</code></td><td>Necessário apenas para buscar conteúdo de URLs externas, evitando bloqueio de CORS no navegador.</td></tr>
+          <tr><td><strong>Extração de HTML</strong></td><td><code>cheerio</code></td><td>Parsing e remoção de tags irrelevantes (script/style) para extrair texto limpo da página.</td></tr>
+          <tr><td><strong>Testes</strong></td><td><code>node:test</code> (nativo)</td><td>Runner de testes embutido no Node — zero dependências extras para validar a lógica pura.</td></tr>
+          <tr><td><strong>Landing page</strong></td><td><code>HTML + CSS</code> (self-contained)</td><td>Página explicativa estática, sem dependências novas — reutiliza os tokens de cor do <code>style.css</code> do app.</td></tr>
+          <tr><td><strong>Persistência</strong></td><td>Nenhuma</td><td>Toda a contagem roda em memória, no cliente — não há necessidade de banco de dados.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>4</span></div>
+  </div>
+
+  <!-- PAGE 5 — FASES DE DESENVOLVIMENTO -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">4</span>
+        <div>
+          <h2>Fases de Desenvolvimento</h2>
+          <div class="subtitle">Do mais simples ao mais complexo — todas concluídas.</div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="phase">
+          <div class="dot">1</div>
+          <div class="phase-box">
+            <div class="top-row"><h4>Estrutura estática</h4><span class="pill success">CONCLUÍDA</span></div>
+            <p class="desc">Layout inicial da aplicação, sem lógica de negócio.</p>
+            <ul>
+              <li>Textarea, botão "Translate" e tabela vazia</li>
+              <li>Limite de 2048 caracteres via atributo <code>maxlength</code> + contador visual</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="dot">2</div>
+          <div class="phase-box">
+            <div class="top-row"><h4>Lógica de contagem (core)</h4><span class="pill success">CONCLUÍDA</span></div>
+            <p class="desc">O coração do projeto: transformar texto em contagem de palavras.</p>
+            <ul>
+              <li>Tokenização com normalização de caixa e remoção de pontuação</li>
+              <li>Contagem de ocorrências em função pura, sem tocar no DOM</li>
+              <li>Renderização inicial da tabela, ainda sem ordenação</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="dot">3</div>
+          <div class="phase-box">
+            <div class="top-row"><h4>Ordenação e validações</h4><span class="pill success">CONCLUÍDA</span></div>
+            <p class="desc">Fechamento de todas as histórias de usuário obrigatórias.</p>
+            <ul>
+              <li>Ordenação decrescente por frequência</li>
+              <li>Mensagem de erro para campo vazio</li>
+              <li>Tratamento de espaços múltiplos, quebras de linha e acentuação</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="dot">4</div>
+          <div class="phase-box">
+            <div class="top-row"><h4>Polimento de UX</h4><span class="pill success">CONCLUÍDA</span></div>
+            <p class="desc">Transformar a aplicação funcional em uma experiência agradável.</p>
+            <ul>
+              <li>Responsividade (mobile e tabelas com rolagem horizontal)</li>
+              <li>Feedback visual em cliques e inserção de linhas</li>
+              <li>Tratamento do caso de texto sem palavras reconhecíveis</li>
+              <li>Acessibilidade com atributos ARIA</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="dot">5</div>
+          <div class="phase-box">
+            <div class="top-row"><h4>Bônus: gráfico <span class="pill bonus">bônus</span></h4><span class="pill success">CONCLUÍDA</span></div>
+            <p class="desc">Representação visual da frequência de palavras.</p>
+            <ul>
+              <li>Column chart com Chart.js, limitado às 15 palavras mais frequentes para manter a leitura clara</li>
+              <li>Cores do gráfico acompanham o tema claro/escuro da aplicação</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="dot">6</div>
+          <div class="phase-box">
+            <div class="top-row"><h4>Bônus: análise via URL <span class="pill bonus">bônus</span></h4><span class="pill success">CONCLUÍDA</span></div>
+            <p class="desc">Permite analisar o conteúdo de uma página web em vez de texto colado manualmente.</p>
+            <ul>
+              <li>Alternância entre modo "Texto" e modo "URL" na interface</li>
+              <li>Backend Express com endpoint <code>/api/extract</code> que busca e limpa o HTML da página</li>
+              <li>Tratamento de erros: URL inválida, falha de rede, conteúdo não-HTML</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>5</span></div>
+  </div>
+
+  <!-- PAGE 6 — ARQUITETURA E ESTRUTURA -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">5</span>
+        <div>
+          <h2>Arquitetura e Estrutura</h2>
+          <div class="subtitle">Como o código está organizado e por quê.</div>
+        </div>
+      </div>
+
+      <p>
+        A separação de responsabilidades é o princípio central da arquitetura: a lógica de
+        contagem de palavras é <strong>pura</strong> — recebe texto e devolve dados, sem depender
+        do navegador — o que a torna simples de testar isoladamente. A manipulação da interface
+        fica isolada em outro módulo, que apenas consome essas funções puras. A landing page
+        (seção 8) é um documento estático independente, sem lógica própria além de links.
+      </p>
+
+      <div class="code-block">World_free/Primeiro Projeto/
+├── App.md                <span class="cmt">Especificação original (user stories)</span>
+├── CLAUDE.md              <span class="cmt">Guia de stack, fases e convenções</span>
+├── index.html             <span class="cmt">Entry point da aplicação</span>
+├── <span class="tree-label">landing.html</span>           <span class="cmt">Landing page explicativa do projeto</span>
+├── package.json           <span class="cmt">Configuração dos testes</span>
+├── css/
+│   └── style.css          <span class="cmt">Estilos, responsividade e temas</span>
+├── js/
+│   ├── main.js            <span class="cmt">Eventos, DOM e orquestração</span>
+│   ├── wordFrequency.js   <span class="cmt">Lógica pura: tokenizar, contar, ordenar</span>
+│   └── chart.js           <span class="cmt">Renderização do gráfico (Chart.js)</span>
+├── tests/
+│   └── wordFrequency.test.js  <span class="cmt">Testes automatizados da lógica pura</span>
+└── server/                <span class="cmt">Backend do bônus "análise via URL"</span>
+    ├── index.js            <span class="cmt">Endpoint /api/extract</span>
+    └── package.json</div>
+
+      <h3 class="subhead">Fluxo de dados</h3>
+      <p>
+        <code>main.js</code> lê o texto do <code>textarea</code> (preenchido manualmente ou via
+        URL) → chama <code>countWordFrequency()</code> e <code>sortByFrequency()</code> de
+        <code>wordFrequency.js</code> → renderiza a tabela e repassa o mesmo resultado para
+        <code>renderChart()</code>, que desenha o gráfico. Nenhuma dessas funções de cálculo
+        conhece a existência do DOM. <code>landing.html</code> não participa desse fluxo — é o
+        ponto de entrada explicativo que leva o visitante até <code>index.html</code>.
+      </p>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>6</span></div>
+  </div>
+
+  <!-- PAGE 7 — TESTES AUTOMATIZADOS -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">6</span>
+        <div>
+          <h2>Testes Automatizados</h2>
+          <div class="subtitle">Cobertura da lógica de negócio, sem dependências externas.</div>
+        </div>
+      </div>
+
+      <p>
+        A lógica de tokenização, contagem e ordenação é validada por <strong>8 testes
+        automatizados</strong>, executados com o runner nativo do Node.js (<code>node:test</code>)
+        — sem necessidade de instalar frameworks de teste. Todos passam na versão atual do código.
+      </p>
+
+      <table>
+        <thead><tr><th>Função testada</th><th>Cenários cobertos</th></tr></thead>
+        <tbody>
+          <tr><td><code>tokenize()</code></td><td>Divisão e normalização de palavras; remoção de pontuação; texto vazio; múltiplos espaços e quebras de linha</td></tr>
+          <tr><td><code>countWordFrequency()</code></td><td>Contagem de palavras repetidas; mapa vazio para texto vazio</td></tr>
+          <tr><td><code>sortByFrequency()</code></td><td>Ordenação decrescente com empates; lista vazia para mapa vazio</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout result">
+        Resultado da última execução: <strong>8 de 8 testes aprovados</strong> (<code>npm test</code>).
+        A landing page não introduziu lógica testável — é HTML/CSS estático, sem funções puras
+        novas para cobrir.
+      </div>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>7</span></div>
+  </div>
+
+  <!-- PAGE 8 — COMO EXECUTAR -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">7</span>
+        <div>
+          <h2>Como Executar</h2>
+          <div class="subtitle">Passo a passo para rodar o projeto localmente.</div>
+        </div>
+      </div>
+
+      <h3 class="subhead">Front-end (fases 1 a 5) e landing page</h3>
+      <div class="code-block">npx serve .
+<span class="cmt"># ou</span>
+python3 -m http.server 8000</div>
+      <p>
+        Com o servidor no ar, abra <code>http://localhost:8000/landing.html</code> para a página
+        explicativa ou <code>http://localhost:8000/index.html</code> para a aplicação em si.
+      </p>
+
+      <h3 class="subhead">Rodar os testes</h3>
+      <div class="code-block">npm test</div>
+
+      <h3 class="subhead">Backend do bônus "análise via URL" (fase 6)</h3>
+      <div class="code-block">cd server
+npm install
+npm start</div>
+      <p>
+        Com o backend em execução em <code>http://localhost:3000</code>, a opção "URL" na
+        interface passa a buscar e analisar o conteúdo de qualquer página informada.
+      </p>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>8</span></div>
+  </div>
+
+  <!-- PAGE 9 — LANDING PAGE (NOVA SEÇÃO) -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">8</span>
+        <div>
+          <h2>Landing Page</h2>
+          <div class="subtitle">Página explicativa criada para apresentar o projeto antes da aplicação.</div>
+        </div>
+      </div>
+
+      <p>
+        Foi adicionado um novo arquivo, <code>landing.html</code>, na raiz do projeto: uma página
+        de apresentação que explica a funcionalidade do Word Frequency para quem ainda não abriu
+        a aplicação — hero com chamada para ação, passo a passo de uso, grade de funcionalidades,
+        stack técnica e um CTA final, todos levando para <code>index.html</code>.
+      </p>
+
+      <h3 class="subhead">Estrutura da página</h3>
+      <ul class="checklist">
+        <li><strong>Hero</strong> — título, resumo do que o app faz, botões "Experimentar agora" e "Ver especificação", e um preview estático da tabela de frequência</li>
+        <li><strong>Como funciona</strong> — 3 passos (colar texto/URL → clicar em Translate → ver tabela e gráfico)</li>
+        <li><strong>Funcionalidades</strong> — grade com as 6 principais capacidades do app, incluindo os dois recursos bônus</li>
+        <li><strong>Stack técnica</strong> — chips com as tecnologias usadas no projeto</li>
+        <li><strong>CTA final</strong> — segundo convite para abrir a aplicação</li>
+      </ul>
+
+      <h3 class="subhead">Design guiado pela skill ui-ux-pro-max</h3>
+      <p>
+        O visual foi revisado com a skill de design <code>ui-ux-pro-max</code> (base local de
+        padrões de UI/UX), consultada nos domínios <code>--design-system</code>,
+        <code>landing</code>, <code>icons</code> e <code>ux</code>. Decisões aplicadas:
+      </p>
+
+      <div class="icon-grid">
+        <div class="icon-card">
+          <div class="badge-row">
+            <span class="icon-swatch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="14" y2="6"/><line x1="4" y1="12" x2="11" y2="12"/><line x1="4" y1="18" x2="8" y2="18"/><path d="M19 4v14"/><path d="M15 14l4 4 4-4"/></svg></span>
+            <h4>Padrão de layout</h4>
+          </div>
+          <p><em>Feature-Rich Showcase</em> (hero → grade de funcionalidades → CTA), identificado como o melhor encaixe entre os padrões de landing da base de dados.</p>
+        </div>
+        <div class="icon-card">
+          <div class="badge-row">
+            <span class="icon-swatch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6"/><path d="M11 7l1.5-1.5a3.5 3.5 0 015 5L16 12"/><path d="M13 17l-1.5 1.5a3.5 3.5 0 01-5-5L8 12"/></svg></span>
+            <h4>Tipografia</h4>
+          </div>
+          <p>Par sugerido para ferramentas de desenvolvedor: <strong>JetBrains Mono</strong> (títulos e tags) + <strong>IBM Plex Sans</strong> (corpo), reforçando o tom técnico do produto.</p>
+        </div>
+        <div class="icon-card">
+          <div class="badge-row">
+            <span class="icon-swatch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg></span>
+            <h4>Ícones</h4>
+          </div>
+          <p>Emojis substituídos por SVGs outline (estilo Phosphor), marcados <code>aria-hidden</code> por serem decorativos ao lado de texto visível — anti-padrão evitado.</p>
+        </div>
+        <div class="icon-card">
+          <div class="badge-row">
+            <span class="icon-swatch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 10-3.5 6.6L21 20l-1.2-3.6A7.96 7.96 0 0021 12z"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="13" y2="14"/></svg></span>
+            <h4>Acessibilidade &amp; interação</h4>
+          </div>
+          <p>Estados de foco visíveis em todos os links/botões, alvos de toque com no mínimo 44px, e suporte a <code>prefers-reduced-motion</code>.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        A paleta de acento azul do <code>style.css</code> existente foi mantida (light/dark aware)
+        em vez da paleta genérica sugerida pela busca — decisão de consistência de marca com o
+        <code>index.html</code> real, não uma recomendação direta da skill.
+      </div>
+
+      <div class="stack-list">
+        <span class="stack-chip">landing.html</span>
+        <span class="stack-chip">CSS custom properties</span>
+        <span class="stack-chip">Google Fonts (JetBrains Mono / IBM Plex Sans)</span>
+        <span class="stack-chip">SVG outline icons</span>
+      </div>
+    </div>
+    <div class="footer-row"><span>Word Frequency — Relatório de Projeto</span><span>9</span></div>
+  </div>
+
+  <!-- PAGE 10 — CONSIDERAÇÕES FINAIS -->
+  <div class="page">
+    <div class="page-body">
+      <div class="section-head">
+        <span class="section-num">9</span>
+        <div>
+          <h2>Considerações Finais</h2>
+          <div class="subtitle">Status atual e possíveis evoluções futuras.</div>
+        </div>
+      </div>
+
+      <p>
+        O projeto <strong>Word Frequency</strong> está com todas as histórias de usuário
+        obrigatórias e os dois recursos bônus da especificação implementados e validados. A
+        aplicação roda inteiramente no navegador para o fluxo principal, com um backend leve e
+        opcional apenas para o recurso de análise por URL. A landing page complementa o projeto
+        como ponto de entrada explicativo, sem alterar a lógica ou os testes existentes.
+      </p>
+
+      <h3 class="subhead">Possíveis evoluções (fora do escopo original)</h3>
+      <ul style="font-size:11.5px; line-height:1.8;">
+        <li>Deploy do front-end — landing page + app (ex.: GitHub Pages) — e do backend (ex.: Render, Railway)</li>
+        <li>Lista de stop words configurável, para ignorar palavras muito comuns</li>
+        <li>Exportação da tabela de frequência em CSV</li>
+        <li>Histórico de análises anteriores (exigiria persistência)</li>
+      </ul>
+
+      <div class="footer-row" style="position: static; margin-top: 40px;">
+        <span>Word Frequency — Relatório de Projeto</span>
+        <span>Documentação gerada com apoio do Claude Code</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
