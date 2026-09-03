@@ -1,0 +1,66 @@
+{
+  "source": "https://news.ycombinator.com/",
+  "collected_at": "2026-09-03",
+  "posts": [
+    {
+      "rank": 1,
+      "title": "Audacity 4.0",
+      "points": 906,
+      "url": "https://github.com/audacity/audacity/releases/tag/Audacity-4.0.0"
+    },
+    {
+      "rank": 2,
+      "title": ".name Termination",
+      "points": 846,
+      "url": "https://neil.fraser.name/news/2026/09/03/"
+    },
+    {
+      "rank": 3,
+      "title": "Pre-Release of Polars 2.0",
+      "points": 358,
+      "url": "https://pola.rs/posts/announcing-polars-2/"
+    },
+    {
+      "rank": 4,
+      "title": "The browser's main thread is expensive",
+      "points": 332,
+      "url": "https://kciter.so/posts/the-expensive-main-thread/en/"
+    },
+    {
+      "rank": 5,
+      "title": "Nvidia to acquire Hugging Face",
+      "points": 275,
+      "url": "https://www.cnbc.com/2026/09/03/nvidia-agrees-to-buy-hugging-face-for-almost-13-billion-ai-expansion.html"
+    },
+    {
+      "rank": 6,
+      "title": "Any Human Ever – One life, drawn at random from all who have ever lived",
+      "points": 251,
+      "url": "https://anyhumanever.com/"
+    },
+    {
+      "rank": 7,
+      "title": "What I learned from my mom (1941-2026)",
+      "points": 233,
+      "url": "https://experimentalliving.substack.com/p/what-i-learned-from-my-mom-1941-2026"
+    },
+    {
+      "rank": 8,
+      "title": "New York Times and The Athletic workers demand company scrap Kalshi deal",
+      "points": 231,
+      "url": "https://newsguild.org/new-york-times-and-the-athletic-workers-demand-company-scrap-kalshi-deal/"
+    },
+    {
+      "rank": 9,
+      "title": "Ask HN: Why were OpenAI, Claude, and Grok simultaneously down?",
+      "points": 226,
+      "url": "https://news.ycombinator.com/item?id=49551096"
+    },
+    {
+      "rank": 10,
+      "title": "Google Antigravity TOS: 3rd party usage can get Google account suspended",
+      "points": 189,
+      "url": "https://twitter.com/GergelyOrosz/status/2095453567955968398"
+    }
+  ]
+}

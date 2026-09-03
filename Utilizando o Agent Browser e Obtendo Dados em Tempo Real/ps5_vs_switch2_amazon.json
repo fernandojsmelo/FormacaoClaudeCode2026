@@ -1,0 +1,61 @@
+{
+  "source": "https://www.amazon.com.br/",
+  "collected_at": "2026-09-03",
+  "comparison": [
+    {
+      "product": "PlayStation 5 Edição Digital 825GB 1 Controle Branco (Sony)",
+      "price": "R$ 4.099,00",
+      "rating": "4,8 de 5 estrelas",
+      "review_count": 185,
+      "model_number": "CFI 2114B",
+      "release_date": "17 janeiro 2024",
+      "storage": "825 GB SSD",
+      "dimensions": "13,1 x 43,1 x 35,9 cm; 6 kg",
+      "language": "Português",
+      "key_features": [
+        "Design Slim, compacto e elegante",
+        "825 GB de armazenamento SSD integrado",
+        "SSD de ultra-alta velocidade (inicialização quase instantânea)",
+        "A partir de jan/2028 novos jogos serão apenas digitais nesta versão sem leitor de disco"
+      ],
+      "url": "https://www.amazon.com.br/PlayStation-Edi%C3%A7%C3%A3o-Digital-Controle-Sony/dp/B0GWNKJDCZ",
+      "other_listings_found": [
+        { "title": "PlayStation®5 Slim Digital 825GB – Pacote ASTRO BOT e Gran Turismo 7", "price": "R$ 4.184,07", "rating": "4,8 de 5 estrelas", "reviews": "3,7 mil" },
+        { "title": "PlayStation 5 Slim Disk 1TB 1 Controle Branco", "price": "R$ 4.599,90", "rating": "4,8 de 5 estrelas", "reviews": "92" },
+        { "title": "PlayStation®5 Slim Disk - Pacote ASTRO BOT e Gran Turismo 7", "price": "R$ 4.556,07", "rating": "4,8 de 5 estrelas", "reviews": "2 mil" },
+        { "title": "PlayStation®5 Slim Edição Digital", "price": "R$ 4.449,90", "rating": "4,8 de 5 estrelas", "reviews": "1,1 mil" }
+      ]
+    },
+    {
+      "product": "Nintendo Switch 2 Console",
+      "price": "R$ 3.787,00",
+      "rating": "4,8 de 5 estrelas",
+      "review_count": 4976,
+      "model_number": "BEESKB6AA",
+      "storage": "256 GB (expansível via microSD Express, vendido separadamente)",
+      "dimensions": "10,69 x 22 x 22,5 cm; 150 g",
+      "language": "Inglês",
+      "key_features": [
+        "Três modos de reprodução: TV, mesa e portátil",
+        "Tela LCD touch de 7,9 polegadas, suporte a HDR e até 120 fps",
+        "Dock com suporte a 4K quando conectado à TV",
+        "GameChat: voz, compartilhamento de tela e chat de vídeo",
+        "Joy-Con 2 com conexão magnética e função de mouse em jogos compatíveis",
+        "Compatível com jogos físicos e digitais do Switch original"
+      ],
+      "url": "https://www.amazon.com.br/Nintendo-BEESKB6AA-Switch-2-Console/dp/B0F3GWXLTS",
+      "other_listings_found": [
+        { "title": "Nintendo, Console, Nintendo Switch 2, Nacional, 1 ano de Garantia", "price": "R$ 3.989,05", "rating": "4,8 de 5 estrelas", "reviews": "809" },
+        { "title": "Bundle Nintendo Switch 2: Escolha Seu Jogo - Modelo Nacional", "price": "R$ 4.138,40", "rating": "4,7 de 5 estrelas", "reviews": "26" },
+        { "title": "Console Nintendo Switch 2 + Jogo Super Mario Galaxy + Super Mario Galaxy 2", "price": "R$ 4.231,85", "rating": "5,0 de 5 estrelas", "reviews": "6" }
+      ]
+    }
+  ],
+  "summary": {
+    "cheaper": "Nintendo Switch 2 (R$ 3.787,00 vs R$ 4.099,00 do PS5 — diferença de R$ 312,00)",
+    "more_reviewed": "Nintendo Switch 2 (4.976 avaliações vs 185 do PS5 nesta listagem específica)",
+    "same_rating": "4,8 de 5 estrelas em ambos",
+    "storage_note": "PS5 vem com mais armazenamento de fábrica (825 GB SSD vs 256 GB do Switch 2), mas o Switch 2 é portátil e expansível via microSD Express",
+    "form_factor": "PS5 é um console doméstico fixo; Switch 2 é híbrido (TV, mesa e portátil)"
+  }
+}
