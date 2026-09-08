@@ -8,7 +8,9 @@ principal, que usa o mesmo contexto e as mesmas tools de sempre.
 
 ## O arquivo do subagente
 
-Já está ativo neste projeto em [`.claude/agents/code-reviewer.md`](../../../.claude/agents/code-reviewer.md):
+Já está ativo neste projeto em [`.claude/agents/code-reviewer.md`](../../../.claude/agents/code-reviewer.md)
+(uma cópia idêntica fica em [`code-reviewer.md`](code-reviewer.md), nesta
+mesma pasta, só como referência):
 
 ```markdown
 ---
