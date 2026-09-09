@@ -104,14 +104,16 @@ async def main() -> None:
                 if isinstance(block, ToolUseBlock) and block.name in ("Task", "Agent"):
                     print(f"-> sub-agent disparado: {block.input.get('subagent_type')}")
 
-        if hasattr(message, "parent_tool_use_id") and message.parent_tool_use_id:
+        is_subagent = hasattr(message, "parent_tool_use_id") and message.parent_tool_use_id
+        if is_subagent:
             print("   (executando dentro de um sub-agent)")
 
-        # Relatorio final, ja consolidado (fan-in) pelo proprio Claude.
-        if isinstance(message, ResultMessage):
+        # Sub-agents tambem emitem ResultMessage ao concluir; so a do
+        # orquestrador (sem parent_tool_use_id) e o relatorio final consolidado.
+        if isinstance(message, ResultMessage) and not is_subagent:
             print("\n=== Relatorio consolidado ===\n")
             print(message.result)
-            print(f"\nCusto: ${message.total_cost_usd:.4f} · {message.num_turns} turno(s)")
+            print(f"\nCusto total: ${message.total_cost_usd:.4f} · {message.num_turns} turno(s)")
 
 
 if __name__ == "__main__":
