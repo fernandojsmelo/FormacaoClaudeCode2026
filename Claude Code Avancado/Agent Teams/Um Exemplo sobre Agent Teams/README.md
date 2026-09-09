@@ -13,6 +13,7 @@ seguindo o padrão ensinado na Aula 4 (ver PDF na pasta ao lado).
   test-agent.md     ← só olha cobertura de testes
 exemplo/
   auth.js           ← código de propósito didático, com problemas plantados
+team.py             ← o mesmo time, via Claude Agent SDK (Python)
 ```
 
 `auth.js` tem, de propósito, um segredo hardcoded, uma injeção de SQL por
@@ -32,6 +33,17 @@ e nenhum teste — o suficiente para os 3 agents terem o que reportar.
 3. Observe: o orquestrador deve disparar os 3 sub-agents juntos (em paralelo,
    não um de cada vez) e no final devolver um único relatório consolidado com
    as seções 🔴 Crítico / ⚠️ Avisos / ✅ Pontos positivos.
+
+## Como testar (via Claude Agent SDK / Python)
+
+`team.py` é o mesmo time, mas definido em código com `AgentDefinition`
+em vez de arquivos `.md`, e disparado via `query()` do SDK.
+
+1. `pip install claude-agent-sdk` (requer Node.js 18+ instalado e a
+   variável `ANTHROPIC_API_KEY` configurada no ambiente).
+2. Rode `python team.py` dentro desta pasta.
+3. O script imprime cada sub-agent conforme é disparado (prova do
+   paralelismo) e, ao final, o relatório único consolidado pelo Claude.
 
 ## O que observar
 
