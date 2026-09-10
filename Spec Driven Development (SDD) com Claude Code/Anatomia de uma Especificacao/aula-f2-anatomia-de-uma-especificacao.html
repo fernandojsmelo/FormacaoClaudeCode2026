@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula F2 — Anatomia de uma especificação | SDD Fundamentos</title>
+<link rel="stylesheet" href="assets/slides.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="glyph">✳</span>
+    <span><b>SDD</b> Fundamentos</span>
+  </a>
+  <span class="chip">Aula F2</span>
+  <span class="topbar-spacer"></span>
+  <span class="chip">~60 min</span>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Alternar tema">☀</button>
+</header>
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+<main class="stage">
+
+<!-- ============ CAPA ============ -->
+<section class="slide active">
+  <div class="cover">
+    <span class="badge">✳ Seção 1 · Aula F2</span>
+    <h1>Anatomia de uma especificação</h1>
+    <p class="sub">Quais peças compõem uma spec que funciona — e a regra de ouro para saber se a sua está pronta.</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 700 340" role="img" aria-label="Documento de especificação anotado, mostrando suas seis seções">
+        <!-- folha -->
+        <rect x="150" y="16" width="400" height="308" rx="14" fill="var(--panel)" stroke="var(--border-2)" stroke-width="1.5"/>
+
+        <!-- título -->
+        <rect x="176" y="42" width="180" height="13" rx="6" fill="var(--accent)"/>
+        <rect x="176" y="63" width="290" height="7" rx="3.5" fill="var(--border-2)"/>
+
+        <!-- seção: objetivo -->
+        <rect x="176" y="92" width="86" height="9" rx="4.5" fill="var(--accent-2)"/>
+        <rect x="176" y="108" width="330" height="6" rx="3" fill="var(--border-2)"/>
+        <rect x="176" y="120" width="270" height="6" rx="3" fill="var(--border-2)"/>
+        <path d="M148 104 H96" stroke="var(--accent)" stroke-width="1.3"/>
+        <text x="90" y="108" text-anchor="end" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--accent)">o quê / por quê</text>
+
+        <!-- seção: escopo -->
+        <rect x="176" y="146" width="70" height="9" rx="4.5" fill="var(--blue)"/>
+        <rect x="176" y="162" width="300" height="6" rx="3" fill="var(--border-2)"/>
+        <rect x="176" y="174" width="210" height="6" rx="3" fill="var(--border-2)"/>
+        <path d="M552 158 H612" stroke="var(--blue)" stroke-width="1.3"/>
+        <text x="618" y="162" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--blue)">escopo +</text>
+        <text x="618" y="177" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--blue)">fora dele</text>
+
+        <!-- seção: requisitos -->
+        <rect x="176" y="200" width="98" height="9" rx="4.5" fill="var(--violet)"/>
+        <rect x="176" y="216" width="320" height="6" rx="3" fill="var(--border-2)"/>
+        <rect x="176" y="228" width="255" height="6" rx="3" fill="var(--border-2)"/>
+        <path d="M148 214 H96" stroke="var(--violet)" stroke-width="1.3"/>
+        <text x="90" y="211" text-anchor="end" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--violet)">requisitos</text>
+        <text x="90" y="226" text-anchor="end" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--violet)">F e NF</text>
+
+        <!-- seção: aceite -->
+        <rect x="176" y="254" width="120" height="9" rx="4.5" fill="var(--green)"/>
+        <g fill="var(--green)">
+          <text x="178" y="284" font-size="12" font-family="ui-monospace, monospace">✓</text>
+          <text x="178" y="302" font-size="12" font-family="ui-monospace, monospace">✓</text>
+        </g>
+        <rect x="196" y="277" width="250" height="6" rx="3" fill="var(--border-2)"/>
+        <rect x="196" y="295" width="220" height="6" rx="3" fill="var(--border-2)"/>
+        <path d="M552 282 H612" stroke="var(--green)" stroke-width="1.3"/>
+        <text x="618" y="279" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--green)">critérios</text>
+        <text x="618" y="294" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--green)">de aceite</text>
+      </svg>
+      <figcaption>Uma spec não é um texto corrido — é um documento com seções que cumprem funções distintas.</figcaption>
+    </figure>
+
+    <div class="cover-meta">
+      <span class="chip">Use ← → para navegar</span>
+      <span class="chip">Quiz no final</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBJETIVOS ============ -->
+<section class="slide">
+  <p class="eyebrow">Roteiro da aula</p>
+  <h2>O que você vai levar daqui</h2>
+  <p class="lead">Na F1 vimos <em>por que</em> a spec importa. Agora vamos abrir o documento e ver <strong>do que ele é feito</strong>.</p>
+
+  <ul class="check-list">
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Separar o <strong>"o quê / por quê"</strong> do <strong>"como"</strong> — e saber por que essa fronteira importa</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Distinguir requisitos <strong>funcionais</strong> de <strong>não-funcionais</strong></span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Escrever <strong>critérios de aceite</strong> verificáveis — a peça mais importante</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Declarar <strong>escopo, fora-de-escopo</strong> e restrições técnicas</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Aplicar a <strong>regra de ouro</strong> para julgar se uma spec está pronta</span></button></li>
+  </ul>
+</section>
+
+<!-- ============ A FRONTEIRA ============ -->
+<section class="slide">
+  <p class="eyebrow">A fronteira fundamental</p>
+  <h2>"O quê / por quê" ≠ "como"</h2>
+  <p class="lead">Este é o erro mais comum de quem começa: escrever uma spec que já é uma implementação disfarçada. Quando a spec decide o "como", ela <strong>rouba do agente</strong> exatamente o trabalho que ele faz bem.</p>
+
+  <div class="vs">
+    <div class="pane good">
+      <h4>Pertence à spec — "o quê / por quê"</h4>
+      <ul>
+        <li>O comportamento observável do sistema</li>
+        <li>Quem usa e para resolver qual problema</li>
+        <li>As regras de negócio</li>
+        <li>O que caracteriza sucesso e erro</li>
+        <li>Limites que <em>não podem</em> ser violados</li>
+      </ul>
+    </div>
+    <div class="mid">│</div>
+    <div class="pane bad">
+      <h4>Não pertence — "como"</h4>
+      <ul>
+        <li>Nomes de classes, funções e variáveis</li>
+        <li>Estrutura de pastas do projeto</li>
+        <li>Qual algoritmo de ordenação usar</li>
+        <li>Se é <code>for</code> ou <code>map</code></li>
+        <li>Detalhes internos que ninguém observa de fora</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="ico">⚠️</span>
+    <p><strong>A exceção que confirma a regra:</strong> às vezes o "como" <em>é</em> requisito. "Tem que ser PostgreSQL porque o time já opera Postgres" não é implementação — é <strong>restrição técnica</strong>, e tem seção própria na spec. A diferença: você consegue explicar <em>por quê</em>.</p>
+  </div>
+
+  <div class="quote">
+    Teste rápido: se a resposta para "por que assim?" for <strong>"porque o negócio exige"</strong>, é spec. Se for <strong>"porque eu gosto"</strong>, é código — deixe o agente decidir.
+  </div>
+</section>
+
+<!-- ============ AS SEIS PEÇAS ============ -->
+<section class="slide">
+  <p class="eyebrow">Anatomia</p>
+  <h2>As seis peças de uma spec</h2>
+  <p class="lead">Clique em cada peça para ver o que ela contém e como escrevê-la.</p>
+
+  <div class="acc">
+    <button class="acc-head" type="button"><span class="acc-num">1</span> Objetivo — o "por quê" em duas linhas <span class="caret">▶</span></button>
+    <div class="acc-body">
+      <p>Qual problema real isto resolve, e para quem. É a peça que impede que o incremento vire uma solução sem dono.</p>
+      <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">objetivo</span></div>
+      <div class="term-body"><span class="ok">✓</span> "Permitir que o usuário veja quanto gastou no mês,
+  para decidir se pode fazer uma compra grande."
+
+<span class="no">✗</span> "Criar endpoint de resumo."   <span class="c">&#47;&#47; isso é o "como", não o "por quê"</span></div></div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-head" type="button"><span class="acc-num">2</span> Requisitos funcionais — o que o sistema faz <span class="caret">▶</span></button>
+    <div class="acc-body">
+      <p>Comportamentos observáveis, em frases que descrevem uma ação e seu resultado. Um requisito por linha; se precisar de "e", provavelmente são dois.</p>
+      <ul>
+        <li>O usuário pode registrar uma transação com data, descrição, valor e tipo.</li>
+        <li>O sistema lista todas as transações em ordem decrescente de data.</li>
+        <li>O sistema rejeita transações com valor menor ou igual a zero.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-head" type="button"><span class="acc-num">3</span> Requisitos não-funcionais — como o sistema se comporta <span class="caret">▶</span></button>
+    <div class="acc-body">
+      <p>Qualidades transversais: desempenho, segurança, persistência, limites, acessibilidade, custo. São os que mais somem das specs — e os que mais causam retrabalho quando somem.</p>
+      <div class="grid g3" style="margin-top:14px">
+        <div class="tile info"><div class="ico">⚡</div><h4>Desempenho</h4><p>"A listagem responde em menos de 300&nbsp;ms com 10&nbsp;mil registros."</p></div>
+        <div class="tile info"><div class="ico">🔒</div><h4>Segurança</h4><p>"A chave da API vem de variável de ambiente, nunca do código."</p></div>
+        <div class="tile info"><div class="ico">💾</div><h4>Persistência</h4><p>"Os dados sobrevivem a um reinício do servidor."</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-head" type="button"><span class="acc-num">4</span> Critérios de aceite — como saber que terminou <span class="caret">▶</span></button>
+    <div class="acc-body">
+      <p>A peça mais importante da spec inteira. Um critério de aceite é uma afirmação que alguém consegue <strong>testar e responder sim ou não</strong>, sem opinar. Se dois revisores podem discordar sobre se o critério foi atendido, ele ainda não é um critério.</p>
+      <div class="term"><div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">critérios de aceite</span></div>
+      <div class="term-body"><span class="ok">✓</span> <span class="k">POST</span> /transacoes com valor <span class="s">0</span> retorna <span class="s">422</span>
+<span class="ok">✓</span> <span class="k">GET</span> /transacoes lista as transações criadas
+<span class="ok">✓</span> os dados continuam lá depois de reiniciar o servidor
+
+<span class="no">✗</span> a API deve ser rápida        <span class="c">&#47;&#47; rápida quanto?</span>
+<span class="no">✗</span> o código deve ser limpo      <span class="c">&#47;&#47; limpo segundo quem?</span>
+<span class="no">✗</span> tratar os erros direito      <span class="c">&#47;&#47; quais erros? qual resposta?</span></div></div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-head" type="button"><span class="acc-num">5</span> Escopo e fora-de-escopo — as duas listas <span class="caret">▶</span></button>
+    <div class="acc-body">
+      <p>O escopo delimita o incremento. O <strong>fora-de-escopo</strong> é o que impede o agente (e o time) de resolver criativamente um problema que não era para ser resolvido agora.</p>
+      <div class="callout tip"><span class="ico">🧲</span><p>O fora-de-escopo é a peça mais subestimada da spec. Sem ela, todo incremento tende a crescer — o agente vê uma lacuna adjacente e a preenche por conta própria.</p></div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-head" type="button"><span class="acc-num">6</span> Restrições técnicas — o "como" que é obrigatório <span class="caret">▶</span></button>
+    <div class="acc-body">
+      <p>Decisões de "como" que <em>já foram tomadas</em> e não estão em discussão: stack, versões, bibliotecas obrigatórias, padrões do time, compatibilidade. Escreva também o <strong>motivo</strong> — sem ele, uma restrição vira mistério para quem lê depois.</p>
+      <ul>
+        <li>Python 3.11+ com FastAPI — é o padrão do restante do sistema.</li>
+        <li>SQLite — o app precisa rodar sem serviço externo na máquina do aluno.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VAGA vs PRECISA ============ -->
+<section class="slide">
+  <p class="eyebrow">Lado a lado</p>
+  <h2>Spec vaga × spec precisa</h2>
+  <p class="lead">A mesma funcionalidade, escrita de dois jeitos. Alterne entre as abas e repare em quantas perguntas a primeira versão deixa em aberto.</p>
+
+  <div class="tabs">
+    <div class="tab-btns">
+      <button class="tab-btn active" type="button">✗ Vaga</button>
+      <button class="tab-btn" type="button">✓ Precisa</button>
+      <button class="tab-btn" type="button">🔎 As perguntas escondidas</button>
+    </div>
+
+    <div class="tab-panel active">
+      <div class="term">
+        <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">spec vaga</span></div>
+        <div class="term-body"><span class="k">Funcionalidade</span>
+  Filtro de transações.
+
+<span class="k">Descrição</span>
+  O usuário precisa conseguir filtrar suas transações
+  de forma prática. Deve funcionar bem e ser rápido.
+  Tratar os erros adequadamente.</div>
+      </div>
+      <p>Parece razoável — e é exatamente esse o perigo. É um texto que <strong>soa</strong> como especificação, mas não permite verificar nada. "Prática", "bem", "rápido" e "adequadamente" são quatro decisões terceirizadas.</p>
+    </div>
+
+    <div class="tab-panel">
+      <div class="term">
+        <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">spec precisa</span></div>
+        <div class="term-body"><span class="k">Objetivo</span>
+  Permitir que o usuário encontre transações específicas
+  sem percorrer a lista inteira.
+
+<span class="k">Requisitos funcionais</span>
+  · filtrar por categoria (valor exato)
+  · filtrar por período (data inicial e final, inclusivas)
+  · filtrar por faixa de valor (mínimo e máximo)
+  · os filtros são combináveis entre si (E lógico)
+
+<span class="k">Requisitos não-funcionais</span>
+  · resposta abaixo de <span class="s">300ms</span> com <span class="s">10.000</span> transações
+
+<span class="k">Fora de escopo</span>
+  · busca por texto livre na descrição
+  · filtros salvos pelo usuário
+
+<span class="k">Critérios de aceite</span>
+  <span class="ok">✓</span> <span class="k">GET</span> /transacoes?categoria=alimentacao devolve só essa categoria
+  <span class="ok">✓</span> categoria inexistente devolve lista vazia e <span class="s">200</span> (não é erro)
+  <span class="ok">✓</span> data inicial maior que a final devolve <span class="s">422</span> com mensagem clara
+  <span class="ok">✓</span> os três filtros combinados devolvem a interseção correta
+  <span class="ok">✓</span> sem nenhum filtro, devolve tudo (comportamento atual preservado)</div>
+      </div>
+    </div>
+
+    <div class="tab-panel">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Na versão vaga…</th><th>…a pergunta escondida</th><th>Na versão precisa</th></tr></thead>
+          <tbody>
+            <tr><td>"filtrar"</td><td>por quais campos?</td><td>categoria, período e faixa de valor</td></tr>
+            <tr><td>"de forma prática"</td><td>combináveis ou um de cada vez?</td><td>combináveis, com E lógico</td></tr>
+            <tr><td>"rápido"</td><td>quanto? com qual volume?</td><td>&lt; 300 ms com 10 mil registros</td></tr>
+            <tr><td>"tratar os erros"</td><td>categoria inexistente é erro ou lista vazia?</td><td>lista vazia com 200 — decisão explícita</td></tr>
+            <tr><td>(ausente)</td><td>busca textual entra?</td><td>fora de escopo, declarado</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout tip"><span class="ico">🎯</span><p>Repare: a spec precisa não ficou longa por enfeite. Cada linha a mais <strong>fecha uma pergunta</strong> que alguém teria que responder no chute.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGRA DE OURO ============ -->
+<section class="slide">
+  <p class="eyebrow">O teste definitivo</p>
+  <h2>A regra de ouro</h2>
+
+  <div class="quote" style="font-size:21px">
+    Se uma <strong>pessoa nova no time</strong> conseguisse implementar a funcionalidade lendo apenas a spec — sem perguntar nada a ninguém — então o <strong>agente também consegue</strong>.
+  </div>
+
+  <p class="lead">É um teste prático, não filosófico. Leia sua spec fingindo que você acabou de chegar ao projeto e que não pode perguntar nada. Toda vez que você pensar "hmm, aqui eu perguntaria…", achou um buraco.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 220" role="img" aria-label="Uma spec sendo lida por uma pessoa nova no time e por um agente, ambos chegando ao mesmo resultado">
+      <!-- spec central -->
+      <rect x="290" y="52" width="140" height="116" rx="12" fill="var(--accent-dim)" stroke="var(--accent)" stroke-width="1.5"/>
+      <rect x="310" y="72" width="70" height="8" rx="4" fill="var(--accent)"/>
+      <rect x="310" y="90" width="100" height="5" rx="2.5" fill="var(--border-2)"/>
+      <rect x="310" y="102" width="86" height="5" rx="2.5" fill="var(--border-2)"/>
+      <rect x="310" y="120" width="60" height="5" rx="2.5" fill="var(--border-2)"/>
+      <rect x="310" y="132" width="94" height="5" rx="2.5" fill="var(--border-2)"/>
+      <text x="360" y="188" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--accent)">spec</text>
+
+      <!-- humano -->
+      <circle cx="96" cy="82" r="17" fill="var(--panel)" stroke="var(--blue)" stroke-width="1.5"/>
+      <path d="M70 132 a26 26 0 0 1 52 0 z" fill="var(--panel)" stroke="var(--blue)" stroke-width="1.5"/>
+      <text x="96" y="164" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--blue)">dev novo no time</text>
+      <path d="M136 110 H282" stroke="var(--blue)" stroke-width="1.6" marker-end="url(#a2)"/>
+
+      <!-- agente -->
+      <rect x="586" y="62" width="58" height="48" rx="12" fill="var(--panel)" stroke="var(--accent)" stroke-width="1.5"/>
+      <circle cx="602" cy="84" r="4.5" fill="var(--accent)"/>
+      <circle cx="628" cy="84" r="4.5" fill="var(--accent)"/>
+      <path d="M604 98 H626" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M615 62 V48" stroke="var(--accent)" stroke-width="1.6"/>
+      <circle cx="615" cy="44" r="4" fill="var(--accent)"/>
+      <text x="615" y="134" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--accent)">agente</text>
+      <path d="M578 110 H438" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#a2b)"/>
+
+      <!-- resultado -->
+      <text x="360" y="30" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--green)">mesma leitura → mesmo resultado</text>
+
+      <defs>
+        <marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--blue)"/></marker>
+        <marker id="a2b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/></marker>
+      </defs>
+    </svg>
+    <figcaption>A spec é boa quando os dois leitores chegam ao mesmo lugar sem precisar perguntar nada.</figcaption>
+  </figure>
+
+  <h3>Checklist rápido antes de mandar a spec</h3>
+  <ul class="check-list">
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Consigo dizer <strong>quem</strong> ganha o quê com isto?</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Cada critério de aceite é <strong>testável</strong> com um sim ou não?</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Declarei ao menos um item <strong>fora de escopo</strong>?</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Os casos de <strong>erro</strong> estão descritos, não só o caminho feliz?</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Removi decisões de "<strong>como</strong>" que não são restrição de verdade?</span></button></li>
+  </ul>
+</section>
+
+<!-- ============ ARMADILHAS ============ -->
+<section class="slide">
+  <p class="eyebrow">Cuidado</p>
+  <h2>Quatro armadilhas comuns</h2>
+  <p class="lead">Clique para ver o antídoto de cada uma.</p>
+
+  <div class="flips">
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face"><span class="ico">🌫️</span><h4>Adjetivo no lugar de número</h4><p>"rápido", "seguro", "amigável", "robusto"</p><span class="hint">clique →</span></div>
+        <div class="flip-face flip-back"><p><strong>Antídoto:</strong> todo adjetivo de qualidade vira número ou vira nada. "Rápido" → "abaixo de 300&nbsp;ms com 10 mil registros".</p></div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face"><span class="ico">🙂</span><h4>Só o caminho feliz</h4><p>A spec descreve o que acontece quando tudo dá certo — e para por aí.</p><span class="hint">clique →</span></div>
+        <div class="flip-face flip-back"><p><strong>Antídoto:</strong> para cada requisito, escreva a linha "e se der errado?". Entrada inválida, recurso inexistente, serviço externo fora do ar.</p></div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face"><span class="ico">📦</span><h4>Spec grande demais</h4><p>Um documento que descreve o produto inteiro de uma vez.</p><span class="hint">clique →</span></div>
+        <div class="flip-face flip-back"><p><strong>Antídoto:</strong> uma spec por <strong>incremento</strong>, não por produto. Se não cabe em um ciclo de trabalho, quebre em duas. (Assunto da Aula F3.)</p></div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face"><span class="ico">🔧</span><h4>Spec que é código disfarçado</h4><p>"Criar a classe <code>TransacaoService</code> com o método <code>filtrar()</code>…"</p><span class="hint">clique →</span></div>
+        <div class="flip-face flip-back"><p><strong>Antídoto:</strong> pergunte "isso é observável de fora?". Nome de classe não é. Se não é observável e não é restrição justificada, sai da spec.</p></div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face"><span class="ico">🤷</span><h4>Ambiguidade silenciosa</h4><p>"listar as transações do mês" — mês corrente? mês informado? fuso de quem?</p><span class="hint">clique →</span></div>
+        <div class="flip-face flip-back"><p><strong>Antídoto:</strong> releia caçando pronomes e termos relativos. "do mês", "dele", "os principais", "quando necessário" quase sempre escondem uma decisão.</p></div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face"><span class="ico">📋</span><h4>Requisito com "e"</h4><p>"O sistema valida a entrada e envia o e-mail e registra o log."</p><span class="hint">clique →</span></div>
+        <div class="flip-face flip-back"><p><strong>Antídoto:</strong> um requisito por linha. Requisitos grudados não podem ser aceitos ou rejeitados separadamente — e é isso que a verificação precisa fazer.</p></div>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- ============ RESUMO ============ -->
+<section class="slide">
+  <p class="eyebrow">Fechamento</p>
+  <h2>Resumo da aula</h2>
+
+  <div class="grid g2">
+    <div class="tile key"><div class="ico">✂️</div><h4>A fronteira</h4><p>A spec cuida do "o quê" e do "por quê". O "como" fica com o agente — salvo quando é restrição justificada.</p></div>
+    <div class="tile key"><div class="ico">🧩</div><h4>Seis peças</h4><p>Objetivo · requisitos funcionais · não-funcionais · critérios de aceite · escopo e fora-de-escopo · restrições.</p></div>
+    <div class="tile key"><div class="ico">✅</div><h4>Critério de aceite</h4><p>É a peça central: uma afirmação verificável com sim ou não, sem espaço para opinião.</p></div>
+    <div class="tile key"><div class="ico">🏅</div><h4>Regra de ouro</h4><p>Se um dev novo no time implementaria só lendo a spec, o agente também implementa.</p></div>
+  </div>
+
+  <div class="quote">
+    Você já sabe <strong>por que</strong> (F1) e <strong>o que escrever</strong> (F2). Falta o <strong>quando</strong>: em que momento a spec entra, o que vem antes e o que vem depois. É a <strong>Aula F3 — O ciclo e as fases do SDD</strong>.
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="slide">
+  <p class="eyebrow">Verificação</p>
+  <h2>Quiz da Aula F2</h2>
+
+  <div class="quiz">
+    <div class="quiz-head">
+      <span class="ico">✳</span>
+      <h3>Duas perguntas para fixar a anatomia da spec</h3>
+    </div>
+    <p style="color:var(--muted);font-size:15px">Escolha uma alternativa por questão. O feedback aparece na hora.</p>
+
+    <div class="q">
+      <p class="q-title"><span class="n">01.</span> Qual das alternativas é um <strong>critério de aceite</strong> bem escrito?</p>
+      <div class="opts">
+        <button class="opt" type="button"><span class="letter">A</span><span>"A validação dos dados deve ser feita de forma robusta e segura."</span></button>
+        <button class="opt" type="button"><span class="letter">B</span><span>"Criar a função <code>validar_transacao()</code> no módulo de serviços."</span></button>
+        <button class="opt" type="button" data-correct="1"><span class="letter">C</span><span>"<code>POST /transacoes</code> com valor igual a zero retorna 422 com mensagem indicando o campo inválido."</span></button>
+        <button class="opt" type="button"><span class="letter">D</span><span>"O usuário precisa conseguir cadastrar transações de forma prática e intuitiva."</span></button>
+      </div>
+      <div class="feedback"
+           data-ok="Isso mesmo: dá para executar a chamada e responder sim ou não, sem discussão. As outras usam adjetivos não verificáveis (A e D) ou descrevem o &quot;como&quot; interno, que não é observável de fora (B)."
+           data-err="A resposta é a <b>C</b>. Um critério de aceite precisa ser verificável com um sim ou não. &quot;Robusta e segura&quot; (A) e &quot;prática e intuitiva&quot; (D) são adjetivos sem medida — dois revisores podem discordar. Já (B) é implementação: o nome de uma função não é observável de fora."></div>
+    </div>
+
+    <div class="q">
+      <p class="q-title"><span class="n">02.</span> Numa spec, por que o <strong>fora-de-escopo</strong> é uma seção importante e não apenas um detalhe?</p>
+      <div class="opts">
+        <button class="opt" type="button"><span class="letter">A</span><span>Porque documentos formais exigem uma seção de limitações para fins de auditoria.</span></button>
+        <button class="opt" type="button" data-correct="1"><span class="letter">B</span><span>Porque sem ela o incremento tende a crescer sozinho: ao ver uma lacuna adjacente, o agente (ou o time) a preenche por conta própria, misturando trabalho que não era daquele ciclo.</span></button>
+        <button class="opt" type="button"><span class="letter">C</span><span>Porque ela substitui os critérios de aceite quando a funcionalidade é pequena.</span></button>
+        <button class="opt" type="button"><span class="letter">D</span><span>Porque lista as funcionalidades que foram canceladas definitivamente no produto.</span></button>
+      </div>
+      <div class="feedback"
+           data-ok="Exato: declarar o fora-de-escopo é o que mantém o incremento do tamanho que você decidiu. E &quot;fora de escopo&quot; não é &quot;cancelado&quot; — normalmente significa apenas &quot;não agora&quot;."
+           data-err="A resposta é a <b>B</b>. O fora-de-escopo existe para conter o crescimento do incremento, não por formalidade (A). Ele não substitui critérios de aceite (C), que cumprem outra função, e não significa cancelamento definitivo (D) — em geral significa apenas &quot;não neste ciclo&quot;."></div>
+    </div>
+
+    <div class="quiz-score"></div>
+  </div>
+
+  <div class="callout">
+    <span class="ico">➡️</span>
+    <p><strong>Próxima aula — F3: O ciclo e as fases do SDD.</strong> Princípios, especificar, planejar, tarefas, implementar e verificar — o artefato de cada fase e por que separar o pensar do fazer reduz retrabalho.</p>
+  </div>
+
+  <p style="text-align:center;margin-top:24px">
+    <a class="nav-btn" href="aula-f1-por-que-sdd-existe.html">← Aula F1</a>
+    <a class="nav-btn primary" href="aula-f3-o-ciclo-e-as-fases.html">Aula F3 →</a>
+  </p>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="nav-btn" id="prevBtn" type="button">← <span class="lbl">Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">01 / 09</span>
+  <button class="nav-btn primary" id="nextBtn" type="button"><span class="lbl">Próximo</span> →</button>
+</nav>
+
+<script src="assets/slides.js"></script>
+</body>
+</html>
