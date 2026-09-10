@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula F3 — O ciclo e as fases do SDD | SDD Fundamentos</title>
+<link rel="stylesheet" href="assets/slides.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="glyph">✳</span>
+    <span><b>SDD</b> Fundamentos</span>
+  </a>
+  <span class="chip">Aula F3</span>
+  <span class="topbar-spacer"></span>
+  <span class="chip">~60 min</span>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Alternar tema">☀</button>
+</header>
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+<main class="stage">
+
+<!-- ============ CAPA ============ -->
+<section class="slide active">
+  <div class="cover">
+    <span class="badge">✳ Seção 1 · Aula F3</span>
+    <h1>O ciclo e as fases do SDD</h1>
+    <p class="sub">Princípios → especificar → planejar → tarefas → implementar → verificar. Cada fase com seu artefato, e o loop que volta à spec sempre que o rumo desvia.</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 700 400" role="img" aria-label="Ciclo do SDD em seis fases dispostas em círculo, com uma seta de retorno para a fase de especificar">
+        <!-- anel -->
+        <circle cx="350" cy="200" r="128" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="4 6"/>
+
+        <!-- fase 0: princípios (topo) -->
+        <g>
+          <circle cx="350" cy="72" r="40" fill="var(--panel)" stroke="var(--violet)" stroke-width="1.8"/>
+          <text x="350" y="70" text-anchor="middle" font-size="18">📐</text>
+          <text x="350" y="90" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--violet)">princípios</text>
+        </g>
+
+        <!-- fase 1: especificar -->
+        <g>
+          <circle cx="461" cy="136" r="40" fill="var(--accent-dim)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="461" y="134" text-anchor="middle" font-size="18">📄</text>
+          <text x="461" y="154" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--accent)">especificar</text>
+        </g>
+
+        <!-- fase 2: planejar -->
+        <g>
+          <circle cx="461" cy="264" r="40" fill="var(--panel)" stroke="var(--blue)" stroke-width="1.8"/>
+          <text x="461" y="262" text-anchor="middle" font-size="18">🗺️</text>
+          <text x="461" y="282" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--blue)">planejar</text>
+        </g>
+
+        <!-- fase 3: tarefas -->
+        <g>
+          <circle cx="350" cy="328" r="40" fill="var(--panel)" stroke="var(--blue)" stroke-width="1.8"/>
+          <text x="350" y="326" text-anchor="middle" font-size="18">🧾</text>
+          <text x="350" y="346" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--blue)">tarefas</text>
+        </g>
+
+        <!-- fase 4: implementar -->
+        <g>
+          <circle cx="239" cy="264" r="40" fill="var(--panel)" stroke="var(--gold)" stroke-width="1.8"/>
+          <text x="239" y="262" text-anchor="middle" font-size="18">⚙️</text>
+          <text x="239" y="282" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--gold)">implementar</text>
+        </g>
+
+        <!-- fase 5: verificar -->
+        <g>
+          <circle cx="239" cy="136" r="40" fill="var(--green-dim)" stroke="var(--green)" stroke-width="2"/>
+          <text x="239" y="134" text-anchor="middle" font-size="18">🔍</text>
+          <text x="239" y="154" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--green)">verificar</text>
+        </g>
+
+        <!-- setas do anel -->
+        <path d="M389 90  A 128 128 0 0 1 428 111" fill="none" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#f3a)"/>
+        <path d="M479 178 A 128 128 0 0 1 479 222" fill="none" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#f3a)"/>
+        <path d="M428 290 A 128 128 0 0 1 390 310" fill="none" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#f3a)"/>
+        <path d="M310 310 A 128 128 0 0 1 272 290" fill="none" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#f3a)"/>
+        <path d="M221 222 A 128 128 0 0 1 221 178" fill="none" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#f3a)"/>
+
+        <!-- retorno verificar → especificar -->
+        <path d="M240 96 C 260 30, 440 30, 460 96" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#f3b)"/>
+        <text x="350" y="30" text-anchor="middle" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--accent)">desviou? volta pra spec ↻</text>
+
+        <!-- centro -->
+        <text x="350" y="196" text-anchor="middle" font-size="13" font-family="ui-monospace, monospace" fill="var(--ink)">o ciclo</text>
+        <text x="350" y="215" text-anchor="middle" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--muted)">é iterativo</text>
+
+        <defs>
+          <marker id="f3a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"/></marker>
+          <marker id="f3b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Seis fases, um loop. A seta pontilhada é a que mais se usa na vida real.</figcaption>
+    </figure>
+
+    <div class="cover-meta">
+      <span class="chip">Use ← → para navegar</span>
+      <span class="chip">Quiz no final</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBJETIVOS ============ -->
+<section class="slide">
+  <p class="eyebrow">Roteiro da aula</p>
+  <h2>O que você vai levar daqui</h2>
+  <p class="lead">F1 deu o motivo, F2 deu o documento. F3 dá o <strong>processo</strong>: onde a spec entra e o que acontece antes e depois dela.</p>
+
+  <ul class="check-list">
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Nomear as <strong>seis fases</strong> e o <strong>artefato</strong> que cada uma produz</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Entender por que separar o <strong>pensar</strong> do <strong>fazer</strong> reduz retrabalho</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Reconhecer que o fluxo é <strong>iterativo</strong>, não linear</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Dimensionar um ciclo: <strong>o tamanho certo</strong> de um incremento</span></button></li>
+  </ul>
+
+  <div class="callout tip">
+    <span class="ico">🔗</span>
+    <p>Este é o ciclo que você vai repetir <strong>doze vezes</strong> nos dois projetos práticos do curso — seis em Python e seis em JavaScript.</p>
+  </div>
+</section>
+
+<!-- ============ FLUXO INTERATIVO ============ -->
+<section class="slide">
+  <p class="eyebrow">Explorando o ciclo</p>
+  <h2>As fases, uma a uma</h2>
+  <p class="lead">Clique em cada fase para ver o que ela faz e qual artefato deixa para a próxima.</p>
+
+  <div>
+    <div class="flow" data-flow>
+      <button class="flow-step" type="button"
+        data-title="0 · Princípios e convenções"
+        data-desc="Antes de qualquer spec, o projeto declara suas regras permanentes: stack, padrões de código, convenções de nomes, como rodar e testar. Não muda a cada ciclo — é o pano de fundo que vale para todos eles. No Claude Code, este é o papel do arquivo CLAUDE.md."
+        data-art="CLAUDE.md / documento de convenções">
+        <span class="n">FASE 0</span><span class="t">📐 Princípios</span>
+      </button>
+
+      <button class="flow-step" type="button"
+        data-title="1 · Especificar"
+        data-desc="Descrever o incremento: objetivo, requisitos funcionais e não-funcionais, escopo e fora-de-escopo, restrições e — o mais importante — critérios de aceite. Aqui você decide O QUÊ, sem decidir COMO. É a fase da Aula F2."
+        data-art="spec.md (o &quot;o quê&quot; e o &quot;por quê&quot;)">
+        <span class="n">FASE 1</span><span class="t">📄 Especificar</span>
+      </button>
+
+      <button class="flow-step" type="button"
+        data-title="2 · Planejar"
+        data-desc="Traduzir a spec em abordagem técnica: quais arquivos serão tocados, qual a ordem, quais decisões de design, quais riscos. É aqui que o COMO aparece pela primeira vez — e o momento mais barato de discordar dele, porque ainda não existe código."
+        data-art="plano técnico (arquivos, ordem, decisões)">
+        <span class="n">FASE 2</span><span class="t">🗺️ Planejar</span>
+      </button>
+
+      <button class="flow-step" type="button"
+        data-title="3 · Tarefas"
+        data-desc="Quebrar o plano em passos pequenos e ordenados, cada um verificável isoladamente. Serve para acompanhar o progresso, para parar no meio sem perder o fio e para revisar em pedaços em vez de num bloco só."
+        data-art="lista de tarefas ordenada">
+        <span class="n">FASE 3</span><span class="t">🧾 Tarefas</span>
+      </button>
+
+      <button class="flow-step" type="button"
+        data-title="4 · Implementar"
+        data-desc="Executar as tarefas e escrever o código. Note que esta é a única fase que produz código — e ela vem depois de quatro fases de pensamento. Aqui a discussão sobre O QUÊ já acabou; se ela reaparece, é sinal de que a spec estava incompleta."
+        data-art="código funcionando + commits">
+        <span class="n">FASE 4</span><span class="t">⚙️ Implementar</span>
+      </button>
+
+      <button class="flow-step" type="button"
+        data-title="5 · Verificar"
+        data-desc="Conferir o resultado CONTRA A SPEC, não contra o gosto de quem revisa: rodar os critérios de aceite um a um, os testes automatizados e, se quiser, um subagente revisor. Falhou algum critério? O ciclo não terminou."
+        data-art="critérios checados, testes verdes, revisão">
+        <span class="n">FASE 5</span><span class="t">🔍 Verificar</span>
+      </button>
+    </div>
+    <div class="flow-detail"></div>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🧮</span>
+    <p>Repare na proporção: <strong>quatro fases de pensamento para uma de código</strong>. Isso não é excesso de processo — é o reconhecimento de que escrever código nunca foi a parte difícil.</p>
+  </div>
+</section>
+
+<!-- ============ PENSAR vs FAZER ============ -->
+<section class="slide">
+  <p class="eyebrow">O princípio por trás</p>
+  <h2>Separar o pensar do fazer</h2>
+  <p class="lead">Quando pensamento e execução acontecem ao mesmo tempo, cada mudança de ideia <strong>desfaz trabalho já feito</strong>. Separá-los faz com que a mudança de ideia custe uma edição de texto.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 260" role="img" aria-label="Comparação entre pensar e fazer misturados, com muito desperdício, e separados, com correção barata">
+      <!-- misturado -->
+      <text x="14" y="24" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--red)">MISTURADO — pensa enquanto escreve código</text>
+      <g>
+        <rect x="14"  y="38" width="76" height="34" rx="8" fill="var(--panel)" stroke="var(--border-2)"/><text x="52" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--ink)">código</text>
+        <rect x="100" y="38" width="76" height="34" rx="8" fill="var(--red-dim)" stroke="var(--red)"/><text x="138" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--red)">descarta</text>
+        <rect x="186" y="38" width="76" height="34" rx="8" fill="var(--panel)" stroke="var(--border-2)"/><text x="224" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--ink)">código</text>
+        <rect x="272" y="38" width="76" height="34" rx="8" fill="var(--red-dim)" stroke="var(--red)"/><text x="310" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--red)">descarta</text>
+        <rect x="358" y="38" width="76" height="34" rx="8" fill="var(--panel)" stroke="var(--border-2)"/><text x="396" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--ink)">código</text>
+        <rect x="444" y="38" width="76" height="34" rx="8" fill="var(--red-dim)" stroke="var(--red)"/><text x="482" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--red)">descarta</text>
+        <rect x="530" y="38" width="96" height="34" rx="8" fill="var(--green-dim)" stroke="var(--green)"/><text x="578" y="60" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--green)">✓ enfim</text>
+      </g>
+      <text x="14" y="96" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--muted)">↑ metade do trabalho vira lixo — e cada bloco vermelho custou tempo real</text>
+
+      <line x1="14" y1="118" x2="706" y2="118" stroke="var(--border)"/>
+
+      <!-- separado -->
+      <text x="14" y="152" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--green)">SEPARADO — pensa em texto, depois escreve código</text>
+      <g>
+        <rect x="14"  y="166" width="86" height="34" rx="8" fill="var(--accent-dim)" stroke="var(--accent)"/><text x="57" y="188" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--accent)">spec</text>
+        <rect x="110" y="166" width="72" height="34" rx="8" fill="var(--red-dim)" stroke="var(--red)" stroke-dasharray="3 3"/><text x="146" y="188" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--red)">edita</text>
+        <rect x="192" y="166" width="86" height="34" rx="8" fill="var(--blue-dim)" stroke="var(--blue)"/><text x="235" y="188" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--blue)">plano</text>
+        <rect x="288" y="166" width="72" height="34" rx="8" fill="var(--red-dim)" stroke="var(--red)" stroke-dasharray="3 3"/><text x="324" y="188" text-anchor="middle" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--red)">ajusta</text>
+        <rect x="370" y="166" width="120" height="34" rx="8" fill="var(--panel)" stroke="var(--border-2)"/><text x="430" y="188" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--ink)">código (1×)</text>
+        <rect x="500" y="166" width="126" height="34" rx="8" fill="var(--green-dim)" stroke="var(--green)"/><text x="563" y="188" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="var(--green)">✓ verificado</text>
+      </g>
+      <text x="14" y="224" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--muted)">↑ o descarte continua existindo — mas descarta-se texto, não código</text>
+    </svg>
+    <figcaption>SDD não elimina a mudança de ideia. Ele muda o material que você joga fora.</figcaption>
+  </figure>
+
+  <div class="quote">
+    Mudar de ideia é inevitável e saudável. O que o SDD faz é garantir que você mude de ideia <strong>enquanto o material ainda é barato</strong>.
+  </div>
+</section>
+
+<!-- ============ ITERATIVO ============ -->
+<section class="slide">
+  <p class="eyebrow">Corrigindo um mal-entendido</p>
+  <h2>O fluxo é iterativo, não linear</h2>
+  <p class="lead">Olhando o diagrama, parece uma esteira: uma fase entrega para a seguinte e nunca se volta. Na prática, <strong>volta-se o tempo todo</strong> — e isso é o funcionamento normal, não uma falha.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-top:0">Quando voltar para a spec</h3>
+      <ul>
+        <li>O plano revelou uma decisão de produto que ninguém tinha tomado</li>
+        <li>Um critério de aceite se mostrou impossível ou ambíguo</li>
+        <li>A implementação esbarrou numa regra de negócio não escrita</li>
+        <li>A verificação passou, mas o resultado não resolve o problema original</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Quando voltar só para o plano</h3>
+      <ul>
+        <li>A abordagem técnica não sobreviveu ao contato com o código</li>
+        <li>Apareceu um caminho mais simples para o mesmo "o quê"</li>
+        <li>Uma dependência não existia ou se comportava diferente</li>
+        <li>A ordem das tarefas causava retrabalho evitável</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="ico">🚩</span>
+    <p><strong>Sinal de alerta:</strong> se você se pega discutindo <em>o quê</em> o sistema deve fazer durante a fase de implementação, pare. Isso não é um detalhe de código — é a spec pedindo para ser atualizada. Atualize-a e siga; não decida no meio do arquivo.</p>
+  </div>
+
+  <div class="quote">
+    Waterfall também tem fases — a diferença é que lá voltar é um <strong>fracasso do processo</strong>. Aqui, voltar é o processo. A comparação completa vem na <strong>Aula F5</strong>.
+  </div>
+</section>
+
+<!-- ============ TAMANHO DO CICLO ============ -->
+<section class="slide">
+  <p class="eyebrow">Calibragem</p>
+  <h2>Qual o tamanho certo de um ciclo?</h2>
+  <p class="lead">A pergunta prática mais comum. A resposta curta: <strong>um incremento que você consegue verificar de uma vez</strong>.</p>
+
+  <div class="tabs">
+    <div class="tab-btns">
+      <button class="tab-btn active" type="button">🐜 Pequeno demais</button>
+      <button class="tab-btn" type="button">✓ No ponto</button>
+      <button class="tab-btn" type="button">🐘 Grande demais</button>
+    </div>
+
+    <div class="tab-panel active">
+      <div class="card">
+        <p><strong>Exemplo:</strong> "adicionar o campo <code>descricao</code> ao modelo".</p>
+        <p><strong>Sintoma:</strong> a spec fica maior que a mudança. Você gasta mais tempo especificando do que teria gasto fazendo.</p>
+        <p><strong>Ajuste:</strong> agrupe com o que vem junto, ou simplesmente faça — nem toda mudança precisa de spec. A Aula F5 traça essa fronteira.</p>
+      </div>
+    </div>
+
+    <div class="tab-panel">
+      <div class="card">
+        <p><strong>Exemplo:</strong> "categorias: criar, listar e associar a cada transação, com filtro por categoria" — a Aula 3 do Projeto 1.</p>
+        <p><strong>Sintoma de que está certo:</strong> cabe em 4 a 6 critérios de aceite; dá para demonstrar funcionando ao final; um commit (ou poucos) fecha o assunto.</p>
+        <div class="callout tip"><span class="ico">📏</span><p><strong>Régua prática:</strong> se você consegue enunciar o incremento em <strong>uma frase</strong> que contém um verbo e um resultado observável, o tamanho está bom.</p></div>
+      </div>
+    </div>
+
+    <div class="tab-panel">
+      <div class="card">
+        <p><strong>Exemplo:</strong> "fazer o app de controle de gastos".</p>
+        <p><strong>Sintoma:</strong> a spec vira um documento de produto; o plano tem trinta passos; a verificação não cabe numa sessão; e o contexto do agente satura no meio do caminho.</p>
+        <p><strong>Ajuste:</strong> quebre por <strong>valor entregue</strong>, não por camada técnica. "Registrar e listar transações" é um bom corte; "fazer o banco de dados" não é — porque não dá para verificar sozinho.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>O arco incremental na prática</h3>
+  <p>É exatamente assim que os projetos do curso são organizados — cada aula é <strong>um ciclo completo</strong> que parte do estado da anterior:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Ciclo</th><th>Incremento (Projeto 1 — Python)</th><th>Verificável por</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Registrar e listar transações</td><td><code>POST</code> cria, <code>GET</code> lista, dados sobrevivem ao reinício</td></tr>
+        <tr><td>2</td><td>CRUD completo + validação</td><td><code>PUT</code>/<code>DELETE</code> funcionam; inválido retorna 422</td></tr>
+        <tr><td>3</td><td>Categorias e filtro</td><td>filtro por categoria devolve só aquela categoria</td></tr>
+        <tr><td>4</td><td>Saldo e resumo mensal</td><td>resumo do mês bate com entradas − saídas</td></tr>
+        <tr><td>5</td><td>Filtros avançados + testes</td><td>suíte verde; filtros combinados funcionam juntos</td></tr>
+        <tr><td>6</td><td>Exportação CSV, dashboard e deploy</td><td>CSV baixa; app roda fora da máquina local</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Nada é jogado fora entre ciclos, e cada um deixa o sistema em estado demonstrável.</p>
+</section>
+
+<!-- ============ CICLO NA PRÁTICA ============ -->
+<section class="slide">
+  <p class="eyebrow">Como isso parece no terminal</p>
+  <h2>Um ciclo completo, do começo ao fim</h2>
+
+  <div class="term">
+    <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">um ciclo de SDD — categorias</span></div>
+    <div class="term-body"><span class="c">&#47;&#47; FASE 0 — princípios (feito uma vez, no início do projeto)</span>
+<span class="p">&gt;</span> <span class="u">CLAUDE.md</span> já descreve: FastAPI, SQLite, testes com pytest,
+  camadas em <span class="s">app/routers</span> e <span class="s">app/models</span>
+
+<span class="c">&#47;&#47; FASE 1 — especificar</span>
+<span class="p">&gt;</span> escreva em <span class="s">specs/03-categorias.md</span> a spec para categorias:
+  criar e listar categorias, associar uma a cada transação
+  e filtrar transações por categoria.
+  critérios de aceite obrigatórios.
+
+<span class="c">&#47;&#47; FASE 2 — planejar (sem tocar em arquivo ainda)</span>
+<span class="p">&gt;</span> leia specs/03-categorias.md e proponha um plano
+<span class="ok">✓</span> plano: 1 modelo, 1 migração, 2 rotas, 1 parâmetro de query
+<span class="no">✗</span> <span class="u">você revisa e ajusta:</span> "categoria inexistente deve devolver
+  lista vazia, não 404 — está na spec"
+
+<span class="c">&#47;&#47; FASE 3 — tarefas</span>
+<span class="ok">✓</span> 1. modelo Categoria + relação com Transacao
+<span class="ok">✓</span> 2. POST /categorias e GET /categorias
+<span class="ok">✓</span> 3. campo categoria_id em Transacao
+<span class="ok">✓</span> 4. parâmetro ?categoria= em GET /transacoes
+
+<span class="c">&#47;&#47; FASE 4 — implementar</span>
+<span class="p">&gt;</span> execute o plano aprovado
+
+<span class="c">&#47;&#47; FASE 5 — verificar contra a spec</span>
+<span class="ok">✓</span> GET /transacoes?categoria=alimentacao → só alimentação
+<span class="ok">✓</span> categoria inexistente → [] com 200
+<span class="ok">✓</span> sem filtro → tudo (comportamento anterior preservado)
+<span class="p">&gt;</span> git commit -m "categorias e filtro (spec 03)"<span class="cursor"></span></div>
+  </div>
+
+  <div class="callout tip">
+    <span class="ico">👀</span>
+    <p>O momento mais valioso do ciclo acima é o <strong>✗ na fase 2</strong>: uma correção de rumo que custou uma frase. Se ela tivesse sido descoberta na fase 5, custaria uma reimplementação.</p>
+  </div>
+</section>
+
+<!-- ============ RESUMO ============ -->
+<section class="slide">
+  <p class="eyebrow">Fechamento</p>
+  <h2>Resumo da aula</h2>
+
+  <div class="grid g2">
+    <div class="tile key"><div class="ico">🔄</div><h4>Seis fases</h4><p>Princípios → especificar → planejar → tarefas → implementar → verificar. Cada uma com um artefato próprio.</p></div>
+    <div class="tile key"><div class="ico">🧠</div><h4>Pensar ≠ fazer</h4><p>Separar as duas coisas faz o descarte cair sobre texto, não sobre código já escrito.</p></div>
+    <div class="tile key"><div class="ico">↩️</div><h4>Iterativo</h4><p>Voltar à spec quando o rumo desvia é o processo funcionando, não falhando.</p></div>
+    <div class="tile key"><div class="ico">📏</div><h4>Tamanho do ciclo</h4><p>Um incremento verificável de uma vez: 4 a 6 critérios de aceite, demonstrável ao final.</p></div>
+  </div>
+
+  <div class="quote">
+    Você já sabe <strong>por que</strong>, <strong>o quê</strong> e <strong>quando</strong>. Falta a peça que explica o mecanismo: o que acontece do lado do agente quando ele lê a sua spec. É a <strong>Aula F4 — Como um agente "lê" uma spec</strong>.
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="slide">
+  <p class="eyebrow">Verificação</p>
+  <h2>Quiz da Aula F3</h2>
+
+  <div class="quiz">
+    <div class="quiz-head">
+      <span class="ico">✳</span>
+      <h3>Duas perguntas sobre o ciclo</h3>
+    </div>
+    <p style="color:var(--muted);font-size:15px">Escolha uma alternativa por questão. O feedback aparece na hora.</p>
+
+    <div class="q">
+      <p class="q-title"><span class="n">01.</span> Qual é a diferença entre as fases de <strong>especificar</strong> e <strong>planejar</strong>?</p>
+      <div class="opts">
+        <button class="opt" type="button"><span class="letter">A</span><span>Nenhuma relevante — são dois nomes para o mesmo documento, escrito em momentos diferentes.</span></button>
+        <button class="opt" type="button" data-correct="1"><span class="letter">B</span><span>Especificar define o "o quê" e o "por quê" (comportamento e critérios de aceite); planejar define o "como" técnico — arquivos, ordem, decisões de design e riscos.</span></button>
+        <button class="opt" type="button"><span class="letter">C</span><span>Especificar é feito pela pessoa e planejar é sempre feito pelo agente, sem revisão humana.</span></button>
+        <button class="opt" type="button"><span class="letter">D</span><span>Planejar vem antes de especificar, porque é preciso conhecer a arquitetura para escrever requisitos.</span></button>
+      </div>
+      <div class="feedback"
+           data-ok="Isso: a spec é o alvo e o plano é a rota até ele. É justamente por serem coisas diferentes que dá para aprovar a spec e ainda assim rejeitar o plano — corrigindo o rumo antes de existir código."
+           data-err="A resposta é a <b>B</b>. A spec é o alvo (&quot;o quê&quot; / &quot;por quê&quot;); o plano é a rota técnica até ele (&quot;como&quot;). Não são o mesmo documento (A). O plano pode ser proposto pelo agente, mas é revisado por você — esse é o ponto da fase (C). E a ordem é spec antes de plano (D): você define o alvo antes da rota."></div>
+    </div>
+
+    <div class="q">
+      <p class="q-title"><span class="n">02.</span> Durante a <strong>implementação</strong>, o agente esbarra numa regra de negócio que a spec não previa. Qual a atitude alinhada ao SDD?</p>
+      <div class="opts">
+        <button class="opt" type="button"><span class="letter">A</span><span>Decidir a regra ali mesmo, dentro do código, e seguir — o importante é não interromper a implementação.</span></button>
+        <button class="opt" type="button"><span class="letter">B</span><span>Abandonar o ciclo inteiro e recomeçar do zero, já que a spec falhou.</span></button>
+        <button class="opt" type="button" data-correct="1"><span class="letter">C</span><span>Parar, voltar à spec para registrar a decisão, e então retomar — o loop de volta é parte normal do ciclo.</span></button>
+        <button class="opt" type="button"><span class="letter">D</span><span>Anotar a pendência num comentário <code>TODO</code> e resolver na fase de verificação.</span></button>
+      </div>
+      <div class="feedback"
+           data-ok="Exato. O fluxo é iterativo: voltar à spec é o processo funcionando. A decisão fica registrada, a verificação passa a ter o que checar, e o próximo ciclo herda a regra."
+           data-err="A resposta é a <b>C</b>. Decidir dentro do código (A) recria justamente o problema que o SDD resolve: uma decisão de produto tomada em silêncio. Recomeçar do zero (B) é desproporcional — voltar uma fase é barato. E adiar num TODO (D) só empurra a decisão para a fase em que ela custa mais caro."></div>
+    </div>
+
+    <div class="quiz-score"></div>
+  </div>
+
+  <div class="callout">
+    <span class="ico">➡️</span>
+    <p><strong>Próxima aula — F4: Como um agente "lê" uma spec.</strong> Janela de contexto, por que ambiguidade quebra o agente, engenharia de contexto e o papel do <code>CLAUDE.md</code>.</p>
+  </div>
+
+  <p style="text-align:center;margin-top:24px">
+    <a class="nav-btn" href="aula-f2-anatomia-de-uma-especificacao.html">← Aula F2</a>
+    <a class="nav-btn primary" href="aula-f4-como-um-agente-le-uma-spec.html">Aula F4 →</a>
+  </p>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="nav-btn" id="prevBtn" type="button">← <span class="lbl">Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">01 / 09</span>
+  <button class="nav-btn primary" id="nextBtn" type="button"><span class="lbl">Próximo</span> →</button>
+</nav>
+
+<script src="assets/slides.js"></script>
+</body>
+</html>
