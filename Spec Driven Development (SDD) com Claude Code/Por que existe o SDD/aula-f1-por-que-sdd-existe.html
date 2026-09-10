@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula F1 — Por que SDD existe | SDD Fundamentos</title>
+<link rel="stylesheet" href="assets/slides.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="glyph">✳</span>
+    <span><b>SDD</b> Fundamentos</span>
+  </a>
+  <span class="chip">Aula F1</span>
+  <span class="topbar-spacer"></span>
+  <span class="chip">~60 min</span>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Alternar tema">☀</button>
+</header>
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+<main class="stage">
+
+<!-- ============ 1. CAPA ============ -->
+<section class="slide active">
+  <div class="cover">
+    <span class="badge">✳ Seção 1 · Aula F1</span>
+    <h1>Por que SDD existe</h1>
+    <p class="sub">Do "codar no chute" à especificação como fonte da verdade — e o preço que se paga por pular essa etapa.</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 760 320" role="img" aria-label="Comparação entre o caminho do chute, cheio de retrabalho, e o caminho do SDD, direto ao aceite">
+        <!-- LANE A: chute -->
+        <text x="16" y="26" font-family="ui-monospace, monospace" font-size="13" fill="var(--red)">SEM SPEC — "codar no chute"</text>
+
+        <rect x="16"  y="42" width="120" height="52" rx="10" fill="var(--red-dim)" stroke="var(--red)" stroke-width="1"/>
+        <text x="76" y="66" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--ink)">pedido</text>
+        <text x="76" y="82" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--ink)">vago</text>
+
+        <path d="M144 68 H186" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#ah)"/>
+
+        <rect x="194" y="42" width="112" height="52" rx="10" fill="var(--panel)" stroke="var(--border-2)"/>
+        <text x="250" y="74" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--ink)">código</text>
+
+        <path d="M314 68 H356" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#ah)"/>
+
+        <rect x="364" y="42" width="132" height="52" rx="10" fill="var(--red-dim)" stroke="var(--red)"/>
+        <text x="430" y="66" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--red)">"não era</text>
+        <text x="430" y="82" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--red)">isso"</text>
+
+        <!-- loop de retrabalho -->
+        <path d="M430 100 C 430 140, 250 140, 250 102" fill="none" stroke="var(--red)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ahr)"/>
+        <text x="340" y="136" text-anchor="middle" font-size="11.5" font-family="ui-monospace, monospace" fill="var(--red)">retrabalho ↻</text>
+
+        <path d="M504 68 H548" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#ah)"/>
+        <text x="620" y="64" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--muted)">horas gastas,</text>
+        <text x="620" y="80" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--muted)">resultado incerto</text>
+
+        <!-- divisor -->
+        <line x1="16" y1="172" x2="744" y2="172" stroke="var(--border)" stroke-width="1"/>
+
+        <!-- LANE B: SDD -->
+        <text x="16" y="204" font-family="ui-monospace, monospace" font-size="13" fill="var(--green)">COM SPEC — Spec Driven Development</text>
+
+        <rect x="16" y="220" width="120" height="52" rx="10" fill="var(--green-dim)" stroke="var(--green)"/>
+        <text x="76" y="252" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--ink)">spec</text>
+
+        <path d="M144 246 H186" stroke="var(--green)" stroke-width="1.6" marker-end="url(#ahg)"/>
+
+        <rect x="194" y="220" width="112" height="52" rx="10" fill="var(--panel)" stroke="var(--border-2)"/>
+        <text x="250" y="252" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--ink)">plano</text>
+
+        <path d="M314 246 H356" stroke="var(--green)" stroke-width="1.6" marker-end="url(#ahg)"/>
+
+        <rect x="364" y="220" width="112" height="52" rx="10" fill="var(--panel)" stroke="var(--border-2)"/>
+        <text x="420" y="252" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--ink)">código</text>
+
+        <path d="M484 246 H526" stroke="var(--green)" stroke-width="1.6" marker-end="url(#ahg)"/>
+
+        <rect x="534" y="220" width="150" height="52" rx="10" fill="var(--green-dim)" stroke="var(--green)"/>
+        <text x="609" y="252" text-anchor="middle" font-size="12.5" font-family="ui-monospace, monospace" fill="var(--green)">✓ critério de aceite</text>
+
+        <defs>
+          <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"/>
+          </marker>
+          <marker id="ahg" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="var(--green)"/>
+          </marker>
+          <marker id="ahr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="var(--red)"/>
+          </marker>
+        </defs>
+      </svg>
+      <figcaption>O mesmo trabalho, dois caminhos: um volta várias vezes, o outro tem um destino verificável.</figcaption>
+    </figure>
+
+    <div class="cover-meta">
+      <span class="chip">Use ← → para navegar</span>
+      <span class="chip">Quiz no final</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. OBJETIVOS ============ -->
+<section class="slide">
+  <p class="eyebrow">Roteiro da aula</p>
+  <h2>O que você vai levar daqui</h2>
+  <p class="lead">Esta é a aula que constrói a <strong>motivação</strong>. Antes de aprender a escrever uma spec, é preciso entender por que ela resolve um problema real.</p>
+
+  <ul class="check-list">
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Reconhecer o padrão do <strong>"codar no chute"</strong> e por que ele gera resultado imprevisível</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Entender a virada de chave: a <strong>spec é a fonte da verdade</strong>, o código é derivado</span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Diferenciar <strong>documentação morta</strong> de <strong>spec executável</strong></span></button></li>
+    <li><button class="check-item" type="button"><span class="box">✓</span><span>Estimar o <strong>custo real</strong> de não usar SDD — em tempo, revisão e confiança</span></button></li>
+  </ul>
+
+  <div class="callout tip">
+    <span class="ico">💡</span>
+    <p>Clique nos itens acima para marcá-los conforme avançamos. Toda aula desta seção tem esse checklist.</p>
+  </div>
+</section>
+
+<!-- ============ 3. O PROBLEMA ============ -->
+<section class="slide">
+  <p class="eyebrow">O problema</p>
+  <h2>"Codar no chute"</h2>
+  <p class="lead">Você abre o terminal, descreve o que quer em uma frase e espera o melhor. Às vezes funciona. O problema não é a falha — é a <strong>imprevisibilidade</strong>.</p>
+
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title">claude — pedido sem contexto</span>
+    </div>
+    <div class="term-body"><span class="p">&gt;</span> faz um sistema de login pra mim
+
+<span class="c">&#47;&#47; o agente agora precisa adivinhar:</span>
+<span class="c">&#47;&#47;   · e-mail e senha? OAuth? magic link?</span>
+<span class="c">&#47;&#47;   · onde persiste? já existe banco?</span>
+<span class="c">&#47;&#47;   · sessão por cookie ou JWT?</span>
+<span class="c">&#47;&#47;   · precisa de "esqueci minha senha"?</span>
+<span class="c">&#47;&#47;   · qual o critério para dizer que está pronto?</span>
+
+<span class="no">✗</span> 400 linhas depois: <span class="no">"não era bem isso"</span><span class="cursor"></span></div>
+  </div>
+
+  <p>Cada decisão que você não tomou, <strong>alguém tomou por você</strong> — e você só descobre qual foi depois que o código está escrito. Revisar vira arqueologia: em vez de comparar o resultado com um alvo, você tenta reconstruir qual alvo o agente imaginou.</p>
+
+  <div class="grid g3">
+    <div class="tile bad"><div class="ico">🎲</div><h4>Imprevisível</h4><p>O mesmo pedido, feito duas vezes, produz dois sistemas diferentes.</p></div>
+    <div class="tile bad"><div class="ico">🔍</div><h4>Difícil de revisar</h4><p>Sem alvo declarado, não existe "certo" ou "errado" — só gosto pessoal.</p></div>
+    <div class="tile bad"><div class="ico">🔁</div><h4>Retrabalho caro</h4><p>A correção chega quando o código já existe, que é o momento mais caro possível.</p></div>
+  </div>
+</section>
+
+<!-- ============ 4. A VIRADA DE CHAVE ============ -->
+<section class="slide">
+  <p class="eyebrow">A virada de chave</p>
+  <h2>A spec é a fonte da verdade</h2>
+  <p class="lead">SDD inverte a hierarquia entre spec e código. A especificação deixa de ser um subproduto e passa a ser o <strong>artefato principal</strong>; o código é o que se deriva dela.</p>
+
+  <div class="vs">
+    <div class="pane bad">
+      <h4>Modelo antigo</h4>
+      <p style="font-family:var(--mono);font-size:14px;color:var(--ink)">código → (talvez) doc</p>
+      <ul>
+        <li>O código é a única verdade</li>
+        <li>A doc é escrita depois, se sobrar tempo</li>
+        <li>Divergiu? A doc está errada</li>
+        <li>A intenção fica só na cabeça de quem escreveu</li>
+      </ul>
+    </div>
+    <div class="mid">▶</div>
+    <div class="pane good">
+      <h4>Modelo SDD</h4>
+      <p style="font-family:var(--mono);font-size:14px;color:var(--ink)">spec → plano → código</p>
+      <ul>
+        <li>A spec é a única verdade</li>
+        <li>O código é um artefato derivado dela</li>
+        <li>Divergiu? Ou o código está errado, ou a spec mudou — e isso é decidido, não descoberto</li>
+        <li>A intenção fica registrada e revisável</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quote">
+    Se o código é <strong>o "como"</strong>, a spec é <strong>o "o quê" e o "por quê"</strong>. Trocar de linguagem muda o "como" inteiro — e não deveria mudar uma linha do "o quê".
+  </div>
+
+  <div class="callout">
+    <span class="ico">🧭</span>
+    <p>Este é o fio condutor de todo o curso: nos dois projetos práticos você vai construir apps diferentes, em <strong>Python</strong> e em <strong>JavaScript</strong>, com o mesmo ciclo. A prova de que a spec é a verdade é ela sobreviver à troca de stack.</p>
+  </div>
+</section>
+
+<!-- ============ 5. DOC MORTA vs SPEC EXECUTÁVEL ============ -->
+<section class="slide">
+  <p class="eyebrow">Mudança de era</p>
+  <h2>Da documentação morta à spec executável</h2>
+  <p class="lead">Todo dev já viu um <code>README</code> que descreve um sistema que não existe mais. Isso não é preguiça do time — é consequência de um documento que <strong>nada consome</strong>.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-top:0;color:var(--red)">📄 Documentação morta</h3>
+      <ul>
+        <li>Escrita <strong>depois</strong> do código</li>
+        <li>Ninguém a lê para produzir nada</li>
+        <li>Desatualiza em silêncio</li>
+        <li>Serve para prestar contas, não para construir</li>
+        <li>Custo puro, benefício difuso</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;color:var(--green)">⚡ Spec executável</h3>
+      <ul>
+        <li>Escrita <strong>antes</strong> do código</li>
+        <li>É o <strong>input</strong> do agente e do time</li>
+        <li>Desatualizar quebra o próximo ciclo — o erro aparece</li>
+        <li>Serve para construir <em>e</em> para verificar</li>
+        <li>Paga-se no primeiro retrabalho evitado</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Por que agora?</h3>
+  <p>Porque apareceu um leitor que <strong>consome a spec literalmente e produz código a partir dela</strong>. Um agente não infere o que "todo mundo sabe" sobre o produto: ele trabalha com o que está escrito. Isso transforma um documento antes opcional em <strong>combustível de produção</strong>.</p>
+
+  <div class="quote">
+    "Executável" aqui não significa que a spec roda. Significa que <strong>alguém a executa</strong> — e esse alguém agora também é uma máquina.
+  </div>
+</section>
+
+<!-- ============ 6. O CUSTO REAL ============ -->
+<section class="slide">
+  <p class="eyebrow">O argumento econômico</p>
+  <h2>O custo real de não usar SDD</h2>
+  <p class="lead">Corrigir rumo é barato no começo e caro no fim. SDD não adiciona uma etapa — ele <strong>move a etapa de decisão</strong> para onde ela custa menos.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 300" role="img" aria-label="Curva mostrando que o custo de corrigir cresce da spec ao código em produção">
+      <!-- eixos -->
+      <line x1="60" y1="250" x2="690" y2="250" stroke="var(--border-2)" stroke-width="1.5"/>
+      <line x1="60" y1="30"  x2="60"  y2="250" stroke="var(--border-2)" stroke-width="1.5"/>
+      <text x="60" y="278" font-size="12" font-family="ui-monospace, monospace" fill="var(--muted)">quando o erro é descoberto →</text>
+      <text x="18" y="24" font-size="12" font-family="ui-monospace, monospace" fill="var(--muted)">custo</text>
+
+      <!-- curva -->
+      <path d="M90 242 C 250 236, 380 200, 470 150 S 620 60, 670 44"
+            fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- área sob a curva -->
+      <path d="M90 242 C 250 236, 380 200, 470 150 S 620 60, 670 44 L670 250 L90 250 Z"
+            fill="var(--accent-dim)"/>
+
+      <!-- pontos -->
+      <circle cx="90"  cy="242" r="6" fill="var(--green)"/>
+      <text x="90" y="222" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--green)">na spec</text>
+
+      <circle cx="280" cy="228" r="6" fill="var(--green)"/>
+      <text x="280" y="208" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--green)">no plano</text>
+
+      <circle cx="470" cy="150" r="6" fill="var(--gold)"/>
+      <text x="470" y="130" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--gold)">na revisão do código</text>
+
+      <circle cx="670" cy="44" r="6" fill="var(--red)"/>
+      <text x="666" y="26" text-anchor="end" font-size="12" font-family="ui-monospace, monospace" fill="var(--red)">em produção</text>
+
+      <!-- faixa SDD -->
+      <rect x="70" y="34" width="230" height="26" rx="7" fill="var(--green-dim)" stroke="var(--green)"/>
+      <text x="185" y="52" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" fill="var(--green)">SDD decide aqui ⤵</text>
+      <path d="M185 62 L185 214" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4 4"/>
+    </svg>
+    <figcaption>Mudar uma frase da spec custa segundos. Mudar a mesma decisão em produção custa uma sprint.</figcaption>
+  </figure>
+
+  <h3>Onde o custo aparece na prática</h3>
+  <div class="grid g4">
+    <div class="tile warn"><div class="ico">⏱️</div><h4>Tempo</h4><p>Ciclos de "quase isso" que se acumulam durante o dia inteiro.</p></div>
+    <div class="tile warn"><div class="ico">🧠</div><h4>Contexto</h4><p>Cada retomada obriga a reexplicar tudo — para o agente e para o colega.</p></div>
+    <div class="tile warn"><div class="ico">👥</div><h4>Revisão</h4><p>Sem alvo escrito, o PR vira debate de opinião em vez de conferência.</p></div>
+    <div class="tile warn"><div class="ico">🤝</div><h4>Confiança</h4><p>Ninguém sabe dizer se o que foi entregue é o que foi pedido.</p></div>
+  </div>
+</section>
+
+<!-- ============ 7. QUANDO A SPEC APARECE ============ -->
+<section class="slide">
+  <p class="eyebrow">O mesmo pedido, reescrito</p>
+  <h2>Como isso muda o pedido na prática</h2>
+  <p class="lead">Nada de burocracia: repare que a versão com spec não é <em>mais longa por gosto</em> — ela é longa exatamente onde havia uma decisão escondida.</p>
+
+  <div class="tabs">
+    <div class="tab-btns">
+      <button class="tab-btn active" type="button">✗ No chute</button>
+      <button class="tab-btn" type="button">✓ Com spec</button>
+      <button class="tab-btn" type="button">📊 O que mudou</button>
+    </div>
+
+    <div class="tab-panel active">
+      <div class="term">
+        <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">pedido no chute</span></div>
+        <div class="term-body"><span class="p">&gt;</span> faz um sistema de login pra mim</div>
+      </div>
+      <p><strong>7 palavras.</strong> Pelo menos 5 decisões de produto deixadas em aberto, todas resolvidas por chute — e nenhuma delas registrada.</p>
+    </div>
+
+    <div class="tab-panel">
+      <div class="term">
+        <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">spec — autenticação por e-mail e senha</span></div>
+        <div class="term-body"><span class="k">Objetivo</span>
+  Permitir que um usuário cadastrado acesse sua conta.
+
+<span class="k">Escopo</span>
+  · cadastro com e-mail + senha
+  · login retornando um token de sessão
+  · logout invalidando o token
+
+<span class="k">Fora de escopo</span>
+  · OAuth / login social
+  · recuperação de senha  <span class="c">(fica para o próximo ciclo)</span>
+
+<span class="k">Critérios de aceite</span>
+  <span class="ok">✓</span> senha nunca é gravada em texto puro
+  <span class="ok">✓</span> credencial errada retorna <span class="s">401</span>, sem dizer qual campo falhou
+  <span class="ok">✓</span> token expira em <span class="s">24h</span>
+  <span class="ok">✓</span> e-mail duplicado retorna <span class="s">422</span> com mensagem clara</div>
+      </div>
+      <p>Agora existe um <strong>alvo verificável</strong>. Você não precisa ler o código para saber se a entrega está certa — basta conferir os quatro critérios.</p>
+    </div>
+
+    <div class="tab-panel">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>No chute</th><th>Com spec</th></tr></thead>
+          <tbody>
+            <tr><td>Decisões de produto</td><td>tomadas pelo agente, em silêncio</td><td>tomadas por você, por escrito</td></tr>
+            <tr><td>Como revisar</td><td>lendo o código inteiro</td><td>conferindo os critérios de aceite</td></tr>
+            <tr><td>Quando o erro aparece</td><td>depois do código pronto</td><td>enquanto ainda é texto</td></tr>
+            <tr><td>Reaproveitável?</td><td>não — o prompt some no histórico</td><td>sim — versionada junto do código</td></tr>
+            <tr><td>Escopo</td><td>elástico, cresce sozinho</td><td>fechado, com fora-de-escopo explícito</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout tip">
+        <span class="ico">⏳</span>
+        <p>Os 3 minutos gastos escrevendo a spec do login se pagam na <strong>primeira</strong> pergunta que você não precisou responder duas vezes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. MITOS ============ -->
+<section class="slide">
+  <p class="eyebrow">Antes que alguém pergunte</p>
+  <h2>Três objeções — e as respostas</h2>
+  <p class="lead">Clique em cada cartão para ver a resposta.</p>
+
+  <div class="flips">
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face">
+          <span class="ico">🐢</span>
+          <h4>"Isso vai me deixar mais lento"</h4>
+          <p>Escrever antes parece tempo perdido.</p>
+          <span class="hint">clique →</span>
+        </div>
+        <div class="flip-face flip-back">
+          <p>Mais lento no primeiro passo, <strong>bem mais rápido no total</strong>. O tempo do SDD sai do orçamento de retrabalho, não do de entrega. Você troca 5 minutos de escrita por 40 de "não era isso".</p>
+        </div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face">
+          <span class="ico">📚</span>
+          <h4>"É burocracia disfarçada"</h4>
+          <p>Parece processo por processo.</p>
+          <span class="hint">clique →</span>
+        </div>
+        <div class="flip-face flip-back">
+          <p>Burocracia é documento que <strong>ninguém consome</strong>. A spec é consumida imediatamente — pelo agente, pelo plano e pela verificação. Se ela não estiver sendo usada, ela não é spec; é papel.</p>
+        </div>
+      </div>
+    </button>
+
+    <button class="flip" type="button">
+      <div class="flip-inner">
+        <div class="flip-face">
+          <span class="ico">🤖</span>
+          <h4>"O modelo é esperto, ele entende"</h4>
+          <p>Modelos bons preenchem lacunas sozinhos.</p>
+          <span class="hint">clique →</span>
+        </div>
+        <div class="flip-face flip-back">
+          <p>Ele entende — e por isso <strong>preenche a lacuna com algo plausível</strong>, não necessariamente com o que você queria. Quanto melhor o modelo, mais convincente fica o palpite errado.</p>
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <div class="callout warn">
+    <span class="ico">⚖️</span>
+    <p><strong>Honestidade intelectual:</strong> SDD não é para tudo. Corrigir um typo ou rodar um script descartável não precisa de spec. A Aula F5 traça essa fronteira com cuidado — SDD é ferramenta, não religião.</p>
+  </div>
+</section>
+
+<!-- ============ 9. RESUMO ============ -->
+<section class="slide">
+  <p class="eyebrow">Fechamento</p>
+  <h2>Resumo da aula</h2>
+
+  <div class="grid g2">
+    <div class="tile key"><div class="ico">🎯</div><h4>O problema</h4><p>Pedir código sem contexto transfere decisões de produto para o agente — em silêncio e sem registro.</p></div>
+    <div class="tile key"><div class="ico">🔄</div><h4>A virada</h4><p>A spec passa a ser a fonte da verdade; o código é artefato derivado dela.</p></div>
+    <div class="tile key"><div class="ico">⚡</div><h4>Spec executável</h4><p>Documentação morta é escrita depois e ninguém lê. A spec é escrita antes e é consumida para produzir.</p></div>
+    <div class="tile key"><div class="ico">💰</div><h4>O custo</h4><p>Corrigir na spec custa segundos; em produção, custa uma sprint. SDD move a decisão para o barato.</p></div>
+  </div>
+
+  <div class="quote">
+    A pergunta que fica para a próxima aula: se a spec é tão importante, <strong>o que exatamente ela precisa conter</strong>? É o assunto da <strong>Aula F2 — Anatomia de uma especificação</strong>.
+  </div>
+
+  <div class="callout tip">
+    <span class="ico">✍️</span>
+    <p><strong>Exercício de 5 minutos:</strong> pegue a última tarefa que você pediu a um agente. Reescreva-a com objetivo, escopo, fora-de-escopo e três critérios de aceite. Compare o tamanho das duas versões — e o número de decisões que estavam escondidas na primeira.</p>
+  </div>
+</section>
+
+<!-- ============ 10. QUIZ ============ -->
+<section class="slide">
+  <p class="eyebrow">Verificação</p>
+  <h2>Quiz da Aula F1</h2>
+
+  <div class="quiz">
+    <div class="quiz-head">
+      <span class="ico">✳</span>
+      <h3>Duas perguntas para fixar o modelo mental</h3>
+    </div>
+    <p style="color:var(--muted);font-size:15px">Escolha uma alternativa por questão. O feedback aparece na hora.</p>
+
+    <div class="q">
+      <p class="q-title"><span class="n">01.</span> Qual é a mudança central que o SDD propõe em relação ao desenvolvimento tradicional?</p>
+      <div class="opts">
+        <button class="opt" type="button"><span class="letter">A</span><span>Substituir a escrita de código por prompts mais longos e detalhados.</span></button>
+        <button class="opt" type="button" data-correct="1"><span class="letter">B</span><span>Tratar a especificação como fonte da verdade, com o código passando a ser um artefato derivado dela.</span></button>
+        <button class="opt" type="button"><span class="letter">C</span><span>Documentar o sistema logo depois de terminar a implementação, para manter o repositório organizado.</span></button>
+        <button class="opt" type="button"><span class="letter">D</span><span>Congelar todos os requisitos no início do projeto e não alterá-los mais.</span></button>
+      </div>
+      <div class="feedback"
+           data-ok="A hierarquia se inverte: a spec vira o artefato principal e o código é o &quot;como&quot; derivado dela. Por isso o mesmo ciclo funciona em Python e em JavaScript."
+           data-err="A resposta é a <b>B</b>. SDD não é sobre prompts maiores nem sobre documentar depois — é sobre inverter a hierarquia: a spec vira o artefato principal e o código passa a ser derivado dela. Congelar requisitos (D) seria waterfall; o SDD é iterativo."></div>
+    </div>
+
+    <div class="q">
+      <p class="q-title"><span class="n">02.</span> Por que a "documentação morta" desatualiza, e o que a spec executável faz de diferente?</p>
+      <div class="opts">
+        <button class="opt" type="button"><span class="letter">A</span><span>Porque é escrita em Markdown; a spec resolve isso usando um formato estruturado como YAML ou JSON.</span></button>
+        <button class="opt" type="button" data-correct="1"><span class="letter">B</span><span>Porque é escrita depois e nada a consome, então divergir do código não gera consequência; a spec executável é o input do trabalho, então a divergência aparece já no ciclo seguinte.</span></button>
+        <button class="opt" type="button"><span class="letter">C</span><span>Porque é longa demais; a spec resolve isso sendo sempre curta, com no máximo uma página.</span></button>
+        <button class="opt" type="button"><span class="letter">D</span><span>Porque os desenvolvedores não gostam de escrever; a spec resolve isso deixando o agente escrever a documentação sozinho.</span></button>
+      </div>
+      <div class="feedback"
+           data-ok="Exato: o que mantém um documento vivo não é o formato nem o tamanho, é ele ser consumido. Como a spec alimenta o plano, a implementação e a verificação, ficar desatualizada quebra o próximo ciclo — e o erro aparece."
+           data-err="A resposta é a <b>B</b>. O formato (A) e o tamanho (C) não são a causa: um documento desatualiza quando nada depende dele. A spec executável é o input do plano, da implementação e da verificação — divergir dela tem consequência imediata."></div>
+    </div>
+
+    <div class="quiz-score"></div>
+  </div>
+
+  <div class="callout">
+    <span class="ico">➡️</span>
+    <p><strong>Próxima aula — F2: Anatomia de uma especificação.</strong> O que compõe uma boa spec, a separação entre "o quê/por quê" e "como", e a regra de ouro para saber se a sua spec está pronta.</p>
+  </div>
+
+  <p style="text-align:center;margin-top:24px">
+    <a class="nav-btn" href="index.html">← Voltar ao índice</a>
+    <a class="nav-btn primary" href="aula-f2-anatomia-de-uma-especificacao.html">Aula F2 →</a>
+  </p>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="nav-btn" id="prevBtn" type="button">← <span class="lbl">Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">01 / 10</span>
+  <button class="nav-btn primary" id="nextBtn" type="button"><span class="lbl">Próximo</span> →</button>
+</nav>
+
+<script src="assets/slides.js"></script>
+</body>
+</html>
