@@ -1,3 +1,9 @@
 .claude/
 .agents/
 skills-lock.json
+
+# Exceção: slash commands do projeto SDD1 (Controle de Gastos) são versionados
+!Spec Driven Development (SDD) com Claude Code/SDD1/.claude/
+Spec Driven Development (SDD) com Claude Code/SDD1/.claude/*
+!Spec Driven Development (SDD) com Claude Code/SDD1/.claude/commands/
+!Spec Driven Development (SDD) com Claude Code/SDD1/.claude/commands/**
