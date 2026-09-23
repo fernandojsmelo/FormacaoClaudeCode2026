@@ -1,0 +1,34 @@
+ATA DE REUNIÃO
+Projeto: Migração de Infraestrutura para Cloud
+Data: 22/09/2026 (terça-feira)
+Horário: 14h00 - 15h00
+Local: Sala de Reuniões B / Microsoft Teams
+Participantes: André Ferreira (Head de TI), Camila Ribeiro (SRE), Diego Nogueira (DBA), Fernanda Costa (Segurança da Informação)
+
+PAUTA:
+1. Progresso da migração dos bancos de dados
+2. Avaliação de custos da nova infraestrutura
+3. Plano de contingência e rollback
+4. Cronograma das próximas fases
+
+DISCUSSÃO:
+André abriu informando que a fase 1 da migração (ambiente de homologação) foi concluída com sucesso na semana anterior, sem impacto nos usuários finais. Diego relatou que a migração do banco de dados principal para o novo provedor cloud está em andamento, com 40% dos dados já replicados, e estimou conclusão total até 10/10/2026.
+
+Camila apresentou os números de custo projetados para os primeiros três meses após a migração completa, indicando uma redução estimada de 18% em relação ao custo atual de infraestrutura on-premise. Ela alertou, no entanto, que esses números podem variar dependendo do tráfego real após o lançamento da nova plataforma de vendas.
+
+Fernanda levantou preocupações sobre a política de backup e criptografia dos dados durante a transição, solicitando que um plano de contingência formal seja documentado antes da migração do ambiente de produção. O grupo concordou que a produção só será migrada após testes completos em homologação e aprovação formal de segurança.
+
+Foi definido um cronograma revisado: fase 2 (homologação avançada) até 30/09, fase 3 (produção) prevista para 15/10, alinhada com o lançamento da nova plataforma de vendas.
+
+DECISÕES:
+- Produção só migra após aprovação formal de segurança da Fernanda.
+- Cronograma revisado aprovado: fase 2 até 30/09, fase 3 até 15/10.
+- Orçamento de infraestrutura cloud aprovado com base na projeção de redução de custos.
+
+AÇÕES:
+- Diego: concluir replicação do banco de dados principal (prazo: 10/10).
+- Fernanda: documentar plano de contingência e política de backup/criptografia (prazo: 29/09).
+- Camila: monitorar custos reais durante a fase de homologação (contínuo).
+- André: alinhar cronograma de migração de produção com a equipe do projeto de vendas online (prazo: 26/09).
+
+PRÓXIMA REUNIÃO: 29/09/2026, 14h00.

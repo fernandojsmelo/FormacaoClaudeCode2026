@@ -1,0 +1,35 @@
+ATA DE REUNIÃO
+Projeto: Lançamento Plataforma de Vendas Online
+Data: 21/09/2026 (segunda-feira)
+Horário: 09h00 - 10h15
+Local: Sala de Reuniões A / Google Meet
+Participantes: Carla Mendes (Gerente de Projeto), Rafael Souza (Dev Backend), Juliana Alves (Dev Frontend), Bruno Castro (UX Designer), Patrícia Lima (Marketing)
+
+PAUTA:
+1. Status geral do desenvolvimento
+2. Revisão do design das telas de checkout
+3. Planejamento da campanha de lançamento
+4. Riscos e bloqueios
+
+DISCUSSÃO:
+Carla abriu a reunião apresentando o cronograma atualizado do projeto, destacando que o sprint atual está com 70% das tarefas concluídas. Rafael informou que a integração com o gateway de pagamento está finalizada, mas ainda há um bug intermitente na confirmação de pedidos que precisa ser investigado antes da próxima sprint.
+
+Juliana apresentou o progresso do frontend, mostrando as telas já implementadas do catálogo de produtos e carrinho de compras. Bruno trouxe o protótipo revisado da tela de checkout, com ajustes solicitados na reunião anterior, e recebeu aprovação geral do time, com pequenas sugestões de Patrícia sobre a exibição de cupons de desconto.
+
+Patrícia apresentou o plano de campanha de marketing para o lançamento, previsto para 15/10/2026, incluindo posts em redes sociais, e-mail marketing e parceria com influenciadores do setor. Ela solicitou que o time técnico confirme a data final de entrega até 25/09 para alinhar o cronograma de divulgação.
+
+Foi discutido um risco relacionado à capacidade do servidor em picos de acesso durante a campanha de lançamento. Rafael ficou responsável por avaliar a necessidade de upgrade de infraestrutura.
+
+DECISÕES:
+- Aprovado o design da tela de checkout com ajustes na exibição de cupons.
+- Data de lançamento mantida em 15/10/2026, condicionada à resolução do bug de confirmação de pedidos.
+- Marketing seguirá com o planejamento da campanha, aguardando confirmação final até 25/09.
+
+AÇÕES:
+- Rafael: investigar e corrigir bug na confirmação de pedidos (prazo: 24/09).
+- Rafael: avaliar necessidade de upgrade de infraestrutura para picos de acesso (prazo: 25/09).
+- Bruno: ajustar protótipo da tela de checkout com sugestões de cupons (prazo: 23/09).
+- Patrícia: preparar materiais de divulgação para redes sociais (prazo: 30/09).
+- Carla: confirmar data final de lançamento com a diretoria (prazo: 25/09).
+
+PRÓXIMA REUNIÃO: 28/09/2026, 09h00.

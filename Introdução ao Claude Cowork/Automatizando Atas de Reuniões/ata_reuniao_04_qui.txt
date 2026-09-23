@@ -1,0 +1,35 @@
+ATA DE REUNIÃO
+Projeto: Alinhamento Estratégico / Diretoria
+Data: 24/09/2026 (quinta-feira)
+Horário: 16h00 - 17h00
+Local: Sala da Diretoria / Google Meet
+Participantes: Roberto Almeida (Diretor Geral), Carla Mendes (Gerente de Projeto), André Ferreira (Head de TI), Patrícia Lima (Marketing), Mariana Duarte (Gerente de Atendimento)
+
+PAUTA:
+1. Aprovação final da data de lançamento da plataforma de vendas
+2. Revisão orçamentária do trimestre
+3. Riscos consolidados dos projetos em andamento
+4. Comunicação interna sobre o lançamento
+
+DISCUSSÃO:
+Carla apresentou o status consolidado do projeto de lançamento da plataforma de vendas, informando que o bug crítico de confirmação de pedidos está em fase final de correção e que o design da tela de checkout já foi aprovado. Roberto questionou os riscos remanescentes, e André respondeu que a migração de infraestrutura para cloud segue dentro do cronograma, com a fase de produção prevista para concluir antes do lançamento em 15/10.
+
+Patrícia reforçou que a campanha de marketing está pronta para ser ativada assim que a data de lançamento for confirmada oficialmente, e solicitou a confirmação formal da diretoria ainda nesta semana para não atrasar a divulgação. Mariana informou que a equipe de suporte já está se preparando com treinamentos e participação nos testes finais.
+
+Roberto revisou o orçamento do trimestre, aprovando os investimentos adicionais em infraestrutura cloud apresentados por André, e destacou que o resultado do lançamento será determinante para o planejamento do próximo trimestre. Foi discutida a necessidade de uma comunicação interna a todos os colaboradores sobre o lançamento, incluindo um resumo dos principais recursos da nova plataforma.
+
+Ao final, Roberto aprovou oficialmente a manutenção da data de lançamento em 15/10/2026, condicionada à confirmação da correção do bug até 08/10.
+
+DECISÕES:
+- Data de lançamento oficialmente confirmada para 15/10/2026, condicionada à correção do bug até 08/10.
+- Orçamento adicional para infraestrutura cloud aprovado.
+- Comunicação interna sobre o lançamento será preparada e enviada a todos os colaboradores.
+
+AÇÕES:
+- Carla: confirmar correção definitiva do bug de confirmação de pedidos até 08/10 e reportar à diretoria.
+- Patrícia: ativar campanha de marketing após confirmação oficial (a partir de 08/10).
+- André: garantir conclusão da migração de infraestrutura antes de 15/10.
+- Mariana: finalizar treinamento da equipe de suporte antes do lançamento.
+- Roberto: comunicar decisão formalmente à diretoria executiva.
+
+PRÓXIMA REUNIÃO: 01/10/2026, 16h00.

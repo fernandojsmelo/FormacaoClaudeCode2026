@@ -1,0 +1,34 @@
+ATA DE REUNIÃO
+Projeto: Atendimento ao Cliente / Suporte
+Data: 23/09/2026 (quarta-feira)
+Horário: 11h00 - 11h45
+Local: Sala de Reuniões C / Presencial
+Participantes: Mariana Duarte (Gerente de Atendimento), Thiago Ramos (Coordenador de Suporte N1), Luciana Barros (Coordenadora de Suporte N2), Pedro Henrique (Analista de Qualidade)
+
+PAUTA:
+1. Indicadores de atendimento do mês
+2. Aumento no volume de chamados sobre a nova plataforma
+3. Treinamento da equipe para o lançamento de outubro
+4. Feedback dos clientes
+
+DISCUSSÃO:
+Mariana apresentou os indicadores de setembro: tempo médio de resposta caiu de 12 para 9 minutos, e a satisfação do cliente (CSAT) subiu para 91%, acima da meta de 88%. Thiago relatou um aumento de 15% no volume de chamados relacionados a dúvidas sobre a nova plataforma de vendas, ainda em fase de testes com clientes beta.
+
+Luciana destacou que a maioria dos chamados de nível 2 está relacionada a problemas de pagamento recorrente, o que reforça a importância de resolver o bug de confirmação de pedidos mencionado pela equipe técnica. Ela sugeriu que a equipe de suporte seja incluída nos testes finais da plataforma antes do lançamento, para se familiarizar com o novo fluxo.
+
+Pedro apresentou os resultados das avaliações de qualidade do mês, apontando pontos de melhoria na comunicação escrita da equipe N1. Foi proposto um treinamento de reforço sobre a nova plataforma e sobre comunicação com o cliente, a ser realizado na primeira semana de outubro, antes do lançamento oficial em 15/10.
+
+Mariana também compartilhou feedbacks positivos recebidos de clientes beta sobre a facilidade de navegação no novo catálogo de produtos, e um feedback negativo recorrente sobre a demora na aplicação de cupons de desconto no checkout.
+
+DECISÕES:
+- Equipe de suporte será incluída nos testes finais da nova plataforma antes do lançamento.
+- Treinamento de reforço agendado para a primeira semana de outubro.
+- Feedback sobre cupons de desconto será repassado à equipe de produto/UX.
+
+AÇÕES:
+- Thiago: organizar participação da equipe de suporte nos testes finais da plataforma (prazo: 02/10).
+- Luciana: levantar todos os chamados relacionados a pagamento recorrente para análise técnica (prazo: 26/09).
+- Pedro: preparar material de treinamento sobre comunicação e nova plataforma (prazo: 01/10).
+- Mariana: repassar feedback sobre cupons de desconto para a equipe de UX/produto (prazo: 24/09).
+
+PRÓXIMA REUNIÃO: 30/09/2026, 11h00.
