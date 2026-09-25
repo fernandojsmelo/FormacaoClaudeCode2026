@@ -1,0 +1,14 @@
+Usando o plugin data me informe:
+
+- Analisa esses logs de API. Quais endpoints têm maior taxa de erro? Me mostra um ranking com contagem e percentual.
+
+- Existe algum padrão de horário nos erros 500? 
+Agrupa por hora do dia e me mostra onde está o pico.
+
+- Gera uma query SQL (PostgreSQL) que eu possa usar para monitorar
+em tempo real a taxa de erro por serviço nas últimas 24h.
+
+- Qual a latência média por endpoint e por status code? Identifica os gargalos mais críticos.
+
+- Gere um grafico para contar alguma história desses dados (Storytelling)
+
