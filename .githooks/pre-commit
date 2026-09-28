@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Bloqueia o commit quando um notebook (.ipynb) é alterado sem que o material de
+# apoio gerado a partir dele (.md) também esteja no commit.
+# Ativação (uma vez por clone): git config core.hooksPath .githooks
+# Para ignorar num caso específico: git commit --no-verify
+
+staged=$(mktemp)
+trap 'rm -f "$staged"' EXIT
+git diff --cached --name-only -z --diff-filter=ACMR | tr '\0' '\n' > "$staged"
+
+missing=()
+while IFS= read -r nb; do
+  [[ "$nb" == *.ipynb ]] || continue
+  [[ "$nb" == */.ipynb_checkpoints/* ]] && continue
+  md="${nb%.ipynb}.md"
+  grep -qxF -- "$md" "$staged" || missing+=("$nb")
+done < "$staged"
+
+if (( ${#missing[@]} )); then
+  echo "pre-commit: notebook(s) alterado(s) sem o .md/.pdf de apoio regenerado:" >&2
+  printf '  - %s\n' "${missing[@]}" >&2
+  echo >&2
+  echo "Regenere e adicione ao commit:" >&2
+  printf '  .venv/bin/python scripts/notebook_to_pdf.py' >&2
+  printf ' "%s"' "${missing[@]}" >&2
+  echo >&2
+  echo "(ou use 'git commit --no-verify' se a mudança não afeta o material)" >&2
+  exit 1
+fi

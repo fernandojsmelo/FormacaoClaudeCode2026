@@ -110,7 +110,9 @@ Aulas com notebook `.ipynb` têm ao lado um `.md` (células sem saídas) e um `.
 .venv/bin/python scripts/notebook_to_pdf.py "<módulo>/<aula>/notebook.ipynb" [...]
 ```
 
-O notebook é a fonte da verdade — nunca editar o `.md`/`.pdf` à mão. Requer `nbconvert` e `markdown` no `.venv`. Depois, fazer a mesma checagem visual do pipeline acima.
+O notebook é a fonte da verdade — nunca editar o `.md`/`.pdf` à mão. Dependências: `.venv/bin/pip install -r requirements.txt`. Depois, fazer a mesma checagem visual do pipeline acima.
+
+O hook versionado `.githooks/pre-commit` bloqueia commits que alteram um `.ipynb` sem incluir o `.md` correspondente. Ativar uma vez por clone com `git config core.hooksPath .githooks`. Usar `git commit --no-verify` só quando a mudança no notebook não afeta o material.
 
 ## Estrutura e numeração
 
