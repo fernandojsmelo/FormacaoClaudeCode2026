@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Bloqueia o push quando algum PDF enviado está fora do tema escuro do curso:
+# PDF claro (precisa ser reconstruído) ou com margens brancas.
+# Verifica só os PDFs adicionados/alterados nos commits do push, lendo o conteúdo
+# commitado. Varredura do repositório inteiro: .venv/bin/python scripts/check_pdfs.py --all
+# Ativação (uma vez por clone): git config core.hooksPath .githooks
+# Para ignorar num caso excepcional: git push --no-verify
+
+root=$(git rev-parse --show-toplevel)
+py="$root/.venv/bin/python"
+
+if [ ! -x "$py" ]; then
+  echo "pre-push: .venv não encontrado. Crie com:" >&2
+  echo "  python3 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
+  exit 1
+fi
+
+cd "$root" || exit 1
+if ! "$py" scripts/check_pdfs.py --pre-push; then
+  echo >&2
+  echo "pre-push: push bloqueado. Corrija os PDFs acima (veja o CLAUDE.md) e tente de novo." >&2
+  echo "          Para ignorar só desta vez: git push --no-verify" >&2
+  exit 1
+fi
