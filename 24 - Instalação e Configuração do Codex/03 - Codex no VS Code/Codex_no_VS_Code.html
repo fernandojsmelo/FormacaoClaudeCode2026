@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Codex no VS Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+kbd{font-family:var(--mono);font-size:10.5px;background:var(--surface-2);border:1px solid var(--border-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink);white-space:nowrap}
+td code{font-size:10.5px}
+td{font-size:11.6px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Instalação e configuração do Codex · Aula 3</div>
+    <h1>Codex no<br><em>VS Code</em></h1>
+    <p class="lead">Como usar a extensão do Codex dentro do editor: instalar e fazer login, usar como contexto o código que já está aberto, escolher onde a tarefa roda, revisar as mudanças ao lado do código e configurar a extensão.</p>
+    <div class="chips"><span>openai.chatgpt</span><span>Contexto do editor</span><span>Slash commands</span><span>Local · Worktree · Cloud</span><span>config.toml</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Codex (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>O Codex <em>ao lado do código</em></h2>
+  <p class="intro">A extensão coloca o agente do Codex numa barra lateral do editor. A vantagem sobre o app e a web é que <strong>o contexto já está aberto</strong>: os arquivos, a seleção e os chats recentes entram no prompt sem você precisar explicar tudo de novo.</p>
+  <div class="grid g3">
+    <div class="card"><div class="k">Contexto</div><h3>Use o que está aberto</h3><p>Referencie arquivos abertos, o trecho selecionado e chats recentes direto no composer. O Codex começa pelo código que você já está vendo.</p></div>
+    <div class="card"><div class="k">Revisão</div><h3>Mudanças ao lado do código</h3><p>Leia o resumo e o diff focado, mantenha só as edições que quiser e peça ajustes no mesmo chat.</p></div>
+    <div class="card"><div class="k">Delegação</div><h3>Quando a tarefa cresce</h3><p>Itere localmente no que é rápido e mande para a nuvem (Codex web) o que precisa de mais tempo. O resultado volta para o mesmo editor.</p></div>
+  </div>
+  <h3 style="font-family:var(--display);font-size:16px;margin:18px 0 8px">Use a extensão quando…</h3>
+  <div class="grid g2">
+    <ul class="bullets">
+      <li><strong>Você está fazendo edições focadas</strong> e quer os arquivos e o Codex na mesma tela.</li>
+      <li><strong>Você está aprendendo um código desconhecido</strong> e quer perguntar sobre os arquivos e símbolos abertos.</li>
+    </ul>
+    <ul class="bullets">
+      <li><strong>Você quer revisar mudanças no lugar</strong>, aplicando edições junto ao código-fonte.</li>
+      <li><strong>Você quer delegar uma tarefa maior</strong> para a nuvem sem sair do editor.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Instalação</span><span class="n">02</span></div>
+  <h2>Instalando a <em>extensão</em></h2>
+  <p class="intro">A mesma extensão, <code>openai.chatgpt</code> no Marketplace, funciona no <strong>VS Code</strong>, <strong>VS Code Insiders</strong>, <strong>Cursor</strong> e <strong>Windsurf</strong>. Xcode e as IDEs JetBrains têm integrações próprias.</p>
+  <div class="grid g2" style="grid-template-columns:1.2fr 1fr;align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Instale</h3><p>Procure por "Codex" na aba de extensões (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>) ou use a linha de comando ao lado.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Abra o Codex</h3><p>Clique no ícone do Codex. Se ele não aparecer, rode <strong>Codex: Open Codex Sidebar</strong> na Command Palette.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Faça login</h3><p>Entre com a conta do ChatGPT. Com uma chave de API a extensão funciona, mas <strong>sem os recursos de nuvem</strong>.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Primeiro chat</h3><p>Com o projeto aberto, peça para explicar o código, fazer uma mudança focada ou depurar um problema.</p></div></div>
+    </div>
+    <div>
+      <div class="term-title">Instalação pelo terminal</div>
+<pre class="term">code --install-extension openai.chatgpt</pre>
+      <div class="callout good"><strong>Boa prática da documentação:</strong> crie <strong>checkpoints no Git</strong> (commit) antes e depois de cada tarefa. Assim fica fácil reverter o que o agente mudou.</div>
+      <div class="callout warn"><strong>Windows:</strong> se os seus repositórios estão no WSL2, ative <code>chatgpt.runCodexInWindowsSubsystemForLinux</code>. O agente passa a rodar no WSL2, com o sandbox do Linux. No <strong>Linux</strong>, o sandbox precisa do <code>bubblewrap</code>, como vimos na aula 2.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Contexto</span><span class="n">03</span></div>
+  <h2>Usando o contexto do <em>editor</em></h2>
+  <p class="intro">O grande diferencial da extensão é passar o código certo para o agente com poucos cliques.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th>Como</th><th>O que faz</th></tr>
+        <tr><td>Contexto automático</td><td style="color:var(--muted)">Arquivos abertos e a seleção atual acompanham o prompt. Ligue ou desligue com <code>/ide-context</code>.</td></tr>
+        <tr><td><code>chatgpt.addToThread</code></td><td style="color:var(--muted)">Adiciona o <strong style="color:var(--ink)">trecho selecionado</strong> como contexto do chat atual.</td></tr>
+        <tr><td><code>chatgpt.addFileToThread</code></td><td style="color:var(--muted)">Adiciona o <strong style="color:var(--ink)">arquivo inteiro</strong> como contexto do chat atual.</td></tr>
+        <tr><td>CodeLens em TODO</td><td style="color:var(--muted)">Mostra um atalho acima dos comentários <code>TODO</code> para o Codex resolvê-los.</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <div class="term-title">Exemplo de prompt com a seleção ativa</div>
+<pre class="term"><span class="c"># com a função parse_date() selecionada no editor</span>
+Explique o que este trecho faz e por que ele
+falha com datas no formato "28/09/2026".
+Corrija sem mudar a assinatura da função e
+adicione um teste para o caso.</pre>
+      <div class="callout">Com a seleção como contexto, você não precisa colar o código nem dizer o caminho do arquivo. Foque o prompt no <strong>resultado esperado</strong> e em <strong>como validar</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Onde roda</span><span class="n">04</span></div>
+  <h2>Local, Worktree ou <em>Cloud</em> pelo editor</h2>
+  <p class="intro">Os mesmos três lugares de execução do app (aula 2) estão disponíveis na extensão. Você troca com slash commands digitados no composer.</p>
+  <div class="grid g4">
+    <div class="card"><div class="k">/local</div><h3>Workspace local</h3><p>Roda na pasta aberta no editor. É o modo para iteração rápida e prática.</p></div>
+    <div class="card"><div class="k">/worktree</div><h3>Nova worktree Git</h3><p>Roda numa cópia isolada do repositório, sem mexer nos arquivos que você está editando.</p></div>
+    <div class="card"><div class="k">/cloud</div><h3>Nuvem</h3><p>Envia o chat para o Codex web, quando a execução em nuvem está disponível. Ideal para tarefas longas.</p></div>
+    <div class="card"><div class="k">/cloud-environment</div><h3>Escolher o environment</h3><p>Define qual environment da nuvem (aula 1) o chat vai usar.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Permissões</div><p style="color:var(--ink)">O controle fica <strong>abaixo do composer</strong>, como no app. O sandbox define até onde o agente vai sozinho, e as aprovações definem quando ele para e pede permissão. O comando <code>/approve</code> aprova uma nova tentativa depois de uma recusa do revisor automático.</p></div>
+    <div class="callout" style="margin-top:0">A extensão e a CLI usam o <strong>mesmo agente e a mesma configuração</strong>. Um chat em nuvem iniciado no editor aparece no Codex web e pode ser revisado lá, e vice-versa.</div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Composer</span><span class="n">05</span></div>
+  <h2>Slash commands <em>essenciais</em></h2>
+  <p class="intro">Digite <code>/</code> no composer, filtre (ex.: <code>/status</code>) e pressione <kbd>Enter</kbd>. Os principais:</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:32%">Comando</th><th>Para quê</th></tr>
+      <tr><td><code>/init</code></td><td style="color:var(--muted)">Gera um <code>AGENTS.md</code> inicial para o projeto</td></tr>
+      <tr><td><code>/plan</code></td><td style="color:var(--muted)">Liga ou desliga o modo de planejamento em várias etapas</td></tr>
+      <tr><td><code>/goal</code></td><td style="color:var(--muted)">Define um objetivo persistente para o Codex perseguir</td></tr>
+      <tr><td><code>/review</code></td><td style="color:var(--muted)">Code review das mudanças não commitadas ou em relação a um branch base</td></tr>
+      <tr><td><code>/model</code> · <code>/reasoning</code></td><td style="color:var(--muted)">Escolhe o modelo e o esforço de raciocínio do chat</td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th style="width:32%">Comando</th><th>Para quê</th></tr>
+      <tr><td><code>/status</code></td><td style="color:var(--muted)">Mostra o ID do chat, o uso de contexto e os limites de uso</td></tr>
+      <tr><td><code>/compact</code></td><td style="color:var(--muted)">Compacta o contexto do chat atual</td></tr>
+      <tr><td><code>/side</code></td><td style="color:var(--muted)">Abre um chat lateral temporário sem interromper o principal</td></tr>
+      <tr><td><code>/fork</code></td><td style="color:var(--muted)">Copia um chat local para um novo chat local</td></tr>
+      <tr><td><code>/mcp</code></td><td style="color:var(--muted)">Mostra o status dos servidores MCP conectados</td></tr>
+    </table></div>
+  </div>
+  <div class="callout good">Paralelo com o Claude Code: o <code>AGENTS.md</code> faz o papel do <code>CLAUDE.md</code>, e o <code>/init</code> e o <code>/compact</code> funcionam de forma parecida nas duas ferramentas.</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Revisão</span><span class="n">06</span></div>
+  <h2>Revisando o trabalho <em>no editor</em></h2>
+  <p class="intro">Ao terminar, o Codex mostra um resumo e as linhas alteradas ali mesmo, sem painel extra. Você mantém o que quiser e pede ajustes no mesmo chat.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">1 · Diff focado</div><h3>Inspecione</h3><p>Veja só os arquivos afetados, com a justificativa do agente ao lado do código.</p></div>
+    <div class="card"><div class="k">2 · Selecione</div><h3>Mantenha o que quiser</h3><p>Aceite as edições que fazem sentido e descarte o resto antes de seguir.</p></div>
+    <div class="card"><div class="k">3 · /review</div><h3>Segunda opinião</h3><p>Rode o code review nas mudanças não commitadas ou contra um branch base antes de commitar.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Mensagens durante a execução</div><p style="color:var(--ink)">Por padrão (<code>queue</code>), o que você envia enquanto o Codex trabalha <strong>entra na fila</strong> para a próxima rodada. No modo <code>steer</code>, a mensagem <strong>redireciona a rodada atual</strong>. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> inverte o comportamento só para aquela mensagem.</p></div>
+    <div class="callout warn" style="margin-top:0">O <code>/review</code> roda <strong>no chat atual</strong> quando possível (<code>inline</code>). Para abrir a revisão num chat separado, mude <code>chatgpt.reviewDelivery</code> para <code>detached</code>.</div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Configuração</span><span class="n">07</span></div>
+  <h2>As duas camadas de <em>configuração</em></h2>
+  <p class="intro">A extensão separa o <strong>comportamento do agente</strong> (compartilhado com a CLI) do <strong>comportamento do editor</strong>.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">Codex settings · config.toml</div><p style="color:var(--ink)">Modelo, esforço de raciocínio, permissões, sandbox, servidores MCP e personalização. Abra pela engrenagem da barra lateral em <strong>Codex Settings → Open config.toml</strong>.</p></div>
+<pre class="term" style="margin-top:10px"><span class="c"># pessoal (vale para CLI e extensão)</span>
+~/.codex/config.toml
+
+<span class="c"># por projeto (só em projetos confiáveis)</span>
+.codex/config.toml</pre>
+      <div class="callout" style="margin-top:10px">Ordem de precedência: flags da CLI, depois o <code>.codex/config.toml</code> do projeto e por último o pessoal. Vale a regra mais específica.</div>
+    </div>
+    <div><div class="table-wrap"><table>
+      <tr><th>Editor settings (chatgpt.*)</th><th>Padrão</th></tr>
+      <tr><td><code>followUpQueueMode</code></td><td style="color:var(--muted)"><code>queue</code> (ou <code>steer</code>)</td></tr>
+      <tr><td><code>composerEnterBehavior</code></td><td style="color:var(--muted)"><code>enter</code> envia; opções para exigir <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd></td></tr>
+      <tr><td><code>reviewDelivery</code></td><td style="color:var(--muted)"><code>inline</code> (ou <code>detached</code>)</td></tr>
+      <tr><td><code>commentCodeLensEnabled</code></td><td style="color:var(--muted)"><code>true</code>: CodeLens nos TODOs</td></tr>
+      <tr><td><code>openOnStartup</code></td><td style="color:var(--muted)"><code>false</code>: foca a barra do Codex ao iniciar</td></tr>
+      <tr><td><code>localeOverride</code></td><td style="color:var(--muted)">Auto: idioma da interface do Codex</td></tr>
+      <tr><td><code>runCodexInWindowsSubsystemForLinux</code></td><td style="color:var(--muted)"><code>false</code>: só no Windows, para rodar no WSL2</td></tr>
+    </table></div>
+    <p style="color:var(--muted);font-size:11.5px;margin:8px 0 0">Nas configurações do editor, filtre por <code>@ext:openai.chatgpt</code>.</p></div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Produtividade</span><span class="n">08</span></div>
+  <h2>Comandos e <em>atalhos de teclado</em></h2>
+  <p class="intro">Todos os comandos da extensão ficam na Command Palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>, ou <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> no macOS), e qualquer um pode ganhar um atalho próprio.</p>
+  <div class="grid g2" style="grid-template-columns:1.25fr 1fr;align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th>Comando</th><th>Atalho padrão</th><th>Função</th></tr>
+      <tr><td><code>chatgpt.newChat</code></td><td><kbd>Ctrl</kbd>+<kbd>N</kbd> · <kbd>Cmd</kbd>+<kbd>N</kbd></td><td style="color:var(--muted)">Novo chat</td></tr>
+      <tr><td><code>chatgpt.openSidebar</code></td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">Abre a barra lateral</td></tr>
+      <tr><td><code>chatgpt.newCodexPanel</code></td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">Novo painel do Codex</td></tr>
+      <tr><td><code>chatgpt.openCommandMenu</code></td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">Menu de comandos do Codex</td></tr>
+      <tr><td><code>chatgpt.addToThread</code></td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">Seleção → contexto</td></tr>
+      <tr><td><code>chatgpt.addFileToThread</code></td><td style="color:var(--muted)">—</td><td style="color:var(--muted)">Arquivo → contexto</td></tr>
+    </table></div>
+    <div>
+      <div class="card"><div class="k">Criar um atalho</div>
+        <ol style="margin:4px 0 0;padding-left:18px;font-size:12.3px">
+          <li>Abra a Command Palette.</li>
+          <li>Rode <strong>Preferences: Open Keyboard Shortcuts</strong>.</li>
+          <li>Busque <code>Codex</code> ou o ID (ex.: <code>chatgpt.addToThread</code>).</li>
+          <li>Clique no lápis e grave a combinação.</li>
+        </ol></div>
+      <div class="callout good">Sugestão: dê um atalho ao <code>chatgpt.addToThread</code>. Selecionar código e mandar para o chat vira um gesto só.</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">09</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Qual é o ID da extensão oficial do Codex no Marketplace do VS Code?</p>
+        <div class="opts"><div>A) openai.codex</div><div>B) openai.chatgpt</div><div>C) github.copilot</div><div>D) openai.codex-cli</div></div>
+        <div class="answer"><b>B.</b> A extensão é a <code>openai.chatgpt</code>, a mesma no VS Code, Cursor e Windsurf.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Você está no meio de uma edição e quer delegar uma tarefa longa sem ocupar a máquina. Qual comando usar?</p>
+        <div class="opts"><div>A) /local</div><div>B) /compact</div><div>C) /cloud</div><div>D) /fork</div></div>
+        <div class="answer"><b>C.</b> O <code>/cloud</code> envia o chat para o Codex web, usando o environment escolhido com <code>/cloud-environment</code>.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Onde ficam o modelo, as permissões e os servidores MCP que a extensão compartilha com a CLI?</p>
+        <div class="opts"><div>A) settings.json do VS Code</div><div>B) config.toml</div><div>C) AGENTS.md</div><div>D) package.json</div></div>
+        <div class="answer"><b>B.</b> O comportamento do agente fica no <code>config.toml</code> (<code>~/.codex/</code> ou <code>.codex/</code> do projeto). As configurações <code>chatgpt.*</code> cuidam só do editor.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Com <code>followUpQueueMode</code> no padrão, o que acontece com uma mensagem enviada enquanto o Codex trabalha?</p>
+        <div class="opts"><div>A) Interrompe e descarta a rodada</div><div>B) Entra na fila para a próxima rodada</div><div>C) É ignorada</div><div>D) Abre um novo chat</div></div>
+        <div class="answer"><b>B.</b> O padrão é <code>queue</code>. Com <code>steer</code> a mensagem redireciona a rodada atual, e <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> inverte o comportamento uma vez.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">O agente onde<br><em>o código já está</em></h1>
+    <p class="lead">A extensão <code>openai.chatgpt</code> traz o Codex para o VS Code, o Cursor e o Windsurf. Ela usa como contexto os arquivos e a seleção abertos, alterna entre local, worktree e nuvem com slash commands, mostra o diff ao lado do código e compartilha o <code>config.toml</code> com a CLI.</p>
+    <div class="chips"><span>openai.chatgpt</span><span>/ide-context</span><span>/local · /worktree · /cloud</span><span>/review</span><span>config.toml</span></div>
+    <div class="next">Próxima aula → A interface via CLI</div>
+    <div class="source">Fontes: learn.chatgpt.com/docs (codex/ide · developer-commands?surface=ide · developer-settings?surface=ide · config-file/config-basic · sandboxing · windows) e marketplace.visualstudio.com/items?itemName=openai.chatgpt. Interface, comandos e disponibilidade podem mudar; confira a documentação oficial.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

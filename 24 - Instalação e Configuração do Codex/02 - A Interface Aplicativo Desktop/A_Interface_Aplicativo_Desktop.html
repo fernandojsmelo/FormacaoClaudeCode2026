@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>A Interface Aplicativo Desktop</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+kbd{font-family:var(--mono);font-size:10.5px;background:var(--surface-2);border:1px solid var(--border-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink);white-space:nowrap}
+td kbd{font-size:10px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2)}
+.pill.g{background:var(--good-soft);color:var(--good);border-color:#35493B}
+.pill.w{background:var(--warn-soft);color:var(--warn);border-color:#54421F}
+.pill.d{background:var(--danger-soft);color:var(--danger);border-color:#5A3431}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Instalação e configuração do Codex · Aula 2</div>
+    <h1>A interface<br><em>Aplicativo Desktop</em></h1>
+    <p class="lead">Como usar o Codex no aplicativo desktop do ChatGPT: instalar no macOS, Windows ou Linux, trabalhar direto no seu projeto ou em worktrees paralelas, controlar permissões e revisar o diff com Git e terminal integrados.</p>
+    <div class="chips"><span>macOS · Windows · Linux</span><span>Local · Worktree · Cloud</span><span>Sandbox e permissões</span><span>Git integrado</span><span>Terminal</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Codex (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>O Codex dentro do <em>app desktop</em></h2>
+  <p class="intro">O Codex não tem um app separado: ele é um dos três modos do <strong>aplicativo desktop do ChatGPT</strong>. Diferente do Codex Cloud (aula 1), aqui o agente trabalha <strong>no seu computador</strong>, com os arquivos, ferramentas e dependências que já estão instalados nele.</p>
+  <div class="grid g3">
+    <div class="card"><div class="k">Chat</div><h3>Conversa</h3><p>O ChatGPT tradicional, para perguntas e textos. Atalho <kbd>Ctrl</kbd>+<kbd>1</kbd> no macOS, ou <kbd>Alt</kbd>+<kbd>1</kbd> no Windows e no Linux.</p></div>
+    <div class="card"><div class="k">Work</div><h3>Tarefas longas</h3><p>Trabalho com arquivos, documentos, planilhas e ferramentas conectadas. Atalho <kbd>Ctrl</kbd>+<kbd>2</kbd> ou <kbd>Alt</kbd>+<kbd>2</kbd>.</p></div>
+    <div class="card" style="border-color:var(--accent)"><div class="k">Codex</div><h3>Agente de código</h3><p>Lê, edita e testa o seu projeto, com terminal, Git e revisão de diff. Atalho <kbd>Ctrl</kbd>+<kbd>3</kbd> ou <kbd>Alt</kbd>+<kbd>3</kbd>.</p></div>
+  </div>
+  <h3 style="font-family:var(--display);font-size:16px;margin:18px 0 8px">Por que usar o app em vez da interface web</h3>
+  <div class="grid g2">
+    <ul class="bullets">
+      <li><strong>Todos os chats à vista:</strong> vários projetos e tarefas longas em paralelo, sem perder contexto.</li>
+      <li><strong>Ambiente real:</strong> o agente usa o seu Node, Python, banco local e segredos do projeto, sem precisar configurar um container.</li>
+    </ul>
+    <ul class="bullets">
+      <li><strong>Ferramentas integradas:</strong> terminal, controles de Git, painel de revisão, navegador embutido e visualização de arquivos.</li>
+      <li><strong>Um lugar só:</strong> no mesmo app você escolhe se a tarefa roda localmente, numa worktree ou na nuvem.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Instalação</span><span class="n">02</span></div>
+  <h2>Instalando o app em <em>cada sistema</em></h2>
+  <p class="intro">Baixe em <code>chatgpt.com/download</code>, faça login com a conta do ChatGPT, escolha onde trabalhar e selecione <strong>Codex → New chat</strong>.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">macOS</div><h3>Download direto</h3><p>Instale pelo site. O sandbox usa o <strong style="color:var(--ink)">Seatbelt</strong>, nativo do macOS, e funciona sem configuração extra.</p></div>
+    <div class="card"><div class="k">Windows</div><h3>Microsoft Store / winget</h3><p>Roda nativo com PowerShell e o sandbox do Windows, ou dentro do <strong style="color:var(--ink)">WSL2</strong> com o sandbox do Linux.</p>
+<pre class="term" style="margin-top:8px;font-size:10.3px">winget install --id 9PLM9XGG6VKS -s msstore</pre></div>
+    <div class="card"><div class="k">Linux <span class="pill w" style="margin-left:4px">preview</span></div><h3>.deb / .rpm / script</h3><p>Ubuntu 24.04 e 26.04, Debian 13, Fedora 43 e 44 e Arch, em x64 e ARM64 (<code>uname -m</code> mostra a sua arquitetura).</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div>
+      <div class="term-title">Ubuntu / Debian (x64)</div>
+<pre class="term">cd ~/Downloads
+sudo apt install ./chatgpt_amd64.deb
+chatgpt            <span class="c"># ou abra pelo menu de aplicativos</span>
+
+<span class="c"># pré-requisito do sandbox no Linux / WSL2</span>
+sudo apt install bubblewrap</pre>
+    </div>
+    <div>
+      <div class="callout warn" style="margin-top:0"><strong>Ubuntu 24.04:</strong> mesmo com o <code>bubblewrap</code> instalado, o Codex pode avisar que não consegue criar o <em>user namespace</em>. A solução documentada é carregar o perfil AppArmor <code>bwrap-userns-restrict</code> (pacote <code>apparmor-profiles</code>) com <code>sudo apparmor_parser -r</code>.</div>
+      <div class="callout">No Fedora, a instalação é <code>sudo dnf install</code> com o <code>.rpm</code> baixado. Para ARM64, troque <code>amd64</code> por <code>arm64</code> no nome do pacote.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Onde roda</span><span class="n">03</span></div>
+  <h2>Local, Worktree ou <em>Cloud</em></h2>
+  <p class="intro">Ao iniciar um chat no Codex, escolha abaixo da caixa de mensagem <strong>onde a tarefa vai rodar</strong>. Essa é a decisão mais importante da interface.</p>
+  <div class="table-wrap"><table>
+    <tr><th style="width:15%">Modo</th><th style="width:25%">Onde executa</th><th style="width:30%">Quando usar</th><th>Atenção</th></tr>
+    <tr><td>Local</td><td>Direto na pasta atual do projeto, no seu computador</td><td style="color:var(--muted)">Tarefas rápidas que você quer acompanhar e testar na hora</td><td style="color:var(--muted)">Mexe nos mesmos arquivos que você está editando</td></tr>
+    <tr><td>Worktree</td><td>Numa cópia isolada do repositório (Git worktree), também local</td><td style="color:var(--muted)">Várias tarefas em paralelo sem atrapalhar o seu trabalho atual</td><td style="color:var(--muted)">Só funciona em repositórios Git</td></tr>
+    <tr><td>Cloud</td><td>Num environment na nuvem (o mesmo da aula 1)</td><td style="color:var(--muted)">Tarefas longas que podem rodar com o computador desligado</td><td style="color:var(--muted)">Precisa de environment configurado no Codex Cloud</td></tr>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout good" style="margin-top:0"><strong>Local e Worktree rodam no seu computador.</strong> O repositório, os comandos e as dependências continuam na sua máquina, e nada é enviado para um container.</div>
+    <div class="callout" style="margin-top:0"><strong>Regra prática:</strong> use Local quando quiser acompanhar a tarefa, Worktree quando quiser várias em paralelo e Cloud quando puder deixar rodando sem a sua máquina.</div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Segurança</span><span class="n">04</span></div>
+  <h2>Sandbox e <em>modos de permissão</em></h2>
+  <p class="intro">Dois controles trabalham juntos. O <strong>sandbox</strong> define quais arquivos e recursos de rede o agente pode acessar. As <strong>aprovações</strong> decidem quando ele para e pede autorização para ir além desse limite. O controle de permissões fica abaixo da caixa de mensagem.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><span class="pill g">padrão</span><h3 style="margin-top:8px">Ask for approval</h3><p>Trabalha livremente dentro do projeto e <strong style="color:var(--ink)">pede aprovação</strong> para ultrapassar o limite. Aprove com <kbd>Enter</kbd> ou recuse com <kbd>Esc</kbd>.</p></div>
+    <div class="card"><span class="pill w">opcional</span><h3 style="margin-top:8px">Approve for me</h3><p>Chamado de <strong style="color:var(--ink)">Auto-review</strong> nas configurações. Mantém o mesmo sandbox, mas os pedidos vão para um <strong style="color:var(--ink)">agente revisor automático</strong> em vez de você.</p></div>
+    <div class="card"><span class="pill d">cuidado</span><h3 style="margin-top:8px">Full access</h3><p>Remove as restrições do sandbox. O agente não fica limitado à pasta do projeto e pode executar <strong style="color:var(--ink)">ações destrutivas não intencionais</strong>.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="callout" style="margin-top:0">No primeiro uso, só <strong>Ask for approval</strong> aparece no menu. Para liberar os outros modos, vá em <strong>Settings → General → Permissions</strong>. Isso só deixa o modo disponível; ele não é selecionado sozinho.</div>
+    <div class="callout warn" style="margin-top:0">O sandbox vale também para os <strong>comandos que o agente dispara</strong> (<code>git</code>, gerenciadores de pacotes, testes), não só para as edições de arquivo. Em empresas, o administrador pode desabilitar alguns modos.</div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Paralelismo</span><span class="n">05</span></div>
+  <h2>Worktrees e <em>Handoff</em></h2>
+  <p class="intro">Uma worktree é uma segunda cópia (checkout) do repositório. Cada uma tem os seus arquivos, mas todas compartilham o mesmo <code>.git</code> (commits e branches). Assim, várias tarefas rodam em paralelo sem interferir no seu checkout principal (<strong>Local</strong>).</p>
+  <div class="grid g2" style="grid-template-columns:1.2fr 1fr;align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Selecione "Worktree"</h3><p>Abaixo da caixa de mensagem. Se quiser, escolha um <em>local environment</em> para rodar o setup na worktree.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Escolha o branch de partida</h3><p><code>main</code>, um branch de feature ou o branch atual, inclusive com alterações não commitadas.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Envie o prompt</h3><p>O Codex cria a worktree e trabalha em <em>detached HEAD</em> por padrão.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Decida onde continuar</h3><p>Continue na worktree ou faça o <strong>Handoff</strong> para o Local.</p></div></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Handoff</div><p style="color:var(--ink)">Move o chat <strong>e o código</strong> entre Local e Worktree. O Codex cuida das operações de Git, porque o <strong>Git só permite um branch em checkout num lugar por vez</strong>.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">Ficar na worktree</div><p style="color:var(--ink)">Use <strong>Create branch here</strong> no cabeçalho do chat. Depois, faça commit, push e abra o PR no GitHub. O botão <strong>Open</strong> abre a worktree na sua IDE.</p></div>
+      <div class="callout good">Pense no Local como o primeiro plano e na Worktree como o segundo plano, onde você deixa trabalho na fila.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Configuração</span><span class="n">06</span></div>
+  <h2>Local environments: <em>setup e actions</em></h2>
+  <p class="intro">Como a worktree roda noutra pasta, ela pode estar sem dependências ou arquivos que não estão no Git. O <strong>local environment</strong> resolve isso. Ele é configurado nas Settings do app e fica salvo na pasta <code>.codex</code> na raiz do projeto, que você pode versionar para a equipe.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">Setup script</div><p style="color:var(--ink)">Roda automaticamente <strong>quando o Codex cria uma nova worktree</strong> no início de um chat. Serve para instalar dependências ou fazer o build inicial.</p></div>
+      <div class="term-title" style="margin-top:10px">Exemplo: projeto TypeScript</div>
+<pre class="term">npm install
+npm run build</pre>
+    </div>
+    <div>
+      <div class="card"><div class="k">Actions</div><p style="color:var(--ink)">Tarefas frequentes, como subir o servidor de dev ou rodar os testes, viram <strong>botões na barra superior</strong> do app e rodam no terminal integrado. Cada action tem um ícone próprio.</p></div>
+      <div class="term-title" style="margin-top:10px">Exemplo: action "Run" num projeto Node.js</div>
+<pre class="term">npm start</pre>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout" style="margin-top:0">Setup e actions aceitam <strong>scripts por plataforma</strong> (macOS, Windows, Linux) quando os comandos diferem entre sistemas.</div>
+    <div class="callout good" style="margin-top:0">A primeira action roda com <kbd>⌘</kbd>+<kbd>⇧</kbd>+<kbd>D</kbd> no macOS, <kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> no Windows ou <kbd>Super</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> no Linux.</div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Revisão</span><span class="n">07</span></div>
+  <h2>Git integrado e <em>terminal</em></h2>
+  <p class="intro">No app você revisa, testa e entrega o trabalho do Codex sem abrir outra ferramenta.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Painel de diff</div>
+      <ul class="checklist">
+        <li>Mostra as mudanças do checkout atual (Local ou Worktree).</li>
+        <li>Aceita <strong>comentários inline</strong> para o Codex corrigir.</li>
+        <li>Faz stage ou revert de <strong>trechos</strong> ou de arquivos inteiros.</li>
+        <li>Faz commit, push do branch e <strong>cria o pull request</strong>.</li>
+      </ul>
+      <p style="margin-top:8px">Painel de revisão: <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>B</kbd> no macOS ou <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>B</kbd> no Windows e no Linux.</p>
+    </div>
+    <div class="card"><div class="k">Terminal integrado</div>
+      <p style="color:var(--ink)">Cada chat tem um terminal ligado ao seu projeto ou worktree. Abra com <kbd>Ctrl</kbd>+<kbd>`</kbd> e limpe com <kbd>Ctrl</kbd>+<kbd>L</kbd>. O <strong>Codex lê a saída do terminal</strong>, então consegue checar o servidor de dev ou um build que falhou.</p>
+<pre class="term" style="margin-top:8px">git status
+git pull --rebase
+pnpm test
+pnpm run lint</pre>
+    </div>
+  </div>
+  <div class="callout">Para operações de Git que o app não oferece (rebase interativo, cherry-pick etc.), use o terminal integrado. Para não misturar mudanças com o seu trabalho, comece a tarefa numa <strong>worktree</strong>.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Além do código</span><span class="n">08</span></div>
+  <h2>Recursos que só o <em>app</em> oferece</h2>
+  <p class="intro">O app desktop também deixa o agente usar o navegador e o computador, agendar tarefas e ser controlado pelo celular.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Scheduled tasks</div><h3>Tarefas agendadas</h3><p>Rodam em segundo plano de forma recorrente. Em repositórios Git, usam <strong style="color:var(--ink)">worktrees dedicadas</strong> para não conflitar com o seu trabalho. O computador precisa estar ligado e o app aberto quando a tarefa usa arquivos locais.</p></div>
+    <div class="card"><div class="k">Codex Remote</div><h3>Controle pelo celular</h3><p>No app, vá em <strong style="color:var(--ink)">Settings → Connections → Control this Mac or PC</strong> e escaneie o QR code com o app ChatGPT do celular. Dá para iniciar tarefas, aprovar comandos e revisar diffs à distância, com a execução acontecendo no computador conectado (Mac ou Windows).</p></div>
+    <div class="card"><div class="k">Navegador embutido</div><h3>Testar a aplicação</h3><p>Abra o painel do navegador com <kbd>⌘</kbd>+<kbd>⇧</kbd>+<kbd>B</kbd> ou <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> para ver o app rodando e comentar direto na página.</p></div>
+    <div class="card"><div class="k">Computer Use</div><h3>Usar outros apps</h3><p>Permite que o agente use aplicativos do desktop durante a tarefa, sempre dentro das permissões que você concedeu.</p></div>
+  </div>
+  <div class="callout warn">A disponibilidade de Remote, navegador e Computer Use depende do sistema, do plano e das configurações do workspace. Alguns recursos ainda estão em rollout gradual.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Produtividade</span><span class="n">09</span></div>
+  <h2>Atalhos <em>essenciais</em> do Codex</h2>
+  <p class="intro">A paleta de comandos (<kbd>⌘</kbd>+<kbd>K</kbd> ou <kbd>Ctrl</kbd>+<kbd>K</kbd>) dá acesso a tudo. A lista completa está em Settings, ou abra com <kbd>⌘</kbd>+<kbd>/</kbd> / <kbd>Ctrl</kbd>+<kbd>/</kbd>.</p>
+  <div class="table-wrap"><table>
+    <tr><th style="width:36%">Ação</th><th style="width:32%">macOS</th><th>Windows / Linux</th></tr>
+    <tr><td>Abrir pasta do projeto</td><td><kbd>⌘</kbd>+<kbd>O</kbd></td><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td></tr>
+    <tr><td>Novo chat</td><td><kbd>⌘</kbd>+<kbd>N</kbd></td><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td></tr>
+    <tr><td>Chat lateral (side chat)</td><td><kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>S</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></td></tr>
+    <tr><td>Próximo chat que precisa de atenção</td><td><kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>A</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></td></tr>
+    <tr><td>Buscar arquivos · árvore de arquivos</td><td><kbd>⌘</kbd>+<kbd>P</kbd> · <kbd>⌘</kbd>+<kbd>⇧</kbd>+<kbd>E</kbd></td><td><kbd>Ctrl</kbd>+<kbd>P</kbd> · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></td></tr>
+    <tr><td>Abrir aba de revisão (diff)</td><td><kbd>⌃</kbd>+<kbd>⇧</kbd>+<kbd>G</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></td></tr>
+    <tr><td>Terminal integrado</td><td><kbd>⌃</kbd>+<kbd>`</kbd></td><td><kbd>Ctrl</kbd>+<kbd>`</kbd></td></tr>
+    <tr><td>Seletor de modelo</td><td><kbd>⌃</kbd>+<kbd>⇧</kbd>+<kbd>M</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd></td></tr>
+    <tr><td>Aprovar · recusar pedido</td><td><kbd>Enter</kbd> · <kbd>Esc</kbd></td><td><kbd>Enter</kbd> · <kbd>Esc</kbd></td></tr>
+  </table></div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">10</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Você quer que o Codex implemente duas features em paralelo sem mexer nos arquivos que você está editando. Qual modo usar?</p>
+        <div class="opts"><div>A) Local</div><div>B) Worktree</div><div>C) Full access</div><div>D) Quick chat</div></div>
+        <div class="answer"><b>B.</b> Cada worktree é um checkout isolado do mesmo repositório, e as tarefas rodam em segundo plano sem tocar no seu Local.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O que muda ao trocar "Ask for approval" por "Approve for me"?</p>
+        <div class="opts"><div>A) O sandbox é removido</div><div>B) O agente ganha acesso à internet</div><div>C) Um revisor automático aprova no seu lugar</div><div>D) O chat vai para a nuvem</div></div>
+        <div class="answer"><b>C.</b> O limite do sandbox continua o mesmo. Só muda quem analisa os pedidos para ultrapassá-lo: um agente revisor automático.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Onde o Codex salva a configuração do local environment (setup e actions)?</p>
+        <div class="opts"><div>A) Em ~/.bashrc</div><div>B) No AGENTS.md</div><div>C) Na pasta .codex na raiz do projeto</div><div>D) Só na nuvem</div></div>
+        <div class="answer"><b>C.</b> O arquivo gerado fica em <code>.codex</code> e pode ser versionado no Git para a equipe usar a mesma configuração.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. No Ubuntu, o que é preciso instalar para o sandbox do Codex funcionar?</p>
+        <div class="opts"><div>A) docker</div><div>B) bubblewrap</div><div>C) firejail</div><div>D) Nada; o sandbox é só no macOS</div></div>
+        <div class="answer"><b>B.</b> No Linux e no WSL2, o Codex usa o <code>bwrap</code> (<code>sudo apt install bubblewrap</code>). No Ubuntu 24.04 pode ser preciso também o perfil AppArmor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Seu projeto, seu computador,<br><em>várias tarefas em paralelo</em></h1>
+    <p class="lead">No app desktop do ChatGPT, o modo Codex trabalha direto no seu projeto (Local), em cópias isoladas (Worktree) ou na nuvem (Cloud). O sandbox e os modos de permissão definem até onde o agente vai sozinho. Os local environments preparam as worktrees, e o Git e o terminal integrados levam o trabalho do diff ao pull request.</p>
+    <div class="chips"><span>Chat · Work · Codex</span><span>Local · Worktree · Cloud</span><span>Ask for approval</span><span>.codex/</span><span>Handoff</span></div>
+    <div class="next">Próxima aula → Codex no VS Code</div>
+    <div class="source">Fontes: learn.chatgpt.com/docs (app · windows/windows-app · linux/linux-app · environments/git-worktrees · environments/local-environment · sandboxing · integrated-terminal · automations · remote · reference/commands). Interface, atalhos e disponibilidade podem mudar; confira a documentação oficial.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

