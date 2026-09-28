@@ -35,12 +35,21 @@ with tempfile.TemporaryDirectory() as tmp:
         os.remove(imgpath)
 results.sort(key=lambda x: -x[1])
 for p, a in results:
-    if a > 150:  # baseline do tema escuro fica ~75-110 nesta resolução; acima disso é suspeito
+    if a > 150:  # baseline do tema escuro fica ~20-55 nesta resolução; acima disso é suspeito
         print(f'{a:6.1f}  {p}')
 "
 ```
 
-Qualquer PDF que aparecer nessa lista (brilho médio acima de ~150 na renderização em 20 DPI) está fora do padrão e precisa ser reconstruído no tema escuro antes do push. O baseline normal do tema escuro fica entre ~75 e ~110 nessa métrica (a média sobe por causa do texto claro sobre fundo escuro e do anti-aliasing em baixa resolução) — não confundir isso com um PDF fora do padrão.
+Qualquer PDF que aparecer nessa lista (brilho médio acima de ~150 na renderização em 20 DPI) está fora do padrão e precisa ser reconstruído no tema escuro antes do push. O baseline normal do tema escuro fica entre ~20 e ~55 nessa métrica (a média sobe com o texto claro sobre fundo escuro e o anti-aliasing em baixa resolução) — não confundir isso com um PDF fora do padrão.
+
+Além do brilho, conferir se algum PDF tem **margens brancas** (conteúdo escuro, mas bordas da página claras):
+
+```bash
+find . \( -path ./.git -o -path ./.venv -o -path ./.idea -o -path ./.claude -o -path ./.agents \) -prune -o -name '*.pdf' -print0 \
+  | xargs -0 .venv/bin/python scripts/fill_pdf_margins.py --check
+```
+
+Se listar algum arquivo, corrigir com o mesmo script sem `--check`: ele pinta as margens com `--bg` por baixo do conteúdo, sem alterar texto, páginas ou links.
 
 Ao encontrar um PDF fora do padrão:
 1. Extrair o texto completo com `pdftotext -layout` e ler por inteiro antes de reescrever — nunca inventar ou resumir conteúdo.
@@ -72,6 +81,7 @@ Fontes via Google Fonts:
 
 ### Duas famílias de formato de página
 
+- **Obrigatório nas duas famílias:** incluir `background:#171310` dentro do `@page` (ex.: `@page{ size:A4; margin:15mm; background:#171310 }`). Sem isso o Chrome imprime as margens em branco, mesmo com o `body` escuro.
 - **Lesson** (aulas com quiz, landscape): `@page{ size:960pt 540pt; margin:.5in .55in }`, `.wrap{max-width:920px}`, `section.block{page-break-before:always}`. Usado para decks de aula com capa, seções numeradas (01, 02...), quiz de fixação e encerramento com "Próxima aula →".
 - **Resumo/Relatório** (A4 portrait): `@page{ size:A4; margin:14mm–16mm }`, `.wrap{max-width:720–740px}`. Usado para resumos de módulo, relatórios de sessão/projeto e documentação técnica.
 
