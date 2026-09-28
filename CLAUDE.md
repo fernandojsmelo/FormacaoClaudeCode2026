@@ -4,52 +4,18 @@ Curso em PDF organizado em módulos numerados (`NN - Nome do Módulo`), cada um 
 
 ## Antes de qualquer `git push` neste repositório
 
-Sempre, antes de subir para o Git, verificar se algum PDF está fora do padrão de tema escuro. Não confiar apenas na inspeção visual de amostras — rodar uma varredura em todos os PDFs do repositório comparando o brilho médio da primeira página:
+Sempre, antes de subir para o Git, verificar se algum PDF está fora do padrão de tema escuro. Não confiar apenas na inspeção visual de amostras — rodar a varredura em todos os PDFs do repositório:
 
 ```bash
-python3 -W ignore -c "
-import subprocess, os, tempfile
-from PIL import Image
-root = '.'
-pdfs = []
-for dirpath, dirnames, filenames in os.walk(root):
-    if any(seg in dirpath for seg in ('/.git', '/.venv', '/.idea', '/.claude', '/.agents')):
-        continue
-    for f in filenames:
-        if f.lower().endswith('.pdf'):
-            pdfs.append(os.path.join(dirpath, f))
-results = []
-with tempfile.TemporaryDirectory() as tmp:
-    for i, pdf in enumerate(sorted(pdfs)):
-        base = os.path.join(tmp, f'p{i}')
-        try:
-            subprocess.run(['pdftoppm','-png','-f','1','-l','1','-r','20', pdf, base], check=True, capture_output=True, timeout=30)
-        except Exception:
-            continue
-        cands = [f for f in os.listdir(tmp) if f.startswith(f'p{i}-') and f.endswith('.png')]
-        if not cands: continue
-        imgpath = os.path.join(tmp, cands[0])
-        img = Image.open(imgpath).convert('L')
-        avg = sum(img.getdata())/ (img.size[0]*img.size[1])
-        results.append((pdf, avg))
-        os.remove(imgpath)
-results.sort(key=lambda x: -x[1])
-for p, a in results:
-    if a > 150:  # baseline do tema escuro fica ~20-55 nesta resolução; acima disso é suspeito
-        print(f'{a:6.1f}  {p}')
-"
+.venv/bin/python scripts/check_pdfs.py --all
 ```
 
-Qualquer PDF que aparecer nessa lista (brilho médio acima de ~150 na renderização em 20 DPI) está fora do padrão e precisa ser reconstruído no tema escuro antes do push. O baseline normal do tema escuro fica entre ~20 e ~55 nessa métrica (a média sobe com o texto claro sobre fundo escuro e o anti-aliasing em baixa resolução) — não confundir isso com um PDF fora do padrão.
+O script renderiza a primeira página de cada PDF a 20 DPI e aponta dois problemas:
 
-Além do brilho, conferir se algum PDF tem **margens brancas** (conteúdo escuro, mas bordas da página claras):
+- **PDF claro** — brilho médio acima de ~150. O normal do tema escuro fica entre ~20 e ~55 nessa métrica (a média sobe com o texto claro e o anti-aliasing em baixa resolução); não confundir isso com um PDF fora do padrão. Precisa ser reconstruído (passos abaixo).
+- **Margens brancas** — conteúdo escuro, mas bordas da página claras. Corrigir com `.venv/bin/python scripts/fill_pdf_margins.py <arquivo.pdf>`, que pinta as margens com `--bg` por baixo do conteúdo, sem alterar texto, páginas ou links.
 
-```bash
-find . \( -path ./.git -o -path ./.venv -o -path ./.idea -o -path ./.claude -o -path ./.agents \) -prune -o -name '*.pdf' -print0 \
-  | xargs -0 .venv/bin/python scripts/fill_pdf_margins.py --check
-```
-
-Se listar algum arquivo, corrigir com o mesmo script sem `--check`: ele pinta as margens com `--bg` por baixo do conteúdo, sem alterar texto, páginas ou links.
+O hook versionado `.githooks/pre-push` roda a mesma checagem automaticamente, só nos PDFs adicionados ou alterados nos commits do push, e bloqueia o envio se encontrar problema (ignorar só em caso excepcional com `git push --no-verify`). Ele usa o `.venv` do projeto: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`. A ativação é a mesma do pre-commit: `git config core.hooksPath .githooks`. O hook não dispensa a varredura completa acima, que pega também PDFs antigos.
 
 Ao encontrar um PDF fora do padrão:
 1. Extrair o texto completo com `pdftotext -layout` e ler por inteiro antes de reescrever — nunca inventar ou resumir conteúdo.
