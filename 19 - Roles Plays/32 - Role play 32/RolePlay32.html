@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Role Play 32 — Transcrição</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:10mm 11mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:8.1pt;line-height:1.34}
+.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px}
+h1{font-family:var(--display);font-weight:600;font-size:16pt;line-height:1.2;margin:0 0 4px}
+.meta{font-family:var(--mono);font-size:7.5pt;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:9px}
+.turn{margin:0 0 7px;break-inside:auto}
+.who{font-family:var(--mono);font-size:7.4pt;color:var(--muted);margin-bottom:2px}
+.who b{color:var(--accent-ink);font-weight:600}
+.who{break-after:avoid;page-break-after:avoid}
+.msg h4{break-after:avoid;page-break-after:avoid}
+.msg p,.msg li,.turn.user .msg{orphans:3;widows:3}
+.turn.user .msg{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-style:italic}
+.turn.ai .who{text-align:right}
+.turn.ai .msg{background:var(--accent-soft);border:1px solid var(--border-2);border-radius:8px;padding:7px 10px;margin-left:28px}
+.msg p{margin:0 0 4px}
+.msg p:last-child,.msg ul:last-child,.msg ol:last-child{margin-bottom:0}
+.msg h4{font-size:8.9pt;margin:6px 0 3px;color:var(--ink)}
+.msg ul,.msg ol{margin:0 0 4px;padding-left:16px}
+.msg li{margin:1px 0}
+.msg strong{color:var(--accent-ink);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:8pt;margin:3px 0 5px;border:1px solid var(--border-2);border-radius:8px;overflow:hidden}
+th{background:var(--surface-2);font-family:var(--mono);font-size:7.5pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:4px 8px;font-weight:500}
+td{border-top:1px solid var(--border);padding:4px 8px;vertical-align:top;background:var(--surface)}
+.end{text-align:center;font-family:var(--mono);font-size:8pt;color:var(--muted);margin:10px 0 6px}
+.foot{font-family:var(--mono);font-size:7.5pt;color:var(--muted);border-top:1px solid var(--border);padding-top:8px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · IA com Claude e Cowork</div>
+  <h1>O Especialista em Privacidade e a Profissional com Medo de Vazar Dados</h1>
+  <div class="meta">Transcrição da prática 1 · 28 de setembro de 2026, 14:28</div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 00:00</div><div class="msg">
+    <p>"Oi! Eu quero usar o Claude no trabalho, mas travo numa coisa: lido com dados de clientes e fico com medo. O Claude fica 'aprendendo' tudo o que eu digito e vai usar minhas informações pra responder pra outras pessoas? Alguém na empresa consegue ler minhas conversas?</p>
+    <p>E se eu apagar, some de verdade ou fica guardado pra sempre? Eu não sei o que é seguro fazer."</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">00:54 <b>Você</b></div><div class="msg">
+    <p>É perfeitamente normal ter esse receio, e você está coberta de razão ao se preocupar com os dados dos seus clientes.</p>
+    <p>Trabalhar com Inteligência Artificial exige mesmo esse cuidado básico.</p>
+    <p>Para que você possa usar o Claude no trabalho com total tranquilidade, vamos direto às suas dúvidas e ao que é seguro fazer:</p>
+    <h4>1. O Claude fica "aprendendo" com o que eu digito para responder a outras pessoas?</h4>
+    <p>Não, o Claude não vai pegar uma informação confidencial sua e mostrar para outro usuário. No entanto, nas contas gratuitas e no plano Pro individual, a Anthropic (empresa dona do Claude) pode usar os históricos para treinar e aprimorar os modelos internos.</p>
+    <ul><li><strong>Como resolver:</strong> Você pode desativar isso facilmente. Vá em Settings (Configurações) no seu perfil e desmarque a opção que permite o uso de seus dados para treinamento.</li>
+    <li><strong>Se a sua empresa usa a API do Claude ou o plano Enterprise:</strong> Fique tranquila, pois a Anthropic garante em contrato que esses dados nunca são usados para treinamento.</li></ul>
+    <h4>2. Alguém na minha empresa consegue ler minhas conversas?</h4>
+    <p>Depende de como você acessa a ferramenta:</p>
+    <ul><li>Se você criou uma conta pessoal (com seu e-mail pessoal ou mesmo o corporativo, mas de forma avulsa), ninguém da sua empresa tem acesso direto à sua interface.</li>
+    <li>Se a sua empresa contratou um plano corporativo (Enterprise) ou se você usa o Claude integrado a um sistema interno da empresa, os administradores de TI da sua organização podem, sim, auditar e ler os históricos por motivos de segurança e conformidade.</li></ul>
+    <h4>3. Se eu apagar uma conversa, ela some de verdade ou fica guardada?</h4>
+    <p>Quando você deleta um chat na interface, ele some da sua tela. No entanto, por questões de segurança legal e combate a abusos, a Anthropic retém os dados em seus servidores por um período (geralmente 30 dias) antes da exclusão definitiva, a menos que sua empresa tenha um acordo Enterprise com políticas de retenção customizadas.</p>
+    <h4>🛡️ Guia rápido de boas práticas para trabalhar com segurança</h4>
+    <p>Para nunca correr riscos com a Lei Geral de Proteção de Dados (LGPD) ou com as políticas da sua empresa, adote o hábito da anonimização:</p>
+    <table>
+      <tr><th>❌ O que NUNCA digitar no Claude</th><th>O que fazer em vez disso</th></tr>
+      <tr><td>Nomes reais de clientes, CPFs, e-mails, telefones ou RG.</td><td>Substitua por termos genéricos (ex: Cliente A, Cliente B).</td></tr>
+      <tr><td>Relatórios financeiros brutos ou dados bancários.</td><td>Use porcentagens ou mude os valores reais por números fictícios.</td></tr>
+      <tr><td>Contratos na íntegra ou segredos comerciais.</td><td>Copie apenas a cláusula ou o trecho isolado que você precisa analisar.</td></tr>
+    </table>
+    <p>Para eu te ajudar a configurar o uso do Claude da forma mais protegida possível, me conta:</p>
+    <ul><li>Você pretende usar a versão gratuita, o plano Pro ou a conta da própria empresa?</li>
+    <li>Qual é o tipo de tarefa com dados de clientes que você quer agilizar (ex: responder e-mails, analisar planilhas, criar relatórios)?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 00:57</div><div class="msg">
+    <p>Uau, adorei o jeito claro como você explicou! Eu realmente quero saber mais sobre essas configurações, porque quero fazer tudo direitinho. No meu caso, eu uso uma conta pessoal, mas é no plano gratuito. Não sei configurar nada ainda, então fico perdida. Também queria entender melhor essa parte de apagar as conversas... depois que excluo, ninguém pode acessar de jeito nenhum, mesmo a Anthropic? Ah, e sobre as tarefas, seria mais pra revisar textos e agilizar relatórios. Isso é seguro de fazer no plano gratuito?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">02:04 <b>Você</b></div><div class="msg">
+    <p>Que bom que a explicação ajudou!</p>
+    <p>Vamos dar o próximo passo para você configurar tudo direitinho e trabalhar sem peso na consciência.</p>
+    <h4>⚙️ Como desativar o treinamento de dados no plano gratuito</h4>
+    <p>Como você usa a versão gratuita, a prioridade número um é garantir que a Anthropic não use seus textos para treinar a IA. No Claude, isso é controlado por uma configuração de privacidade da conta.</p>
+    <p>Siga este passo a passo simples na sua tela:</p>
+    <ol><li>Clique na sua foto de perfil ou nas suas iniciais (no canto inferior esquerdo ou superior direito, dependendo da versão da tela).</li>
+    <li>Selecione a opção Settings (Configurações).</li>
+    <li>Procure pela aba ou seção chamada Privacy (Privacidade) ou Data Training (Treinamento de Dados).</li>
+    <li>Desmarque a caixa que autoriza o uso das suas conversas para melhorar os modelos da Anthropic. Salve as alterações.</li></ol>
+    <h4>🗑️ O que acontece "nos bastidores" quando você apaga uma conversa?</h4>
+    <p>Depois que você clica em excluir, a conversa some imediatamente da sua tela e nenhum robô ou usuário comum do Claude pode acessá-la.</p>
+    <p>Porém, respondendo diretamente à sua dúvida: a equipe de segurança da Anthropic ainda pode ter acesso aos dados por até 30 dias. Eles mantêm essa cópia temporária em servidores protegidos estritamente para verificar se houve alguma violação legal ou de termos de uso (como crimes ou abusos). Passado esse prazo regulamentar, o histórico é excluído permanentemente dos sistemas deles.</p>
+    <h4>📝 Revisar textos e relatórios no plano gratuito é seguro?</h4>
+    <p>Sim, é perfeitamente seguro, desde que você aplique a regra de ouro que conversamos: a anonimização. O plano gratuito não é menos seguro em termos de invasão ou vazamento para terceiros, ele apenas exige que você gerencie sua privacidade manualmente (desativando o treinamento, como mostrei acima).</p>
+    <p>Veja como fazer suas tarefas com segurança total:</p>
+    <ul><li><strong>Para revisar textos (e-mails, propostas):</strong> Copie o texto para o Claude, mas mude o nome do cliente para "Fulano" e o nome da empresa para "Empresa X". Peça para o Claude melhorar a escrita. Depois de pronto, copie de volta para o seu computador e recoloque os nomes originais.</li>
+    <li><strong>Para agilizar relatórios:</strong> Nunca faça o upload da planilha original de dados dos clientes. Em vez disso, peça ajuda conceitual ou estrutural. Por exemplo, digite: "Tenho um relatório onde preciso calcular a taxa de conversão de leads por região. Me dê o passo a passo de quais fórmulas usar no Excel".</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 02:09</div><div class="msg">
+    <p>Ah, agora ficou mais claro! Eu vou tentar configurar essa parte do treinamento de dados hoje mesmo, seguindo o passo a passo que você explicou. Sobre apagar, bom saber que depois de trinta dias é excluído de vez. Isso me deixa mais tranquila. E adorei a dica da anonimização para revisar textos e relatórios, parece bem prático! Só mais uma coisinha: no futuro, se eu mudar pra um plano Pro ou algo da empresa, as proteções mudam muito? Ou é só continuar com as boas práticas?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">03:14 <b>Você</b></div><div class="msg">
+    <p>Que excelente iniciativa!</p>
+    <p>Fazer essa configuração hoje mesmo já vai te dar uma camada enorme de tranquilidade para produzir no trabalho.</p>
+    <p>Sobre a sua dúvida sobre o futuro: se você mudar para o plano Pro ou se a sua empresa contratar um plano corporativo (Team ou Enterprise), as proteções mudam bastante — e sempre para melhor!</p>
+    <p>Abaixo, veja como funciona essa evolução na segurança:</p>
+    <h4>💼 O que muda se você fizer o upgrade?</h4>
+    <table>
+      <tr><th>Tipo de Conta</th><th>Política de Treinamento de Dados</th><th>Retenção e Exclusão</th></tr>
+      <tr><td>Plano Gratuito</td><td>Permite o treinamento por padrão. Exige que você desative manualmente nas configurações.</td><td>Mantido por 30 dias pela Anthropic antes da exclusão definitiva.</td></tr>
+      <tr><td>Plano Pro (Pago Individual)</td><td>Segue a mesma regra do gratuito. Você precisa desativar manualmente o treinamento nas configurações.</td><td>Mantido por 30 dias pela Anthropic para fins de auditoria de segurança.</td></tr>
+      <tr><td>Plano Team / Enterprise (Empresarial)</td><td>Privacidade Máxima Automática. Os dados nunca são usados para treinamento. A opção vem bloqueada de fábrica.</td><td>A empresa pode definir regras personalizadas. Os dados podem ser guardados ou apagados conforme a política interna de TI.</td></tr>
+    </table>
+    <h4>🎯 A Regra de Ouro: Continuar com as boas práticas?</h4>
+    <p>Sim, com certeza! Mesmo que amanhã a sua empresa contrate o plano Enterprise mais seguro do mundo (onde a Anthropic garante em contrato que não lê e não treina nada), o hábito da anonimização deve continuar.</p>
+    <p>O motivo é simples: segurança digital é feita em camadas. Se você se acostumar a nunca colocar o CPF, o nome real ou o faturamento exato de um cliente na tela da IA, você elimina qualquer chance de:</p>
+    <ol><li>Cometer um erro humano e vazar algo sem querer.</li><li>Infringir regras da LGPD (Lei Geral de Proteção de Dados).</li><li>Deixar rastros em históricos que administradores da sua própria empresa possam ler no futuro.</li></ol>
+    <p>Em resumo: os planos pagos e empresariais trazem travas tecnológicas automáticas incríveis, mas o seu comportamento seguro é a sua melhor defesa.</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 03:18</div><div class="msg">
+    <p>Nossa, entendi tudo direitinho agora! É bom saber que os planos pagos e empresariais oferecem mais segurança ainda, mas adorei essa ideia de criar o hábito da anonimização. Faz todo o sentido pra evitar qualquer risco, mesmo sem querer. Vou seguir com as boas práticas, com certeza! Muito obrigada por explicar tudo de forma tão clara. Agora me sinto muito mais confiante pra usar o Claude de forma segura no dia a dia!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">04:07 <b>Você</b></div><div class="msg">
+    <p>Fico muito feliz em saber disso!</p>
+    <p>Essa confiança é o primeiro passo para você transformar a inteligência artificial em uma grande aliada no seu trabalho, sem abrir mão da ética e da segurança com os dados dos seus clientes. Você está começando do jeito certo.</p>
+    <p>Agora que você já sabe como se proteger e configurar sua conta, está pronta para colocar a mão na massa com total tranquilidade!</p>
+    <p>Sempre que precisar, estou por aqui. Se quiser dar o próximo passo na prática agora ou no futuro, me avise para:</p>
+    <ul><li>Criarmos juntos um modelo de comando (prompt) para estruturar seus relatórios.</li><li>Montarmos um guia rápido de anonimização para você consultar no dia a dia.</li></ul>
+    <p>Muito sucesso no uso do Claude e bom trabalho!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 04:09</div><div class="msg">
+    <p>Muito obrigada! Foi ótimo conversar com você, e agora me sinto muito mais preparada pra usar o Claude com segurança e confiança. Se eu tiver mais dúvidas ou precisar de ajuda no futuro, com certeza vou te procurar. Sucesso pra você também!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">04:55 <b>Você</b></div><div class="msg">
+    <p>Com base nas políticas oficiais de privacidade da Anthropic, existem alguns detalhes muito importantes sobre o funcionamento do plano gratuito (assim como dos planos Pro e Max) que você precisa saber para ter o controle total dos seus dados.</p>
+    <p>Aqui está o funcionamento exato do treinamento e da retenção de dados para usuários de planos de consumidor:</p>
+    <h4>🎛️ O Controle de Treinamento é Seu (Conversas Novas e Retomadas)</h4>
+    <p>Nos planos de consumidor (Free, Pro e Max), a permissão para usar suas conversas no treinamento dos modelos da Anthropic é controlada diretamente por você através das Configurações de Privacidade.</p>
+    <p>Essa chave liga/desliga funciona em tempo real:</p>
+    <ul><li>Se você alterar a configuração hoje, ela passará a valer tanto para as novas conversas que você iniciar quanto para as conversas antigas que você retomar (ou seja, se você voltar a digitar em um chat antigo após mudar a configuração, a nova regra de privacidade se aplica a ele).</li></ul>
+    <h4>⏳ O Prazo de Retenção Muda Conforme a Sua Escolha</h4>
+    <p>A sua escolha em relação ao treinamento muda drasticamente o tempo que a Anthropic guarda as suas informações:</p>
+    <ul><li><strong>Se você PERMITIR o treinamento (Opt-in):</strong> Os seus dados podem passar por um processo de descaracterização (de-identificação) e ser retidos pela Anthropic por até 5 anos para pesquisa e desenvolvimento dos modelos.</li>
+    <li><strong>Se você NÃO PERMITIR o treinamento (Opt-out):</strong> O uso para treino é totalmente bloqueado e o prazo de retenção cai para apenas 30 dias. Após esse período, os dados são excluídos permanentemente.</li></ul>
+    <h4>⚠️ A Exceção Importante: Revisão de Segurança</h4>
+    <p>Sendo totalmente transparente com você: existe um cenário onde os dados podem ser retidos e analisados mesmo se você desativar o treinamento.</p>
+    <p>Se alguma conversa sua violar os Termos de Serviço ou for sinalizada pelos filtros automáticos para uma revisão de segurança (por suspeita de conteúdo prejudicial, ilegal ou abusivo), a Anthropic se reserva o direito de reter e usar esses dados para melhorar seus sistemas de segurança e detecção de abusos, sobrepondo-se à sua escolha de opt-out. Por isso, manter a prática de não enviar dados confidenciais de clientes é, de fato, a sua melhor proteção.</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 04:57</div><div class="msg">
+    <p>Ah, entendi bem agora! Então, mesmo que eu desative o treinamento, tem essa questão das conversas sinalizadas, né? Mas achei ótimo saber que eu posso controlar isso nas configurações e que a retenção diminui bastante com o opt-out. Vou ficar de olho pra sempre evitar compartilhar qualquer dado mais sensível. Obrigada por deixar tudo tão claro pra mim!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">06:02 <b>Você</b></div><div class="msg">
+    <p>Para que você tenha total clareza sobre o ciclo de vida dos seus dados e quem realmente pode visualizar o que você digita, o funcionamento do sistema da Anthropic ocorre da seguinte forma:</p>
+    <h4>⏱️ Retenção e Exclusão: O que acontece quando você deleta?</h4>
+    <ul><li><strong>Controle no histórico:</strong> Todas as suas conversas ficam salvas na sua conta por tempo indeterminado e só saem de lá quando você decidir clicar no botão de excluir.</li>
+    <li><strong>Surgimento imediato:</strong> No momento em que você deleta um chat, ele some na hora do seu histórico visual e da sua interface.</li>
+    <li><strong>Limpeza dos sistemas:</strong> Após a sua exclusão, a Anthropic remove completamente esses dados dos sistemas de armazenamento em um prazo de até aproximadamente 30 dias.</li>
+    <li><strong>Bloqueio de treino:</strong> Uma regra de ouro do sistema é que conversas excluídas nunca são usadas para treinamento do modelo, garantindo que o comando de apagar interrompa esse fluxo.</li></ul>
+    <h4>👥 Quem vê os seus dados?</h4>
+    <p>A privacidade das suas conversas é protegida por políticas rígidas de acesso:</p>
+    <ul><li><strong>Revisão humana restrita:</strong> Apenas uma equipe especializada de Confiança e Segurança (Trust &amp; Safety) da Anthropic pode revisar as suas conversas, e isso só acontece se o chat for sinalizado automaticamente por suspeita de violação dos termos de uso. Fora esse cenário de segurança, ninguém fica lendo seus textos.</li>
+    <li><strong>Sem comercialização:</strong> A Anthropic afirma categoricamente que não vende os seus dados para terceiros ou empresas de publicidade. O modelo de negócios deles não é baseado na venda de informações de usuários.</li></ul>
+    <p>Com todas essas regras de retenção e privacidade esclarecidas, você gostaria de:</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 06:04</div><div class="msg">
+    <p>Nossa, adorei entender como funciona essa parte de exclusão e retenção! É bom saber que, quando eu apago, os dados realmente saem do sistema em até trinta dias e que as conversas excluídas nunca vão para treinamento. Também achei interessante essa questão da equipe de segurança só revisar em casos específicos. Isso me deixa mais confiante pra usar a ferramenta no dia a dia. Muito obrigada por explicar tudo de forma tão detalhada!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">06:55 <b>Você</b></div><div class="msg">
+    <p>Para fechar com chave de ouro e garantir que você tenha total autonomia e segurança, é fundamental entender a diferença de proteção jurídica entre a sua conta e o ambiente corporativo, além de fixar três hábitos diários simples.</p>
+    <h4>🏢 Planos de Consumidor vs. Planos de Empresa e API</h4>
+    <p>A proteção jurídica e técnica muda drasticamente dependendo de qual "porta de entrada" você usa para acessar o Claude:</p>
+    <ul><li><strong>Planos de Consumidor (Free, Pro, Max):</strong> São voltados para o uso individual. Como vimos, a proteção depende da sua configuração manual. Por padrão, os termos permitem o uso de dados para treino, exigindo que você faça o opt-out (desativação).</li>
+    <li><strong>Planos de Empresa (Team/Enterprise) e API:</strong> Se a sua empresa contratar um plano corporativo ou se os desenvolvedores dela integrarem o Claude em um sistema próprio via API, as regras mudam. Esses serviços possuem termos comerciais específicos onde, por padrão, os dados nunca são usados para treinamento. É uma proteção nativa muito mais robusta, desenhada especificamente para segredos de negócios e dados regulados.</li></ul>
+    <h4>📋 Checklist de Boas Práticas para o seu Dia a Dia</h4>
+    <p>Independentemente do plano que você estiver usando, adote estas três dicas básicas como rotina:</p>
+    <ol><li><strong>Monitore sua privacidade:</strong> Sempre que criar uma conta nova ou se notar alguma atualização na plataforma, tire dois minutos para revisar a sua aba de Settings (Configurações) e garantir que a opção de treinamento de dados continua desativada.</li>
+    <li><strong>Evite o "Ctrl+C / Ctrl+V" automático:</strong> Antes de colar um texto, respire fundo e avalie se há dados ultrassensíveis desnecessários ali (como senhas, dados bancários ou documentos pessoais de clientes). Se houver, apague ou mascare essas linhas antes de enviar para a IA.</li>
+    <li><strong>Faça uma limpa no histórico:</strong> Conversas que serviram apenas para uma tarefa rápida e pontual não precisam ficar salvas para sempre. Criou o relatório? Revisou o e-mail? Exclua a conversa em seguida para acelerar o prazo de eliminação definitiva dos sistemas.</li></ol>
+    <p>⚠️ <strong>Nota Importante de Transparência:</strong> Eu sou um assistente de Inteligência Artificial e não um advogado ou especialista jurídico. As orientações acima servem como boas práticas informativas baseadas no funcionamento da tecnologia, mas não substituem uma consultoria jurídica e não garantem conformidade legal (como adequação formal à LGPD). Para verificar os termos exatos, prazos legais e responsabilidades, consulte sempre a Política de Privacidade Oficial da Anthropic.</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Cláudia Resende</b> 06:57</div><div class="msg">
+    <p>Nossa, agora me sinto realmente preparada pra usar o Claude com muita segurança! Vou adotar essas dicas no meu dia a dia, especialmente revisar as configurações e evitar colar informações sensíveis. Também vou ficar de olho nos termos, caso um dia eu mude de plano ou minha empresa adote algo mais robusto. Obrigada por toda a paciência e por explicar tudo com tanta clareza. Foi muito útil mesmo!</p>
+  </div></div>
+
+  <div class="end">Fim da sessão</div>
+  <div class="foot">Esta transcrição inclui conteúdo gerado por IA e é fornecida para seus propósitos de aprendizado pessoal.</div>
+</div>
+</body>
+</html>
