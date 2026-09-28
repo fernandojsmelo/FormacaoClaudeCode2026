@@ -1,6 +1,6 @@
 # Aula 4 — Benchmark Textual entre Modelos
 
-Este notebook compara **Kimi**, **Claude Opus**, **GPT-4o** e **Gemini** em tarefas textuais.
+Este notebook compara **Kimi**, **Claude Opus** e **GPT-5.5** em tarefas textuais.
 
 **Objetivo:** medir custo, tempo e qualidade das respostas para o mesmo prompt.
 
@@ -16,7 +16,7 @@ Descomente e execute a linha abaixo caso ainda não tenha instalado.
 
 
 ```python
-# !pip install openai anthropic google-generativeai python-dotenv pandas matplotlib
+# !pip install openai anthropic python-dotenv pandas matplotlib
 ```
 
 ## 2. Configuração do ambiente
@@ -32,20 +32,18 @@ from dotenv import load_dotenv
 # Clientes das APIs
 import openai
 import anthropic
-import google.generativeai as genai
 
 load_dotenv()
 
 KIMI_API_KEY = os.getenv("KIMI_API_KEY")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Inicialização dos clientes
 kimi_client = openai.OpenAI(api_key=KIMI_API_KEY, base_url="https://api.moonshot.ai/v1")
 anthropic_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
-genai.configure(api_key=GOOGLE_API_KEY)
+
 ```
 
 ## 3. Tabela de preços
@@ -54,12 +52,14 @@ Atualize os valores conforme a tabela oficial de cada provider no momento da gra
 
 
 ```python
+# Preços por 1M tokens (USD) — verificados em 2026-08-03.
+# As chaves precisam bater com o campo "provider" retornado por cada call_*().
 PRICES = {
-    "kimi": {"input": 0.50, "output": 2.00},
-    "claude-opus": {"input": 15.00, "output": 75.00},
-    "gpt-5.5": {"input": 2.50, "output": 10.00},
-    "gemini": {"input": 1.25, "output": 5.00},
+    "kimi":        {"input":  3.00, "output": 15.00},  # kimi-k3 (Moonshot)
+    "claude-opus": {"input":  5.00, "output": 25.00},  # claude-opus-5 (Anthropic)
+    "gpt-5.5":     {"input":  5.00, "output": 30.00},  # gpt-5.5 (OpenAI), faixa <272K
 }
+
 ```
 
 ## 4. Funções padronizadas de chamada
@@ -87,20 +87,24 @@ def call_kimi(system_prompt, user_prompt, model="kimi-k3"):
         "time_seconds": elapsed
     }
 
-def call_claude(system_prompt, user_prompt, model="claude-opus-4-6"):
+def call_claude(system_prompt, user_prompt, model="claude-opus-5"):
     start = time.time()
+    # O claude-opus-5 não aceita temperature (400 invalid_request_error) e vem com
+    # thinking ligado por padrão, que consome parte do max_tokens — por isso o
+    # limite é mais folgado que os 4096 usados no opus-4-6.
     response = anthropic_client.messages.create(
         model=model,
-        max_tokens=4096,
+        max_tokens=16000,
         system=system_prompt,
-        messages=[{"role": "user", "content": user_prompt}],
-        temperature=0.3
+        messages=[{"role": "user", "content": user_prompt}]
     )
     elapsed = time.time() - start
+    # Com thinking ligado, content[0] é um bloco 'thinking'; o texto vem depois.
+    text = next(b.text for b in response.content if b.type == "text")
     return {
         "provider": "claude-opus",
         "model": model,
-        "response": response.content[0].text,
+        "response": text,
         "input_tokens": response.usage.input_tokens,
         "output_tokens": response.usage.output_tokens,
         "total_tokens": response.usage.input_tokens + response.usage.output_tokens,
@@ -109,13 +113,14 @@ def call_claude(system_prompt, user_prompt, model="claude-opus-4-6"):
 
 def call_openai(system_prompt, user_prompt, model="gpt-5.5"):
     start = time.time()
+    # O gpt-5.5 aceita apenas o temperature padrão (1). Enviar outro valor devolve
+    # 400 unsupported_value, por isso o parâmetro é omitido aqui.
     response = openai_client.chat.completions.create(
         model=model,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
-        ],
-        temperature=0.3
+        ]
     )
     elapsed = time.time() - start
     return {
@@ -128,24 +133,6 @@ def call_openai(system_prompt, user_prompt, model="gpt-5.5"):
         "time_seconds": elapsed
     }
 
-def call_gemini(system_prompt, user_prompt, model="gemini-3.5-flash"):
-    start = time.time()
-    gemini_model = genai.GenerativeModel(model)
-    response = gemini_model.generate_content(
-        [system_prompt, user_prompt],
-        generation_config={"temperature": 0.3}
-    )
-    elapsed = time.time() - start
-    usage = response.usage_metadata
-    return {
-        "provider": "gemini",
-        "model": model,
-        "response": response.text,
-        "input_tokens": usage.prompt_token_count,
-        "output_tokens": usage.candidates_token_count,
-        "total_tokens": usage.total_token_count,
-        "time_seconds": elapsed
-    }
 ```
 
 ## 5. Funções de cálculo de custo e execução do benchmark
@@ -158,13 +145,29 @@ def calculate_cost(provider, input_tokens, output_tokens):
     output_cost = (output_tokens / 1_000_000) * prices.get("output", 0)
     return round(input_cost + output_cost, 6)
 
+# Nome do provider por função de chamada — usado quando a call falha,
+# para que a linha de erro use a mesma chave de PRICES/quality_scores.
+CALLER_PROVIDERS = {
+    "call_kimi": "kimi",
+    "call_claude": "claude-opus",
+    "call_openai": "gpt-5.5",
+}
+
+# Colunas métricas (sem o texto da resposta) — úteis para exibir tabelas e gráficos.
+METRIC_COLUMNS = [
+    "task", "provider", "model",
+    "input_tokens", "output_tokens", "total_tokens",
+    "time_seconds", "cost_usd",
+]
+
 def run_textual_benchmark(system_prompt, user_prompt, task_name="tarefa"):
     """
     Executa o mesmo prompt nos 4 modelos e retorna um DataFrame comparativo.
+    O texto gerado fica na coluna "response" (última do DataFrame).
     """
     results = []
-    callers = [call_kimi, call_claude, call_openai, call_gemini]
-    
+    callers = [call_kimi, call_claude, call_openai]
+
     for caller in callers:
         try:
             result = caller(system_prompt, user_prompt)
@@ -177,9 +180,9 @@ def run_textual_benchmark(system_prompt, user_prompt, task_name="tarefa"):
             results.append(result)
         except Exception as e:
             results.append({
-                "provider": caller.__name__.replace("call_", ""),
+                "provider": CALLER_PROVIDERS.get(caller.__name__, caller.__name__),
                 "model": "error",
-                "response": str(e),
+                "response": f"[ERRO] {type(e).__name__}: {e}",
                 "input_tokens": 0,
                 "output_tokens": 0,
                 "total_tokens": 0,
@@ -187,17 +190,23 @@ def run_textual_benchmark(system_prompt, user_prompt, task_name="tarefa"):
                 "cost_usd": 0,
                 "task": task_name
             })
-    
+
     df = pd.DataFrame(results)
-    return df[["task", "provider", "model", "input_tokens", "output_tokens", "total_tokens", "time_seconds", "cost_usd"]]
+    # Mantém "response" no DataFrame — display_responses() depende dela.
+    return df[METRIC_COLUMNS + ["response"]]
+
+def metrics(df):
+    """Versão só com métricas, para exibir a tabela sem o texto das respostas."""
+    return df[METRIC_COLUMNS]
 
 def display_responses(df):
     for _, row in df.iterrows():
+        text = str(row["response"])
         print(f"\n{'='*60}")
         print(f"PROVIDER: {row['provider'].upper()} | MODEL: {row['model']}")
         print(f"TOKENS: {row['total_tokens']} | TIME: {row['time_seconds']:.2f}s | COST: ${row['cost_usd']:.6f}")
         print(f"{'='*60}")
-        print(row['response'][:800] + "..." if len(row['response']) > 800 else row['response'])
+        print(text[:800] + "..." if len(text) > 800 else text)
         print()
 ```
 
@@ -220,7 +229,7 @@ multimodalidade e capacidade de seguir instruções complexas.
 user_prompt = f"Resuma o seguinte texto em no máximo 3 parágrafos:\n\n{texto_tecnico}"
 
 df_resumo = run_textual_benchmark(system_prompt, user_prompt, task_name="resumo")
-df_resumo
+metrics(df_resumo)
 ```
 
 
@@ -238,7 +247,7 @@ user_prompt = """Explique o que é uma API REST e por que ela é importante no d
 Use no máximo 200 palavras e inclua um exemplo prático."""
 
 df_conceito = run_textual_benchmark(system_prompt, user_prompt, task_name="explicacao_conceito")
-df_conceito
+metrics(df_conceito)
 ```
 
 
@@ -257,7 +266,7 @@ desenvolvedores a gerenciar tarefas. Para cada funcionalidade, dê um nome, desc
 e explique como a IA seria usada."""
 
 df_ideias = run_textual_benchmark(system_prompt, user_prompt, task_name="geracao_ideias")
-df_ideias
+metrics(df_ideias)
 ```
 
 
@@ -270,7 +279,7 @@ display_responses(df_ideias)
 
 ```python
 df_all = pd.concat([df_resumo, df_conceito, df_ideias], ignore_index=True)
-df_all
+metrics(df_all)
 ```
 
 ## 10. Visualização comparativa
@@ -318,15 +327,12 @@ quality_scores = {
     ("kimi", "resumo"): 4,
     ("claude-opus", "resumo"): 5,
     ("gpt-5.5", "resumo"): 4,
-    ("gemini", "resumo"): 4,
     ("kimi", "explicacao_conceito"): 5,
     ("claude-opus", "explicacao_conceito"): 5,
     ("gpt-5.5", "explicacao_conceito"): 4,
-    ("gemini", "explicacao_conceito"): 4,
     ("kimi", "geracao_ideias"): 4,
     ("claude-opus", "geracao_ideias"): 5,
     ("gpt-5.5", "geracao_ideias"): 4,
-    ("gemini", "geracao_ideias"): 4,
 }
 
 df_all["quality_score"] = df_all.apply(
@@ -355,8 +361,13 @@ plt.show()
 
 
 ```python
-df_all.to_csv("benchmark_textual_resultados.csv", index=False)
+# Métricas (planilha enxuta) + respostas completas em arquivo separado
+df_all[METRIC_COLUMNS + ["quality_score", "efficiency"]].to_csv(
+    "benchmark_textual_resultados.csv", index=False
+)
+df_all.to_csv("benchmark_textual_respostas.csv", index=False)
 print("Resultados salvos em benchmark_textual_resultados.csv")
+print("Respostas completas salvas em benchmark_textual_respostas.csv")
 ```
 
 ## 13. Conclusão da aula
