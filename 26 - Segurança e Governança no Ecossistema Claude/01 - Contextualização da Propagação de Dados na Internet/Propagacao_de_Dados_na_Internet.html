@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Propagação de Dados na Internet</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.6px}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;align-items:stretch;margin:6px 0 4px}
+.node{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 10px 9px;text-align:center}
+.node .ic{font-size:20px;line-height:1}
+.node h4{margin:6px 0 3px;font-size:12px}
+.node p{margin:0;font-size:10.5px;color:var(--muted);line-height:1.4}
+.node .who{margin-top:6px;font-family:var(--mono);font-size:8.8px;color:var(--warn);letter-spacing:.04em}
+.node:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:34%;color:var(--accent);font-weight:700;font-size:13px;background:var(--bg);padding:0 1px}
+.cycle{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.cycle .c-step{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:9px;padding:9px 10px}
+.cycle .c-step .n{font-family:var(--mono);font-size:10px;color:var(--accent-ink)}
+.cycle .c-step h4{margin:3px 0 4px;font-size:12.5px}
+.cycle .c-step p{margin:0;font-size:10.8px;color:var(--muted)}
+.vis td:nth-child(2),.vis td:nth-child(3){text-align:center;font-weight:600}
+.y{color:var(--danger)} .n{color:var(--good)}
+.big{font-family:var(--display);font-size:26px;font-weight:600;color:var(--accent-ink);line-height:1}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Segurança e governança no ecossistema Claude · Aula 1</div>
+    <h1>Como os dados se<br><em>propagam na internet</em></h1>
+    <p class="lead">Antes de falar de privacidade em ferramentas de IA, é preciso entender o terreno: o caminho de uma informação desde o seu dispositivo, quem consegue ver o quê no trajeto, onde ela fica guardada e por que, uma vez publicada, é tão difícil apagá-la.</p>
+    <div class="chips"><span>Pegada digital</span><span>Trânsito e HTTPS</span><span>Cópias e retenção</span><span>Rastreamento</span><span>LGPD</span><span>Dados e IA</span></div>
+    <div class="byline">Formação Claude Code 2026 · Módulo de segurança e governança</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Ponto de partida</span><span class="n">01</span></div>
+  <h2>Sua <em>pegada digital</em></h2>
+  <p class="intro">Tudo o que você faz on-line deixa rastros. Parte deles você cria de propósito. A outra parte é gerada sem que você perceba, e costuma ser a maior.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Pegada ativa</div><h3>O que você publica e envia</h3>
+      <ul class="bullets"><li>Posts, comentários, fotos e currículos</li><li>Formulários de cadastro e compras</li><li>E-mails, mensagens e arquivos compartilhados</li><li><strong>Prompts e documentos enviados a assistentes de IA</strong></li></ul></div>
+    <div class="card"><div class="k">Pegada passiva</div><h3>O que é coletado sobre você</h3>
+      <ul class="bullets"><li>Endereço IP, localização aproximada e horários de acesso</li><li>Cookies e identificadores de navegador e de dispositivo</li><li>Páginas visitadas, cliques e tempo de leitura</li><li>Metadados de arquivos, como a localização GPS de uma foto</li></ul></div>
+  </div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><div class="big">Persistente</div><p style="margin-top:6px">Os dados costumam durar muito mais do que o contexto em que foram criados.</p></div>
+    <div class="card"><div class="big">Replicável</div><p style="margin-top:6px">Copiar custa quase zero, e uma informação rapidamente existe em muitos lugares.</p></div>
+    <div class="card"><div class="big">Combinável</div><p style="margin-top:6px">Dados inofensivos isolados, quando cruzados, revelam muito sobre uma pessoa.</p></div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Trajeto</span><span class="n">02</span></div>
+  <h2>A viagem de uma <em>mensagem</em></h2>
+  <p class="intro">Ao enviar um formulário, um e-mail ou um prompt, os dados são quebrados em <strong>pacotes</strong> que passam por vários intermediários até o destino. Cada etapa é um ponto onde algo pode ser observado ou guardado.</p>
+  <div class="flow">
+    <div class="node"><div class="ic">💻</div><h4>Seu dispositivo</h4><p>App ou navegador monta a requisição</p><div class="who">extensões, malware</div></div>
+    <div class="node"><div class="ic">📶</div><h4>Rede local</h4><p>Wi-Fi de casa, do escritório ou público</p><div class="who">quem controla a rede</div></div>
+    <div class="node"><div class="ic">🏢</div><h4>Provedor</h4><p>Sua operadora encaminha o tráfego</p><div class="who">provedor de acesso</div></div>
+    <div class="node"><div class="ic">🌐</div><h4>Internet</h4><p>Roteadores e redes de trânsito entre países</p><div class="who">intermediários</div></div>
+    <div class="node"><div class="ic">⚡</div><h4>CDN e proxies</h4><p>Distribuem e protegem o site</p><div class="who">operador da CDN</div></div>
+    <div class="node"><div class="ic">🗄</div><h4>Servidor</h4><p>Processa e grava o conteúdo</p><div class="who">empresa e fornecedores</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px;align-items:start">
+    <div class="card"><div class="k">DNS: a primeira pista</div><p style="color:var(--ink)">Antes de conectar, o dispositivo pergunta ao DNS qual é o endereço de <code>exemplo.com</code>. Essa consulta revela <strong>quais sites você acessa</strong>, mesmo que o conteúdo depois vá criptografado.</p></div>
+    <div class="callout warn" style="margin-top:0">A rota não é fixa nem nacional. Um pacote enviado de São Paulo para um serviço hospedado fora do Brasil cruza redes de outros países. É por isso que a <strong>transferência internacional de dados</strong> aparece na LGPD.</div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Criptografia</span><span class="n">03</span></div>
+  <h2>O que o <em>HTTPS</em> protege, e o que não protege</h2>
+  <p class="intro">O cadeado do navegador indica uma conexão <strong>HTTPS</strong> (TLS): o conteúdo trafega cifrado entre você e o servidor. Isso é essencial, mas não torna a comunicação invisível.</p>
+  <div class="grid g2" style="grid-template-columns:1.15fr 1fr;align-items:start">
+    <div class="table-wrap vis"><table>
+      <tr><th>Informação</th><th>Visível na rede?</th><th>Visível ao servidor?</th></tr>
+      <tr><td>Conteúdo: texto, senhas, arquivos</td><td class="n">não</td><td class="y">sim</td></tr>
+      <tr><td>Caminho da página (/conta/extrato)</td><td class="n">não</td><td class="y">sim</td></tr>
+      <tr><td>Domínio acessado (banco.com.br)</td><td class="y">em geral, sim</td><td class="y">sim</td></tr>
+      <tr><td>Seu endereço IP</td><td class="y">sim</td><td class="y">sim</td></tr>
+      <tr><td>Horário, duração e volume de dados</td><td class="y">sim</td><td class="y">sim</td></tr>
+    </table></div>
+    <div>
+      <div class="card"><div class="k">A lição central</div><p style="color:var(--ink)">O HTTPS protege o dado <strong>em trânsito</strong>. No destino, o servidor recebe tudo <strong>em claro</strong> para processar. A partir daí, o que acontece depende só de <strong>quem opera o serviço</strong> e das suas políticas.</p></div>
+      <div class="callout">Os <strong>metadados</strong> (quem, quando, de onde, quanto) contam muita coisa, mesmo sem o conteúdo: uma consulta às 3h da manhã num site de saúde já é uma informação sensível.</div>
+      <div class="callout danger">Sem o cadeado (HTTP puro), qualquer um no caminho, como a rede Wi-Fi pública, pode ler e até alterar o conteúdo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Armazenamento</span><span class="n">04</span></div>
+  <h2>Um dado, <em>muitas cópias</em></h2>
+  <p class="intro">Quando chega ao destino, a informação raramente fica num lugar só. Sistemas modernos multiplicam os dados para ganhar velocidade, resiliência e análise.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Banco de dados</div><p style="color:var(--ink)">A cópia principal, muitas vezes <strong>replicada</strong> em mais de uma região para não perder dados.</p></div>
+    <div class="card"><div class="k">Backups</div><p style="color:var(--ink)">Cópias de segurança guardadas por semanas ou anos. <strong>Apagar da base não apaga do backup</strong> na hora.</p></div>
+    <div class="card"><div class="k">Logs</div><p style="color:var(--ink)">Registros técnicos de acessos e erros que às vezes gravam, sem querer, trechos do conteúdo.</p></div>
+    <div class="card"><div class="k">Caches e CDNs</div><p style="color:var(--ink)">Cópias temporárias espalhadas pelo mundo para responder mais rápido.</p></div>
+    <div class="card"><div class="k">Analytics e fornecedores</div><p style="color:var(--ink)">Ferramentas de terceiros (suporte, métricas, e-mail) que recebem parte dos dados.</p></div>
+    <div class="card"><div class="k">Fora do sistema</div><p style="color:var(--ink)">Capturas de tela, e-mails encaminhados, planilhas exportadas: cópias que ninguém controla.</p></div>
+  </div>
+  <div class="callout warn"><strong>Por isso "apagar" é tão difícil:</strong> excluir um post remove a cópia visível, mas não necessariamente os backups, os caches, os arquivos de terceiros (como os arquivos da web) ou as capturas feitas por outras pessoas. A regra prática é <strong>pensar antes de enviar</strong>, porque depois o controle diminui.</div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Rastreamento</span><span class="n">05</span></div>
+  <h2>Como você é <em>rastreado</em> entre sites</h2>
+  <p class="intro">Além do que você envia, há um ecossistema inteiro dedicado a observar o que você faz e juntar essas observações num perfil.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:30%">Técnica</th><th>Como funciona</th></tr>
+      <tr><td>Cookies de 1ª parte</td><td style="color:var(--muted)">Guardados pelo próprio site: login, carrinho, preferências</td></tr>
+      <tr><td>Cookies de 3ª parte</td><td style="color:var(--muted)">De anunciantes embutidos em vários sites, que ligam suas visitas entre eles</td></tr>
+      <tr><td>Pixels e SDKs</td><td style="color:var(--muted)">Imagens invisíveis e bibliotecas em apps que avisam um terceiro quando você abre algo</td></tr>
+      <tr><td>Fingerprinting</td><td style="color:var(--muted)">Identifica o navegador pela combinação de fontes, tela, idioma e hardware, sem cookie</td></tr>
+      <tr><td>Login social</td><td style="color:var(--muted)">"Entrar com…" liga sua identidade real aos serviços que você usa</td></tr>
+    </table></div>
+    <div>
+      <div class="card"><div class="k">Corretores de dados (data brokers)</div><p style="color:var(--ink)">Empresas que <strong>compram, cruzam e revendem</strong> perfis montados a partir de muitas fontes: navegação, compras, cadastros públicos e vazamentos.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">Metadados de arquivos</div><p style="color:var(--ink)">Uma foto de celular pode trazer no EXIF a <strong>localização GPS</strong>, o modelo do aparelho e a hora. Um PDF ou DOCX pode trazer o <strong>nome do autor</strong> e o histórico de edição.</p></div>
+      <div class="callout good">Antes de compartilhar um arquivo, remova os metadados. Muitos apps e sistemas operacionais têm a opção "remover localização".</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Riscos</span><span class="n">06</span></div>
+  <h2>Quando os dados <em>escapam</em></h2>
+  <p class="intro">Um vazamento raramente é um "hacker de filme". Na maioria das vezes, é uma combinação de erro humano, configuração errada e credencial reutilizada.</p>
+  <div class="grid g4">
+    <div class="card"><div class="k">Configuração</div><h3>Banco exposto</h3><p>Base de dados ou storage na nuvem aberto por engano na internet.</p></div>
+    <div class="card"><div class="k">Credenciais</div><h3>Senha reutilizada</h3><p>Senha vazada num site testada automaticamente em outros (<em>credential stuffing</em>).</p></div>
+    <div class="card"><div class="k">Engenharia social</div><h3>Phishing</h3><p>Mensagem falsa que convence a pessoa a entregar acesso ou dados.</p></div>
+    <div class="card"><div class="k">Erro humano</div><h3>Envio indevido</h3><p>Planilha com dados de clientes enviada ou colada no lugar errado.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Efeito cascata</div><p style="color:var(--ink)">Dados vazados circulam em fóruns, são combinados com outros vazamentos e alimentam golpes cada vez mais convincentes, com seu nome, CPF e histórico de compras certos.</p></div>
+    <div>
+      <div class="card"><div class="k">Proteções que mais funcionam</div>
+        <ul class="checklist"><li>Senhas únicas com um gerenciador de senhas</li><li>Autenticação em dois fatores (2FA)</li><li>Desconfiar de urgência em mensagens</li><li>Verificar se seu e-mail já apareceu em vazamentos públicos</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Legislação</span><span class="n">07</span></div>
+  <h2>A <em>LGPD</em> em cinco minutos</h2>
+  <p class="intro">A Lei Geral de Proteção de Dados (Lei nº 13.709/2018) regula como pessoas e empresas tratam dados pessoais no Brasil. Ela vale para qualquer tratamento de dados de pessoas no país, inclusive feito por empresas estrangeiras.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:30%">Conceito</th><th>O que é</th></tr>
+        <tr><td>Dado pessoal</td><td style="color:var(--muted)">Informação que identifica ou <strong style="color:var(--ink)">pode identificar</strong> uma pessoa: nome, CPF, e-mail, IP, localização</td></tr>
+        <tr><td>Dado sensível</td><td style="color:var(--muted)">Saúde, origem racial ou étnica, religião, opinião política, filiação sindical, vida sexual, dados genéticos e biométricos</td></tr>
+        <tr><td>Titular</td><td style="color:var(--muted)">A pessoa a quem os dados se referem</td></tr>
+        <tr><td>Controlador</td><td style="color:var(--muted)">Quem decide o que fazer com os dados</td></tr>
+        <tr><td>Operador</td><td style="color:var(--muted)">Quem trata os dados em nome do controlador</td></tr>
+        <tr><td>ANPD</td><td style="color:var(--muted)">Autoridade Nacional de Proteção de Dados, que fiscaliza e aplica sanções</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Princípios que guiam tudo</div>
+        <ul class="bullets"><li><strong>Finalidade:</strong> usar só para o propósito informado</li><li><strong>Necessidade:</strong> coletar o mínimo necessário</li><li><strong>Transparência:</strong> dizer ao titular o que é feito</li><li><strong>Segurança:</strong> proteger contra acesso indevido</li></ul></div>
+      <div class="card" style="margin-top:10px"><div class="k">Direitos do titular</div><p style="color:var(--ink)">Confirmar se há tratamento, acessar, corrigir, pedir a eliminação e a portabilidade dos dados e revogar o consentimento.</p></div>
+      <div class="callout warn">As sanções incluem advertência e multa de até <strong>2% do faturamento</strong> no Brasil, limitada a <strong>R$ 50 milhões por infração</strong>, além da publicização da infração.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Ciclo de vida</span><span class="n">08</span></div>
+  <h2>O <em>ciclo de vida</em> de um dado</h2>
+  <p class="intro">Governança de dados é cuidar da informação em todas as etapas, não só na hora de guardar. Cada etapa tem uma pergunta que precisa ter resposta.</p>
+  <div class="cycle">
+    <div class="c-step"><div class="n">01</div><h4>Coleta</h4><p>Preciso mesmo deste dado? Com qual base legal?</p></div>
+    <div class="c-step"><div class="n">02</div><h4>Trânsito</h4><p>Viaja cifrado? Por quais países e serviços passa?</p></div>
+    <div class="c-step"><div class="n">03</div><h4>Armazenamento</h4><p>Onde fica, quem acessa e com quais permissões?</p></div>
+    <div class="c-step"><div class="n">04</div><h4>Processamento</h4><p>Quais sistemas, pessoas e IAs usam o dado?</p></div>
+    <div class="c-step"><div class="n">05</div><h4>Compartilhamento</h4><p>Quais fornecedores recebem? Há contrato?</p></div>
+    <div class="c-step"><div class="n">06</div><h4>Descarte</h4><p>Quando é apagado, inclusive dos backups?</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px;align-items:start">
+    <div class="card"><div class="k">Minimização</div><p style="color:var(--ink)">O dado mais seguro é o que <strong>nunca foi coletado</strong>. Cada campo a mais num formulário é mais uma coisa para proteger, e mais uma para vazar.</p></div>
+    <div class="callout good" style="margin-top:0">Guarde este ciclo: na aula 03 ele vira a base da <strong>política de uso de IA</strong> de uma empresa, com as mesmas seis perguntas aplicadas ao que se envia a um assistente.</div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Dados e IA</span><span class="n">09</span></div>
+  <h2>O que muda quando o destino é uma <em>IA</em></h2>
+  <p class="intro">Um prompt é uma mensagem como outra qualquer: sai do seu dispositivo, viaja cifrado e é processado no servidor do provedor. A diferença está na <strong>quantidade de contexto</strong> que colamos sem pensar.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">O que costuma ir num prompt</div>
+        <ul class="bullets"><li>Trechos de contratos, e-mails e atas de reunião</li><li>Planilhas com nomes, CPFs e valores de clientes</li><li>Código-fonte, chaves de API e senhas esquecidas no meio</li><li>Documentos internos e estratégicos</li></ul></div>
+      <div class="callout danger"><strong>Shadow AI:</strong> quando funcionários usam contas pessoais de ferramentas de IA para trabalho, os dados da empresa saem do ambiente controlado, sem contrato, sem configuração e sem registro.</div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Perguntas a fazer sobre qualquer ferramenta de IA</div>
+        <ul class="checklist"><li>Os dados são usados para <strong>treinar modelos</strong>? Dá para desativar?</li><li>Por quanto tempo as conversas ficam <strong>retidas</strong>?</li><li>Quem na empresa fornecedora pode <strong>acessar</strong> o conteúdo?</li><li>A conta é <strong>pessoal ou corporativa</strong>, e com quais garantias contratuais?</li><li>Conectores e integrações dão acesso a <strong>quais sistemas</strong>?</li></ul></div>
+      <div class="callout">As respostas mudam conforme o produto, o plano e as configurações. Na <strong>aula 02</strong> veremos como isso funciona no ecossistema Claude.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Prática</span><span class="n">10</span></div>
+  <h2>Boas práticas para o <em>dia a dia</em></h2>
+  <div class="grid g3" style="align-items:start;margin-top:8px">
+    <div class="card"><div class="k">Ao navegar</div>
+      <ul class="checklist"><li>Confira o HTTPS antes de digitar dados</li><li>Evite Wi-Fi público para coisas sensíveis, ou use VPN confiável</li><li>Revise permissões de apps e extensões</li><li>Limpe ou bloqueie cookies de terceiros</li></ul></div>
+    <div class="card"><div class="k">Ao compartilhar</div>
+      <ul class="checklist"><li>Remova metadados de fotos e documentos</li><li>Compartilhe links com prazo e permissão mínima</li><li>Pense se o dado precisa mesmo sair dali</li><li>Anonimize: troque nomes e CPFs por exemplos</li></ul></div>
+    <div class="card"><div class="k">Ao usar IA</div>
+      <ul class="checklist"><li>Nunca cole senhas, tokens e chaves de API</li><li>Use a conta <strong>corporativa</strong> para trabalho</li><li>Revise as configurações de privacidade da ferramenta</li><li>Envie o mínimo de contexto necessário</li></ul></div>
+  </div>
+  <div class="callout good"><strong>Teste rápido antes de enviar qualquer coisa:</strong> "Se este conteúdo aparecesse amanhã num vazamento, qual seria o estrago?" Se a resposta incomoda, reduza, anonimize ou não envie.</div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">11</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Numa conexão HTTPS, o que o provedor de internet ainda consegue ver?</p>
+        <div class="opts"><div>A) As senhas digitadas</div><div>B) O conteúdo da página</div><div>C) O domínio, o IP e o horário</div><div>D) Nada</div></div>
+        <div class="answer"><b>C.</b> O conteúdo vai cifrado, mas os metadados (domínio, IP, horário e volume) continuam visíveis na rede.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Você apagou um post. Por que ele ainda pode existir?</p>
+        <div class="opts"><div>A) Não pode, apagou está apagado</div><div>B) Backups, caches, arquivos da web e capturas de terceiros</div><div>C) Só se o site for inseguro</div><div>D) Por causa do HTTPS</div></div>
+        <div class="answer"><b>B.</b> Os dados são replicados em muitos lugares, e excluir a cópia visível não remove as outras na hora.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Pela LGPD, qual destes é um dado pessoal <strong>sensível</strong>?</p>
+        <div class="opts"><div>A) E-mail</div><div>B) Endereço IP</div><div>C) Diagnóstico de saúde</div><div>D) Nome completo</div></div>
+        <div class="answer"><b>C.</b> Dados de saúde estão entre os sensíveis. E-mail, IP e nome são pessoais, mas não sensíveis.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Um funcionário cola a planilha de clientes na conta pessoal de um chatbot. Como se chama esse risco?</p>
+        <div class="opts"><div>A) Fingerprinting</div><div>B) Shadow AI</div><div>C) Credential stuffing</div><div>D) CDN</div></div>
+        <div class="answer"><b>B.</b> É o uso de ferramentas de IA fora do ambiente controlado pela empresa, sem contrato nem governança.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Pense antes de enviar:<br><em>dados viajam e ficam</em></h1>
+    <p class="lead">Cada informação que sai do seu dispositivo passa por vários intermediários, deixa metadados mesmo com HTTPS, é copiada para bancos, backups, logs e fornecedores e pode ser cruzada com outras. A LGPD dá direitos e deveres sobre esse ciclo, e as ferramentas de IA são só mais um destino, que pede o mesmo cuidado.</p>
+    <div class="chips"><span>Pegada ativa e passiva</span><span>HTTPS ≠ invisível</span><span>Muitas cópias</span><span>LGPD</span><span>Shadow AI</span></div>
+    <div class="next">Próxima aula → Privacidade no Claude</div>
+    <div class="source">Referências: Lei nº 13.709/2018 (LGPD) e orientações da ANPD. Esta aula é introdutória e não substitui orientação jurídica. Consulte sempre as políticas atualizadas de cada serviço.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
