@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Privacidade no Claude</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.4px}
+td code{font-size:10.3px}
+.term{font-size:10.8px}
+.y{color:var(--danger)} .g{color:var(--good)} .w{color:var(--warn)}
+.big{font-family:var(--display);font-size:30px;font-weight:600;color:var(--accent-ink);line-height:1}
+.fam{border-radius:12px;padding:14px 16px;border:1px solid var(--border)}
+.fam.c{background:var(--surface);border-top:3px solid var(--warn)}
+.fam.b{background:var(--surface);border-top:3px solid var(--good)}
+.fam h3{margin:4px 0 6px;font-size:15px}
+.path{font-family:var(--mono);font-size:11px;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:8px;padding:8px 12px}
+.path b{color:var(--accent-ink)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Segurança e governança no ecossistema Claude · Aula 2</div>
+    <h1>Privacidade<br><em>no Claude</em></h1>
+    <p class="lead">O que acontece com o que você envia ao Claude: quando os dados podem treinar modelos, por quanto tempo ficam guardados, quem pode acessá-los, o que muda entre contas pessoais e corporativas e quais controles estão nas suas mãos, no Claude.ai e no Claude Code.</p>
+    <div class="chips"><span>Consumidor × comercial</span><span>Treinamento</span><span>Retenção</span><span>Feedback 👍👎</span><span>Claude Code</span><span>Seus controles</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado no Privacy Center, na Política de Privacidade e na documentação oficial da Anthropic (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Ponto de partida</span><span class="n">01</span></div>
+  <h2>Duas famílias de produtos, <em>duas regras</em></h2>
+  <p class="intro">A primeira pergunta sobre privacidade no Claude é sempre a mesma: <strong>que tipo de conta você está usando?</strong> A Anthropic tem termos diferentes para uso pessoal e uso comercial, e quase todas as respostas desta aula dependem disso.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="fam c"><div class="k">Termos de consumidor</div><h3>Free, Pro e Max</h3>
+      <ul class="bullets"><li>Contas pessoais do Claude.ai e dos apps</li><li><strong>Inclui o Claude Code</strong> usado com login dessas contas</li><li>Você decide se seus dados ajudam a treinar modelos</li><li>A Anthropic é a <strong>controladora</strong> dos seus dados</li></ul></div>
+    <div class="fam b"><div class="k">Termos comerciais</div><h3>Team, Enterprise, API e nuvens</h3>
+      <ul class="bullets"><li>Claude for Work (Team e Enterprise), Console e API</li><li>Amazon Bedrock, Google Cloud Vertex, Claude Gov e Education</li><li><strong>Não treina com seus dados</strong> por padrão</li><li>A empresa cliente é a <strong>controladora</strong>, e a Anthropic é a <strong>operadora</strong></li></ul></div>
+  </div>
+  <div class="callout warn" style="margin-top:12px"><strong>Lembra da aula 1?</strong> Controlador e operador são conceitos da LGPD. No plano comercial, quem decide sobre os dados é a sua empresa, e a Anthropic só os processa conforme as instruções dela. Por isso, uma conta pessoal usada para trabalho é o exemplo clássico de <strong>Shadow AI</strong>.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Consumidor</span><span class="n">02</span></div>
+  <h2>Seus dados treinam o Claude? <em>Você decide</em></h2>
+  <p class="intro">Desde a atualização dos Termos de Consumidor (agosto de 2025), as contas Free, Pro e Max têm uma opção explícita. Com ela ligada, novas conversas e sessões de código podem ser usadas para treinar modelos futuros.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">Onde fica a opção</div>
+        <div class="path" style="margin-top:6px">Configurações → <b>Privacidade</b> → "<b>Help improve our AI models</b>"</div>
+        <p style="margin-top:8px">Também em <code>claude.ai/settings/data-privacy-controls</code>. Vale no navegador, no desktop e no celular, e pode ser mudada a qualquer momento.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">O que entra, se estiver ligada</div>
+        <ul class="bullets"><li>A conversa inteira, com o conteúdo enviado</li><li>Estilos personalizados e preferências de conversa</li><li>Dados de uso do <strong>Claude for Chrome</strong></li><li>Sessões do <strong>Claude Code</strong> feitas com essa conta</li></ul></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">O que <span class="g">não</span> entra</div>
+        <ul class="checklist"><li>Chats <strong>incognito</strong>, mesmo com a opção ligada</li><li>Conversas que você <strong>excluiu</strong></li><li>Conteúdo bruto de <strong>conectores e servidores MCP</strong> (ex.: Google Drive), a menos que você o copie para a conversa</li><li>Conversas antigas sem atividade nova, após a escolha</li></ul></div>
+      <div class="callout warn">Desligar a opção vale para o futuro: os dados <strong>não saem</strong> de treinos já iniciados nem de modelos já treinados.</div>
+      <div class="callout">Mesmo com a opção desligada, conversas <strong>sinalizadas por violar a Política de Uso</strong> podem ser usadas para melhorar os sistemas de segurança.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Consumidor</span><span class="n">03</span></div>
+  <h2>Por quanto tempo os dados <em>ficam guardados</em></h2>
+  <p class="intro">A retenção depende da sua escolha de treinamento e do que acontece com a conversa. Estes são os prazos publicados no Privacy Center para as contas Free, Pro e Max.</p>
+  <div class="grid g2" style="grid-template-columns:1.35fr 1fr;align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:52%">Situação</th><th>Prazo</th></tr>
+      <tr><td>Opção de treinamento <strong>desligada</strong></td><td class="g">30 dias</td></tr>
+      <tr><td>Opção de treinamento <strong>ligada</strong> (dados desidentificados, no pipeline de treino)</td><td class="w">até 5 anos</td></tr>
+      <tr><td>Conversa <strong>excluída</strong> por você</td><td class="g">sai do histórico na hora, e do back-end em até 30 dias</td></tr>
+      <tr><td>Feedback 👍/👎 ou relatório de bug</td><td class="w">5 anos</td></tr>
+      <tr><td>Conversa sinalizada por violar a Política de Uso</td><td class="y">entradas e saídas: até 2 anos · pontuações de segurança: até 7 anos</td></tr>
+      <tr><td>Exigência legal ou disputa</td><td style="color:var(--muted)">pelo tempo necessário</td></tr>
+    </table></div>
+    <div>
+      <div class="grid g2">
+        <div class="card"><div class="big">30</div><p style="margin-top:4px">dias, com o treino desligado</p></div>
+        <div class="card"><div class="big">5</div><p style="margin-top:4px">anos, com o treino ligado</p></div>
+      </div>
+      <div class="callout good">A mudança para 5 anos só vale para conversas <strong>novas ou retomadas</strong> depois de ligar a opção.</div>
+      <div class="callout">Por que tanto tempo? Segundo a Anthropic, ciclos de desenvolvimento de modelos levam de 18 a 24 meses, e dados consistentes ao longo do tempo ajudam a treinar modelos e classificadores de abuso.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Atenção</span><span class="n">04</span></div>
+  <h2>O botão <em>👍 / 👎</em> não é inocente</h2>
+  <p class="intro">Dar joinha numa resposta parece um gesto pequeno, mas é um <strong>envio explícito de dados</strong> para a Anthropic, e vale tanto em contas pessoais quanto em comerciais.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">O que é enviado</div><p style="color:var(--ink)">A <strong>conversa inteira</strong> relacionada ao feedback, com conteúdo, estilos e preferências, não só a resposta avaliada.</p></div>
+    <div class="card"><div class="k">Por quanto tempo</div><p style="color:var(--ink)">Fica guardada por <strong>5 anos</strong> no back-end da Anthropic, separada do seu e-mail e das suas outras conversas.</p></div>
+    <div class="card"><div class="k">Para quê</div><p style="color:var(--ink)">Analisar a eficácia do serviço, pesquisa e <strong>treinamento de modelos</strong>, inclusive em planos comerciais, que em geral não treinam com dados.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="callout danger" style="margin-top:0"><strong>Regra prática:</strong> não dê 👍/👎 em conversas com dados pessoais de terceiros, segredos da empresa, código proprietário ou qualquer coisa que você não enviaria por e-mail para fora.</div>
+    <div class="callout" style="margin-top:0">O mesmo vale no Claude Code: transcrições enviadas com <code>/feedback</code>, <code>/bug</code> ou <code>/share</code> também ficam <strong>5 anos</strong>. Revise o conteúdo antes de confirmar o envio.</div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Comercial</span><span class="n">05</span></div>
+  <h2>Team, Enterprise e API: <em>a empresa no controle</em></h2>
+  <p class="intro">Nos produtos comerciais, a regra padrão se inverte: os dados <strong>não treinam modelos</strong>, e a organização decide quem acessa o quê.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">Treinamento</div><p style="color:var(--ink)">Chats e sessões de código <strong>não são usados para treinar</strong>, a menos que a organização entre no <strong>Development Partner Program</strong> ou que alguém envie feedback 👍/👎.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">Quem manda nos dados</div><p style="color:var(--ink)">O <strong>Primary Owner</strong> da organização administra as contas e pode <strong>exportar os dados dos usuários</strong>, inclusive as conversas e os arquivos enviados. Numa conta de trabalho, suas conversas são visíveis para a empresa.</p></div>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Produto</th><th>Retenção padrão</th></tr>
+      <tr><td>API</td><td style="color:var(--muted)">Entradas e saídas apagadas em <strong style="color:var(--ink)">até 30 dias</strong> (exceções: Files API, acordos específicos, violações e lei)</td></tr>
+      <tr><td>Team e Enterprise</td><td style="color:var(--muted)">Conversas ficam no produto até serem excluídas. Depois, somem do back-end em até 30 dias</td></tr>
+      <tr><td>Enterprise com retenção personalizada</td><td style="color:var(--muted)">Prazo definido pelo Owner, com <strong style="color:var(--ink)">mínimo de 30 dias</strong>. Projetos ficam indefinidamente por padrão</td></tr>
+      <tr><td>Incognito (Work)</td><td style="color:var(--muted)">Apagado automaticamente em até 30 dias</td></tr>
+      <tr><td><strong>Zero Data Retention</strong></td><td style="color:var(--muted)">Por acordo, para API e Claude Code no Enterprise elegíveis: a Anthropic não guarda entradas e saídas, só os resultados dos classificadores de segurança</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Comparativo</span><span class="n">06</span></div>
+  <h2>Consumidor × comercial <em>lado a lado</em></h2>
+  <div class="table-wrap" style="margin-top:8px"><table>
+    <tr><th style="width:26%">Aspecto</th><th style="width:37%">Free · Pro · Max (inclui Claude Code)</th><th>Team · Enterprise · API</th></tr>
+    <tr><td>Treina modelos?</td><td class="w">Só se você ligar a opção</td><td class="g">Não, por padrão (salvo Development Partner Program)</td></tr>
+    <tr><td>Retenção padrão</td><td>30 dias (treino desligado) ou até 5 anos (ligado)</td><td>API: 30 dias · Work: até a exclusão, ou retenção personalizada</td></tr>
+    <tr><td>Zero Data Retention</td><td class="y">Não disponível</td><td class="g">Por acordo, para produtos elegíveis</td></tr>
+    <tr><td>Quem controla os dados (LGPD)</td><td>Anthropic (controladora)</td><td>Sua empresa (controladora), Anthropic (operadora)</td></tr>
+    <tr><td>Quem pode ver suas conversas</td><td>Só você, salvo feedback ou revisão de segurança</td><td>Você e os administradores da organização (exportação)</td></tr>
+    <tr><td>Feedback 👍/👎</td><td colspan="2">Envia a conversa inteira, guardada por 5 anos e usável em treino, <strong>nos dois casos</strong></td></tr>
+    <tr><td>Violação da Política de Uso</td><td colspan="2">Entradas e saídas por até 2 anos e pontuações de segurança por até 7 anos, <strong>nos dois casos</strong></td></tr>
+  </table></div>
+  <div class="callout warn"><strong>Conclusão para o trabalho:</strong> dados da empresa devem ir para uma <strong>conta comercial</strong> administrada pela empresa, com contrato, controles e sem treino por padrão, e não para a sua conta pessoal.</div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Claude Code</span><span class="n">07</span></div>
+  <h2>Privacidade no <em>Claude Code</em></h2>
+  <p class="intro">O Claude Code roda na sua máquina, mas conversa com a API: <strong>seus prompts, os arquivos que ele lê e as respostas</strong> trafegam pela rede (TLS 1.2+). As regras de treino e retenção seguem o tipo de conta com que você fez login.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">Cópia local em texto puro</div><p style="color:var(--ink)">As transcrições das sessões ficam <strong>sem criptografia</strong> em <code>~/.claude/projects/</code> por <strong>30 dias</strong>, para permitir retomar sessões. O prazo é ajustável com <code>cleanupPeriodDays</code>.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">Telemetria</div><p style="color:var(--ink)">As métricas de uso <strong>não incluem código, prompts nem caminhos de arquivo</strong>. Os relatórios de erro removem padrões conhecidos de segredos e dados pessoais antes de sair da máquina.</p></div>
+    </div>
+    <div>
+      <div class="term-title">settings.json: desliga métricas, erros e pesquisas de uma vez</div>
+<pre class="term">{
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+  },
+  "cleanupPeriodDays": 7
+}
+
+<span class="c"># ou individualmente, no shell:</span>
+export DISABLE_TELEMETRY=1
+export DISABLE_ERROR_REPORTING=1</pre>
+      <div class="callout warn">Desligar a telemetria <strong>não impede</strong> que o conteúdo das suas sessões vá para a API: sem isso o Claude Code não funciona. O que decide o treino é a opção de privacidade da conta.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Claude Code</span><span class="n">08</span></div>
+  <h2>Protegendo segredos do <em>repositório</em></h2>
+  <p class="intro">No Claude Code, o maior risco de privacidade não é a política da Anthropic, e sim <strong>o que o agente lê</strong>. Tudo o que ele abre para trabalhar vira parte do prompt.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="term-title">.claude/settings.json: bloqueando leituras sensíveis</div>
+<pre class="term">{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/*.pem)"
+    ]
+  }
+}</pre>
+      <div class="callout good">Versione este arquivo no repositório: a proteção passa a valer para toda a equipe, não só para você.</div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Boas práticas</div>
+        <ul class="checklist"><li>Mantenha segredos em <code>.env</code> fora do Git e bloqueie a leitura deles</li><li>Use dados fictícios ou anonimizados em testes e exemplos</li><li>Revise o que o agente pretende ler antes de aprovar</li><li>Não cole tokens e chaves no prompt "só para testar"</li><li>Apague ou reduza <code>~/.claude/projects/</code> em máquinas compartilhadas</li></ul></div>
+      <div class="callout">Conectores e servidores MCP funcionam do mesmo jeito: o que eles trazem para a conversa passa a fazer parte dela. Conecte só o necessário e com o menor acesso possível.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Segurança técnica</span><span class="n">09</span></div>
+  <h2>Como a Anthropic <em>protege os dados</em></h2>
+  <div class="grid g3" style="align-items:start;margin-top:8px">
+    <div class="card"><div class="k">Criptografia</div><p style="color:var(--ink)">Dados criptografados <strong>em trânsito</strong> e <strong>em repouso</strong>, automaticamente.</p></div>
+    <div class="card"><div class="k">Acesso de funcionários</div><p style="color:var(--ink)">Por padrão, <strong>funcionários não acessam</strong> suas conversas. As exceções são quando você envia feedback e quando o time de Trust &amp; Safety precisa revisar uma violação, com base na necessidade de saber.</p></div>
+    <div class="card"><div class="k">Controles internos</div><p style="color:var(--ink)">Menor privilégio, autenticação multifator, segmentação de rede, monitoramento e treinamento anual da equipe.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th>Certificações informadas</th><th>O que atestam</th></tr>
+      <tr><td>ISO 27001:2022</td><td style="color:var(--muted)">Gestão de segurança da informação</td></tr>
+      <tr><td>ISO/IEC 42001:2023</td><td style="color:var(--muted)">Gestão de sistemas de IA</td></tr>
+      <tr><td>SOC 2 Tipo I e II</td><td style="color:var(--muted)">Controles de segurança auditados</td></tr>
+      <tr><td>HIPAA (com BAA)</td><td style="color:var(--muted)">Configuração para dados de saúde (EUA)</td></tr>
+    </table></div>
+    <div>
+      <div class="callout warn" style="margin-top:0"><strong>Transferência internacional:</strong> os dados são <strong>armazenados nos EUA</strong> e podem ser processados em outros países. Para empresas brasileiras, esse ponto entra na análise da LGPD (aula 1) e no contrato.</div>
+      <div class="callout">Documentos de conformidade e o acordo de tratamento de dados (DPA) ficam no <strong>Trust Center</strong> da Anthropic (<code>trust.anthropic.com</code>).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Na prática</span><span class="n">10</span></div>
+  <h2>Os controles que estão <em>nas suas mãos</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:8px">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Revise a opção de treinamento</h3><p>Configurações → Privacidade → "Help improve our AI models". Decida conscientemente.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Use chats incognito</h3><p>Para assuntos sensíveis: eles <strong>não treinam</strong> o Claude, mesmo com a opção ligada.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Exclua o que não precisa</h3><p>Conversas excluídas saem do histórico na hora, do back-end em até 30 dias, e não entram em treinos futuros.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Cuidado com o compartilhamento</h3><p>Links de chats compartilhados expõem a conversa. Revogue os que não usa mais.</p></div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="b">5</div><div><h3>Exporte seus dados</h3><p>Nas configurações da conta você pode exportar o histórico: é o direito de acesso da LGPD na prática.</p></div></div>
+      <div class="step"><div class="b">6</div><div><h3>Exclua a conta, se quiser</h3><p>Ao excluir a conta, seus dados deixam de entrar em treinos futuros.</p></div></div>
+      <div class="step"><div class="b">7</div><div><h3>No Claude Code</h3><p>Bloqueie a leitura de segredos, ajuste <code>cleanupPeriodDays</code> e reduza a telemetria se a política da empresa pedir.</p></div></div>
+      <div class="step"><div class="b">8</div><div><h3>Pense antes do 👍/👎</h3><p>Só em conversas sem nada sensível.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">11</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Você usa o Claude Code com login de uma conta Pro. Qual regra de treinamento vale?</p>
+        <div class="opts"><div>A) Nunca treina, porque é código</div><div>B) A opção de privacidade da sua conta Pro</div><div>C) Sempre treina</div><div>D) As regras do plano Enterprise</div></div>
+        <div class="answer"><b>B.</b> O Claude Code segue o tipo de conta do login. Em Free, Pro e Max vale a sua opção de treinamento.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Numa conta Pro com o treinamento ligado, qual é o prazo máximo de retenção das conversas novas?</p>
+        <div class="opts"><div>A) 30 dias</div><div>B) 1 ano</div><div>C) Até 5 anos</div><div>D) Para sempre</div></div>
+        <div class="answer"><b>C.</b> Até 5 anos, desidentificadas. Com a opção desligada, a retenção é de 30 dias.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O que acontece ao clicar 👎 numa resposta?</p>
+        <div class="opts"><div>A) Nada é enviado</div><div>B) Só a nota é registrada</div><div>C) A conversa inteira é enviada e guardada por 5 anos</div><div>D) A conversa é excluída</div></div>
+        <div class="answer"><b>C.</b> O feedback leva a conversa relacionada inteira, guardada por 5 anos e usável em treinamento, inclusive em planos comerciais.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Onde o Claude Code guarda as transcrições das sessões na sua máquina?</p>
+        <div class="opts"><div>A) Em lugar nenhum</div><div>B) Criptografadas na nuvem</div><div>C) Em texto puro em ~/.claude/projects/</div><div>D) No .git do projeto</div></div>
+        <div class="answer"><b>C.</b> Ficam em texto puro por 30 dias (ajustável com <code>cleanupPeriodDays</code>), para permitir retomar sessões.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Privacidade começa<br><em>pela conta certa</em></h1>
+    <p class="lead">Nas contas Free, Pro e Max, você decide se seus dados treinam o Claude, com 30 dias de retenção sem treino e até 5 anos com treino. Nos planos comerciais, os dados não treinam modelos por padrão e a empresa controla o acesso. Feedback e violações têm prazos próprios nos dois casos. No Claude Code, o cuidado principal é o que o agente lê e o que fica guardado localmente.</p>
+    <div class="chips"><span>Opção de treinamento</span><span>30 dias × 5 anos</span><span>👍👎 = 5 anos</span><span>Conta comercial para trabalho</span><span>deny em segredos</span></div>
+    <div class="next">Próxima aula → Segurança digital para empresas</div>
+    <div class="source">Fontes: privacy.claude.com (artigos de consumidor e comercial, atualizados entre mar e ago/2026), anthropic.com/legal/privacy, anthropic.com/news/updates-to-our-consumer-terms (ago/2025) e docs.claude.com/en/docs/claude-code/data-usage. Políticas mudam: confira sempre as versões atuais. Esta aula não substitui orientação jurídica.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
