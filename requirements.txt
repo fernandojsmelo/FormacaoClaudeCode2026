@@ -1,5 +1,6 @@
 # Ferramentas do repositório (scripts/notebook_to_pdf.py)
 nbconvert>=7.17
 markdown>=3.11
-# scripts/fill_pdf_margins.py
+# scripts/fill_pdf_margins.py e scripts/check_pdfs.py
 pypdf>=6.0
+pillow>=10.0
