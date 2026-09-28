@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Slash Commands</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+kbd{font-family:var(--mono);font-size:10.5px;background:var(--surface-2);border:1px solid var(--border-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink);white-space:nowrap}
+td code{font-size:10.5px}
+td{font-size:11.6px}
+.term{font-size:11px}
+.cheat td{padding:4px 9px;font-size:10.6px}
+.cheat td:first-child{white-space:nowrap}
+.cheat th{padding:6px 9px}
+.grp td{background:var(--surface-2);font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);padding:4px 9px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Primeiros passos com Codex · Aula 2</div>
+    <h1>Slash<br><em>Commands</em></h1>
+    <p class="lead">Os comandos que você digita <strong>dentro</strong> da sessão do Codex, começando com <code>/</code>: configurar o projeto, planejar, revisar, gerenciar o contexto, conectar ferramentas e personalizar a interface, sem sair do terminal.</p>
+    <div class="chips"><span>/init</span><span>/plan · /goal</span><span>/review · /diff</span><span>/compact</span><span>/import</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Codex CLI (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Fundamentos</span><span class="n">01</span></div>
+  <h2>Como funcionam os <em>slash commands</em></h2>
+  <p class="intro">Na aula anterior vimos os <strong>comandos do terminal</strong> (<code>codex exec</code>, <code>codex resume</code>…). Os slash commands são digitados <strong>no composer, dentro da sessão</strong>, e agem sobre ela sem precisar reiniciar.</p>
+  <div class="grid g2" style="grid-template-columns:1.1fr 1fr;align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Digite <code>/</code></h3><p>Abre o menu com todos os comandos disponíveis.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Filtre digitando</h3><p><code>/rev</code> já mostra <code>/review</code>. O menu completa o nome para você.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Pressione <kbd>Enter</kbd></h3><p>Alguns abrem um seletor (<code>/model</code>), outros agem na hora (<code>/diff</code>).</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Com o Codex trabalhando</h3><p>Digite o comando e aperte <kbd>Tab</kbd>: ele entra na fila e roda na próxima rodada.</p></div></div>
+    </div>
+    <div>
+      <div class="term-title">Vários comandos aceitam texto na mesma linha</div>
+<pre class="term">/plan Proponha a migração do banco para Postgres
+/goal Terminar a migração com os testes passando
+/side Esse plano tem algum risco óbvio?
+/mention src/lib/api.ts
+/clear preparação da release</pre>
+      <div class="callout">Alguns comandos ficam indisponíveis em certos momentos. Por exemplo, <code>/plan</code> não roda com o Codex trabalhando, e <code>/side</code> não funciona dentro de outro side chat nem durante um review.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Configurar</span><span class="n">02</span></div>
+  <h2>Preparando a <em>sessão</em></h2>
+  <p class="intro">Os primeiros comandos de um projeto novo: dar contexto ao Codex e ajustar modelo e permissões.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">/init</div><h3>Cria o AGENTS.md</h3><p>Gera um <code>AGENTS.md</code> inicial no diretório atual, com as instruções persistentes do projeto (comandos de teste, convenções). É o equivalente ao <code>CLAUDE.md</code>.</p></div>
+    <div class="card"><div class="k">/status</div><h3>Onde estou?</h3><p>Mostra o modelo ativo, a política de aprovação, as pastas com permissão de escrita e quanto contexto ainda resta.</p></div>
+    <div class="card"><div class="k">/permissions</div><h3>O que ele pode fazer</h3><p>Ajusta no meio da sessão o que o Codex faz sem perguntar, por exemplo alternando entre Auto e Read Only.</p></div>
+    <div class="card"><div class="k">/model</div><h3>Modelo e raciocínio</h3><p>Troca o modelo (ex.: <code>gpt-6-luna</code>, <code>gpt-6-sol</code>) e, quando disponível, o esforço de raciocínio.</p></div>
+    <div class="card"><div class="k">/fast</div><h3>Modo rápido</h3><p>Liga ou desliga o tier <em>Fast</em> do modelo, quando o catálogo oferece. Se o modelo não tem esse tier, o comando nem aparece.</p></div>
+    <div class="card"><div class="k">/personality</div><h3>Estilo das respostas</h3><p>Deixa o Codex mais conciso, mais explicativo ou mais colaborativo, sem mudar as suas instruções.</p></div>
+  </div>
+  <div class="callout good"><strong>Ritual de início sugerido:</strong> <code>/init</code> (só na primeira vez) → revisar o <code>AGENTS.md</code> gerado → <code>/status</code> para conferir modelo e permissões → começar a tarefa.</div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Planejar</span><span class="n">03</span></div>
+  <h2>Planejar e <em>guiar</em> o trabalho</h2>
+  <p class="intro">Em tarefas maiores, vale alinhar o plano antes de o Codex sair editando arquivos.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">/plan</div><p style="color:var(--ink)">Coloca o chat em <strong>modo de planejamento</strong>: o Codex propõe um plano de execução antes de implementar. Aceita o pedido na mesma linha e também imagens coladas.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">/goal</div><p style="color:var(--ink)">Define um <strong>objetivo persistente</strong> que o Codex acompanha durante uma tarefa longa. Sem argumento, mostra o objetivo atual, que também pode ser editado, pausado, retomado ou limpo.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">/side · /btw</div><p style="color:var(--ink)">Abre um <strong>chat lateral temporário</strong> para uma pergunta pontual, sem poluir a conversa principal. O status do chat principal continua visível.</p></div>
+    </div>
+    <div>
+<pre class="term"><span class="c"># 1. alinhar o plano</span>
+/plan Adicionar autenticação por e-mail no app
+
+<span class="c"># 2. fixar o critério de pronto</span>
+/goal Login funcionando e testes passando
+
+<span class="c"># 3. apontar os arquivos certos</span>
+/mention src/auth/
+/mention tests/test_auth.py
+
+<span class="c"># 4. tirar uma dúvida sem desviar a tarefa</span>
+/side Qual a diferença entre bcrypt e argon2?</pre>
+      <div class="callout"><code>/mention</code> faz o mesmo que digitar <kbd>@</kbd> no composer: anexa um arquivo ou pasta ao chat. Na extensão da IDE, <code>/ide</code> inclui os arquivos abertos e a seleção.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Revisar</span><span class="n">04</span></div>
+  <h2>Revisar antes de <em>commitar</em></h2>
+  <p class="intro">Terminada a tarefa, estes comandos mostram exatamente o que mudou e dão uma segunda opinião sobre o código.</p>
+  <div class="grid g4">
+    <div class="card"><div class="k">/diff</div><h3>O que mudou</h3><p>Mostra o diff do Git: mudanças staged, unstaged e <strong style="color:var(--ink)">arquivos novos ainda não rastreados</strong>.</p></div>
+    <div class="card"><div class="k">/review</div><h3>Segunda opinião</h3><p>Revisa a working tree com foco em mudanças de comportamento e testes faltando.</p></div>
+    <div class="card"><div class="k">/copy</div><h3>Copiar resposta</h3><p>Copia a última resposta ou plano concluído. O atalho é <kbd>Ctrl</kbd>+<kbd>O</kbd>.</p></div>
+    <div class="card"><div class="k">/raw</div><h3>Rolagem crua</h3><p>Liga o modo de rolagem sem formatação, para selecionar e copiar saídas longas.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+<pre class="term"><span class="c"># fluxo de revisão recomendado</span>
+/diff                 <span class="c"># 1. veja as mudanças</span>
+/review               <span class="c"># 2. peça a revisão</span>
+<span class="c"># 3. peça as correções no próprio chat</span>
+Corrija os dois problemas apontados e rode os testes
+/diff                 <span class="c"># 4. confira de novo antes do commit</span></pre>
+    <div class="callout good" style="margin-top:0">O <code>/review</code> usa o modelo da sessão, a menos que você defina <code>review_model</code> no <code>config.toml</code>. Assim dá para revisar com um modelo diferente do que escreveu o código. Fora da sessão, o equivalente é o <code>codex review</code> (aula 1).</div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Contexto</span><span class="n">05</span></div>
+  <h2>Contexto e <em>sessões</em></h2>
+  <p class="intro">Uma conversa longa enche a janela de contexto. Saber quando compactar, recomeçar ou bifurcar mantém o Codex preciso.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:26%">Comando</th><th>Efeito</th><th style="width:30%">Quando usar</th></tr>
+      <tr><td><code>/compact</code></td><td style="color:var(--muted)">Troca os turnos antigos por um resumo e libera contexto</td><td style="color:var(--muted)">Depois de uma rodada longa, na mesma tarefa</td></tr>
+      <tr><td><code>/new</code></td><td style="color:var(--muted)">Chat novo na mesma sessão da CLI</td><td style="color:var(--muted)">Tarefa nova, mesmo repositório</td></tr>
+      <tr><td><code>/clear</code></td><td style="color:var(--muted)">Limpa o terminal <strong style="color:var(--ink)">e</strong> o contexto, e começa do zero</td><td style="color:var(--muted)">Recomeço total (aceita um nome)</td></tr>
+      <tr><td><code>/fork</code></td><td style="color:var(--muted)">Bifurca o chat atual num novo</td><td style="color:var(--muted)">Testar outra abordagem</td></tr>
+      <tr><td><code>/resume</code></td><td style="color:var(--muted)">Retoma um chat salvo</td><td style="color:var(--muted)">Voltar a uma tarefa anterior</td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th style="width:26%">Comando</th><th>Efeito</th></tr>
+      <tr><td><code>/rename</code></td><td style="color:var(--muted)">Dá um nome reconhecível à sessão</td></tr>
+      <tr><td><code>/archive</code></td><td style="color:var(--muted)">Arquiva a sessão e sai (a transcrição continua salva)</td></tr>
+      <tr><td><code>/delete</code></td><td style="color:var(--muted)">Apaga a sessão de vez e sai</td></tr>
+      <tr><td><code>/app</code></td><td style="color:var(--muted)">Continua a sessão no app desktop (macOS/Windows)</td></tr>
+      <tr><td><code>/exit</code> · <code>/quit</code></td><td style="color:var(--muted)">Sai da CLI (atalho <kbd>Ctrl</kbd>+<kbd>C</kbd>)</td></tr>
+    </table>
+    </div>
+  </div>
+  <div class="callout warn">Salve ou commite o trabalho importante antes de <code>/quit</code>, e prefira <code>/archive</code> a <code>/delete</code> quando houver dúvida.</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Extensões</span><span class="n">06</span></div>
+  <h2>Ferramentas, skills e <em>agentes</em></h2>
+  <p class="intro">Comandos para ver e usar o que amplia o Codex: servidores MCP, skills, plugins, apps, hooks e subagentes.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">/mcp</div><p style="color:var(--ink)">Lista as ferramentas MCP disponíveis na sessão. <code>/mcp verbose</code> mostra o diagnóstico de cada servidor.</p></div>
+    <div class="card"><div class="k">/skills</div><p style="color:var(--ink)">Navega pelas skills locais e insere a escolhida, para que o próximo pedido siga as instruções dela.</p></div>
+    <div class="card"><div class="k">/plugins</div><p style="color:var(--ink)">Mostra os plugins instalados e os disponíveis: ferramentas, instalação e ativação.</p></div>
+    <div class="card"><div class="k">/apps</div><p style="color:var(--ink)">Navega pelos apps (conectores) e insere no prompt como <code>$app-slug</code>.</p></div>
+    <div class="card"><div class="k">/hooks</div><p style="color:var(--ink)">Mostra e gerencia os hooks de ciclo de vida: confiar em hooks novos ou alterados, ou desativar os não gerenciados.</p></div>
+    <div class="card"><div class="k">/agent · /subagents</div><p style="color:var(--ink)">Alterna entre as threads dos subagentes criados, para inspecionar ou continuar o trabalho de cada um.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">/ps · /stop</div><p style="color:var(--ink)">O <code>/ps</code> mostra os terminais em segundo plano (ex.: servidor de dev) e a saída recente de cada um. O <code>/stop</code> encerra todos eles.</p></div>
+    <div class="callout" style="margin-top:0">Se o revisor automático recusar uma ação, <code>/approve</code> libera <strong>uma</strong> nova tentativa daquela ação.</div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Ajustes</span><span class="n">07</span></div>
+  <h2>Personalização e <em>diagnóstico</em></h2>
+  <p class="intro">Para deixar a interface do seu jeito e investigar quando algo não se comporta como esperado.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:30%">Personalizar</th><th>O que faz</th></tr>
+      <tr><td><code>/statusline</code></td><td style="color:var(--muted)">Escolhe e ordena os itens do rodapé: modelo, contexto, limites, Git, tokens</td></tr>
+      <tr><td><code>/title</code></td><td style="color:var(--muted)">Define o título da janela ou aba do terminal</td></tr>
+      <tr><td><code>/theme</code></td><td style="color:var(--muted)">Tema de destaque de sintaxe</td></tr>
+      <tr><td><code>/keymap</code></td><td style="color:var(--muted)">Remapeia os atalhos da interface</td></tr>
+      <tr><td><code>/vim</code></td><td style="color:var(--muted)">Liga ou desliga o modo Vim no composer</td></tr>
+      <tr><td><code>/pets</code></td><td style="color:var(--muted)">Escolhe ou esconde o "pet" do terminal</td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th style="width:30%">Diagnosticar</th><th>O que faz</th></tr>
+      <tr><td><code>/usage</code></td><td style="color:var(--muted)">Uso de tokens da conta (diário, semanal, acumulado)</td></tr>
+      <tr><td><code>/debug-config</code></td><td style="color:var(--muted)">Mostra as camadas de configuração e os requisitos</td></tr>
+      <tr><td><code>/experimental</code></td><td style="color:var(--muted)">Liga recursos experimentais</td></tr>
+      <tr><td><code>/memories</code></td><td style="color:var(--muted)">Controla o uso e a geração de memórias</td></tr>
+      <tr><td><code>/feedback</code></td><td style="color:var(--muted)">Envia logs aos mantenedores</td></tr>
+      <tr><td><code>/logout</code></td><td style="color:var(--muted)">Sai da conta (máquinas compartilhadas)</td></tr>
+    </table></div>
+  </div>
+  <div class="callout">Só no Windows: <code>/setup-default-sandbox</code> configura o sandbox elevado, e <code>/sandbox-add-read-dir</code> libera a leitura de uma pasta extra.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Claude Code</span><span class="n">08</span></div>
+  <h2>Vindo do <em>Claude Code</em></h2>
+  <p class="intro">Muitos comandos têm o mesmo nome e o mesmo papel nas duas ferramentas. E o Codex consegue importar a sua configuração do Claude Code.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th>Objetivo</th><th>Claude Code</th><th>Codex</th></tr>
+      <tr><td>Instruções do projeto</td><td><code>/init</code> → CLAUDE.md</td><td><code>/init</code> → AGENTS.md</td></tr>
+      <tr><td>Liberar contexto</td><td><code>/compact</code></td><td><code>/compact</code></td></tr>
+      <tr><td>Recomeçar</td><td><code>/clear</code></td><td><code>/clear</code> · <code>/new</code></td></tr>
+      <tr><td>Trocar modelo</td><td><code>/model</code></td><td><code>/model</code></td></tr>
+      <tr><td>Servidores MCP</td><td><code>/mcp</code></td><td><code>/mcp</code></td></tr>
+      <tr><td>Retomar sessão</td><td><code>/resume</code></td><td><code>/resume</code></td></tr>
+      <tr><td>Permissões</td><td><code>/permissions</code></td><td><code>/permissions</code></td></tr>
+      <tr><td>Estado da sessão</td><td><code>/status</code></td><td><code>/status</code></td></tr>
+    </table></div>
+    <div>
+      <div class="card"><div class="k">/import</div><p style="color:var(--ink)">Abre um seletor para migrar do <strong>Claude Code</strong> (ou do Cursor) a <strong>configuração, os arquivos de projeto e os chats recentes</strong> (até 50 chats dos últimos 30 dias).</p></div>
+<pre class="term" style="margin-top:10px">/import
+<span class="c"># → escolha "Claude Code"</span>
+<span class="c"># → marque configuração, projetos e/ou chats</span></pre>
+      <div class="callout warn">O <code>/import</code> só roda numa sessão local da TUI e fica indisponível com uma tarefa em andamento ou em sessões remotas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Customização</span><span class="n">09</span></div>
+  <h2>Criando os seus <em>próprios comandos</em></h2>
+  <p class="intro">O Codex ainda aceita <strong>custom prompts</strong> (arquivos Markdown que viram <code>/prompts:nome</code>), mas a documentação os marca como <strong>descontinuados</strong>. O caminho recomendado agora são as <strong>skills</strong>.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="term-title">Legado: ~/.codex/prompts/draftpr.md</div>
+<pre class="term">---
+description: Cria branch, commit e PR em rascunho
+argument-hint: [FILES=&lt;paths&gt;] [PR_TITLE="&lt;título&gt;"]
+---
+Crie um branch dev/&lt;nome&gt; para este trabalho.
+Se houver arquivos, faça stage deles: $FILES.
+Faça o commit com uma mensagem clara.
+Abra um PR em rascunho. Use $PR_TITLE, se houver.</pre>
+      <p style="color:var(--muted);font-size:11.5px;margin:6px 0 0">Uso: <code>/prompts:draftpr FILES=src/app.ts PR_TITLE="Login"</code>. Aceita <code>$1</code>…<code>$9</code>, <code>$ARGUMENTS</code> e placeholders nomeados.</p>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th></th><th>Custom prompts</th><th>Skills</th></tr>
+        <tr><td>Situação</td><td style="color:var(--warn)">Descontinuados</td><td style="color:var(--good)">Recomendadas</td></tr>
+        <tr><td>Onde ficam</td><td style="color:var(--muted)">Só em <code>~/.codex/prompts/</code></td><td style="color:var(--muted)">Podem ir no repositório</td></tr>
+        <tr><td>Compartilhar</td><td style="color:var(--muted)">Não vão pelo Git</td><td style="color:var(--muted)">Sim, com a equipe</td></tr>
+        <tr><td>Invocação</td><td style="color:var(--muted)">Só explícita</td><td style="color:var(--muted)">Explícita (<code>/skills</code>) ou automática</td></tr>
+      </table></div>
+      <div class="callout good">É o mesmo conceito das <strong>Agent Skills</strong> que você viu no módulo 17 do curso: instruções reutilizáveis que o agente usa quando a tarefa pede.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Referência</span><span class="n">10</span></div>
+  <h2>Cola: os slash commands <em>por categoria</em></h2>
+  <div class="grid g3" style="align-items:start;margin-top:8px">
+    <div class="table-wrap cheat"><table>
+      <tr class="grp"><td colspan="2">Sessão e modelo</td></tr>
+      <tr><td><code>/init</code></td><td style="color:var(--muted)">Gera AGENTS.md</td></tr>
+      <tr><td><code>/status</code></td><td style="color:var(--muted)">Config e contexto</td></tr>
+      <tr><td><code>/model</code></td><td style="color:var(--muted)">Modelo e raciocínio</td></tr>
+      <tr><td><code>/fast</code></td><td style="color:var(--muted)">Tier rápido</td></tr>
+      <tr><td><code>/personality</code></td><td style="color:var(--muted)">Estilo de resposta</td></tr>
+      <tr><td><code>/permissions</code></td><td style="color:var(--muted)">Aprovações</td></tr>
+      <tr class="grp"><td colspan="2">Planejar</td></tr>
+      <tr><td><code>/plan</code></td><td style="color:var(--muted)">Modo plano</td></tr>
+      <tr><td><code>/goal</code></td><td style="color:var(--muted)">Objetivo persistente</td></tr>
+      <tr><td><code>/side</code> · <code>/btw</code></td><td style="color:var(--muted)">Chat lateral</td></tr>
+      <tr><td><code>/mention</code></td><td style="color:var(--muted)">Anexa arquivo</td></tr>
+      <tr><td><code>/ide</code></td><td style="color:var(--muted)">Contexto da IDE</td></tr>
+    </table></div>
+    <div class="table-wrap cheat"><table>
+      <tr class="grp"><td colspan="2">Revisar</td></tr>
+      <tr><td><code>/diff</code></td><td style="color:var(--muted)">Diff do Git</td></tr>
+      <tr><td><code>/review</code></td><td style="color:var(--muted)">Code review</td></tr>
+      <tr><td><code>/copy</code></td><td style="color:var(--muted)">Copia resposta</td></tr>
+      <tr><td><code>/raw</code></td><td style="color:var(--muted)">Rolagem crua</td></tr>
+      <tr class="grp"><td colspan="2">Contexto e sessões</td></tr>
+      <tr><td><code>/compact</code></td><td style="color:var(--muted)">Resume o chat</td></tr>
+      <tr><td><code>/new</code> · <code>/clear</code></td><td style="color:var(--muted)">Recomeçar</td></tr>
+      <tr><td><code>/fork</code> · <code>/resume</code></td><td style="color:var(--muted)">Bifurcar · retomar</td></tr>
+      <tr><td><code>/rename</code></td><td style="color:var(--muted)">Nomear sessão</td></tr>
+      <tr><td><code>/archive</code> · <code>/delete</code></td><td style="color:var(--muted)">Arquivar · apagar</td></tr>
+      <tr><td><code>/app</code> · <code>/quit</code></td><td style="color:var(--muted)">App desktop · sair</td></tr>
+    </table></div>
+    <div class="table-wrap cheat"><table>
+      <tr class="grp"><td colspan="2">Extensões</td></tr>
+      <tr><td><code>/mcp</code> · <code>/skills</code></td><td style="color:var(--muted)">MCP · skills</td></tr>
+      <tr><td><code>/plugins</code> · <code>/apps</code></td><td style="color:var(--muted)">Plugins · apps</td></tr>
+      <tr><td><code>/hooks</code></td><td style="color:var(--muted)">Hooks</td></tr>
+      <tr><td><code>/agent</code></td><td style="color:var(--muted)">Subagentes</td></tr>
+      <tr><td><code>/ps</code> · <code>/stop</code></td><td style="color:var(--muted)">Terminais em background</td></tr>
+      <tr><td><code>/approve</code></td><td style="color:var(--muted)">Nova tentativa</td></tr>
+      <tr><td><code>/import</code></td><td style="color:var(--muted)">Do Claude Code</td></tr>
+      <tr class="grp"><td colspan="2">Ajustes</td></tr>
+      <tr><td><code>/statusline</code> · <code>/theme</code></td><td style="color:var(--muted)">Visual</td></tr>
+      <tr><td><code>/usage</code> · <code>/debug-config</code></td><td style="color:var(--muted)">Diagnóstico</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">11</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. A conversa ficou longa, mas você quer continuar na mesma tarefa sem perder os pontos importantes. Qual comando usar?</p>
+        <div class="opts"><div>A) /clear</div><div>B) /new</div><div>C) /compact</div><div>D) /delete</div></div>
+        <div class="answer"><b>C.</b> O <code>/compact</code> troca os turnos antigos por um resumo e libera contexto. O <code>/clear</code> e o <code>/new</code> começam do zero.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O Codex está no meio de uma rodada e você quer rodar <code>/diff</code> assim que ela terminar. O que fazer?</p>
+        <div class="opts"><div>A) Esperar e digitar depois</div><div>B) Digitar /diff e apertar Tab</div><div>C) Apertar Ctrl+C</div><div>D) Não é possível</div></div>
+        <div class="answer"><b>B.</b> Com o Codex trabalhando, <kbd>Tab</kbd> coloca o slash command na fila para a próxima rodada.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Qual comando mostra também os arquivos novos que o Git ainda não rastreia?</p>
+        <div class="opts"><div>A) /review</div><div>B) /diff</div><div>C) /status</div><div>D) /copy</div></div>
+        <div class="answer"><b>B.</b> O <code>/diff</code> mostra as mudanças staged e unstaged e os arquivos ainda não rastreados.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual é hoje o jeito recomendado de criar instruções reutilizáveis e compartilháveis com a equipe?</p>
+        <div class="opts"><div>A) Custom prompts em ~/.codex/prompts</div><div>B) Skills</div><div>C) /goal</div><div>D) /personality</div></div>
+        <div class="answer"><b>B.</b> Os custom prompts estão descontinuados e ficam só na sua máquina. As skills podem ir no repositório e ser usadas de forma automática.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Controle a sessão<br><em>sem sair dela</em></h1>
+    <p class="lead">Com <code>/init</code> e <code>/status</code> você prepara o projeto. Com <code>/plan</code>, <code>/goal</code> e <code>/mention</code> guia o trabalho, e com <code>/diff</code> e <code>/review</code> revisa antes do commit. Para o contexto e as sessões há <code>/compact</code>, <code>/new</code> e <code>/fork</code>, para estender o Codex há <code>/mcp</code> e <code>/skills</code>, e para trazer o Claude Code há <code>/import</code>. Na dúvida, digite <code>/</code> e explore.</p>
+    <div class="chips"><span>/init</span><span>/plan · /goal</span><span>/diff · /review</span><span>/compact</span><span>/skills</span><span>/import</span></div>
+    <div class="next">Próxima aula → Criando uma landing page</div>
+    <div class="source">Fontes: learn.chatgpt.com/docs (developer-commands?surface=cli · slash commands in Codex CLI · custom prompts · build-skills · import). A lista de comandos varia com a versão e com os recursos habilitados; digite <code>/</code> na sua sessão para ver os disponíveis.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
