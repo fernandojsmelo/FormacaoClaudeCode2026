@@ -102,6 +102,16 @@ Validar com `pdfinfo` (contagem de páginas/tamanho) e `pdftoppm -png -f N -l N 
 
 Os emojis 🎚️ e 📈 renderizam quebrados neste ambiente Chrome/fontes — substituir por 🔧 e 🚀 respectivamente sempre que aparecerem no conteúdo original.
 
+### Material de apoio gerado a partir de notebooks
+
+Aulas com notebook `.ipynb` têm ao lado um `.md` (células sem saídas) e um `.pdf` (A4, tema escuro) gerados dele. Sempre que um notebook mudar, regenerar os dois com:
+
+```bash
+.venv/bin/python scripts/notebook_to_pdf.py "<módulo>/<aula>/notebook.ipynb" [...]
+```
+
+O notebook é a fonte da verdade — nunca editar o `.md`/`.pdf` à mão. Requer `nbconvert` e `markdown` no `.venv`. Depois, fazer a mesma checagem visual do pipeline acima.
+
 ## Estrutura e numeração
 
 Módulos de nível raiz numerados `NN - Nome` (01 a 22+) por ordem cronológica real do curso (evidência de data de criação de arquivos nunca editados — não confiar em mtime de PDFs já convertidos, pois é sobrescrito a cada conversão). Subpastas de aula dentro de cada módulo seguem o mesmo padrão de numeração, refletindo a ordem pedagógica. Ao adicionar um novo módulo, numerar sequencialmente a partir do maior número existente.
