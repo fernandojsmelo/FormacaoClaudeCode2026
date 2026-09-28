@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Comandos Principais</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+kbd{font-family:var(--mono);font-size:10.5px;background:var(--surface-2);border:1px solid var(--border-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink);white-space:nowrap}
+td code{font-size:10.5px}
+td{font-size:11.6px}
+.term{font-size:11px}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 6px;border-radius:999px;margin-left:4px;vertical-align:middle}
+.tag.s{background:var(--good-soft);color:var(--good);border:1px solid #35493B}
+.tag.x{background:var(--warn-soft);color:var(--warn);border:1px solid #54421F}
+.cheat td{padding:5px 10px;font-size:11px}
+.cheat td:first-child{white-space:nowrap}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Primeiros passos com Codex · Aula 1</div>
+    <h1>Comandos<br><em>principais</em></h1>
+    <p class="lead">Os comandos que você digita no terminal para usar o Codex no dia a dia: iniciar e retomar sessões, autenticar, automatizar com <code>exec</code>, revisar código, conectar servidores MCP, trazer trabalho da nuvem e diagnosticar problemas.</p>
+    <div class="chips"><span>codex</span><span>resume · fork</span><span>exec · review</span><span>mcp · cloud · apply</span><span>doctor · update</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Codex CLI (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Mapa</span><span class="n">01</span></div>
+  <h2>Dois tipos de <em>comando</em></h2>
+  <p class="intro">O Codex tem <strong>subcomandos de terminal</strong> (<code>codex exec</code>, <code>codex resume</code>…), digitados no shell, e <strong>slash commands</strong> (<code>/model</code>, <code>/review</code>…), digitados dentro da sessão. Esta aula cobre os subcomandos. Os slash commands são o tema da próxima aula.</p>
+  <div class="grid g3">
+    <div class="card"><div class="k">Sessão interativa</div><h3>codex · resume · fork</h3><p>Abrir a interface, retomar um chat salvo ou bifurcar uma conversa.</p></div>
+    <div class="card"><div class="k">Automação</div><h3>exec · review</h3><p>Rodar tarefas e code reviews sem interação, em scripts e no CI.</p></div>
+    <div class="card"><div class="k">Conta</div><h3>login · logout · update</h3><p>Autenticação, logout e atualização da CLI.</p></div>
+    <div class="card"><div class="k">Integrações</div><h3>mcp · plugin · cloud · apply</h3><p>Servidores MCP, plugins e o fluxo com o Codex Cloud.</p></div>
+    <div class="card"><div class="k">Manutenção</div><h3>doctor · features · completion</h3><p>Diagnóstico, feature flags e autocompletar no shell.</p></div>
+    <div class="card"><div class="k">Organização</div><h3>archive · unarchive · delete</h3><p>Arquivar, restaurar e apagar sessões salvas.</p></div>
+  </div>
+  <div class="callout good">Na dúvida, pergunte à própria CLI: <code>codex --help</code> lista tudo, e <code>codex &lt;subcomando&gt; --help</code> mostra as opções de cada um. Os marcados como <span class="tag x">experimental</span> na documentação podem mudar entre versões.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Sessão</span><span class="n">02</span></div>
+  <h2><em>codex</em>: abrindo a interface interativa</h2>
+  <p class="intro">Sem subcomando, <code>codex</code> abre a interface de terminal (TUI) no diretório atual. Ele aceita um prompt inicial, imagens e as flags globais.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># abre a TUI no projeto atual</span>
+codex
+
+<span class="c"># já começa com um pedido</span>
+codex "Explique a estrutura deste projeto"
+
+<span class="c"># anexa um print do erro ao primeiro prompt</span>
+codex -i erro.png "O que causa este erro?"
+
+<span class="c"># outro diretório + modelo específico</span>
+codex -C ~/projetos/api -m gpt-6-sol
+
+<span class="c"># edita o workspace, pede aprovação para o resto</span>
+codex -s workspace-write -a on-request
+
+<span class="c"># busca na web ao vivo para dúvidas atuais</span>
+codex --search "Qual a versão estável mais recente do Vite?"</pre>
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:36%">Flag</th><th>Para quê</th></tr>
+        <tr><td><code>-m</code> <code>--model</code></td><td style="color:var(--muted)">Escolhe o modelo da sessão</td></tr>
+        <tr><td><code>-i</code> <code>--image</code></td><td style="color:var(--muted)">Anexa imagens ao primeiro prompt</td></tr>
+        <tr><td><code>-C</code> <code>--cd</code></td><td style="color:var(--muted)">Define o diretório de trabalho</td></tr>
+        <tr><td><code>-s</code> <code>--sandbox</code></td><td style="color:var(--muted)"><code>read-only</code>, <code>workspace-write</code> ou <code>danger-full-access</code></td></tr>
+        <tr><td><code>-a</code> <code>--ask-for-approval</code></td><td style="color:var(--muted)"><code>on-request</code> ou <code>never</code></td></tr>
+        <tr><td><code>--search</code></td><td style="color:var(--muted)">Busca na web ao vivo</td></tr>
+        <tr><td><code>--add-dir</code></td><td style="color:var(--muted)">Libera escrita em outra pasta</td></tr>
+        <tr><td><code>-c chave=valor</code></td><td style="color:var(--muted)">Sobrescreve o config.toml só nesta execução</td></tr>
+      </table></div>
+      <div class="callout warn">Para liberar mais pastas, prefira <code>--add-dir</code> a <code>danger-full-access</code>. É a recomendação da própria documentação.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Conta</span><span class="n">03</span></div>
+  <h2>Login, logout e <em>atualização</em></h2>
+  <p class="intro">Na primeira execução, o <code>codex</code> já pede login. Os subcomandos abaixo servem para os outros cenários: servidor sem navegador, chave de API, máquina compartilhada.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+<pre class="term"><span class="c"># login pela conta do ChatGPT (abre o navegador)</span>
+codex login
+
+<span class="c"># sem navegador: código de dispositivo (SSH, VPS)</span>
+codex login --device-auth
+
+<span class="c"># chave de API lida do stdin (nunca como argumento)</span>
+printenv OPENAI_API_KEY | codex login --with-api-key
+
+<span class="c"># qual modo está ativo? (sai com 0 se logado)</span>
+codex login status
+
+<span class="c"># remove as credenciais salvas</span>
+codex logout</pre>
+    </div>
+    <div>
+      <div class="card"><div class="k">codex update</div><p style="color:var(--ink)">Verifica e aplica atualizações da CLI quando a instalação permite auto-update. Se você instalou por npm ou Homebrew, atualize por eles: <code>npm install -g @openai/codex</code> ou <code>brew upgrade --cask codex</code>.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">codex app</div><p style="color:var(--ink)">Abre o app desktop do ChatGPT (aula 2 do módulo anterior). No macOS, <code>codex app ~/projeto</code> já abre a pasta. No Windows, o comando mostra o caminho para abrir.</p></div>
+      <div class="callout">Lendo a chave pelo stdin, ela não fica no histórico do shell nem aparece na lista de processos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Sessões</span><span class="n">04</span></div>
+  <h2>Retomar, bifurcar e <em>organizar sessões</em></h2>
+  <p class="intro">Toda sessão interativa fica salva. Assim você volta de onde parou, experimenta outro caminho sem perder o original e mantém a lista organizada.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># seletor de sessões do diretório atual</span>
+codex resume
+
+<span class="c"># retoma direto a mais recente</span>
+codex resume --last
+
+<span class="c"># inclui sessões de outros diretórios</span>
+codex resume --all
+
+<span class="c"># copia uma sessão para um chat novo (o original fica intacto)</span>
+codex fork --last
+
+<span class="c"># esconde do seletor, sem apagar · restaura</span>
+codex archive "refatoracao-login"
+codex unarchive "refatoracao-login"
+
+<span class="c"># apaga de vez (--force só aceita UUID)</span>
+codex delete &lt;SESSION_UUID&gt; --force</pre>
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:30%">Comando</th><th>Quando usar</th></tr>
+        <tr><td><code>resume</code></td><td style="color:var(--muted)">Continuar uma tarefa no dia seguinte, com todo o contexto</td></tr>
+        <tr><td><code>fork</code></td><td style="color:var(--muted)">Testar uma abordagem alternativa a partir do mesmo ponto</td></tr>
+        <tr><td><code>archive</code></td><td style="color:var(--muted)">Limpar o seletor sem perder a transcrição</td></tr>
+        <tr><td><code>delete</code></td><td style="color:var(--muted)">Remover a transcrição definitivamente</td></tr>
+      </table></div>
+      <div class="callout">Sessões são identificadas por <strong>ID</strong> ou <strong>nome</strong>, e o ID tem prioridade. Para nomear, use <code>/rename</code> dentro da sessão (próxima aula).</div>
+      <div class="callout warn">O <code>delete</code> é irreversível. Na dúvida, prefira <code>archive</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Automação</span><span class="n">05</span></div>
+  <h2><em>codex exec</em>: tarefas sem interação</h2>
+  <p class="intro"><code>codex exec</code> (alias <code>codex e</code>) roda uma tarefa do início ao fim sem pedir nada ao usuário. Serve para scripts, hooks do Git e pipelines de CI.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># tarefa com escrita no workspace</span>
+codex exec -s workspace-write "Adicione type hints em src/utils.py"
+
+<span class="c"># prompt vindo de um arquivo (stdin)</span>
+cat pedido.md | codex exec -
+
+<span class="c"># CI: eventos JSONL + resumo final num arquivo</span>
+codex exec --json -o resumo.md "Rode os testes e explique as falhas"
+
+<span class="c"># resposta final validada por um JSON Schema</span>
+codex exec --output-schema schema.json "Liste as dependências desatualizadas"
+
+<span class="c"># continua a última execução deste diretório</span>
+codex exec resume --last "Agora corrija a primeira falha"</pre>
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:44%">Opção</th><th>Efeito</th></tr>
+        <tr><td><code>--json</code></td><td style="color:var(--muted)">Um evento JSON por linha</td></tr>
+        <tr><td><code>-o</code> <code>--output-last-message</code></td><td style="color:var(--muted)">Grava só a resposta final</td></tr>
+        <tr><td><code>--ephemeral</code></td><td style="color:var(--muted)">Não salva a sessão em disco</td></tr>
+        <tr><td><code>--skip-git-repo-check</code></td><td style="color:var(--muted)">Roda fora de um repositório Git</td></tr>
+        <tr><td><code>--ignore-user-config</code></td><td style="color:var(--muted)">Ignora o config.toml pessoal</td></tr>
+      </table></div>
+      <div class="callout good"><strong>Dica da documentação:</strong> no CI, combine <code>--json</code> (progresso legível por máquina) com <code>-o</code> (resumo em linguagem natural).</div>
+      <div class="callout warn"><code>--full-auto</code> está descontinuado. Use <code>-s workspace-write</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Qualidade</span><span class="n">06</span></div>
+  <h2><em>codex review</em>: code review no terminal</h2>
+  <p class="intro">Roda uma revisão de código <strong>sem interação</strong> e sem alterar a sua working tree. Escolha <strong>um único alvo</strong> por execução: as opções abaixo não se combinam entre si.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># tudo que ainda não foi commitado</span>
+<span class="c"># (staged, unstaged e arquivos novos)</span>
+codex review --uncommitted
+
+<span class="c"># o branch atual comparado com a main</span>
+codex review --base main
+
+<span class="c"># as mudanças de um commit específico</span>
+codex review --commit a1b2c3d --title "Login com OAuth"
+
+<span class="c"># instruções próprias de revisão</span>
+codex review "Procure problemas de segurança nas queries SQL"</pre>
+    <div>
+      <div class="steps">
+        <div class="step"><div class="b">1</div><div><h3>Antes do commit</h3><p><code>codex review --uncommitted</code> pega problemas enquanto ainda é barato corrigir.</p></div></div>
+        <div class="step"><div class="b">2</div><div><h3>Antes do PR</h3><p><code>codex review --base main</code> revisa o branch inteiro, como um revisor humano faria.</p></div></div>
+        <div class="step"><div class="b">3</div><div><h3>Depois do merge</h3><p><code>codex review --commit &lt;sha&gt;</code> audita uma mudança específica.</p></div></div>
+      </div>
+      <div class="callout"><code>--title</code> só funciona junto com <code>--commit</code>. Para revisar dentro de uma sessão interativa, use o slash command <code>/review</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Integrações</span><span class="n">07</span></div>
+  <h2><em>codex mcp</em>: conectando ferramentas externas</h2>
+  <p class="intro">Gerencia os servidores <strong>Model Context Protocol</strong> guardados em <code>~/.codex/config.toml</code>. São os mesmos servidores MCP que você já usa no Claude Code.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># servidor stdio (ex.: Context7, docs de bibliotecas)</span>
+codex mcp add context7 -- npx -y @upstash/context7-mcp
+
+<span class="c"># stdio com variáveis de ambiente</span>
+codex mcp add meu-db --env DB_URL=postgres://... -- node server.js
+
+<span class="c"># servidor HTTP remoto (streamable HTTP)</span>
+codex mcp add docs --url https://mcp.exemplo.com/mcp
+
+<span class="c"># listar · ver · remover</span>
+codex mcp list --json
+codex mcp get context7
+codex mcp remove meu-db
+
+<span class="c"># OAuth (só servidores HTTP que suportam)</span>
+codex mcp login docs</pre>
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:36%">Transporte</th><th>Como registrar</th></tr>
+        <tr><td>stdio</td><td style="color:var(--muted)">Comando e argumentos <strong style="color:var(--ink)">depois de <code>--</code></strong>, com <code>--env</code> opcional</td></tr>
+        <tr><td>HTTP</td><td style="color:var(--muted)"><code>--url</code>, com <code>--bearer-token-env-var</code> ou OAuth</td></tr>
+      </table></div>
+      <div class="card" style="margin-top:10px"><div class="k">codex plugin</div><p style="color:var(--ink)">Instala, lista e remove <strong>plugins</strong> dos marketplaces configurados. Os marketplaces são gerenciados com <code>codex plugin marketplace</code> (fontes Git ou locais).</p></div>
+      <div class="callout good">O token de um servidor HTTP deve ficar numa <strong>variável de ambiente</strong>, e você passa só o nome dela em <code>--bearer-token-env-var</code>, nunca o valor.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Nuvem</span><span class="n">08</span></div>
+  <h2><em>codex cloud</em> e <em>codex apply</em></h2>
+  <p class="intro">Estes comandos ligam o terminal ao Codex Cloud: você despacha tarefas para um environment na nuvem e depois traz o diff para o repositório local.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># seletor interativo de chats e environments</span>
+codex cloud
+
+<span class="c"># envia uma tarefa (2 tentativas para comparar)</span>
+codex cloud exec --env ENV_ID --attempts 2 "Migre os testes para pytest"
+
+<span class="c"># chats recentes, em JSON para scripts</span>
+codex cloud list --json
+
+<span class="c"># aplica o diff do chat na sua working tree</span>
+codex apply TASK_ID</pre>
+    <div>
+      <div class="steps">
+        <div class="step"><div class="b">1</div><div><h3>Despache</h3><p><code>codex cloud exec</code> manda a tarefa e libera o seu terminal.</p></div></div>
+        <div class="step"><div class="b">2</div><div><h3>Acompanhe</h3><p><code>codex cloud list</code> mostra o status, e a revisão pode ser feita no navegador.</p></div></div>
+        <div class="step"><div class="b">3</div><div><h3>Traga para casa</h3><p><code>codex apply</code> (alias <code>codex a</code>) aplica o diff localmente com <code>git apply</code>.</p></div></div>
+      </div>
+      <div class="callout warn"><code>codex cloud</code> é <strong>experimental</strong>. O <code>codex apply</code> encerra com erro se o <code>git apply</code> falhar por conflito. Faça commit ou stash do seu trabalho antes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Manutenção</span><span class="n">09</span></div>
+  <h2>Diagnóstico e <em>ajustes finos</em></h2>
+  <p class="intro">Comandos para quando algo não funciona, ou quando você quer deixar a CLI do seu jeito.</p>
+  <div class="grid g2" style="align-items:start">
+<pre class="term"><span class="c"># relatório de saúde: instalação, config, login, Git…</span>
+codex doctor
+codex doctor --summary        <span class="c"># só o resumo</span>
+codex doctor --json           <span class="c"># versão sem dados sensíveis, para suporte</span>
+
+<span class="c"># feature flags (gravadas no config.toml)</span>
+codex features list
+codex features enable &lt;nome&gt;
+codex features disable &lt;nome&gt;
+
+<span class="c"># autocompletar no zsh (também bash, fish, powershell)</span>
+codex completion zsh &gt; "${fpath[1]}/_codex"
+
+<span class="c"># roda um comando sob o sandbox do Codex</span>
+codex sandbox linux -- ls ~/.ssh</pre>
+    <div>
+      <div class="card"><div class="k">codex doctor</div><p style="color:var(--ink)">O <strong>primeiro comando</strong> a rodar quando algo der errado: ele verifica instalação, configuração, autenticação, runtime, Git, terminal e sessões.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">codex sandbox</div><p style="color:var(--ink)">Executa qualquer comando sob as mesmas regras que o agente usa (Seatbelt no macOS, Landlock no Linux, sandbox nativo no Windows). É ótimo para entender por que o agente foi bloqueado.</p></div>
+      <div class="callout">Também existe o <code>codex execpolicy</code> (experimental), que testa arquivos de regras e mostra se um comando seria permitido, perguntado ou bloqueado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Referência</span><span class="n">10</span></div>
+  <h2>Cola: <em>todos os comandos</em> numa página</h2>
+  <div class="grid g2" style="align-items:start;margin-top:8px">
+    <div class="table-wrap cheat"><table>
+      <tr><th>Comando</th><th>O que faz</th></tr>
+      <tr><td><code>codex</code></td><td style="color:var(--muted)">Abre a interface interativa</td></tr>
+      <tr><td><code>codex resume</code></td><td style="color:var(--muted)">Retoma uma sessão salva</td></tr>
+      <tr><td><code>codex fork</code></td><td style="color:var(--muted)">Bifurca uma sessão num chat novo</td></tr>
+      <tr><td><code>codex exec</code> · <code>e</code></td><td style="color:var(--muted)">Tarefa não interativa (scripts e CI)</td></tr>
+      <tr><td><code>codex review</code></td><td style="color:var(--muted)">Code review não interativo</td></tr>
+      <tr><td><code>codex login</code> · <code>logout</code></td><td style="color:var(--muted)">Autenticação</td></tr>
+      <tr><td><code>codex update</code></td><td style="color:var(--muted)">Atualiza a CLI</td></tr>
+      <tr><td><code>codex app</code></td><td style="color:var(--muted)">Abre o app desktop do ChatGPT</td></tr>
+      <tr><td><code>codex archive</code> · <code>unarchive</code></td><td style="color:var(--muted)">Esconde ou restaura uma sessão</td></tr>
+      <tr><td><code>codex delete</code></td><td style="color:var(--muted)">Apaga uma sessão (irreversível)</td></tr>
+    </table></div>
+    <div class="table-wrap cheat"><table>
+      <tr><th>Comando</th><th>O que faz</th></tr>
+      <tr><td><code>codex mcp</code></td><td style="color:var(--muted)">Servidores MCP (add, list, get, remove, login)</td></tr>
+      <tr><td><code>codex plugin</code></td><td style="color:var(--muted)">Plugins e marketplaces</td></tr>
+      <tr><td><code>codex cloud</code> <span class="tag x">exp.</span></td><td style="color:var(--muted)">Chats do Codex Cloud pelo terminal</td></tr>
+      <tr><td><code>codex apply</code> · <code>a</code></td><td style="color:var(--muted)">Aplica o diff de um chat da nuvem</td></tr>
+      <tr><td><code>codex doctor</code></td><td style="color:var(--muted)">Relatório de diagnóstico</td></tr>
+      <tr><td><code>codex features</code></td><td style="color:var(--muted)">Lista, liga e desliga feature flags</td></tr>
+      <tr><td><code>codex completion</code></td><td style="color:var(--muted)">Autocompletar para o shell</td></tr>
+      <tr><td><code>codex sandbox</code></td><td style="color:var(--muted)">Roda um comando sob o sandbox do Codex</td></tr>
+      <tr><td><code>codex execpolicy</code> <span class="tag x">exp.</span></td><td style="color:var(--muted)">Testa regras de execução</td></tr>
+      <tr><td><code>codex app-server</code> <span class="tag x">exp.</span></td><td style="color:var(--muted)">Servidor para integrar o Codex em apps</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">11</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Você fechou o terminal ontem no meio de uma tarefa. Como voltar direto para a última sessão deste projeto?</p>
+        <div class="opts"><div>A) codex fork --all</div><div>B) codex resume --last</div><div>C) codex exec resume</div><div>D) codex unarchive</div></div>
+        <div class="answer"><b>B.</b> O <code>codex resume --last</code> pula o seletor e reabre a sessão mais recente do diretório atual.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Qual comando revisa todo o branch atual antes de abrir um PR para a main?</p>
+        <div class="opts"><div>A) codex review --uncommitted</div><div>B) codex review --commit main</div><div>C) codex review --base main</div><div>D) codex exec --review</div></div>
+        <div class="answer"><b>C.</b> O <code>--base main</code> compara o branch atual com a main. O <code>--uncommitted</code> olha só o que ainda não foi commitado.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Como registrar um servidor MCP stdio no Codex?</p>
+        <div class="opts"><div>A) codex mcp add nome --url npx …</div><div>B) codex mcp add nome -- npx -y pacote</div><div>C) codex plugin add nome</div><div>D) codex features enable mcp</div></div>
+        <div class="answer"><b>B.</b> Nos servidores stdio, o comando que inicia o servidor vem depois de <code>--</code>. O <code>--url</code> é para servidores HTTP.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O Codex está se comportando de forma estranha depois de uma atualização. Qual o primeiro comando a rodar?</p>
+        <div class="opts"><div>A) codex doctor</div><div>B) codex logout</div><div>C) codex delete --force</div><div>D) codex sandbox</div></div>
+        <div class="answer"><b>A.</b> O <code>codex doctor</code> verifica instalação, configuração, autenticação, Git e terminal, e aponta o que está errado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Do terminal ao CI,<br><em>um comando por tarefa</em></h1>
+    <p class="lead">Com o <code>codex</code> você abre a sessão, com <code>resume</code> e <code>fork</code> retoma e experimenta, com <code>exec</code> e <code>review</code> automatiza, com <code>mcp</code> conecta ferramentas, com <code>cloud</code> e <code>apply</code> delega para a nuvem e com <code>doctor</code> resolve problemas. Quando precisar lembrar de uma opção, use <code>codex --help</code>.</p>
+    <div class="chips"><span>codex</span><span>resume · fork</span><span>exec · review</span><span>mcp</span><span>cloud · apply</span><span>doctor</span></div>
+    <div class="next">Próxima aula → Slash Commands</div>
+    <div class="source">Fontes: learn.chatgpt.com/docs (codex/cli · developer-commands?surface=cli · extend/mcp · cloud · non-interactive-mode). Comandos marcados como experimentais podem mudar; confira <code>codex --help</code> na sua versão.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
