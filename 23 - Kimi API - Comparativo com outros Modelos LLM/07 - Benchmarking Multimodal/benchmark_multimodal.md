@@ -1,6 +1,6 @@
 # Benchmark Multimodal (Vision)
 
-Este notebook compara **Kimi**, **Claude Opus**, **GPT-4o** e **Gemini** em tarefas que envolvem análise de imagens.
+Este notebook compara **Kimi**, **Claude Opus**, **GPT-5.6 Terra** e **Gemini** em tarefas que envolvem análise de imagens.
 
 **Objetivo:** medir precisão, tempo, custo e capacidade de interpretação visual.
 

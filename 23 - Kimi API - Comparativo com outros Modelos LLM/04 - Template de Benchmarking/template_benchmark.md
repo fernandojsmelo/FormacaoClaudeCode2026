@@ -1,6 +1,6 @@
 # Notebook Base de Benchmarking entre Modelos
 
-Este notebook compara **Kimi**, **Claude Opus**, **GPT-4o** e **Gemini** usando os mesmos prompts e métricas padronizadas.
+Este notebook compara **Kimi**, **Claude Opus**, **GPT-5.5** e **Gemini** usando os mesmos prompts e métricas padronizadas.
 
 Métricas coletadas:
 - Tokens de entrada e saída
