@@ -1,0 +1,3 @@
+# Ferramentas do repositório (scripts/notebook_to_pdf.py)
+nbconvert>=7.17
+markdown>=3.11
