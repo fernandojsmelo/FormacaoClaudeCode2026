@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FocoFlow organiza seu dia em blocos de foco, bloqueia distrações e mostra quanto você realmente produziu.">
+  <title>FocoFlow — Foco profundo, sem esforço</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Aplica o tema salvo antes da pintura, para evitar o "piscar" de cor.
+    try {
+      var tema = localStorage.getItem('focoflow-tema');
+      if (tema) document.documentElement.setAttribute('data-theme', tema);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="logo"><span class="logo-dot" aria-hidden="true"></span>FocoFlow</a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#recursos">Recursos</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#precos">Preços</a>
+        <a href="#depoimentos">Depoimentos</a>
+      </nav>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar modo escuro">
+          <span class="icon-sun" aria-hidden="true">☀</span><span class="icon-moon" aria-hidden="true">☾</span>
+        </button>
+        <a href="#comecar" class="btn btn-small">Baixar grátis</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="badge">Novo · Sessões com IA</span>
+          <h1 class="hero-title">Foco profundo,<br>sem esforço.</h1>
+          <p class="hero-subtitle">O FocoFlow organiza seu dia em blocos de concentração, bloqueia distrações e mostra quanto você realmente produziu.</p>
+          <div class="hero-actions">
+            <a href="#comecar" class="btn">Começar agora</a>
+            <a href="#como-funciona" class="btn btn-ghost">Ver como funciona</a>
+          </div>
+          <p class="hero-note">Grátis para sempre no plano básico · Sem cartão de crédito</p>
+        </div>
+        <div class="hero-visual" role="img" aria-label="Tela do app mostrando uma sessão de foco com 24 minutos e 59 segundos restantes">
+          <div class="timer-card" aria-hidden="true">
+            <p class="timer-label">Sessão de foco</p>
+            <div class="timer-ring"><span>24:59</span></div>
+            <p class="timer-task">Escrever relatório trimestral</p>
+            <div class="timer-bar"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recursos" class="features">
+      <div class="container">
+        <h2 class="section-title">Tudo para você render mais</h2>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⏱</div>
+            <h3>Blocos de foco</h3>
+            <p>Sessões de 25 a 90 minutos com pausas automáticas no ritmo certo.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔕</div>
+            <h3>Bloqueio de distrações</h3>
+            <p>Silencia notificações e sites que roubam sua atenção durante o foco.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📊</div>
+            <h3>Relatórios semanais</h3>
+            <p>Veja em que horários você rende mais e ajuste sua rotina com dados.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="steps">
+      <div class="container">
+        <h2 class="section-title">Como funciona</h2>
+        <ol class="steps-list">
+          <li><strong>Defina a tarefa</strong><span>Escreva o que vai fazer no próximo bloco.</span></li>
+          <li><strong>Entre no fluxo</strong><span>O FocoFlow cuida do tempo e das distrações.</span></li>
+          <li><strong>Acompanhe o progresso</strong><span>Revise seus blocos e celebre cada meta.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="precos" class="pricing">
+      <div class="container">
+        <h2 class="section-title">Planos simples, sem surpresa</h2>
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3>Básico</h3>
+            <p class="price"><span>R$ 0</span>/mês</p>
+            <ul>
+              <li>Blocos de foco ilimitados</li>
+              <li>Pausas automáticas</li>
+              <li>Histórico de 7 dias</li>
+            </ul>
+            <a href="#comecar" class="btn btn-ghost">Começar grátis</a>
+          </article>
+          <article class="price-card price-card-featured">
+            <span class="price-tag">Mais popular</span>
+            <h3>Pro</h3>
+            <p class="price"><span>R$ 19</span>/mês</p>
+            <ul>
+              <li>Tudo do Básico</li>
+              <li>Bloqueio de sites e apps</li>
+              <li>Relatórios semanais com IA</li>
+              <li>Sincronização entre dispositivos</li>
+            </ul>
+            <a href="#comecar" class="btn">Assinar o Pro</a>
+          </article>
+          <article class="price-card">
+            <h3>Equipes</h3>
+            <p class="price"><span>R$ 49</span>/mês</p>
+            <ul>
+              <li>Tudo do Pro para 5 pessoas</li>
+              <li>Metas compartilhadas</li>
+              <li>Painel do gestor</li>
+            </ul>
+            <a href="#comecar" class="btn btn-ghost">Falar com vendas</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="depoimentos" class="testimonials">
+      <div class="container testimonials-grid">
+        <blockquote>
+          <p>“Terminei meu TCC duas semanas antes do prazo. O relatório semanal mudou minha rotina.”</p>
+          <cite>Ana L. · estudante de engenharia</cite>
+        </blockquote>
+        <blockquote>
+          <p>“Parei de checar o celular a cada 5 minutos. Minhas manhãs rendem o dobro.”</p>
+          <cite>Rafael M. · desenvolvedor</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="comecar" class="cta">
+      <div class="container cta-box">
+        <h2>Pronto para o seu melhor dia?</h2>
+        <p>Deixe seu e-mail e receba o link de download e dicas de foco toda semana.</p>
+        <form class="signup-form" id="signup-form" novalidate>
+          <label for="email" class="sr-only">Seu e-mail</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required aria-describedby="form-msg">
+          <button type="submit" class="btn btn-light">Quero o FocoFlow</button>
+        </form>
+        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 FocoFlow · Projeto fictício criado para a Formação Claude Code 2026.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
