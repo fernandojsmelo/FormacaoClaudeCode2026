@@ -98,6 +98,8 @@ google-chrome --headless --disable-gpu --no-sandbox \
 
 Validar com `pdfinfo` (contagem de páginas/tamanho) e `pdftoppm -png -f N -l N -r 80-90 <pdf> <prefixo>` + inspeção visual antes de considerar o arquivo pronto. Nunca pular a checagem visual.
 
+Ao criar um PDF novo a partir de HTML, versionar o `.html` fonte ao lado do `.pdf`, com o mesmo nome base (ex.: `A_Interface_Codex_Cloud.html` + `.pdf`). Para editar uma aula, altere o HTML e renderize de novo — nunca reconstrua do zero a partir do PDF. O HTML precisa ser autocontido (CSS inline; só as fontes vêm do Google Fonts).
+
 ### Armadilha conhecida
 
 Os emojis 🎚️ e 📈 renderizam quebrados neste ambiente Chrome/fontes — substituir por 🔧 e 🚀 respectivamente sempre que aparecerem no conteúdo original.
