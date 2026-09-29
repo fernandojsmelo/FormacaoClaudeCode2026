@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Role Play 34 — Resumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.7pt;line-height:1.52}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:21pt;line-height:1.18;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 8px}
+.byline{font-family:var(--mono);font-size:8.5pt;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:6px}
+section.turn{break-before:page;page-break-before:always}
+section.turn.first{break-before:auto;page-break-before:auto;margin-top:18px}
+.sec{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+.q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-style:italic;color:var(--ink);margin-bottom:14px}
+.q .k{font-family:var(--mono);font-style:normal;font-size:8pt;color:var(--muted);display:block;margin-bottom:3px}
+p{margin:0 0 8px}
+h3{font-family:var(--display);font-weight:600;font-size:12.5pt;margin:12px 0 5px;color:var(--ink);break-after:avoid}
+h4{font-size:10pt;margin:11px 0 5px;color:var(--accent-ink);break-after:avoid}
+ul,ol{margin:0 0 8px;padding-left:20px}
+li{margin:3px 0}
+strong{color:var(--accent-ink);font-weight:600}
+.src{display:inline-block;font-family:var(--mono);font-size:7.8pt;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:9.1pt;margin:6px 0 12px;border:1px solid var(--border-2);break-inside:avoid}
+th{background:var(--surface-2);font-family:var(--mono);font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+blockquote{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--mono);font-size:8.6pt;line-height:1.55;color:var(--ink);break-inside:avoid}
+blockquote ol{margin:5px 0 0;padding-left:18px}
+.follow{background:var(--good-soft);border:1px solid #35493B;border-radius:10px;padding:8px 13px;margin-top:10px;break-inside:avoid}
+.follow p{margin-bottom:4px}
+.follow ul{margin:0}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 13px}
+.card .s{font-family:var(--mono);font-size:8pt;color:var(--accent-ink);margin-bottom:3px}
+.card h5{margin:0 0 4px;font-size:9.6pt}
+.card p{margin:0;font-size:8.8pt;color:var(--muted)}
+.more{font-family:var(--mono);font-size:8pt;color:var(--muted);text-align:center;margin-top:8px}
+.note{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin-top:12px}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:10px;break-before:avoid}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · Role play 34</div>
+  <h1>Supabase sem jargão: dar memória, login e segurança ao app do Lovable</h1>
+  <p class="lead">Resumo da pesquisa feita durante a prática "O Especialista em Back-end e o Criador que 'Perde os Dados ao Atualizar'": o que é o Supabase, como ele resolve dados e login num gerenciador de tarefas, os prompts para o Lovable, a estrutura das tabelas e um roteiro de testes de RLS.</p>
+  <div class="byline">Fernando Melo · 29 de setembro de 2026 · Pesquisa no Modo IA do Google, 09:46</div>
+
+  <!-- 01 -->
+  <section class="turn first">
+    <div class="sec">01 — Pergunta sem resposta</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar o que é o Supabase (sem jargão): É o "bastidor" (back-end) do app — uma plataforma open-source …</div>
+    <p>Parece que não há uma resposta disponível para esta pesquisa. Tente pedir outra coisa.</p>
+    <div class="foot" style="margin-top:6px">As respostas da IA podem conter erros. Saiba mais</div>
+  </section>
+
+  <!-- 02 -->
+  <section class="turn" style="break-before:auto;page-break-before:auto;margin-top:22px">
+    <div class="sec">02 — O que é o Supabase</div>
+    <div class="q"><span class="k">Pergunta</span>Opa! Eu montei um app lindo no Lovable, mas bati numa parede: quando eu fecho e abro de novo, os dados somem, …</div>
+    <p>Opa!</p>
+    <p>Calma, não precisa se desesperar e você não vai ter que virar engenheiro de back-end para fazer o seu app funcionar. É super normal levar esse susto com a sopa de letrinhas da programação!</p>
+    <p>O seu app está lindo porque o Lovable é excelente para construir a "fachada" (o design, os botões, as telas). Só que, no momento, ele é como uma maquete perfeita: visualmente incrível, mas sem encanamento ou energia elétrica. Quando você fecha o app, ele "esquece" tudo porque não tem onde guardar as informações.</p>
+    <p>É exatamente aí que entra o Supabase. Sem jargões, ele é o "bastidor" (ou back-end) do seu app. Ele funciona como a memória e a segurança que faltam para o seu projeto ser um aplicativo de verdade.</p>
+    <h3>O que o Supabase faz pelo seu app?</h3>
+    <p>Em vez de aprender códigos complexos, pense no Supabase como um combo de 4 ferramentas prontas que se conectam ao Lovable:</p>
+    <ul>
+      <li><strong>O Banco de Dados (A Memória):</strong> Sabe quando o usuário digita algo ou cria um post? O banco de dados é a planilha gigante e inteligente onde o app salva isso. É o que faz o app "lembrar" das coisas mesmo se a pessoa fechar ou desligar o celular.</li>
+      <li><strong>O Login (A Portaria):</strong> É o sistema que gerencia os usuários. Ele resolve a parte de criar conta, fazer login com e-mail e senha, ou entrar com o Google.</li>
+      <li><strong>O Armazenamento / Storage (O Depósito):</strong> Se o seu app precisa que o usuário envie fotos, PDFs ou áudios, o Supabase guarda esses arquivos pesados em um "depósito" seguro.</li>
+      <li><strong>As Funções de Bastidor / Edge Functions (O Garçom):</strong> São pequenos scripts que rodam fora do celular do usuário para tarefas específicas (como mandar um e-mail automático ou conectar com um sistema de pagamento).</li>
+    </ul>
+    <h3>Traduzindo os termos técnicos</h3>
+    <p>Quando as pessoas da área começarem a falar difícil com você, use este dicionário mental:</p>
+    <table>
+      <tr><th>Termo Técnico</th><th>O que realmente significa no seu app</th></tr>
+      <tr><td>Back-end</td><td>Tudo o que acontece por trás dos panos (servidores, segurança, banco de dados).</td></tr>
+      <tr><td>Banco de Dados (PostgreSQL)</td><td>O arquivo definitivo onde as informações ficam salvas para sempre.</td></tr>
+      <tr><td>RLS (Row Level Security)</td><td>Segurança de Linha. É a regra que garante que o Usuário A só consiga ver e mexer nos dados dele, e não nos dados do Usuário B.</td></tr>
+      <tr><td>Edge Functions</td><td>Tarefas automatizadas que acontecem na nuvem (ex: calcular algo ou avisar outro sistema).</td></tr>
+    </table>
+    <h3>Por que o Lovable e o Supabase são uma dupla perfeita?</h3>
+    <p>A melhor notícia para você é que o Lovable foi feito para se integrar ao Supabase quase que magicamente. Você não vai precisar digitar linhas e linhas de código de bastidor. Muitas vezes, o próprio assistente de inteligência artificial do Lovable te ajuda a criar as tabelas e conectar as duas ferramentas apenas conversando com ele.</p>
+    <p>O Supabase é o que vai transformar o seu design bonito em um negócio real, onde usuários de verdade criam contas e salvam seus dados com segurança.</p>
+    <div class="follow"><p>Para eu te ajudar a dar o próximo passo sem complicações, me conta:</p>
+      <ul><li>Qual é a ideia principal do seu app? (É um gerenciador, uma loja, uma rede social...?)</li><li>Que tipo de dados o seu usuário precisa salvar nele?</li></ul></div>
+    <div class="foot">A IA pode cometer erros. Por isso, cheque as respostas</div>
+  </section>
+
+  <!-- 03 -->
+  <section class="turn">
+    <div class="sec">03 — Tarefas e RLS</div>
+    <div class="q"><span class="k">Pergunta</span>Opa! Valeu por explicar tudo assim, tá começando a fazer sentido! Olha, meu app é tipo um gerenciador de tarefas. O …</div>
+    <p><strong>Isso mesmo!</strong></p>
+    <p><strong>Você pegou a ideia perfeitamente.</strong> O Supabase resolve exatamente tudo isso para você, e o seu app de tarefas é o exemplo clássico de projeto onde ele brilha.</p>
+    <p>Para o seu gerenciador de tarefas funcionar direito, o Supabase vai agir em duas frentes principais:</p>
+    <ul>
+      <li><strong>O Banco de Dados</strong> vai criar uma tabela chamada "Tarefas" (pense nela como uma planilha do Excel). Cada linha dessa planilha será uma tarefa, contendo o nome da tarefa, o status (se está concluída ou não) e quem foi o usuário que a criou.</li>
+      <li><strong>O RLS</strong> (aquela segurança que conversamos) será a regra de ouro. Você vai ativar o RLS nessa tabela de tarefas dizendo: "Supabase, só mostre ou deixe alterar a linha se o ID do criador for igual ao ID do usuário que está logado agora". Pronto! O Usuário A nunca verá a lista do Usuário B.</li>
+    </ul>
+    <h3>Como o Lovable facilita isso para você?</h3>
+    <p>A melhor parte é que você não vai precisar configurar isso digitando códigos complexos de banco de dados. Como o Lovable tem uma integração nativa fantástica com o Supabase, você pode resolver isso em poucos minutos:</p>
+    <ol>
+      <li><strong>Conectar:</strong> No painel do Lovable, existe um botão para conectar ao Supabase. Ele guia você para criar uma conta gratuita lá e interligar os dois.</li>
+      <li><strong>Pedir ao Lovable:</strong> Você pode literalmente digitar no chat do Lovable: "Crie a tabela de tarefas no Supabase para mim, com uma coluna para o nome, uma para o status de concluído, e ative o RLS para que cada usuário só veja as suas próprias tarefas".</li>
+      <li><strong>Magia da IA:</strong> O Lovable vai se comunicar com o Supabase, criar a estrutura e ajustar as telas do seu app para que elas comecem a salvar e puxar os dados de verdade.</li>
+    </ol>
+    <div class="follow"><p>Para deixarmos o seu app pronto para salvar os dados, você prefere que eu te explique:</p>
+      <ul><li>O passo a passo para criar a conta gratuita no Supabase e conectar no Lovable?</li><li>Como pedir para a IA do Lovable estruturar essa tela de login e de tarefas?</li></ul></div>
+  </section>
+
+  <!-- 04 -->
+  <section class="turn">
+    <div class="sec">04 — Os dois prompts</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, que tranquilo assim! Então, já que é tão direto, acho que prefiro aprender como pedir pra IA do Lovable estrutur…</div>
+    <p>Excelente escolha!</p>
+    <p>Testar com os amigos é o melhor jeito de validar o app. Como o Lovable conversa muito bem com o Supabase, você só precisa dar as instruções certas (os "prompts") para a inteligência artificial fazer o trabalho pesado de back-end por você.</p>
+    <p>Antes de mandar os comandos abaixo no chat do Lovable, certifique-se de que você já clicou no botão do Supabase dentro do painel do Lovable e fez a conexão inicial (geralmente é só clicar em "Connect" e seguir as instruções na tela).</p>
+    <p>Depois de conectado, use este roteiro de dois passos no chat do Lovable:</p>
+    <h3>Passo 1: Criar a Estrutura e a Segurança (O Back-end)</h3>
+    <p>Copie e cole o texto abaixo no chat do Lovable. Ele vai criar a tabela de tarefas e ativar o RLS (a segurança para nenhum amigo ver a tarefa do outro):</p>
+    <blockquote><strong>Prompt para o Lovable:</strong><br>"Crie uma tabela no Supabase chamada 'tarefas'. Ela deve ter as seguintes colunas: um id único, o texto da tarefa (title), um campo booleano para indicar se está concluída (is_completed, começando como falso), a data de criação (created_at) e o id do usuário que criou a tarefa (user_id). Por favor, ative o RLS (Row Level Security) nesta tabela para garantir que cada usuário autenticado possa criar, ler, atualizar e deletar apenas as suas próprias tarefas."</blockquote>
+    <p>O Lovable vai processar, se conectar ao seu Supabase e criar essa estrutura automaticamente.</p>
+    <h3>Passo 2: Ajustar a Tela de Login e a Lista (O Visual + Código)</h3>
+    <p>Assim que a IA confirmar que criou a tabela e as regras de segurança, mande o segundo comando para ela ajustar as telas do app:</p>
+    <blockquote><strong>Prompt para o Lovable:</strong><br>"Agora que a tabela está pronta, ajuste o aplicativo para usar a autenticação do Supabase. Se o usuário não estiver logado, mostre uma tela limpa de Login/Cadastro (com e-mail e senha). Quando ele fizer login, mude para a tela principal onde ele possa ver a lista de tarefas dele. Garanta que o botão de 'Adicionar Tarefa' salve o dado no banco com o 'user_id' do usuário logado, que marcar como 'concluído' atualize o banco de dados, e adicione um botão visível de 'Sair' (Logout)."</blockquote>
+    <h3>Como testar com seus amigos?</h3>
+    <p>Assim que o Lovable terminar de aplicar as mudanças:</p>
+    <ol>
+      <li><strong>Crie a sua própria conta:</strong> No próprio preview do Lovable, tente criar uma conta com seu e-mail e adicione algumas tarefas. Feche o navegador, abra de novo e veja a mágica: suas tarefas continuarão lá!</li>
+      <li><strong>Abra em uma aba anônima:</strong> Entre no app por uma aba anônima e crie uma conta fictícia (como se fosse um amigo seu). Adicione tarefas diferentes ali.</li>
+      <li><strong>O teste real:</strong> Volte para a sua aba normal. Se você não conseguir ver as tarefas que criou na aba anônima, parabéns! O seu banco de dados e o RLS estão funcionando perfeitamente.</li>
+    </ol>
+    <p>A partir daí, você já pode clicar em Publish (Publicar) no Lovable e mandar o link para os seus amigos criarem as contas deles e começarem os testes!</p>
+    <p>Se o Lovable te der alguma mensagem de erro ou pedir alguma confirmação que você não entenda durante esse processo, me avise aqui o que apareceu que a gente resolve junto!</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="turn" style="break-before:auto;page-break-before:auto;margin-top:26px">
+    <div class="sec">05 — O Supabase "nativo" do Lovable</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar a integração com o Lovable (o ponto-chave): O Supabase é o back-end nativo do Lovable — todo projeto já…</div>
+    <p>Cara, tem uma notícia ainda melhor que eu esqueci de te contar sobre essa dupla Lovable + Supabase!</p>
+    <p>Você não vai precisar nem criar conta externa ou ficar configurando chaves de acesso para começar.</p>
+    <p>O grande segredo é que o <strong>Supabase é o back-end nativo do Lovable</strong>. Isso significa que todo projeto que você cria no Lovable já vem com um banco de dados Supabase embutido e gerenciado nos bastidores, sem você precisar fazer nenhum setup manual.</p>
+    <p>A integração é o ponto-chave do Lovable por dois motivos fantásticos:</p>
+    <h3>1. Tradução automática de português para código de segurança</h3>
+    <p>Quando você digita no chat do Lovable em português: "Quero que cada usuário só veja as suas próprias tarefas", a inteligência artificial faz tudo sozinha. Nos bastidores, ela cria as tabelas, faz as conexões e escreve aquela regra de segurança complexa (o RLS) que protege os dados. Você não precisa configurar nenhuma linha de comando no painel do banco de dados.</p>
+    <h3>2. O cofre dos bastidores (Segurança Real)</h3>
+    <p>Mais para frente, se o seu app crescer e você quiser colocar sistemas de pagamento (como o Stripe) ou inteligência artificial (como a OpenAI), você vai precisar de "chaves de API" (que são como as senhas desses serviços).</p>
+    <ul>
+      <li>Se você colocar essas chaves direto no visual do app, qualquer hacker consegue roubar pelo navegador.</li>
+      <li>O Lovable usa esse Supabase nativo para esconder e guardar essas chaves em um cofre nos bastidores. O app funciona com esses serviços e ninguém consegue ver as suas senhas.</li>
+    </ul>
+    <p>Ou seja: você foca em desenhar o app e dizer como ele deve funcionar, e o Lovable usa o Supabase por trás para deixar tudo profissional, seguro e pronto para rodar!</p>
+    <div class="follow"><p>Se você quiser começar a rodar os testes agora mesmo, me conta:</p>
+      <ul><li>Você já tentou mandar o primeiro comando para a IA no chat do Lovable?</li><li>Se sim, deu tudo certo ou o Lovable te devolveu alguma mensagem ou pergunta?</li></ul></div>
+  </section>
+
+  <!-- 06 -->
+  <section class="turn">
+    <div class="sec">06 — Controle, segurança e cuidados</div>
+    <div class="q"><span class="k">Pergunta</span>Vender controle, segurança e não-aprisionamento: Ele continua dono de tudo — o Supabase roda em infra robusta …</div>
+    <p>Você tem toda a razão em querer entender onde está se metendo antes de colocar seu app no ar.</p>
+    <p>A melhor parte de usar o Supabase no Lovable é que você ganha o pacote completo: controle total, segurança de nível bancário e zero aprisionamento (lock-in).</p>
+    <p>Olha só o nível de liberdade e proteção que você passa a ter:</p>
+    <h3>🛡️ Controle e Segurança (Sem Aprisionamento)</h3>
+    <ul>
+      <li><strong>Você continua dono de tudo:</strong> O banco de dados é seu. Se amanhã ou depois você decidir tirar o seu app do Lovable e contratar um programador para refazer o visual do zero, você pode exportar todo o seu banco de dados do Supabase com um clique. Você não fica "preso" a nenhuma plataforma.</li>
+      <li><strong>Infraestrutura gigante:</strong> O Supabase roda em servidores ultra robustos (na AWS), com dados totalmente criptografados e certificações de segurança internacionais (como SOC2). É o mesmo nível de segurança que grandes empresas usam.</li>
+      <li><strong>Plano gratuito generoso:</strong> Dá para testar com muitos amigos e até lançar o app comercialmente sem pagar nada. O tier gratuito deles é super robusto para quem está começando.</li>
+      <li><strong>Integração com outras ferramentas:</strong> O Supabase cria automaticamente "portas de entrada" (APIs) para os seus dados. Isso significa que, se você quiser conectar seu app ao Make.com ou Zapier para mandar um aviso no WhatsApp ou gerar uma planilha no Google Sheets quando uma tarefa for criada, é super simples.</li>
+    </ul>
+    <h3>⚠️ Cuidados Honestos (Para não ter dor de cabeça)</h3>
+    <p>Como seu parceiro nessa jornada, preciso te dar três conselhos práticos e sinceros para evitar problemas lá na frente:</p>
+    <ol>
+      <li><strong>Faça o teste de invasão (Teste o RLS):</strong> Antes de liberar para os amigos, faça aquilo que combinamos: crie duas contas de teste (Usuário A e Usuário B). Entre na conta B e garanta que você não consegue ver nenhuma tarefa da conta A. Segurança a gente não supõe, a gente testa!</li>
+      <li><strong>Cuidado com dados públicos:</strong> Por padrão, o Lovable tenta facilitar sua vida, mas sempre certifique-se com a IA de que as tabelas que guardam informações privadas dos usuários não estão configuradas como "públicas" (sem RLS). Dados privados exigem login.</li>
+      <li><strong>Planeje as tabelas antes do retrabalho:</strong> Antes de pedir para a IA criar mil coisas, gaste 5 minutos com papel e caneta desenhando o que você quer salvar. Se você mudar a estrutura do banco de dados no meio do caminho com o app já cheio de usuários, dá um trabalho danado para consertar sem apagar os dados antigos.</li>
+    </ol>
+    <div class="follow"><p>Para deixarmos tudo redondo para os seus testes, qual desses passos você quer fazer agora?</p>
+      <ul><li>Podemos desenhar juntos as colunas e tabelas perfeitas para o seu gerenciador de tarefas.</li><li>Posso te passar um roteiro de testes de segurança para você aplicar no Lovable e garantir que o RLS está blindado.</li></ul></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="turn">
+    <div class="sec">07 — O desenho das tabelas</div>
+    <div class="q"><span class="k">Pergunta</span>Puxa, essas dicas foram ouro, sério! Acho que quero começar desenhando as colunas e tabelas certinhas pro meu app, …</div>
+    <p>Planejar antes é o segredo dos grandes desenvolvedores!</p>
+    <p>Fazer isso agora vai te poupar horas de retrabalho e garantir que o Lovable monte tudo perfeito de primeira.</p>
+    <p>Para um gerenciador de tarefas (To-Do List) robusto e escalável, o ideal é organizarmos o seu banco de dados em duas tabelas principais. Assim, seu app fica preparado não só para o básico, mas também para crescer no futuro.</p>
+    <p>Aqui está o desenho ideal das suas tabelas:</p>
+    <h3>1. Tabela: usuarios (Nativa do Supabase)</h3>
+    <p>Você não precisa criar essa tabela do zero. O Supabase já cria uma área segura de autenticação (chamada <code>auth.users</code>) assim que o usuário faz o cadastro.</p>
+    <ul><li>Ela guarda o E-mail, a Senha (criptografada) e gera um ID único para cada pessoa (uma sequência de letras e números chamada UUID).</li></ul>
+    <h3>2. Tabela: tarefas (A planilha que vamos criar)</h3>
+    <p>Esta é a tabela onde o Lovable vai salvar cada tarefa. Pense nela como uma planilha com as seguintes colunas:</p>
+    <table>
+      <tr><th>Nome da Coluna</th><th>Tipo de Dado</th><th>Para que serve?</th></tr>
+      <tr><td>id</td><td>Texto/UUID</td><td>O "RG" da tarefa. Cada linha ganha um número único automático.</td></tr>
+      <tr><td>user_id</td><td>Texto/UUID</td><td>O Dono da Tarefa. Aqui vai o ID do usuário que estava logado. É o que o RLS usa para proteger o dado.</td></tr>
+      <tr><td>titulo</td><td>Texto</td><td>O que o usuário precisa fazer (Ex: "Comprar pó de café").</td></tr>
+      <tr><td>descricao</td><td>Texto (Opcional)</td><td>Um campo extra para anotações detalhadas da tarefa.</td></tr>
+      <tr><td>concluida</td><td>Booleano (Sim/Não)</td><td>Começa sempre como Falso (Não). Quando ele clica no check, vira Verdadeiro (Sim).</td></tr>
+      <tr><td>prazo</td><td>Data (Opcional)</td><td>Para o usuário escolher o dia limite para entregar a tarefa.</td></tr>
+      <tr><td>criado_em</td><td>Data/Hora</td><td>Salva automaticamente o dia e horário que a tarefa foi criada.</td></tr>
+    </table>
+    <h3>Por que essa estrutura é ideal?</h3>
+    <p>Ao incluir campos como <code>descricao</code> e <code>prazo</code> desde o início (mesmo que você não use na primeira tela), você já deixa o banco de dados pronto. Se amanhã você quiser colocar um calendário ou um campo de notas no seu app, a estrutura do bastidor já está lá te esperando, sem quebrar o que você já fez!</p>
+    <h3>🚀 O Prompt Pronto para o Lovable</h3>
+    <p>Agora que está planejado, você pode copiar o texto abaixo, colar no chat do Lovable e ver a mágica acontecer:</p>
+    <blockquote>"Crie uma tabela no Supabase chamada 'tarefas' seguindo esta estrutura: um 'id' gerado automaticamente, um 'user_id' conectado ao usuário logado, um 'titulo' (texto), uma 'descricao' (texto opcional), um campo 'concluida' (booleano que começa como false), um campo 'prazo' (data opcional) e um 'criado_em' automático. Ative o RLS para que o usuário autenticado só possa ver, criar, editar ou deletar as tarefas onde o 'user_id' seja igual ao ID dele."</blockquote>
+    <div class="follow"><p style="margin:0">O que você acha dessa estrutura? Quer mudar ou acrescentar algum campo (como categorias ou prioridade por cores) antes de mandar para o Lovable, ou prefere que eu te ensine o roteiro de testes para validar o login e o RLS assim que você rodar o prompt?</p></div>
+  </section>
+
+  <!-- 08 -->
+  <section class="turn" style="break-before:auto;page-break-before:auto;margin-top:26px">
+    <div class="sec">08 — O roteiro de testes do RLS</div>
+    <div class="q"><span class="k">Pergunta</span>Tá perfeito! Acho que já cobre tudo que eu preciso agora, sem complicar demais. Vou mandar esse prompt direto e …</div>
+    <p>Fechado!</p>
+    <p>Excelente decisão. Vá lá, mande o prompt no Lovable e deixe a IA fazer a mágica dela na estrutura do banco.</p>
+    <p>Assim que as telas estiverem prontas e o banco criado, use este roteiro de testes práticos para garantir que a segurança (o RLS) está totalmente blindada antes de mandar para os seus amigos:</p>
+    <h3>🕵️‍♂️ O Roteiro de Testes da Segurança (Passo a Passo)</h3>
+    <p>Para simular dois usuários reais que não se conhecem, nós vamos usar o seu navegador normal e uma janela anônima.</p>
+    <h4>Passo 1: O Usuário "Alfa" (No navegador normal)</h4>
+    <ol>
+      <li>Abra o preview do seu app no Lovable.</li>
+      <li>Crie uma conta de teste usando um e-mail seu (ex: alfa@teste.com).</li>
+      <li>Adicione 3 tarefas na sua lista (ex: "Estudar Supabase", "Comprar café", "Lavar o carro").</li>
+      <li>Certifique-se de que elas aparecem direitinho na tela. <strong>Não faça logout ainda.</strong></li>
+    </ol>
+    <h4>Passo 2: O Usuário "Beta" (Na Janela Anônima)</h4>
+    <ol>
+      <li>Abra uma janela anônima no seu navegador e cole o link do preview do seu app.</li>
+      <li>Como você está no modo anônimo, o app deve abrir na tela de login (se abrir direto nas tarefas do Alfa, avise a IA do Lovable que o fluxo de login falhou).</li>
+      <li>Crie uma nova conta com outro e-mail (ex: beta@teste.com).</li>
+      <li><strong>O Teste de Ouro:</strong> Olhe para a tela. A lista do Usuário Beta está completamente limpa? Se sim, excelente!</li>
+      <li>Adicione 2 tarefas para o Beta (ex: "Pagar a conta de luz", "Academia").</li>
+    </ol>
+    <h4>Passo 3: A Prova dos Nove</h4>
+    <ol>
+      <li>Volte para a sua janela normal (onde o Usuário Alfa está logado) e atualize a página (F5).</li>
+      <li>As tarefas do Beta ("Pagar a conta de luz", "Academia") apareceram ali? <strong>Elas não podem aparecer.</strong> Você só deve ver as 3 tarefas originais do Alfa.</li>
+      <li>Volte para a janela anônima (Beta) e atualize. Ele só deve ver as 2 tarefas dele.</li>
+    </ol>
+    <h3>🚨 E se algo der errado?</h3>
+    <p>Se por acaso o Usuário Beta conseguir ver as tarefas do Alfa (ou vice-versa), significa que a regra do RLS não foi aplicada corretamente ou a IA esqueceu de filtrar os dados pelo ID do usuário na hora de exibir na tela.</p>
+    <p>Se isso acontecer, não entre em pânico! É só colar isso no chat do Lovable:</p>
+    <blockquote>"O Usuário A está conseguindo ver as tarefas do Usuário B. Por favor, revise a política de RLS da tabela 'tarefas' no Supabase e garanta que o código do front-end filtre a busca trazendo apenas as linhas onde o 'user_id' seja igual ao do usuário atualmente logado."</blockquote>
+    <div class="follow"><p>Vá lá rodar o prompt e fazer os cadastros! Assim que concluir os testes, me conte:</p>
+      <ul><li>O app barrou corretamente os dados de um usuário na conta do outro?</li><li>A tela de Login e Logout funcionou de forma fluida?</li></ul></div>
+  </section>
+
+  <!-- 09: nota do curso -->
+  <section class="turn">
+    <div class="sec">09 — Referência oficial · nota da Formação</div>
+    <h3 style="margin-top:4px">O que a documentação atual diz sobre os pontos do diálogo</h3>
+    <p>As respostas acima vieram de uma pesquisa com IA e foram mantidas como estão, porque fazem parte do exercício. Alguns pontos, porém, <strong>misturam dois caminhos diferentes</strong> ou deixam de fora detalhes que fazem diferença (docs.lovable.dev e supabase.com/docs, consultados em setembro de 2026). Use-os para treinar o senso crítico: <strong>confira sempre a fonte primária</strong>.</p>
+    <table>
+      <tr><th style="width:36%">O que o diálogo afirma</th><th>O que diz a documentação atual</th></tr>
+      <tr><td>Em 02:03 e 02:51: "crie uma conta gratuita no Supabase e conecte". Em 03:46: "todo projeto já vem com Supabase embutido, sem conta externa".</td><td>São <strong>dois caminhos diferentes</strong>. O padrão é o <strong>Lovable Cloud</strong>, construído sobre o Supabase, ativado sem conta própria. O outro é <strong>conectar um Supabase seu</strong>, com conta, painel e cobrança próprios, e só funciona em projetos que ainda não ativaram o Cloud. <strong>Não há migração automática</strong> entre os dois. Escolha antes de começar.</td></tr>
+      <tr><td>O prompt salva a tarefa "com o user_id do usuário logado", enviado pelo app.</td><td>Mais seguro: o <strong>banco</strong> define o dono (valor padrão <code>auth.uid()</code>) e a política de INSERT confere. Assim ninguém cria dados em nome de outra pessoa.</td></tr>
+      <tr><td>"Garanta que o front-end filtre" pelo user_id.</td><td>Filtrar na tela <strong>esconde</strong>, mas não protege. Quem protege é o <strong>RLS</strong>. Se um usuário vê dados de outro, o conserto é na política, não no filtro.</td></tr>
+      <tr><td>Testar com <code>alfa@teste.com</code> e <code>beta@teste.com</code>.</td><td>Com Supabase próprio, a confirmação de e-mail vem ligada e o e-mail padrão <strong>só envia para membros da equipe</strong> da organização. Use e-mails de teste convidados para a equipe ou configure SMTP próprio.</td></tr>
+      <tr><td>"Dá para lançar comercialmente sem pagar nada".</td><td>No Free do Supabase, o projeto <strong>pausa após 1 semana sem uso</strong>, há limite de 2 projetos ativos e não há backups automáticos. Para usuários reais, SMTP próprio é necessário.</td></tr>
+    </table>
+    <div class="note">⚠️ <strong>Um ponto que o diálogo não cita:</strong> antes do primeiro cadastro, ajuste o <strong>Site URL</strong> e as <strong>Redirect URLs</strong> do Supabase (o padrão é <code>localhost:3000</code>). Sem isso, os links de confirmação levam a um endereço que não existe.</div>
+    <div class="follow"><p><strong>Para se aprofundar:</strong> módulo 28 — Integração Lovable e Supabase. As aulas 02 a 04 explicam o Supabase e a conexão; as aulas 05 a 09 constroem o Minha Estante, com dono definido pelo banco, RLS testado com dois leitores e uma página pública.</p></div>
+    <div class="foot">Fontes: docs.lovable.dev (Connect to Supabase · Lovable Cloud) e supabase.com/docs (Password-based Auth · Redirect URLs · Send emails with custom SMTP · Row Level Security) e supabase.com/pricing, consultados em setembro de 2026.</div>
+  </section>
+</div>
+</body>
+</html>
