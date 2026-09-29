@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Conhecendo a Ferramenta</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.4px}
+td code{font-size:10.3px}
+kbd{font-family:var(--mono);font-size:10.3px;background:var(--surface-2);border:1px solid var(--border-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink);white-space:nowrap}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11px;line-height:1.6;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+/* maquete do editor */
+.mock{border:1px solid var(--border-2);border-radius:10px;overflow:hidden;background:#100D0A;font-size:10.5px}
+.mock .top{display:flex;align-items:center;gap:5px;padding:7px 8px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.mock .pill{white-space:nowrap;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:6px;border:1px solid var(--border-2);color:var(--muted)}
+.mock .pill.a{background:var(--accent);color:#171310;border-color:var(--accent);font-weight:600}
+.mock .pill.o{border-color:var(--accent);color:var(--accent-ink)}
+.mock .sp{flex:1}
+.mock .body{display:grid;grid-template-columns:34% 66%;min-height:250px}
+.mock .chat{border-right:1px solid var(--border);padding:9px;display:flex;flex-direction:column;gap:6px}
+.mock .bub{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:5px 7px;color:var(--muted)}
+.mock .bub.u{background:var(--accent-soft);color:var(--ink);align-self:flex-end;max-width:85%}
+.mock .input{margin-top:auto;border:1px solid var(--accent);border-radius:7px;padding:6px 7px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.mock .prev{padding:9px;display:flex;flex-direction:column;gap:7px}
+.mock .tb{display:flex;gap:5px}
+.mock .site{flex:1;border:1px dashed var(--border-2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--mono);font-size:10px;background:repeating-linear-gradient(135deg,#15110e 0 10px,#130f0c 10px 20px)}
+.tag{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-size:9.5px;font-weight:700;flex:none}
+.legend{display:grid;gap:6px}
+.legend div{display:grid;grid-template-columns:20px 1fr;gap:7px;align-items:start;font-size:11px}
+.legend b{color:var(--ink)}
+.legend span.t{color:var(--muted)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Introdução ao Lovable · Aula 2</div>
+    <h1>Conhecendo<br><em>a ferramenta</em></h1>
+    <p class="lead">Um tour guiado pela interface do Lovable: criar a conta, usar o painel inicial, entender o editor (chat à esquerda e pré-visualização à direita), escolher entre os modos Build, Plan e Chat, editar apontando na tela, voltar versões e trabalhar mais rápido com atalhos.</p>
+    <div class="chips"><span>Conta e workspace</span><span>Painel inicial</span><span>Editor</span><span>Build · Plan · Chat</span><span>Histórico</span><span>Atalhos</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Lovable (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Primeiro acesso</span><span class="n">01</span></div>
+  <h2>Criando a conta e o <em>primeiro workspace</em></h2>
+  <p class="intro">Não há nada para instalar nem configurar: o Lovable roda no navegador. Na primeira vez, a conta já vem com um <strong>workspace pessoal no plano Free</strong>, pronto para construir.</p>
+  <div class="grid g2" style="grid-template-columns:1.1fr 1fr;align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Cadastre-se em lovable.dev</h3><p>Com e-mail, Google, GitHub ou Apple. Empresas podem usar login único (SSO).</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Ou comece pelo prompt</h3><p>Dá para digitar o pedido na página inicial antes de se cadastrar. O Lovable pede o cadastro ao enviar e <strong>guarda o seu prompt</strong>.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Chegue ao painel inicial</h3><p>Depois do login, o Lovable abre o painel, com a caixa de prompt no centro.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Proteja a conta</h3><p>Ative a <strong>autenticação em dois fatores (2FA)</strong> nas configurações da conta, como vimos no módulo 26.</p></div></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Conta, workspace e projeto</div>
+        <ul class="bullets"><li>A <strong>conta</strong> é você: um login para tudo</li><li>O <strong>workspace</strong> é onde ficam os projetos, os membros e os créditos. Você pode participar de vários</li><li>Cada <strong>projeto</strong> é um app, dentro de um único workspace</li></ul></div>
+      <div class="callout good">No plano Free você tem <strong>5 créditos de build por dia</strong>, até 30 por mês. É o bastante para acompanhar as aulas com calma, desde que cada pedido seja claro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Painel inicial</span><span class="n">02</span></div>
+  <h2>O <em>painel inicial</em> (dashboard)</h2>
+  <p class="intro">O painel é o ponto de partida: é daqui que você cria projetos, abre conversas e chega às configurações do workspace.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">A caixa de prompt</div><p style="color:var(--ink)">Fica no centro. Com o modo <strong>Build</strong> selecionado, o que você descreve vira um <strong>projeto novo</strong>. Com <strong>Chat</strong>, vira uma conversa. Pode ser uma linha ("um app de tarefas com modo escuro") ou uma especificação de vários parágrafos, e o microfone permite ditar.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">O botão +</div>
+        <ul class="bullets"><li><strong>Attach:</strong> anexar imagens, arquivos ou uma captura de tela como referência</li><li><strong>Design:</strong> aplicar um design system (planos pagos) ou um modelo de design (Business e Enterprise)</li><li><strong>Connectors:</strong> conectar ferramentas (servidores MCP) como contexto</li><li><strong>Databases:</strong> ligar o Lovable Cloud ou um Supabase</li></ul></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Barra lateral</div>
+        <ul class="bullets"><li><strong>Troca de workspace</strong>, com a barra de <strong>créditos restantes</strong></li><li><strong>Dashboard</strong>, <strong>Chats</strong>, <strong>Search</strong> e <strong>Connectors</strong></li><li><strong>Projects</strong>, <strong>Starred</strong> (favoritos) e <strong>Recents</strong></li><li>Menu do usuário: configurações da conta, tema, suporte e sair</li></ul></div>
+      <div class="card" style="margin-top:10px"><div class="k">Templates</div><p style="color:var(--ink)">Prefere começar de algo pronto? Na aba <strong>Lovable templates</strong> você abre um app de exemplo e faz um <strong>remix</strong>: uma cópia independente, só sua, disponível em qualquer plano.</p></div>
+      <div class="callout">A visibilidade padrão de um projeto novo é o <strong>workspace</strong>. Você muda isso depois, no botão <strong>Share</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Editor</span><span class="n">03</span></div>
+  <h2>O mapa do <em>editor</em></h2>
+  <p class="intro">Ao abrir um projeto você entra no editor. A regra é simples: <strong>você conversa à esquerda e vê o app à direita</strong>, e o resto fica a um ou dois cliques na barra superior.</p>
+  <div class="grid g2" style="grid-template-columns:1.9fr 1fr;align-items:start">
+    <div class="mock">
+      <div class="top"><span class="tag">1</span><span class="pill">☰</span><span class="pill">Café ▾</span><span class="tag">2</span><span class="pill">History</span><span class="sp"></span><span class="tag">3</span><span class="pill a">Preview</span><span class="pill">Files</span><span class="pill">Code</span><span class="pill">More</span><span class="sp"></span><span class="tag">4</span><span class="pill">Share</span><span class="pill o">Publish</span></div>
+      <div class="body">
+        <div class="chat"><div style="display:flex;gap:5px;align-items:center"><span class="tag">5</span><span style="color:var(--muted);font-family:var(--mono);font-size:9.5px">PROJECT CHAT</span></div>
+          <div class="bub u">Crie um site para a cafeteria…</div>
+          <div class="bub">✓ Criei a página inicial, o cardápio com filtros e a seção de horários.</div>
+          <div class="bub u">Adicione uma seção de especiais do dia</div>
+          <div class="input"><span>＋</span><span style="flex:1">Ask Lovable…</span><span class="pill">Build ▾</span><span>🎙</span></div>
+        </div>
+        <div class="prev"><div class="tb"><span class="tag">6</span><span class="pill">↖ Select</span><span class="pill">T Edit</span><span class="pill">✎ Draw</span><span class="pill">💬 Comment</span><span class="sp" style="flex:1"></span><span class="pill">📱 🖥</span></div>
+          <div class="site">seu app rodando ao vivo</div></div>
+      </div>
+    </div>
+    <div class="legend">
+      <div><span class="tag">1</span><span><b>Menu e nome do projeto</b> <span class="t">— abre a barra lateral e troca entre a versão principal e os rascunhos (drafts)</span></span></div>
+      <div><span class="tag">2</span><span><b>History</b> <span class="t">— todas as versões do projeto, para voltar a qualquer ponto</span></span></div>
+      <div><span class="tag">3</span><span><b>Abas do projeto</b> <span class="t">— Preview, Files (arquivos gerados), Code (código) e More (Cloud, Analytics, Segurança…)</span></span></div>
+      <div><span class="tag">4</span><span><b>Share e Publish</b> <span class="t">— convidar pessoas e colocar o app no ar</span></span></div>
+      <div><span class="tag">5</span><span><b>Chat do projeto</b> <span class="t">— onde você pede, acompanha e revisa cada mudança</span></span></div>
+      <div><span class="tag">6</span><span><b>Barra de pré-visualização</b> <span class="t">— editar apontando na tela, com seletor de dispositivo</span></span></div>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:10.5px;margin-top:8px;font-family:var(--mono)">Esquema ilustrativo baseado no mapa oficial do editor (versão para navegador desktop). A aparência exata pode variar.</p>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Chat</span><span class="n">04</span></div>
+  <h2>O chat do projeto e os <em>três modos</em></h2>
+  <p class="intro">A cada mensagem, o agente do Lovable trabalha em ciclo: <strong>reúne contexto</strong> do projeto, <strong>age</strong> com suas ferramentas e <strong>confere o resultado</strong> antes de seguir. Você escolhe como ele responde com o seletor de modo.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card" style="border-top:3px solid var(--accent)"><div class="k">Build (padrão)</div><h3>Faz a mudança</h3><p>Altera o projeto diretamente. É a escolha certa para a maioria dos pedidos, de ajustes pequenos a funcionalidades inteiras.</p></div>
+    <div class="card" style="border-top:3px solid var(--warn)"><div class="k">Plan</div><h3>Planeja antes</h3><p>Investiga o projeto e escreve um plano para você revisar, editar e aprovar. <strong style="color:var(--ink)">Não mexe no código</strong> até a aprovação. Ideal para mudanças grandes ou arriscadas.</p></div>
+    <div class="card" style="border-top:3px solid var(--good)"><div class="k">Chat</div><h3>Só conversa</h3><p>Discute o app aberto <strong style="color:var(--ink)">sem alterar nada</strong>: como funciona, o que um termo significa, qual abordagem escolher.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Em volta da caixa de texto</div>
+      <ul class="bullets"><li><strong>Microfone:</strong> dite o pedido (<kbd>Alt</kbd>+<kbd>V</kbd>, ou <kbd>⌥</kbd>+<kbd>V</kbd> no Mac). O Lovable transcreve e limpa o texto</li><li><strong>Seletor de modo:</strong> <kbd>Alt</kbd>+<kbd>P</kbd> alterna entre Build, Chat e Plan</li><li><strong>Botão +:</strong> anexar arquivos, adicionar skills e conectores e abrir ferramentas do projeto</li></ul></div>
+    <div>
+      <div class="callout good" style="margin-top:0"><strong>Pode perguntar qualquer coisa</strong>, não só pedir mudanças: "como esse filtro funciona?". E pode pedir ações: "publique meu app" ou "encontre um domínio para a minha padaria".</div>
+      <div class="callout">Com o Lovable ainda trabalhando, você pode mandar mensagens para <strong>corrigir o rumo</strong>, responder às perguntas que ele fizer e desfazer mudanças.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Pré-visualização</span><span class="n">05</span></div>
+  <h2>Editando <em>apontando na tela</em></h2>
+  <p class="intro">A pré-visualização à direita é o seu app de verdade, rodando ao vivo: dá para clicar em tudo como um usuário faria. A <strong>barra de pré-visualização</strong> (que substituiu o antigo "Visual edits") permite pedir mudanças apontando, em vez de descrevendo.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:32%">Modo da barra</th><th>Para quê</th></tr>
+      <tr><td>Select elements <kbd>S</kbd></td><td style="color:var(--muted)">Apontar um ou mais elementos e pedir a mudança em linguagem natural. Com <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+clique você seleciona vários</td></tr>
+      <tr><td>Edit text inline</td><td style="color:var(--muted)">Corrigir um erro de digitação ou trocar um texto direto na página, <strong style="color:var(--ink)">sem prompt</strong></td></tr>
+      <tr><td>Draw annotation</td><td style="color:var(--muted)">Desenhar sobre a tela para mostrar uma mudança de layout difícil de descrever</td></tr>
+      <tr><td>Add a comment</td><td style="color:var(--muted)">Deixar um comentário para você ou para um colega</td></tr>
+    </table></div>
+    <div>
+      <div class="card"><div class="k">Teste em vários tamanhos</div><p style="color:var(--ink)">O botão de dispositivo acima da pré-visualização alterna entre <strong>celular, tablet e desktop</strong>. Sempre confira a versão de celular: é nela que a maioria das pessoas vai abrir o link.</p></div>
+      <div class="callout good"><strong>Quando usar cada coisa:</strong> para ajustes visuais pequenos, apontar é mais rápido que descrever. Para funcionalidades e lógica, use o chat.</div>
+      <div class="callout">Lembra das aulas do Codex? É o mesmo princípio do navegador embutido do app desktop: <strong>ver o resultado</strong> e ajustar em ciclos curtos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Segurança</span><span class="n">06</span></div>
+  <h2>Histórico de versões: sua <em>rede de proteção</em></h2>
+  <p class="intro">Toda mudança que o Lovable faz cria uma <strong>versão automaticamente</strong>. Não existe botão de salvar: o histórico está sempre completo, e dá para voltar a qualquer ponto.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Pré-visualizar</div><p style="color:var(--ink)">Abra o <strong>History</strong> na barra superior e veja como o app estava em qualquer versão anterior.</p></div>
+    <div class="card"><div class="k">Reverter</div><p style="color:var(--ink)">Uma mudança quebrou algo? Volte para a última versão boa. <strong>Nada se perde</strong>: as mudanças posteriores continuam no chat e podem ser reaplicadas.</p></div>
+    <div class="card"><div class="k">Marcar (bookmark)</div><p style="color:var(--ink)">Marque as versões estáveis, como "antes do login" ou "versão aprovada". Elas ficam na aba <strong>Bookmarks</strong>.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Rascunhos (drafts)</div><p style="color:var(--ink)">Pelo nome do projeto você cria um <strong>rascunho</strong>: uma área separada, com chat próprio, para testar uma ideia sem mexer na versão principal. Se gostar, aceite o rascunho no projeto.</p></div>
+    <div class="callout warn" style="margin-top:0"><strong>Paralelo com o que já vimos:</strong> o histórico faz o papel dos <strong>commits do Git</strong>, e os rascunhos o das <strong>worktrees e branches</strong>. É o mesmo raciocínio de experimentar sem medo, agora sem linha de comando.</div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Na prática</span><span class="n">07</span></div>
+  <h2>O primeiro tour <em>em 10 minutos</em></h2>
+  <p class="intro">O guia oficial propõe um primeiro app simples. Adaptado para o português, o exercício passa por todas as áreas que vimos:</p>
+  <div class="grid g2" style="grid-template-columns:1.2fr 1fr;align-items:start">
+    <div>
+<div class="promptbox"><span class="h">Prompt inicial (modo Build):</span>
+Crie um site para a Café Samambaia, uma cafeteria de bairro.
+Inclua uma seção principal acolhedora com título e foto, um
+cardápio interativo em que o visitante filtra os itens por
+categoria (cafés, café da manhã, almoço, doces), uma seção de
+horários e uma seção de localização com o endereço e uma breve
+descrição de "como chegar". Use conteúdo de exemplo realista.
+Visual aconchegante. Funcione bem no celular.
+<span class="h">Sem login nem banco de dados por enquanto.</span></div>
+      <div class="callout good">A última linha importa: sem login e sem banco, a primeira versão tem <strong>menos coisa para dar errado</strong>. As duas coisas entram depois, com um prompt cada.</div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Acompanhe a construção</h3><p>A primeira versão leva alguns minutos. Depois, clique em tudo na pré-visualização.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Peça uma mudança por vez</h3><p>"Adicione uma seção de especiais do dia entre o cardápio e os horários."</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Ajuste apontando</h3><p>Troque um título com <strong>Edit text inline</strong>, sem gastar prompt.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Teste no celular</h3><p>Troque o dispositivo e confira os filtros.</p></div></div>
+      <div class="step"><div class="b">5</div><div><h3>Olhe o histórico</h3><p>Veja as versões criadas e marque a que ficou boa.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Produtividade</span><span class="n">08</span></div>
+  <h2>Atalhos e <em>onde encontrar cada coisa</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:6px">
+    <div class="table-wrap"><table>
+      <tr><th>Ação</th><th>Windows / Linux</th><th>Mac</th></tr>
+      <tr><td>Paleta de comandos (buscar tudo)</td><td><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td><kbd>⌘</kbd>+<kbd>K</kbd></td></tr>
+      <tr><td>Esconder ou mostrar o chat</td><td><kbd>Ctrl</kbd>+<kbd>B</kbd></td><td><kbd>⌘</kbd>+<kbd>B</kbd></td></tr>
+      <tr><td>Configurações do projeto</td><td><kbd>Ctrl</kbd>+<kbd>.</kbd></td><td><kbd>⌘</kbd>+<kbd>.</kbd></td></tr>
+      <tr><td>Abrir ou fechar a barra lateral</td><td><kbd>[</kbd></td><td><kbd>[</kbd></td></tr>
+      <tr><td>Ditar o prompt</td><td><kbd>Alt</kbd>+<kbd>V</kbd></td><td><kbd>⌥</kbd>+<kbd>V</kbd></td></tr>
+      <tr><td>Alternar Build, Chat e Plan</td><td><kbd>Alt</kbd>+<kbd>P</kbd></td><td><kbd>⌥</kbd>+<kbd>P</kbd></td></tr>
+      <tr><td>Selecionar elementos na tela</td><td><kbd>S</kbd></td><td><kbd>S</kbd></td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th style="width:42%">Procurando…</th><th>Onde fica</th></tr>
+      <tr><td>Banco de dados, usuários e logs</td><td style="color:var(--muted)">More → <strong style="color:var(--ink)">Cloud</strong></td></tr>
+      <tr><td>Acessos e visitas do app publicado</td><td style="color:var(--muted)">More → <strong style="color:var(--ink)">Analytics</strong></td></tr>
+      <tr><td>Código do projeto</td><td style="color:var(--muted)">Aba <strong style="color:var(--ink)">Code</strong> (edição direta nos planos pagos)</td></tr>
+      <tr><td>Domínio, Git e conhecimento do projeto</td><td style="color:var(--muted)">More → <strong style="color:var(--ink)">Settings</strong></td></tr>
+      <tr><td>Créditos restantes</td><td style="color:var(--muted)">Barra lateral, no seletor de workspace</td></tr>
+      <tr><td>Ajuda e suporte</td><td style="color:var(--muted)">Botão + do chat → Help center</td></tr>
+    </table></div>
+  </div>
+  <div class="callout">O menu <strong>More</strong> reúne muita coisa: Cloud, AI, Payments, Connectors, Security, SEO e Settings. Ele é o assunto da <strong>próxima aula</strong>.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Boas práticas</span><span class="n">09</span></div>
+  <h2>Hábitos para <em>começar bem</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:8px">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Descreva o resultado, não o código</h3><p>"Adicione um formulário de cadastro com e-mail e senha" funciona melhor que instruções técnicas.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Um pedido por vez</h3><p>Confira a pré-visualização a cada mudança. Pedidos grandes demais são difíceis de revisar.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Use o Plan mode para o que é grande</h3><p>Aprovar um plano custa menos que desfazer um app inteiro.</p></div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="b">4</div><div><h3>Seja específico nos erros</h3><p>"Clicar no filtro de doces não mostra nenhum item. Deveria mostrar os doces." Diga o que, onde e o que era esperado.</p></div></div>
+      <div class="step"><div class="b">5</div><div><h3>Marque as versões boas</h3><p>Um bookmark antes de cada mudança grande é a sua garantia.</p></div></div>
+      <div class="step"><div class="b">6</div><div><h3>Economize créditos</h3><p>Textos e ajustes visuais simples, faça apontando na tela.</p></div></div>
+    </div>
+  </div>
+  <div class="callout warn">Tudo o que você digita ou anexa vai para a plataforma. Use <strong>dados fictícios</strong> nos exercícios, como vimos no módulo 26 sobre segurança.</div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">10</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Você quer discutir como o app funciona sem que o Lovable mude nada. Qual modo usar?</p>
+        <div class="opts"><div>A) Build</div><div>B) Plan</div><div>C) Chat</div><div>D) Publish</div></div>
+        <div class="answer"><b>C.</b> O Chat mode conversa sobre o app aberto sem alterar o código.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Qual é o jeito mais rápido de corrigir um erro de digitação num título?</p>
+        <div class="opts"><div>A) Escrever um prompt</div><div>B) Edit text inline, direto na tela</div><div>C) Abrir o Plan mode</div><div>D) Reverter a versão</div></div>
+        <div class="answer"><b>B.</b> O Edit text inline muda o texto direto na pré-visualização, sem precisar de prompt.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Uma mudança quebrou o app. O que fazer?</p>
+        <div class="opts"><div>A) Apagar o projeto</div><div>B) Abrir o History e reverter para a última versão boa</div><div>C) Criar outra conta</div><div>D) Nada, não dá para desfazer</div></div>
+        <div class="answer"><b>B.</b> Cada mudança vira uma versão automaticamente, e reverter não perde as mudanças posteriores, que continuam no chat.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Onde ficam o banco de dados e os usuários do app?</p>
+        <div class="opts"><div>A) Na aba Files</div><div>B) More → Cloud</div><div>C) No botão Share</div><div>D) No histórico</div></div>
+        <div class="answer"><b>B.</b> O menu More → Cloud reúne banco, usuários, armazenamento, jobs, funções, segredos e logs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Converse à esquerda,<br><em>veja o app à direita</em></h1>
+    <p class="lead">Você conheceu o caminho completo pela interface: a conta e o workspace, o painel inicial com a caixa de prompt, o editor com chat e pré-visualização, os modos Build, Plan e Chat, a edição apontando na tela, o histórico de versões com rascunhos e os atalhos que aceleram o dia a dia. Tudo pronto para explorar os recursos em profundidade.</p>
+    <div class="chips"><span>Painel inicial</span><span>Chat + preview</span><span>Build · Plan · Chat</span><span>Select · Edit · Draw</span><span>History</span></div>
+    <div class="next">Próxima aula → Explorando os recursos do Lovable</div>
+    <div class="source">Fontes: docs.lovable.dev (Quick start · Dashboard overview · Find your way around the Lovable editor · Work with Lovable in the project chat · Edit from the preview · Version history). A interface evolui com frequência; nomes de botões e atalhos podem mudar.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
