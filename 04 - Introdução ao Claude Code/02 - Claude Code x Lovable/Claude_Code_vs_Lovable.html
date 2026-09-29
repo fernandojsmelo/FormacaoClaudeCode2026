@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Claude Code vs Lovable</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:16mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.6pt;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:22pt;line-height:1.15;margin:0 0 8px}
+h2{font-family:var(--display);font-weight:600;font-size:15pt;margin:0 0 12px}
+.lead{color:var(--muted);margin:0 0 16px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.duo .c{background:var(--surface-2);border:1px solid var(--border-2);border-radius:10px;padding:12px 14px;text-align:center}
+.duo .c b{display:block;font-size:11pt}
+.duo .c span{font-family:var(--mono);font-size:8pt;color:var(--muted)}
+p{margin:0 0 10px}
+strong{color:var(--accent-ink);font-weight:600}
+.intro{padding-bottom:14px;border-bottom:1px solid var(--border)}
+section.page{break-before:page;page-break-before:always}
+table{width:100%;border-collapse:collapse;font-size:8.9pt;border:1px solid var(--border-2)}
+th{background:var(--surface-2);font-family:var(--mono);font-size:7.8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600;width:19%}
+td.new{background:#221C14}
+.upd{display:inline-block;font-family:var(--mono);font-size:7pt;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);background:var(--warn-soft);border:1px solid #54421F;border-radius:999px;padding:0 6px;margin-left:4px;vertical-align:1px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:12px 14px}
+.box h3{font-size:9.8pt;color:var(--accent-ink);margin:0 0 6px}
+.box ul{margin:0;padding-left:0;list-style:none}
+.box li{position:relative;padding-left:14px;margin:5px 0;font-size:9.1pt}
+.box li::before{content:"●";position:absolute;left:0;top:0;color:var(--accent);font-size:7pt;line-height:2}
+.fine{font-size:8.3pt;color:var(--muted)}
+.changes{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin:14px 0}
+.changes h3{font-size:9.6pt;margin:0 0 5px;color:var(--warn)}
+.changes ul{margin:0;padding-left:18px;font-size:8.8pt}
+.changes li{margin:3px 0}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);text-align:center;letter-spacing:.06em;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Introdução ao Claude Code · Claude Code x Lovable</div>
+  <h1>Claude Code vs Lovable</h1>
+  <p class="lead">Um comparativo objetivo entre duas abordagens distintas de desenvolvimento assistido por IA: o agente de codificação para desenvolvedores e o construtor de aplicativos full-stack por linguagem natural.</p>
+  <div class="duo">
+    <div class="c"><b>Claude Code</b><span>Anthropic · Agente de codificação</span></div>
+    <div class="c"><b>Lovable</b><span>Construtor de apps com IA</span></div>
+  </div>
+  <div class="intro">
+    <p><strong>Claude Code</strong> é a ferramenta de codificação agêntica da Anthropic: roda no terminal, em IDEs (VS Code, JetBrains) e em um app de desktop, atuando diretamente sobre uma base de código já existente — lê arquivos, propõe planos, edita, executa comandos e integra-se a servidores MCP. É voltada a desenvolvedores que querem acelerar tarefas dentro do próprio fluxo de engenharia.</p>
+    <p style="margin:0"><strong>Lovable</strong> é uma plataforma que gera aplicações web completas a partir de descrições em linguagem natural: cria a interface com <strong>TanStack Start</strong> e Tailwind CSS (em projetos criados desde 13/05/2026; os anteriores usam React + Vite), usa o <strong>Lovable Cloud</strong> como backend — construído sobre o Supabase, com autenticação, banco de dados, armazenamento e funções no servidor — e publica o resultado em uma URL pronta para uso. É voltada a fundadores, times de produto e designers que querem sair da ideia ao protótipo funcional sem configurar um ambiente de desenvolvimento.</p>
+  </div>
+
+  <section class="page">
+    <div class="eyebrow">Comparativo</div>
+    <h2>Comparativo lado a lado</h2>
+    <table>
+      <tr><th>Critério</th><th>Claude Code</th><th>Lovable</th></tr>
+      <tr><td>Proposta central</td><td>Agente de IA que opera dentro de um projeto de código existente, no terminal, IDE ou desktop.</td><td>Gerador de aplicações full-stack a partir de prompts em linguagem natural, via chat.</td></tr>
+      <tr><td>Público principal</td><td>Desenvolvedores e equipes de engenharia de software.</td><td>Fundadores não técnicos, designers, times de produto e desenvolvedores buscando velocidade.</td></tr>
+      <tr><td>Como funciona</td><td>Lê e edita arquivos reais, executa comandos de shell, usa Git, propõe planos antes de agir (Plan Mode) e pode orquestrar subagentes.</td><td class="new">Interpreta o prompt e gera frontend (TanStack Start + Tailwind), backend e banco de dados (Lovable Cloud) prontos para publicação. Trabalha em três modos: <strong>Build</strong> (constrói), <strong>Plan</strong> (propõe um plano antes de mexer) e <strong>Chat</strong> (conversa sem alterar o código). <span class="upd">atualizado</span></td></tr>
+      <tr><td>Stack de saída</td><td>Qualquer linguagem ou framework já presente no repositório do usuário.</td><td class="new">Stack padronizada: TanStack Start, Tailwind CSS e Lovable Cloud (sobre o Supabase). Projetos anteriores a 13/05/2026 seguem em React + Vite; conectar um Supabase externo continua possível. <span class="upd">atualizado</span></td></tr>
+      <tr><td>Integração com código existente</td><td>Ponto forte — projetada para trabalhar sobre bases de código já estabelecidas.</td><td>Limitada — melhor para projetos novos; sincroniza com GitHub, mas o padrão é criar do zero.</td></tr>
+      <tr><td>Personalização e lógica complexa</td><td>Alta: acesso direto ao código-fonte permite ajustes finos e lógica arbitrária.</td><td>Boa para padrões comuns; lógica de negócio incomum ou casos de borda podem exigir prompts adicionais ou edição manual do código.</td></tr>
+      <tr><td>Hospedagem e publicação</td><td>Não inclui hospedagem própria — integra-se à infraestrutura que o time já usa.</td><td class="new">Publicação embutida: gera uma URL <code>.lovable.app</code> com hospedagem e backend gerenciados pela plataforma; roda uma checagem de segurança ao publicar; domínio próprio nos planos pagos. <span class="upd">atualizado</span></td></tr>
+      <tr><td>Extensibilidade</td><td>Servidores MCP, hooks, subagentes, plugins e arquivo de contexto de projeto (CLAUDE.md).</td><td class="new">Editor visual, sistema de temas para identidade visual, geração de imagens embutida e edição direta de código; conectores, pagamentos (Stripe/Paddle), revisão de segurança e de SEO integradas. <span class="upd">atualizado</span></td></tr>
+      <tr><td>Modelo de acesso</td><td>Incluído em planos Claude (Pro, Max, Team, Enterprise) e via API, com consumo baseado em uso.</td><td class="new">Planos Free, Pro, Business e Enterprise. No Free, 5 créditos por dia (até 30 por mês); nos pagos, 5 por dia mais uma cota mensal a partir de 100. A contagem diária zera às 00:00 UTC. <span class="upd">atualizado</span></td></tr>
+      <tr><td>Curva de aprendizado</td><td>Pressupõe familiaridade com terminal, Git e conceitos de desenvolvimento de software.</td><td>Baixa — pensada para quem nunca programou, com interface de chat e edição visual.</td></tr>
+    </table>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">Na prática</div>
+    <h2>Quando escolher cada plataforma</h2>
+    <div class="cols">
+      <div class="box"><h3>Escolha Claude Code quando:</h3>
+        <ul>
+          <li>Você já tem uma base de código em produção e precisa evoluí-la.</li>
+          <li>O time é técnico e quer manter controle total sobre arquitetura e stack.</li>
+          <li>O projeto exige lógica de negócio complexa, integrações específicas ou conformidade com padrões internos de engenharia.</li>
+          <li>Você quer que a IA trabalhe dentro do seu fluxo atual (Git, CI/CD, IDE).</li>
+        </ul></div>
+      <div class="box"><h3>Escolha Lovable quando:</h3>
+        <ul>
+          <li>Você quer validar uma ideia rapidamente, sem montar ambiente de desenvolvimento.</li>
+          <li>Não há um desenvolvedor disponível no momento e o objetivo é um protótipo ou MVP.</li>
+          <li>O aplicativo segue padrões relativamente comuns (SaaS, dashboard, cadastro, reservas, marketplace simples).</li>
+          <li>Publicar rápido em uma URL própria importa mais do que controlar cada detalhe da stack.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">Conclusão</div>
+    <h2>Conclusão</h2>
+    <p>As duas ferramentas não competem exatamente pelo mesmo usuário: Claude Code aprofunda o trabalho de quem já programa, dentro de projetos reais e complexos; Lovable encurta a distância entre uma ideia e um aplicativo publicado, especialmente para quem não programa ou quer testar um conceito rapidamente. Times técnicos tendem a usar Claude Code no dia a dia de desenvolvimento, enquanto fundadores, designers e equipes de produto tendem a recorrer a Lovable para prototipagem e MVPs — e nada impede que as duas abordagens coexistam em fases diferentes de um mesmo projeto.</p>
+    <div class="changes">
+      <h3>O que mudou nesta revisão (setembro de 2026)</h3>
+      <ul>
+        <li>Stack do Lovable: TanStack Start + Tailwind nos projetos novos (desde 13/05/2026), no lugar de React + Vite.</li>
+        <li>Backend: Lovable Cloud, construído sobre o Supabase, sem necessidade de conta separada.</li>
+        <li>Modos de trabalho (Build, Plan, Chat), valores de créditos, domínio próprio, checagem de segurança e integrações.</li>
+      </ul>
+      <p class="fine" style="margin:6px 0 0">O módulo 27 — Introdução ao Lovable mostra essas mudanças na prática.</p>
+    </div>
+    <p class="fine">Este documento tem caráter informativo e foi elaborado a partir de fontes públicas disponíveis em agosto de 2026; a parte do Lovable foi revisada com a documentação oficial (docs.lovable.dev) em setembro de 2026. Preços, planos e funcionalidades mudam com frequência — consulte os canais oficiais de cada produto para confirmar detalhes antes de decidir.</p>
+    <div class="foot">COMPARATIVO ELABORADO COM BASE EM DOCUMENTAÇÃO PÚBLICA — REVISADO EM SETEMBRO DE 2026</div>
+  </section>
+
+</div>
+</body>
+</html>
