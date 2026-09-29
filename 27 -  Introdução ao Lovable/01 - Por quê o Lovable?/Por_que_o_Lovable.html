@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Por que o Lovable</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.4px}
+.g5{grid-template-columns:repeat(5,1fr)}
+td code{font-size:10.3px}
+.y{color:var(--danger)} .g{color:var(--good)} .w{color:var(--warn)}
+.path{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:6px 0}
+.path .st{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 10px;position:relative}
+.path .st:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:38%;color:var(--accent);font-weight:700;background:var(--bg);padding:0 1px}
+.path .st h4{margin:0 0 3px;font-size:12px}
+.path .st p{margin:0;font-size:10.5px;color:var(--muted)}
+.path.old .st{border-top:3px solid var(--danger)}
+.path.new .st{border-top:3px solid var(--good)}
+.lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;margin:10px 0 2px}
+.cat{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px}
+.cat .ic{font-size:17px}
+.cat h4{margin:4px 0 3px;font-size:12px}
+.cat p{margin:0;font-size:10.6px;color:var(--muted)}
+.mod{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px}
+.mod .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:600}
+.mod span{font-size:12px}
+.mod.cur{border-color:var(--accent);background:var(--accent-soft)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Introdução ao Lovable · Aula 1</div>
+    <h1>Por que o<br><em>Lovable?</em></h1>
+    <p class="lead">O que é o Lovable, que problema ele resolve, para quem foi feito, o que dá para construir com ele, como funciona por dentro, quanto custa e onde estão os limites. É a base para as nove aulas práticas deste módulo.</p>
+    <div class="chips"><span>Linguagem natural → app</span><span>Full-stack</span><span>Lovable Cloud</span><span>Código seu</span><span>Créditos</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Lovable (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>O que é o <em>Lovable</em></h2>
+  <p class="intro">O Lovable é uma <strong>plataforma de desenvolvimento full-stack com IA</strong>: você descreve em linguagem natural o que quer construir, e ele gera uma aplicação web funcionando, com <strong>frontend, backend, banco de dados, autenticação e integrações</strong>, tudo apoiado em código editável.</p>
+  <div class="grid g4">
+    <div class="card"><div class="k">Account</div><h3>Sua conta</h3><p>Sua identidade no Lovable. Um único login vale para todos os workspaces de que você participa.</p></div>
+    <div class="card"><div class="k">Workspace</div><h3>O espaço do time</h3><p>Reúne projetos, membros, cobrança e um <strong style="color:var(--ink)">saldo compartilhado de créditos</strong>.</p></div>
+    <div class="card"><div class="k">Project</div><h3>Um app</h3><p>Cada projeto é uma aplicação, com chat, pré-visualização, código e histórico de versões.</p></div>
+    <div class="card"><div class="k">Chats</div><h3>Conversas livres</h3><p>Para pensar ideias fora de um projeto. Quando algo precisa ser construído, o chat manda o trabalho para um projeto.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="callout good" style="margin-top:0"><strong>A diferença para um gerador de protótipos:</strong> o resultado é <strong>código de verdade</strong>, que pode ser sincronizado com GitHub, GitLab ou Bitbucket e entrar no fluxo de engenharia normal da empresa.</div>
+    <div class="callout" style="margin-top:0">O Lovable cobre o ciclo inteiro do produto: da exploração e do protótipo até a <strong>publicação e a operação</strong> do app no ar.</div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>O problema</span><span class="n">02</span></div>
+  <h2>Da ideia ao software <em>sem começar do zero</em></h2>
+  <p class="intro">O que faz o Lovable valer a pena é encurtar a distância entre ter uma ideia e ter um app no ar. Compare os dois caminhos:</p>
+  <div class="lab y">Caminho tradicional</div>
+  <div class="path old">
+    <div class="st"><h4>Montar o ambiente</h4><p>Node, framework, bibliotecas e configuração</p></div>
+    <div class="st"><h4>Escrever o frontend</h4><p>Telas, componentes e estilos, do zero</p></div>
+    <div class="st"><h4>Montar o backend</h4><p>Banco, autenticação, APIs e segredos</p></div>
+    <div class="st"><h4>Configurar a hospedagem</h4><p>Servidor, domínio, HTTPS e deploy</p></div>
+    <div class="st"><h4>Iterar</h4><p>Cada mudança passa por todo o ciclo</p></div>
+  </div>
+  <div class="lab g">Caminho com o Lovable</div>
+  <div class="path new">
+    <div class="st"><h4>Descrever</h4><p>O que o app deve fazer, em português</p></div>
+    <div class="st"><h4>Planejar</h4><p>Plan mode propõe a abordagem antes do código</p></div>
+    <div class="st"><h4>Construir</h4><p>Frontend, backend e banco gerados juntos</p></div>
+    <div class="st"><h4>Testar</h4><p>Pré-visualização ao vivo em celular, tablet e desktop</p></div>
+    <div class="st"><h4>Publicar</h4><p>Um clique e o app está numa URL com HTTPS</p></div>
+  </div>
+  <div class="callout warn">O Lovable <strong>não elimina</strong> o trabalho de pensar o produto. Ele troca horas de configuração e código repetitivo por <strong>ciclos rápidos de descrever, ver e ajustar</strong>. Quem define bem o que quer continua levando vantagem.</div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Motivos</span><span class="n">03</span></div>
+  <h2>Por que usar o <em>Lovable</em></h2>
+  <p class="intro">A documentação oficial resume o valor da plataforma em quatro pontos. Para este curso, somamos a eles três recursos que fazem diferença no dia a dia.</p>
+  <div class="grid g4">
+    <div class="card"><div class="k">1 · Velocidade</div><h3>Iteração rápida</h3><p>Da ideia ao software funcionando construindo por linguagem natural, sem partir de um projeto em branco.</p></div>
+    <div class="card"><div class="k">2 · Colaboração</div><h3>Sozinho ou em time</h3><p>Workspaces compartilhados para pessoas de áreas diferentes contribuírem no mesmo lugar.</p></div>
+    <div class="card"><div class="k">3 · Posse do código</div><h3>O código é seu</h3><p>Propriedade total do código, que se integra aos fluxos de trabalho que você já usa.</p></div>
+    <div class="card"><div class="k">4 · Empresas</div><h3>Governança</h3><p>Segurança, privacidade e governança pensadas desde o início da plataforma.</p></div>
+  </div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card" style="border-top:3px solid var(--accent)"><div class="k">Lovable Cloud</div><p style="color:var(--ink)">Backend embutido com banco de dados, autenticação, armazenamento, tempo real, funções e IA. Nada de infraestrutura para configurar.</p></div>
+    <div class="card" style="border-top:3px solid var(--accent)"><div class="k">Publicação embutida</div><p style="color:var(--ink)">O Lovable hospeda o app, com HTTPS incluído, entrega a partir de vários locais do mundo e domínio próprio.</p></div>
+    <div class="card" style="border-top:3px solid var(--accent)"><div class="k">Git sync</div><p style="color:var(--ink)">Sincronização nos dois sentidos com GitHub, GitLab ou Bitbucket, para revisar, estender e manter o código fora do Lovable.</p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Público</span><span class="n">04</span></div>
+  <h2>Para <em>quem</em> é o Lovable</h2>
+  <p class="intro">Não é uma ferramenta só para quem não programa. A documentação descreve quatro grupos de usuários, com necessidades bem diferentes:</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Times dentro de empresas</div>
+      <ul class="bullets"><li>Produto e design transformando protótipos em ferramentas internas</li><li>Operações, vendas, finanças e RH <strong>trocando planilhas e softwares por assento</strong> por apps próprios</li><li>Marketing criando landing pages, sites de campanha e dashboards</li></ul></div>
+    <div class="card"><div class="k">Times técnicos e agências</div>
+      <ul class="bullets"><li>Desenvolvedores que querem <strong>começar projetos e protótipos rapidamente</strong></li><li>Times de engenharia revisando e mantendo o código gerado via Git</li><li>Agências entregando projetos a clientes, com código portável</li></ul></div>
+    <div class="card"><div class="k">Grandes empresas</div>
+      <ul class="bullets"><li>Ferramentas internas e aplicações críticas para o negócio</li><li>Apps com exigências de segurança, conformidade e governança</li><li>Desenvolvimento com IA integrado aos fluxos de engenharia existentes</li></ul></div>
+    <div class="card"><div class="k">Criadores individuais</div>
+      <ul class="bullets"><li>Fundadores lançando produtos e buscando os primeiros clientes</li><li>Makers com projetos paralelos e pequenos produtos</li><li><strong>Estudantes e professores</strong> em trabalhos e experimentos</li></ul></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Possibilidades</span><span class="n">05</span></div>
+  <h2>O que dá para <em>construir</em></h2>
+  <p class="intro">Do protótipo ao sistema em produção. Estas são as categorias citadas na documentação oficial:</p>
+  <div class="grid g5">
+    <div class="cat"><div class="ic">🧪</div><h4>Protótipos</h4><p>Provas de conceito com dados e lógica reais para validar ideias</p></div>
+    <div class="cat"><div class="ic">💼</div><h4>SaaS e negócios</h4><p>Assinaturas, painéis de cliente, admin, CRMs e portais</p></div>
+    <div class="cat"><div class="ic">🛠️</div><h4>Ferramentas internas</h4><p>Fluxos e painéis que substituem planilhas</p></div>
+    <div class="cat"><div class="ic">📊</div><h4>Dashboards</h4><p>KPIs, relatórios e visualização de dados</p></div>
+    <div class="cat"><div class="ic">🛒</div><h4>Comércio</h4><p>Agendamentos, lojas e marketplaces</p></div>
+    <div class="cat"><div class="ic">👥</div><h4>Apps para o público</h4><p>Comunidades, conteúdo e ferramentas criativas</p></div>
+    <div class="cat"><div class="ic">🤖</div><h4>Apps com IA</h4><p>Chatbots, assistentes, geração de imagens e busca semântica</p></div>
+    <div class="cat"><div class="ic">🌐</div><h4>Sites e marketing</h4><p>Institucionais, landing pages, portfólios e eventos</p></div>
+    <div class="cat"><div class="ic">🎓</div><h4>Educação</h4><p>Cursos, portais de alunos e ferramentas de estudo</p></div>
+    <div class="cat"><div class="ic">🎮</div><h4>Jogos</h4><p>Jogos e conteúdo interativo</p></div>
+  </div>
+  <div class="callout good">Neste módulo vamos construir <strong>dois projetos completos</strong>, com interatividade e experiência do usuário, além de um <strong>dashboard</strong>, e depois publicá-los.</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Por dentro</span><span class="n">06</span></div>
+  <h2>Como o Lovable <em>funciona</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:6px">
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:30%">Camada</th><th>O que o Lovable usa</th></tr>
+        <tr><td>Frontend</td><td style="color:var(--muted)">Apps criados desde <strong style="color:var(--ink)">13/05/2026</strong>: <strong style="color:var(--ink)">TanStack Start</strong> com renderização no servidor (SSR). Os anteriores usam React + Vite</td></tr>
+        <tr><td>Estilo</td><td style="color:var(--muted)">Tailwind CSS</td></tr>
+        <tr><td>Backend</td><td style="color:var(--muted)"><strong style="color:var(--ink)">Lovable Cloud</strong>, baseado no Supabase: banco, autenticação, armazenamento, tempo real, edge functions e IA. Também é possível conectar um Supabase próprio</td></tr>
+        <tr><td>Hospedagem</td><td style="color:var(--muted)">Gerenciada pelo Lovable, com HTTPS, escala automática e domínio próprio</td></tr>
+        <tr><td>Código</td><td style="color:var(--muted)">Sincronizável com GitHub, GitLab ou Bitbucket</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Três modos de trabalho no projeto</div>
+        <ul class="bullets"><li><strong>Plan mode:</strong> investiga o projeto e escreve um <strong>plano</strong> para você revisar e aprovar antes de qualquer código. O plano fica salvo em <code>.lovable/plan.md</code></li><li><strong>Build mode:</strong> constrói as mudanças aprovadas</li><li><strong>Chat mode:</strong> conversa sobre o app aberto <strong>sem alterar o código</strong>, para decidir o que mudar</li></ul></div>
+      <div class="callout good">Familiar? O <strong>Plan mode</strong> do Lovable segue a mesma ideia do <code>/plan</code> do Codex e do modo de planejamento do Claude Code: planejar antes de construir.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Posicionamento</span><span class="n">07</span></div>
+  <h2>Lovable e <em>Claude Code</em>: complementares</h2>
+  <p class="intro">No módulo 04 comparamos as duas ferramentas. A conclusão continua valendo: <strong>não é uma disputa</strong>. Cada uma brilha num ponto diferente do ciclo de desenvolvimento.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:28%"></th><th>Lovable</th><th>Claude Code</th></tr>
+      <tr><td>Ponto de partida</td><td style="color:var(--muted)">Uma ideia, sem código</td><td style="color:var(--muted)">Um repositório existente</td></tr>
+      <tr><td>Interface</td><td style="color:var(--muted)">Chat e pré-visualização no navegador</td><td style="color:var(--muted)">Terminal, IDE e app desktop</td></tr>
+      <tr><td>Infraestrutura</td><td style="color:var(--muted)">Backend e hospedagem incluídos</td><td style="color:var(--muted)">Usa a infraestrutura que você já tem</td></tr>
+      <tr><td>Stack</td><td style="color:var(--muted)">Padronizada (TanStack/React, Tailwind, Cloud)</td><td style="color:var(--muted)">Qualquer uma</td></tr>
+      <tr><td>Melhor para</td><td style="color:var(--muted)">Validar, prototipar e lançar rápido</td><td style="color:var(--muted)">Evoluir sistemas complexos com controle total</td></tr>
+    </table></div>
+    <div>
+      <div class="card"><div class="k">Um fluxo que combina as duas</div>
+        <ol style="margin:4px 0 0;padding-left:18px;font-size:12.3px"><li>Validar a ideia e publicar o MVP no <strong>Lovable</strong></li><li>Sincronizar o código com o <strong>GitHub</strong> (Git sync)</li><li>Clonar o repositório e evoluir partes complexas com o <strong>Claude Code</strong></li><li>Continuar iterando nos dois, com o Git como fonte da verdade</li></ol></div>
+      <div class="callout warn"><strong>Atualização em relação ao módulo 04:</strong> lá o Lovable aparece com React + Supabase. Hoje os apps novos usam <strong>TanStack Start</strong>, e o backend padrão é o <strong>Lovable Cloud</strong> (que usa o Supabase por baixo).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Custos</span><span class="n">08</span></div>
+  <h2>Como o Lovable <em>cobra</em>: créditos</h2>
+  <p class="intro">Os planos são cobrados por <strong>créditos</strong>, não por projeto nem por usuário. Um único saldo paga quatro coisas: construir, conversar, manter o app no ar (hospedagem e Cloud) e os recursos de IA usados dentro do app publicado.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <tr><th style="width:36%">Plano</th><th>Indicado para</th></tr>
+      <tr><td>Free</td><td style="color:var(--muted)">Experimentar o Lovable e projetos pequenos</td></tr>
+      <tr><td>Pro</td><td style="color:var(--muted)">Times ágeis construindo juntos em tempo real</td></tr>
+      <tr><td>Business</td><td style="color:var(--muted)">Departamentos em crescimento que precisam de controles e governança</td></tr>
+      <tr><td>Enterprise</td><td style="color:var(--muted)">Grandes organizações: escala, flexibilidade e governança</td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th>O que vem incluído</th><th>Free</th><th>Pro / Business</th></tr>
+      <tr><td>Créditos de build diários</td><td class="w">5/dia, até 30/mês</td><td class="g">5/dia, sem teto mensal</td></tr>
+      <tr><td>Créditos mensais da assinatura</td><td style="color:var(--muted)">—</td><td class="g">a partir de 100/mês</td></tr>
+      <tr><td>Cota diária de chat</td><td style="color:var(--muted)">incluída</td><td class="g">incluída, maior</td></tr>
+      <tr><td>Créditos mensais para Cloud · IA</td><td style="color:var(--muted)">20 · 4</td><td style="color:var(--muted)">20 · 4</td></tr>
+      <tr><td>Créditos acumulam para o mês seguinte</td><td style="color:var(--muted)">não</td><td class="g">sim</td></tr>
+    </table></div>
+  </div>
+  <div class="callout warn">Os créditos diários e a cota de chat <strong>renovam às 00:00 UTC (21h em Brasília)</strong> e não acumulam. Cada mensagem no Plan mode custa 1 crédito, mais os subagentes que ele usar para pesquisar. Valores podem mudar: confira sempre <code>lovable.dev/pricing</code>.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Limites</span><span class="n">09</span></div>
+  <h2>Onde o Lovable <em>não</em> é a melhor escolha</h2>
+  <p class="intro">Saber os limites evita frustração e ajuda a escolher a ferramenta certa para cada caso.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Foco em web</div><p style="color:var(--ink)">O Lovable constrói <strong>aplicações web</strong>, que podem ser totalmente adaptadas ao celular. Apps nativos para as lojas não são o alvo da plataforma.</p></div>
+    <div class="card"><div class="k">Stack padronizada</div><p style="color:var(--ink)">Se o projeto exige outra linguagem, framework ou arquitetura específica, uma ferramenta como o Claude Code dá mais controle.</p></div>
+    <div class="card"><div class="k">Lógica muito específica</div><p style="color:var(--ink)">Regras de negócio incomuns e casos de borda podem pedir vários ciclos de prompt ou edição direta do código.</p></div>
+    <div class="card"><div class="k">Consumo de créditos</div><p style="color:var(--ink)">Pedidos vagos geram idas e vindas e gastam créditos. Planejar e descrever bem economiza dinheiro.</p></div>
+    <div class="card"><div class="k">Segurança é sua também</div><p style="color:var(--ink)">O Lovable faz varreduras de segurança, mas <strong>revisar as permissões do banco</strong> e os segredos continua sendo responsabilidade de quem publica.</p></div>
+    <div class="card"><div class="k">Dados sensíveis</div><p style="color:var(--ink)">Tudo o que você cola no chat vai para a plataforma. Aplique as práticas do <strong>módulo 26</strong>: anonimize e use conta corporativa.</p></div>
+  </div>
+  <div class="callout good"><strong>Antídoto contra a dependência da plataforma:</strong> ative o <strong>Git sync</strong> desde o início. Com o código no seu repositório, você pode continuar o projeto em qualquer ferramenta.</div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Roteiro</span><span class="n">10</span></div>
+  <h2>O que vem neste <em>módulo</em></h2>
+  <p class="intro">Um caminho prático em dez aulas: da ferramenta ao app publicado.</p>
+  <div class="grid g2" style="gap:8px">
+    <div style="display:grid;gap:8px">
+      <div class="mod cur"><span class="n">01</span><span><strong>Por que o Lovable?</strong> (esta aula)</span></div>
+      <div class="mod"><span class="n">02</span><span>Conhecendo a ferramenta</span></div>
+      <div class="mod"><span class="n">03</span><span>Explorando os recursos do Lovable</span></div>
+      <div class="mod"><span class="n">04</span><span>Criando o primeiro projeto</span></div>
+      <div class="mod"><span class="n">05</span><span>Adicionando interatividade ao projeto</span></div>
+    </div>
+    <div style="display:grid;gap:8px">
+      <div class="mod"><span class="n">06</span><span>Melhorando a experiência do usuário</span></div>
+      <div class="mod"><span class="n">07</span><span>Criando outro projeto</span></div>
+      <div class="mod"><span class="n">08</span><span>Adicionando interatividade</span></div>
+      <div class="mod"><span class="n">09</span><span>Desenvolvendo um dashboard</span></div>
+      <div class="mod"><span class="n">10</span><span>Deploy do projeto</span></div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><div class="k">Aulas 02–03</div><p style="color:var(--ink)">Conhecer a interface, os modos e os recursos.</p></div>
+    <div class="card"><div class="k">Aulas 04–09</div><p style="color:var(--ink)">Construir dois projetos e um dashboard, em ciclos.</p></div>
+    <div class="card"><div class="k">Aula 10</div><p style="color:var(--ink)">Publicar e colocar o app no ar.</p></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">11</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O que o Lovable gera a partir de uma descrição em linguagem natural?</p>
+        <div class="opts"><div>A) Só o layout visual</div><div>B) Um app com frontend, backend, banco e autenticação</div><div>C) Um app nativo para as lojas</div><div>D) Apenas documentação</div></div>
+        <div class="answer"><b>B.</b> Uma aplicação web full-stack apoiada em código editável.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Como os planos do Lovable são cobrados?</p>
+        <div class="opts"><div>A) Por usuário</div><div>B) Por projeto</div><div>C) Por créditos, num saldo compartilhado</div><div>D) Por hora de uso</div></div>
+        <div class="answer"><b>C.</b> Por créditos, e não por assento nem por projeto. O mesmo saldo paga build, chat, hospedagem e Cloud, e IA no app publicado.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Qual modo propõe um plano para você aprovar antes de mexer no código?</p>
+        <div class="opts"><div>A) Build mode</div><div>B) Plan mode</div><div>C) Chat mode</div><div>D) Git sync</div></div>
+        <div class="answer"><b>B.</b> O Plan mode investiga o projeto e escreve o plano, e o Build mode só age depois da aprovação.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual é a melhor forma de evitar ficar preso à plataforma?</p>
+        <div class="opts"><div>A) Não usar o Lovable</div><div>B) Ativar o Git sync desde o início</div><div>C) Usar só o plano Free</div><div>D) Nunca publicar</div></div>
+        <div class="answer"><b>B.</b> Com o código sincronizado no seu repositório, o projeto pode seguir em qualquer ferramenta, como o Claude Code.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Da ideia ao app no ar,<br><em>com código que é seu</em></h1>
+    <p class="lead">O Lovable transforma descrições em linguagem natural em aplicações web full-stack, com backend embutido (Lovable Cloud), hospedagem incluída e código sincronizável com o Git. Ele atende de times de negócio a desenvolvedores, cobra por créditos e complementa o Claude Code em vez de substituí-lo. Conhecer os limites ajuda a usá-lo onde ele brilha.</p>
+    <div class="chips"><span>Full-stack por prompt</span><span>Plan · Build · Chat</span><span>Lovable Cloud</span><span>Créditos</span><span>Git sync</span></div>
+    <div class="next">Próxima aula → Conhecendo a ferramenta</div>
+    <div class="source">Fontes: docs.lovable.dev (Welcome to Lovable · Subscription plans · Credits and usage · Lovable Cloud · Plan mode · FAQ) e lovable.dev/pricing. Planos, créditos e stack podem mudar; confira a documentação oficial.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
