@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Explorando os Recursos do Lovable</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.3px}
+td code{font-size:10.2px}
+.g5{grid-template-columns:repeat(5,1fr)}
+.y{color:var(--danger)} .g{color:var(--good)} .w{color:var(--warn)}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:10.6px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.grp{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 12px}
+.grp .ic{font-size:18px}
+.grp h3{margin:4px 0 5px;font-size:13.5px}
+.grp .it{display:flex;flex-wrap:wrap;gap:5px}
+.grp .it span{font-family:var(--mono);font-size:9.8px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;padding:2px 7px;color:var(--accent-ink)}
+.mini{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px}
+.mini .k{margin-bottom:3px}
+.mini p{margin:0;font-size:11.2px;color:var(--ink)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Introdução ao Lovable · Aula 3</div>
+    <h1>Explorando os recursos<br><em>do Lovable</em></h1>
+    <p class="lead">Além de gerar telas, o Lovable traz backend, IA, pagamentos, conectores, segurança, SEO, análise de acessos e integração com Git. Nesta aula você conhece cada recurso, sabe onde ele fica e vê um exemplo de prompt para usá-lo.</p>
+    <div class="chips"><span>Lovable Cloud</span><span>IA no app</span><span>Pagamentos</span><span>Conectores</span><span>Segurança</span><span>Knowledge</span><span>Git</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial do Lovable (consulta em set/2026)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Mapa</span><span class="n">01</span></div>
+  <h2>Os recursos em <em>seis grupos</em></h2>
+  <p class="intro">Quase tudo está no menu <strong>More</strong> do editor (aula 2) ou nas configurações do projeto. Sabendo o que existe, você pede na hora certa. E vale a regra de ouro: <strong>quase sempre basta pedir no chat</strong>, que o Lovable configura sozinho.</p>
+  <div class="grid g3">
+    <div class="grp"><div class="ic">🗄️</div><h3>Backend</h3><p style="margin:0 0 6px;font-size:11px;color:var(--muted)">Dados, usuários e lógica no servidor</p><div class="it"><span>Cloud</span><span>Database</span><span>Auth</span><span>Storage</span><span>Edge functions</span><span>Secrets</span><span>Jobs</span></div></div>
+    <div class="grp"><div class="ic">🤖</div><h3>Inteligência</h3><p style="margin:0 0 6px;font-size:11px;color:var(--muted)">IA funcionando dentro do app</p><div class="it"><span>AI</span><span>Chatbots</span><span>RAG</span><span>Imagens</span></div></div>
+    <div class="grp"><div class="ic">💳</div><h3>Negócio</h3><p style="margin:0 0 6px;font-size:11px;color:var(--muted)">Cobrar e integrar com ferramentas</p><div class="it"><span>Payments</span><span>Connectors</span><span>Agent integrations</span></div></div>
+    <div class="grp"><div class="ic">🛡️</div><h3>Qualidade</h3><p style="margin:0 0 6px;font-size:11px;color:var(--muted)">Segurança e visibilidade</p><div class="it"><span>Security</span><span>SEO &amp; AI search</span><span>Analytics</span></div></div>
+    <div class="grp"><div class="ic">🧠</div><h3>Contexto</h3><p style="margin:0 0 6px;font-size:11px;color:var(--muted)">Ensinar o agente a trabalhar do seu jeito</p><div class="it"><span>Knowledge</span><span>Skills</span><span>Design systems</span></div></div>
+    <div class="grp"><div class="ic">🧩</div><h3>Código e publicação</h3><p style="margin:0 0 6px;font-size:11px;color:var(--muted)">O código é seu e vai para o mundo</p><div class="it"><span>Code</span><span>Files</span><span>Git sync</span><span>Domains</span></div></div>
+  </div>
+  <div class="callout warn">O menu More mostra <strong>só o que se aplica</strong> ao seu projeto e plano: as seções aparecem quando você começa a usar o recurso. Alguns itens exigem plano pago, e o texto indica quais.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Backend</span><span class="n">02</span></div>
+  <h2>Lovable Cloud: o <em>backend embutido</em></h2>
+  <p class="intro">O Cloud dá ao app um backend completo <strong>sem configurar infraestrutura</strong>. Ele é construído sobre a base open source do Supabase, mas não exige conta separada. Tudo fica em <strong>More → Cloud</strong>.</p>
+  <div class="grid g4">
+    <div class="mini"><div class="k">Database</div><p>Tabelas, registros, consultas SQL, regras de acesso e restauração de backups.</p></div>
+    <div class="mini"><div class="k">Users &amp; auth</div><p>Login por e-mail, telefone, Google, Apple, Microsoft e SSO (SAML).</p></div>
+    <div class="mini"><div class="k">Storage</div><p>Arquivos em buckets, com controle de acesso público ou privado.</p></div>
+    <div class="mini"><div class="k">Edge functions</div><p>Código no servidor (serverless), com chamadas, taxa de sucesso e logs.</p></div>
+    <div class="mini"><div class="k">Secrets</div><p>Chaves de API guardadas com segurança, <strong>fora do código</strong>.</p></div>
+    <div class="mini"><div class="k">Jobs</div><p>Tarefas agendadas em segundo plano, com histórico de execução.</p></div>
+    <div class="mini"><div class="k">Realtime</div><p>Dados que atualizam na tela sem recarregar a página.</p></div>
+    <div class="mini"><div class="k">Logs e uso</div><p>Registros e consumo de créditos do backend.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+<div class="promptbox"><span class="h">Exemplo de prompt:</span>
+Adicione login com e-mail e senha. Cada usuário deve
+ver e editar só as próprias tarefas. Salve as tarefas
+no banco de dados.</div>
+    <div>
+      <div class="callout" style="margin-top:0">Cada plano inclui <strong>20 créditos por mês</strong> para o Cloud. O app escala sozinho, e o banco pode ser redimensionado em <em>Advanced settings</em>. Se preferir, conecte um <strong>Supabase próprio</strong> em vez do Cloud.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Inteligência</span><span class="n">03</span></div>
+  <h2>IA <em>dentro</em> do seu app</h2>
+  <p class="intro">Normalmente, colocar IA num app exige escolher um provedor, gerenciar chaves, configurar a cobrança e proteger as credenciais. O <strong>conector de IA embutido</strong> do Lovable faz isso por você: <strong>sem chaves de API e sem configurar provedor</strong>.</p>
+  <div class="grid g4">
+    <div class="mini"><div class="k">Resumos</div><p>Condensar textos longos em pontos principais.</p></div>
+    <div class="mini"><div class="k">Chatbots</div><p>Assistentes conversacionais dentro do app.</p></div>
+    <div class="mini"><div class="k">Sentimento</div><p>Entender feedback de usuários em escala.</p></div>
+    <div class="mini"><div class="k">Perguntas sobre documentos</div><p>Usuários perguntam direto ao seu conteúdo.</p></div>
+    <div class="mini"><div class="k">Busca semântica (RAG)</div><p>Buscar por significado, não por palavra exata.</p></div>
+    <div class="mini"><div class="k">Tradução</div><p>Atender usuários em vários idiomas.</p></div>
+    <div class="mini"><div class="k">Imagens e documentos</div><p>Extrair e interpretar conteúdo não estruturado.</p></div>
+    <div class="mini"><div class="k">Texto em fala</div><p>Narração e leitura em voz alta.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+<div class="promptbox"><span class="h">Exemplo de prompt:</span>
+Na página de avaliações, adicione um botão "Resumir"
+que usa IA para gerar um resumo de 3 frases dos
+comentários e mostrar o sentimento geral (positivo,
+neutro ou negativo).</div>
+    <div class="callout warn" style="margin-top:0">Não confunda: essa IA roda <strong>no app publicado</strong>, para os seus usuários. Ela é diferente do <strong>agente do Lovable</strong>, que ajuda você a construir. Cada plano inclui <strong>4 créditos de IA por mês</strong>, e o uso aparece em <strong>More → AI</strong>.</div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Negócio</span><span class="n">04</span></div>
+  <h2>Pagamentos e <em>conectores</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:6px">
+    <div>
+      <div class="card"><div class="k">Payments: Stripe e Paddle</div><p style="color:var(--ink)">Assinaturas e pagamentos avulsos, com o Lovable criando as contas, ligando tudo e cuidando da parte técnica. Ao pedir pagamentos, ele analisa o projeto e <strong>recomenda o provedor</strong> mais adequado.</p>
+        <ul class="bullets" style="margin-top:6px"><li><strong>Produtos digitais:</strong> SaaS, conteúdo premium, assinaturas, cursos e downloads</li><li><strong>Produtos físicos:</strong> integração com o <strong>Shopify</strong>, ou Stripe com o estoque gerenciado à parte</li></ul></div>
+      <div class="callout warn">Algumas categorias são <strong>restritas ou proibidas</strong> pelo Stripe e pelo Paddle, como certos serviços financeiros e setores regulados. Confira antes de prometer ao cliente.</div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <tr><th style="width:34%">Tipo de conector</th><th>O que faz</th></tr>
+        <tr><td>App + chat</td><td style="color:var(--muted)">O <strong style="color:var(--ink)">app publicado</strong> usa a ferramenta (enviar mensagens, ler dados) com uma conta compartilhada. O Lovable também a usa no chat</td></tr>
+        <tr><td>Chat (servidor MCP)</td><td style="color:var(--muted)">Pessoal: o Lovable lê as <strong style="color:var(--ink)">suas</strong> contas como contexto enquanto constrói. Não vai para o app publicado</td></tr>
+        <tr><td>Usuário do app</td><td style="color:var(--muted)">Cada usuário final conecta a <strong style="color:var(--ink)">própria conta</strong>, e o app age com as permissões dele</td></tr>
+      </table></div>
+      <p style="font-size:11.3px;color:var(--muted);margin:8px 0 0">Exemplos do catálogo: Slack, Notion, HubSpot, Google Workspace, GitHub, AWS e muitos outros. O que não estiver no catálogo pode ser ligado por API.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Qualidade</span><span class="n">05</span></div>
+  <h2>Segurança: <em>Quick scan</em> e <em>Deep scan</em></h2>
+  <p class="intro">O Lovable previne erros comuns de segurança e procura vulnerabilidades automaticamente. Os resultados ficam em <strong>More → Security</strong>, e dá para corrigir cada achado com a ajuda do próprio Lovable.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card" style="border-top:3px solid var(--good)"><div class="k">Quick scan · automático a cada publicação</div>
+      <ul class="bullets"><li><strong>Banco de dados:</strong> tabelas sem controle de acesso por registro (RLS), regras que liberam para todos, proteção contra senhas vazadas desligada</li><li><strong>Dependências:</strong> vulnerabilidades conhecidas nos pacotes npm</li><li><strong>Servidores MCP</strong> expostos pelo app sem autenticação</li></ul></div>
+    <div class="card" style="border-top:3px solid var(--warn)"><div class="k">Deep scan · revisa todo o código</div>
+      <ul class="bullets"><li>Controle de acesso: usuários vendo ou alterando dados de outros</li><li>Rotas e funções que qualquer um pode acionar</li><li>Entrada não confiável chegando a consultas, comandos ou prompts de IA</li><li>Segredos vazados no código</li><li>Preços e recursos pagos manipuláveis pelo cliente</li></ul></div>
+  </div>
+  <div class="callout danger"><strong>A responsabilidade é de quem publica.</strong> A própria documentação avisa que as varreduras <strong>não garantem segurança completa</strong>. Para apps com dados sensíveis ou funções críticas, faça uma revisão profissional, como vimos no módulo 26. Integrações como Aikido (pentest com IA) e Wiz ampliam a cobertura.</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Qualidade</span><span class="n">06</span></div>
+  <h2>SEO, busca por IA e <em>Analytics</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:6px">
+    <div>
+      <div class="card"><div class="k">SEO &amp; AI search</div><p style="color:var(--ink)">Uma revisão técnica que verifica metadados, indexação, dados estruturados, acessibilidade, desempenho, uso no celular, sitemap e robots.txt. O Lovable também ajuda a:</p>
+        <ul class="bullets" style="margin-top:6px"><li>Pesquisar palavras-chave e concorrentes com dados do <strong>Semrush</strong></li><li>Configurar o <strong>Google Search Console</strong> e enviar o sitemap</li><li>Otimizar pré-visualizações em redes sociais (Open Graph)</li><li>Melhorar a visibilidade em <strong>buscas feitas por IA</strong></li></ul></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">Analytics · sem código de rastreamento</div><p style="color:var(--ink)">Começa a coletar sozinho quando você publica. Mostra visitas, páginas vistas, duração, taxa de rejeição, <strong>origem do tráfego</strong> e dispositivos, em tempo real.</p></div>
+<div class="promptbox" style="margin-top:10px"><span class="h">Exemplo de prompt:</span>
+Revise o SEO do site: título e descrição de cada
+página, imagem de compartilhamento e sitemap.
+Corrija o que estiver faltando.</div>
+      <div class="callout good">Use o Analytics para saber se um post, uma campanha ou uma newsletter <strong>trouxe gente</strong> para o app.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Contexto</span><span class="n">07</span></div>
+  <h2>Knowledge, Skills e <em>Design systems</em></h2>
+  <p class="intro">Em vez de repetir as mesmas instruções em toda conversa, você as define uma vez. É a mesma ideia do <code>CLAUDE.md</code> e do <code>AGENTS.md</code> que vimos nos módulos anteriores.</p>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Knowledge · sempre ativo</div><p style="color:var(--ink)">Texto com instruções permanentes, em dois níveis:</p>
+      <ul class="bullets"><li><strong>Workspace:</strong> padrões de código, bibliotecas preferidas, convenções de nomes</li><li><strong>Projeto:</strong> objetivo do app, esquema do banco, decisões de arquitetura, termos do negócio</li></ul></div>
+    <div class="card"><div class="k">Skills · sob demanda</div><p style="color:var(--ink)">Instruções carregadas <strong>só quando a tarefa pede</strong>. Servem para procedimentos específicos que não precisam ocupar contexto o tempo todo. É o mesmo conceito das Agent Skills do módulo 17.</p></div>
+    <div class="card"><div class="k">Design systems · planos pagos</div><p style="color:var(--ink)">Componentes, estilo e regras definidos num <strong>projeto dedicado</strong> e reaproveitados em todos os projetos do workspace. Uma atualização no design system chega a todos os apps ligados a ele.</p></div>
+  </div>
+<div class="promptbox" style="margin-top:12px"><span class="h">Exemplo de Knowledge do projeto (More → Settings → Knowledge):</span>
+App de reservas para a Café Samambaia. Público: moradores do bairro, maioria no celular.
+Todo o texto em português do Brasil. Cores da marca: verde #2F5D50 e creme #F4EDE1.
+Nunca exibir dados pessoais de clientes em telas públicas.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Código</span><span class="n">08</span></div>
+  <h2>O código é seu: <em>editor, Git e domínio</em></h2>
+  <div class="grid g3" style="align-items:start;margin-top:6px">
+    <div class="card"><div class="k">Aba Code</div><p style="color:var(--ink)">Tudo o que o Lovable constrói é código padrão. No editor de código você:</p>
+      <ul class="bullets"><li>Navega e busca nos arquivos</li><li><strong>Edita direto</strong> (planos pagos)</li><li>Aponta arquivos e linhas exatas no chat</li><li><strong>Baixa</strong> o código</li></ul></div>
+    <div class="card"><div class="k">Git sync</div><p style="color:var(--ink)">Sincronização <strong>nos dois sentidos</strong> com GitHub, GitLab ou Bitbucket, em More → Settings → Git. É a ponte para revisar o código, manter backup e trabalhar junto com desenvolvedores, inclusive no <strong>Claude Code</strong>.</p></div>
+    <div class="card"><div class="k">Domains</div><p style="color:var(--ink)">O app nasce num endereço <code>lovable.app</code>. Em More → Settings → Domains você <strong>compra ou conecta um domínio próprio</strong>. Dá até para pedir no chat: "encontre um domínio para a minha padaria".</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px;align-items:start">
+    <div class="card"><div class="k">Files</div><p style="color:var(--ink)">A aba Files guarda documentos que o Lovable gera para você (relatórios, exportações) e arquivos que você envia, organizados em coleções.</p></div>
+    <div class="callout good" style="margin-top:0"><strong>Recomendação do curso:</strong> ligue o Git sync logo no primeiro projeto que for para frente. Ele é o seu backup, o seu histórico fora da plataforma e a garantia de que você pode continuar o projeto em qualquer ferramenta.</div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Integração com IA</span><span class="n">09</span></div>
+  <h2>Seu app como <em>servidor MCP</em></h2>
+  <p class="intro">Com as <strong>Agent integrations</strong>, um app publicado no Lovable pode ser usado por assistentes de IA como <strong>ChatGPT e Claude</strong>. É o caminho inverso do que fizemos no curso: em vez de conectar servidores MCP ao Claude, o seu app vira um.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>O problema</h3><p>Pessoas usam o app clicando em botões e formulários. Um assistente de IA não clica: ele precisa de uma <strong>lista de ações</strong> para chamar.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>A solução</h3><p>O MCP (Model Context Protocol) expõe as ações do app como <strong>ferramentas</strong> que o assistente descobre e chama.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Na prática</h3><p>O usuário conecta o seu app no Claude e pede, por exemplo: "reserve uma mesa para sexta às 19h". O assistente chama a ação de reserva.</p></div></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">O que você configura</div><ul class="bullets"><li>Quais <strong>ferramentas</strong> (ações) o app expõe</li><li>Como o usuário faz <strong>login</strong></li><li><strong>Permissões</strong> e quem tem acesso</li></ul></div>
+      <div class="callout warn">Lembra do Quick scan? Ele verifica exatamente isto: <strong>um servidor MCP exposto sem autenticação</strong>. Ao publicar ações para IA, sempre exija login.</div>
+      <div class="callout">Liga com o módulo 06 (Servidor MCP no Claude Code): agora você também sabe <strong>criar</strong> um servidor MCP, sem escrever o servidor à mão.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Referência</span><span class="n">10</span></div>
+  <h2>Cola: <em>"quero…" → "uso…"</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:6px">
+    <div class="table-wrap"><table>
+      <tr><th style="width:52%">Quero…</th><th>Uso…</th></tr>
+      <tr><td>Salvar dados e ter login</td><td style="color:var(--muted)">Cloud → Database e Auth</td></tr>
+      <tr><td>Deixar usuários enviarem arquivos</td><td style="color:var(--muted)">Cloud → Storage</td></tr>
+      <tr><td>Rodar código no servidor ou chamar uma API com chave</td><td style="color:var(--muted)">Edge functions + Secrets</td></tr>
+      <tr><td>Executar algo todo dia</td><td style="color:var(--muted)">Cloud → Jobs</td></tr>
+      <tr><td>Chatbot, resumo ou busca inteligente</td><td style="color:var(--muted)">AI (conector embutido)</td></tr>
+      <tr><td>Cobrar assinatura</td><td style="color:var(--muted)">Payments (Stripe ou Paddle)</td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th style="width:52%">Quero…</th><th>Uso…</th></tr>
+      <tr><td>Integrar Slack, Notion ou HubSpot</td><td style="color:var(--muted)">Connectors</td></tr>
+      <tr><td>Checar falhas antes de publicar</td><td style="color:var(--muted)">Security (Quick e Deep scan)</td></tr>
+      <tr><td>Aparecer no Google e em buscas por IA</td><td style="color:var(--muted)">SEO &amp; AI search</td></tr>
+      <tr><td>Ver quem acessa o app</td><td style="color:var(--muted)">Analytics</td></tr>
+      <tr><td>Que o Lovable siga minhas regras</td><td style="color:var(--muted)">Knowledge (e Skills)</td></tr>
+      <tr><td>Levar o código para o Claude Code</td><td style="color:var(--muted)">Git sync</td></tr>
+    </table></div>
+  </div>
+  <div class="callout good">Em todos os casos, o primeiro passo é o mesmo: <strong>descrever no chat o que você quer</strong>. O Lovable escolhe e configura o recurso. O menu More serve para ver, ajustar e acompanhar.</div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Fixação</span><span class="n">11</span></div>
+  <h2>Teste <em>rápido</em></h2>
+  <div class="grid g2" style="align-items:start;margin-top:10px">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Onde guardar a chave de uma API externa que o app precisa usar?</p>
+        <div class="opts"><div>A) No código do frontend</div><div>B) Em Secrets, no Cloud</div><div>C) No Knowledge</div><div>D) Num comentário</div></div>
+        <div class="answer"><b>B.</b> Os Secrets guardam valores sensíveis fora do código, para uso nas edge functions.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Qual é a diferença entre a IA do app e o agente do Lovable?</p>
+        <div class="opts"><div>A) Nenhuma</div><div>B) A IA do app roda para os usuários, e o agente ajuda você a construir</div><div>C) A IA do app exige chave própria</div><div>D) O agente roda no app publicado</div></div>
+        <div class="answer"><b>B.</b> O conector de IA embutido funciona no app publicado, sem chave de API. O agente é quem edita o projeto.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O Quick scan roda quando?</p>
+        <div class="opts"><div>A) Só quando você pede</div><div>B) Automaticamente a cada publicação</div><div>C) Uma vez por mês</div><div>D) Nunca no plano Free</div></div>
+        <div class="answer"><b>B.</b> Ele roda sozinho a cada publicação. O Deep scan revisa todo o código e é mais completo.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual recurso equivale ao CLAUDE.md/AGENTS.md no Lovable?</p>
+        <div class="opts"><div>A) Files</div><div>B) Analytics</div><div>C) Knowledge</div><div>D) Domains</div></div>
+        <div class="answer"><b>C.</b> O Knowledge traz instruções permanentes, no nível do workspace ou do projeto, que o agente considera sempre.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Muito além das telas:<br><em>um app completo</em></h1>
+    <p class="lead">O Lovable Cloud cuida de dados, login, arquivos e lógica no servidor. O conector de IA leva inteligência para o app sem chaves de API. Payments e Connectors ligam o app ao negócio, as varreduras de segurança e o SEO cuidam da qualidade, e Knowledge, Skills e Design systems ensinam o agente a trabalhar do seu jeito. Com o Git sync, o código continua sendo seu.</p>
+    <div class="chips"><span>Cloud</span><span>AI</span><span>Payments</span><span>Connectors</span><span>Security</span><span>Knowledge</span><span>Git sync</span></div>
+    <div class="next">Próxima aula → Criando o primeiro projeto</div>
+    <div class="source">Fontes: docs.lovable.dev (Lovable Cloud · AI features · Payments · Connectors · Security overview · SEO &amp; AI search · Project analytics · Knowledge · Design systems · Code editor · Git sync · Agent integrations · Find your way around the editor). Disponibilidade varia por plano e muda com frequência.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
