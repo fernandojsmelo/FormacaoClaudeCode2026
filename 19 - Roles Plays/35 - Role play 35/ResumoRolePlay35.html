@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Role Play 35 — Resumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.7pt;line-height:1.52}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:21pt;line-height:1.18;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 8px}
+.byline{font-family:var(--mono);font-size:8.5pt;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:6px}
+section.turn{break-before:page;page-break-before:always}
+section.turn.first{break-before:auto;page-break-before:auto;margin-top:18px}
+.sec{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+.q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-style:italic;color:var(--ink);margin-bottom:14px}
+.q .k{font-family:var(--mono);font-style:normal;font-size:8pt;color:var(--muted);display:block;margin-bottom:3px}
+p{margin:0 0 8px}
+h3{font-family:var(--display);font-weight:600;font-size:12.5pt;margin:12px 0 5px;color:var(--ink);break-after:avoid}
+h4{font-size:10pt;margin:11px 0 5px;color:var(--accent-ink);break-after:avoid}
+ul,ol{margin:0 0 8px;padding-left:20px}
+li{margin:3px 0}
+strong{color:var(--accent-ink);font-weight:600}
+code{font-family:var(--mono);font-size:8.6pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 4px}
+table{width:100%;border-collapse:collapse;font-size:9.1pt;margin:6px 0 12px;border:1px solid var(--border-2)}
+tr{break-inside:avoid}
+th{background:var(--surface-2);font-family:var(--mono);font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+blockquote{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--mono);font-size:8.6pt;line-height:1.55;color:var(--ink);break-inside:avoid}
+.follow{background:var(--good-soft);border:1px solid #35493B;border-radius:10px;padding:8px 13px;margin-top:10px;break-inside:avoid}
+.follow p{margin-bottom:4px}
+.follow ul{margin:0}
+.err{color:var(--muted);font-style:italic}
+.note{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin-top:12px;break-inside:avoid}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:10px;break-before:avoid}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · Role play 35</div>
+  <h1>Cobrar assinatura sem guardar cartão: Stripe no app do Lovable</h1>
+  <p class="lead">Resumo da pesquisa feita durante a prática "O Especialista em Pagamentos e a Fundadora com Medo de 'Guardar Cartão'": por que o app não guarda cartão, como proteger as chaves do Stripe, o modo de teste e o cartão 4242, os pré-requisitos e o paywall de um app de treinos, o webhook de teste e os cuidados antes de publicar.</p>
+  <div class="byline">Fernando Melo · 30 de setembro de 2026 · Pesquisa no Modo IA do Google, 08:39</div>
+
+  <!-- 01 -->
+  <section class="turn first">
+    <div class="sec">01 — O cartão nunca passa por você</div>
+    <div class="q"><span class="k">Pergunta</span>Oi! Construí meu app de treinos no Lovable, com login e tudo, e agora quero cobrar uma assinatura mensal. Mas travei de …</div>
+    <p>Oi!</p>
+    <p>Relaxa, o seu medo é super normal e, para ser sincero, é excelente que você tenha essa preocupação. Guardar dados de cartão de crédito no próprio servidor é um pesadelo de segurança e, hoje em dia, praticamente ninguém faz isso do zero — nem mesmo grandes empresas.</p>
+    <p>A boa notícia é que você não vai guardar o cartão de ninguém e não precisa virar um especialista em segurança bancária.</p>
+    <p>Veja como isso funciona na prática de um jeito simples, seguro e sem complicação para quem está usando o Lovable:</p>
+    <h3>🛡️ O "Segredo": Tokenização (O cartão nunca passa por você)</h3>
+    <p>Quando você usa uma plataforma como o Stripe, o seu aplicativo nunca chega a ver, tocar ou salvar os números do cartão de crédito do cliente.</p>
+    <ol>
+      <li><strong>O Formulário Seguro:</strong> No seu app Lovable, o campo onde o usuário digita o cartão parece que está dentro do seu site, mas na verdade é um componente seguro fornecido diretamente pelo Stripe (chamado Stripe Elements ou Checkout).</li>
+      <li><strong>A Conversão em Token:</strong> Assim que o cliente clica em "Assinar", esses dados vão direto para os servidores superprotegidos do Stripe. O Stripe processa o pagamento e devolve para o seu aplicativo apenas um Token (um código do tipo <code>tok_12345</code>).</li>
+      <li><strong>O que você guarda:</strong> Você só salva no seu banco de dados esse "Token" e o ID do cliente no Stripe. Esse código serve apenas para dizer ao Stripe: "Ei, cobra a mensalidade daquele usuário que você já conhece". Se um hacker invadir o seu banco de dados, ele só vai encontrar códigos inúteis que não servem para fazer compras em nenhum outro lugar.</li>
+    </ol>
+    <p>Toda a responsabilidade jurídica e de segurança pesada (chamada conformidade PCI-DSS) fica 100% com o Stripe.</p>
+    <h3>🧩 Como integrar no Lovable sem ser programador?</h3>
+    <p>Como você construiu seu app no Lovable, você provavelmente está usando o Supabase como banco de dados e autenticação, certo? A comunidade e as ferramentas no-code já resolveram essa ponte para você.</p>
+    <p>A forma mais fácil de fazer isso hoje é usando o <strong>Stripe Checkout</strong>:</p>
+    <ul>
+      <li>Você cria o produto (sua assinatura mensal) diretamente no painel visual do Stripe.</li>
+      <li>No Lovable, em vez de criar uma tela de cartão, você coloca um botão "Assinar".</li>
+      <li>Quando o usuário clica, ele é redirecionado para uma página hospedada pelo próprio Stripe para pagar.</li>
+      <li>Após o pagamento, o Stripe manda ele de volta para o seu app e avisa o seu banco de dados (via Webhook) que o usuário X agora está "pago".</li>
+    </ul>
+    <p>Muitos criadores usam templates prontos ou pedem para a IA do Lovable estruturar essa integração usando as funções do Supabase (Edge Functions) que já vêm com modelos prontos para o Stripe.</p>
+    <div class="follow"><p>Para te dar o caminho exato e tirar de vez esse medo, me conta:</p>
+      <ul><li>Você já tem uma conta criada no Stripe?</li><li>Qual banco de dados você está usando no Lovable? É o Supabase padrão?</li><li>Você prefere que o usuário pague em uma página externa do Stripe (mais fácil) ou dentro do seu próprio app (esteticamente mais bonito)?</li></ul></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="turn">
+    <div class="sec">02 — E se as chaves vazarem?</div>
+    <div class="q"><span class="k">Pergunta</span>Tá, entendi, mas e se acontecer alguma coisa com as minhas chaves do Stripe? Tipo, se alguém roubar ou vazar essas …</div>
+    <p>Esse receio também é super válido.</p>
+    <p>Afinal, as chaves de API são as "senhas" que conectam o seu aplicativo ao Stripe. Se uma chave secreta vazar, alguém poderia, em teoria, criar cobranças ou emitir reembolsos na sua conta.</p>
+    <p>A boa notícia é que o Stripe e as plataformas modernas de desenvolvimento (como o Lovable e o Supabase) foram desenhados justamente para que vazamentos acidentais não aconteçam e, caso aconteçam, o estrago seja rigidamente controlado.</p>
+    <p>Veja por que você pode dormir tranquilo se seguir as boas práticas básicas:</p>
+    <h3>🔑 O Stripe usa dois tipos de chaves (E uma delas deve ser pública)</h3>
+    <p>O Stripe divide o acesso em duas chaves muito distintas:</p>
+    <ul>
+      <li><strong>Chave Publicável (<code>pk_live_...</code>):</strong> Esta chave serve apenas para abrir o formulário de pagamento no seu aplicativo. Ela pode (e vai) ser vista por qualquer pessoa no navegador. Ela é 100% inofensiva. Um hacker não consegue fazer absolutamente nada com ela além de gerar um formulário para você receber dinheiro.</li>
+      <li><strong>Chave Secreta (<code>sk_live_...</code>):</strong> Esta é a chave perigosa. Ela serve para criar assinaturas, cancelar planos e gerenciar sua conta. Ela nunca, sob hipótese alguma, deve ficar no código visual do Lovable (no front-end).</li>
+    </ul>
+    <h3>🛡️ Onde a Chave Secreta fica escondida?</h3>
+    <p>No Lovable, você trabalha com o Supabase nos bastidores. A sua chave secreta do Stripe fica guardada dentro do Supabase como uma Variável de Ambiente protegida (Vault/Secrets) ou dentro de uma Edge Function (código de servidor).</p>
+    <p>O usuário final (e os robôs de hackers que vasculham a internet) só conseguem ver o que está no navegador. Eles não têm acesso ao "cofre" do Supabase. O Lovable apenas envia comandos para o servidor, e o servidor — de forma totalmente invisível para o cliente — usa a chave secreta para falar com o Stripe.</p>
+    <h3>🚨 O que acontece se eu vazar a chave sem querer? (Plano de Contingência)</h3>
+    <p>Digamos que você cometeu um erro, colou a chave secreta no lugar errado e ela vazou. Você vai falir? Não.</p>
+    <ol>
+      <li><strong>Os hackers não conseguem roubar o dinheiro que já está no seu banco:</strong> O Stripe não permite que ninguém "saque" o saldo da sua conta para uma conta bancária aleatória através da chave de API. O dinheiro das vendas só pode ser transferido para a conta bancária que você cadastrou e verificou com seus documentos de identidade.</li>
+      <li><strong>O Stripe tem um "Botão de Pânico" (Roll Key):</strong> Se você desconfiar que a chave vazou, você entra no painel do Stripe, clica em "Roll Key" (Renovar Chave). Em um segundo, a chave antiga deixa de funcionar instantaneamente no mundo inteiro, e o Stripe gera uma nova para você colocar no Supabase. O acesso de qualquer invasor é cortado na hora.</li>
+      <li><strong>Chaves com permissões restritas:</strong> No Stripe, você não precisa usar a sua chave secreta "mestra". Você pode criar uma Restricted Key (Chave Restrita) que só tem permissão para, por exemplo, "criar assinaturas", mas bloqueia qualquer leitura de faturamento ou reembolsos. Se ela vazar, o poder do hacker é quase zero.</li>
+    </ol>
+    <h3>💡 Duas regras de ouro para você ficar 100% seguro:</h3>
+    <ul>
+      <li><strong>Ative o 2FA:</strong> Coloque autenticação em duas etapas (aqueles códigos por aplicativo no celular) na sua conta do Stripe e do Supabase. Mesmo que descubram sua senha e suas chaves, ninguém entra no seu painel para mudar sua conta bancária.</li>
+      <li><strong>Nunca cole a chave <code>sk_</code> no chat ou no código visual:</strong> Se a IA do Lovable ou algum tutorial pedir a sua chave do Stripe, certifique-se de que está colando isso no painel de Configurações/Variáveis de Ambiente, e nunca direto no meio do código de uma página.</li>
+    </ul>
+  </section>
+
+  <!-- 03 -->
+  <section class="turn">
+    <div class="sec">03 — O modo de teste</div>
+    <div class="q"><span class="k">Pergunta</span>Tá, entendi melhor agora. Então, basicamente, a chave secreta fica super escondida e mesmo que vaze dá pra troc…</div>
+    <p>Com certeza!</p>
+    <p>O Stripe é mundialmente famoso entre os desenvolvedores justamente porque o ambiente de testes deles é perfeito. Você consegue simular todo o fluxo de cobrança, cancelamento e assinaturas recorrentes sem gastar nem um único centavo.</p>
+    <p>Funciona através de um sistema de "espelhamento" muito simples:</p>
+    <h3>🔄 O Modo de Teste (Test Mode) é uma cópia idêntica</h3>
+    <p>Dentro do painel do Stripe, existe uma chave geral chamada "Modo de Teste" (Test Mode). Quando você ativa essa chave:</p>
+    <ul>
+      <li>O painel fica com uma cor diferente (geralmente laranja ou com um aviso visual nítido) para você nunca se confundir.</li>
+      <li>O Stripe te dá um par de chaves novinho que começa com <code>pk_test_...</code> e <code>sk_test_...</code>.</li>
+      <li>Enquanto o seu aplicativo Lovable/Supabase estiver usando as chaves de teste (<code>_test_</code>), nenhuma cobrança real pode ser feita. Se alguém tentar colocar um cartão de verdade ali, o Stripe recusa na hora.</li>
+    </ul>
+    <h3>💳 Cartões de Crédito Fakes para Testar</h3>
+    <p>Para simular os pagamentos no seu app, você não usa o seu cartão real. O Stripe fornece uma lista de números de cartão fictícios para você testar diferentes cenários.</p>
+    <p class="err">Algo deu errado, e o conteúdo não foi gerado.</p>
+  </section>
+
+  <!-- 04 -->
+  <section class="turn" style="break-before:auto;page-break-before:auto;margin-top:26px">
+    <div class="sec">04 — O cartão 4242</div>
+    <div class="q"><span class="k">Pergunta</span>Ah, legal! Então dá pra testar tudo com esses cartões de mentira sem me preocupar. O número é sempre o mesmo, …</div>
+    <p>Isso mesmo!</p>
+    <p>O <code>4242 4242 4242 4242</code> é o cartão oficial que todo mundo usa para simular pagamentos aprovados com sucesso. Você pode usar ele sem medo!</p>
+    <p>Só vale um lembrete rápido: o Stripe mudou recentemente a forma como lida com esses testes. Hoje, além de digitar o número <code>4242</code>, você precisa colocar um código CVC de 3 dígitos (como <code>123</code>) e uma data de validade no futuro (como <code>12/30</code>).</p>
+    <p>Em alguns formulários mais novos do Stripe, você também pode simplesmente clicar em um botão de preenchimento automático para testes, o que facilita ainda mais.</p>
+    <p>Agora você já tem toda a base de segurança para tirar o projeto do papel e começar a faturar com o seu app de treinos!</p>
+    <div class="follow"><p>Se você precisar de ajuda na próxima etapa, me avise:</p>
+      <ul><li>Quer que eu te mostre o passo a passo para configurar as regras de acesso no seu banco de dados (para bloquear quem não pagou)?</li><li>Ou quer ajuda para criar a página de sucesso do pagamento no Lovable?</li></ul></div>
+  </section>
+
+  <!-- 05 -->
+  <section class="turn">
+    <div class="sec">05 — Encorajamento</div>
+    <div class="q"><span class="k">Pergunta</span>Ah, perfeito! Agora tô bem mais confiante pra seguir. Vou começar com os testes e depois vejo direitinho a parte de …</div>
+    <p>Que ótimo!</p>
+    <p>Fico muito feliz que o papo te trouxe essa segurança. Essa barreira do medo do primeiro pagamento é super comum, mas agora você já viu que a tecnologia joga do seu lado e cuida da parte pesada para você focar no que realmente importa: os treinos e os seus alunos! 🏋️‍♀️✨</p>
+    <p>Vá no seu ritmo, faça muitos testes com o cartão 4242 e aproveite para desenhar bem a experiência do seu usuário.</p>
+    <p>Desejo muuuito sucesso com o lançamento do seu app! Quando quiser estruturar as travas de acesso ou a comunicação com o banco de dados, estarei por aqui. Bom trabalho! 🚀</p>
+    <div class="follow"><p>Se precisar de ajuda no futuro, é só me chamar! Quando voltar, me conte:</p>
+      <ul><li>Se os testes no Stripe Checkout deram certo.</li><li>Como você prefere estruturar a liberação dos treinos (se o usuário perde o acesso imediatamente após vencer a mensalidade ou se terá alguns dias de carência).</li></ul></div>
+  </section>
+
+  <!-- 06 -->
+  <section class="turn" style="break-before:auto;page-break-before:auto;margin-top:26px">
+    <div class="sec">06 — Integração só conversando</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar a integração (e por que é segura): Hoje dá para configurar o Stripe só conversando — ela descreve "criar u…</div>
+    <p>É exatamente esse o ponto alto de construir hoje em dia!</p>
+    <p>Com as ferramentas atuais, o processo ficou incrivelmente simples e visual. No Lovable, você consegue configurar praticamente toda essa integração do Stripe apenas conversando com a IA.</p>
+    <p>Você pode simplesmente digitar para o assistente: "Crie um botão de checkout para uma assinatura mensal de R$ 29,90 e atualize o banco de dados quando o pagamento for aprovado".</p>
+    <p>A partir desse comando, o Lovable faz a mágica acontecer nos bastidores por você:</p>
+    <ul>
+      <li>Gera as funções de pagamento necessárias para falar com o Stripe.</li>
+      <li>Cria as tabelas certas no seu banco de dados (Supabase) para salvar o status de quem pagou.</li>
+      <li>Configura as regras de segurança (RLS - Row Level Security) automaticamente, garantindo que um usuário nunca consiga ver os dados de treino ou de pagamento de outro.</li>
+      <li>Cria o botão visual prontinho na sua tela.</li>
+    </ul>
+    <h3>🛡️ O ponto que mata o medo de vez: O Stripe Checkout</h3>
+    <p>O maior segredo de segurança aqui é usar o Stripe Checkout. Quando o seu aluno clica no botão "Assinar" dentro do seu app de treinos, acontece o seguinte:</p>
+    <ol>
+      <li>Ele é temporariamente redirecionado para uma página hospedada e protegida pelo próprio Stripe.</li>
+      <li>É nessa página segura do Stripe que ele digita o número do cartão, a validade e o CVC.</li>
+      <li>Assim que o pagamento é processado, o Stripe manda o aluno de volta para o seu aplicativo com uma mensagem de "Sucesso!".</li>
+    </ol>
+    <p><strong>O que isso significa na prática?</strong> O número do cartão de crédito do seu cliente nunca passa pelo seu aplicativo, nunca entra no seu banco de dados e você nunca chega nem a ver esses dígitos. Como o seu app jamais toca nesses dados sensíveis, a responsabilidade legal e técnica de proteger as informações bancárias fica 100% por conta do Stripe. Você fica totalmente livre de riscos!</p>
+    <div class="follow"><p>Se você quiser avançar nessa parte prática quando começar a configurar, me avise:</p>
+      <ul><li>Qual o valor exato da assinatura mensal que você quer cobrar dos seus alunos?</li><li>Você quer que eu te ajude a escrever o comando exato em português para você colar no Lovable e ele gerar essa estrutura para você?</li></ul></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="turn">
+    <div class="sec">07 — Testando em 4 passos</div>
+    <div class="q"><span class="k">Pergunta</span>Certo, mas antes de avançar com os próximos passos, acho que é importante garantir que entendi bem como testar tud…</div>
+    <p>Com certeza!</p>
+    <p>O processo é bem direto e visual. Para testar o fluxo completo no Stripe Checkout usando o Lovable, você só precisa seguir estes 4 passos rápidos:</p>
+    <h4>1. Pegue as Chaves de Teste no Stripe</h4>
+    <ol>
+      <li>Faça login no seu painel do Stripe.</li>
+      <li>No topo da tela, ative a chave "Modo de teste" (Test mode). O painel vai mudar de cor (geralmente ganha uma barra laranja).</li>
+      <li>Vá na aba Desenvolvedores &gt; Chaves de API.</li>
+      <li>Copie a Chave pública de teste (começa com <code>pk_test_...</code>) e a Chave secreta de teste (começa com <code>sk_test_...</code>).</li>
+    </ol>
+    <h4>2. Cole as Chaves no seu Projeto (Supabase / Lovable)</h4>
+    <p>Em vez de colocar as chaves no código visual, você vai colá-las na área de Variáveis de Ambiente do seu banco de dados (geralmente nas configurações do Supabase ou no painel do Lovable, dependendo de como você estruturou):</p>
+    <ul>
+      <li>Crie uma variável chamada algo como <code>STRIPE_SECRET_KEY</code> e cole a chave <code>sk_test_...</code>.</li>
+      <li>Crie outra chamada <code>STRIPE_PUBLISHABLE_KEY</code> e cole a <code>pk_test_...</code>.</li>
+    </ul>
+    <h4>3. Faça a Simulação de Compra no seu App</h4>
+    <p>Abra o seu aplicativo em modo de visualização/teste no Lovable e clique no botão de "Assinar" que você criou. Você será redirecionado para a página oficial de testes do Stripe. Lá, preencha assim:</p>
+    <ul>
+      <li><strong>E-mail:</strong> Coloque um e-mail de teste seu (ex: <code>alunoteste@email.com</code>).</li>
+      <li><strong>Número do Cartão:</strong> Digite <code>4242 4242 4242 4242</code>.</li>
+      <li><strong>Validade:</strong> Qualquer data no futuro (ex: <code>12/30</code>).</li>
+      <li><strong>CVC:</strong> Qualquer 3 dígitos (ex: <code>123</code>).</li>
+      <li><strong>Nome:</strong> Qualquer nome.</li>
+    </ul>
+    <p>Clique em Pagar/Assinar. A página vai processar e te mandar de volta para o seu app de treinos.</p>
+    <h4>4. Valide se Funcionou</h4>
+    <p>Para ter certeza absoluta de que deu certo, faça duas checagens:</p>
+    <ol>
+      <li><strong>No seu app:</strong> Veja se a tela do usuário mudou para "Assinante" ou se liberou os treinos bloqueados.</li>
+      <li><strong>No painel do Stripe:</strong> Vá na aba Pagamentos (ainda com o Modo de Teste ativado). Você verá a cobrança fictícia listada lá com o e-mail de teste que você usou.</li>
+    </ol>
+    <p>Pronto! Fazendo isso, você valida todo o caminho que o seu cliente real vai fazer, com custo zero e risco zero.</p>
+    <div class="follow"><p>Quando você fizer esse primeiro teste e ver o pagamento caindo no painel, me avise! Quer que o próximo passo seja:</p>
+      <ul><li>Escrever o comando em português para o Lovable criar as regras que bloqueiam o usuário que não pagou?</li><li>Entender como configurar a página que o cliente vê depois que o pagamento dá certo?</li></ul></div>
+  </section>
+
+  <!-- 08 -->
+  <section class="turn">
+    <div class="sec">08 — Pré-requisitos, fluxo e paywall</div>
+    <div class="q"><span class="k">Pergunta</span>Mostrar o fluxo e os pré-requisitos: Primeiro Supabase conectado (o Stripe roda nas funções do Supabase, e para …</div>
+    <p>Para o seu aplicativo de treinos rodar perfeitamente, o Lovable precisa seguir uma engrenagem que envolve o Supabase e o Stripe.</p>
+    <p>Aqui estão os pré-requisitos obrigatórios e o fluxo exato que você vai pedir para a IA do Lovable estruturar, garantindo que o seu modelo de Paywall (parte grátis e parte premium) funcione com total segurança.</p>
+    <h3>📋 Os 3 Pré-requisitos Antes de Começar</h3>
+    <p>Para o sistema de assinatura funcionar, três pilares precisam estar conectados:</p>
+    <ol>
+      <li><strong>Supabase Conectado e Login Ativo:</strong> O Stripe precisa saber quem está pagando. Por isso, o usuário precisa estar logado no seu app via Supabase Auth. Quando o usuário loga, ele ganha um ID único (ex: <code>user_123</code>). É esse ID que vai ligar o cliente dentro do seu banco de dados ao cliente dentro do Stripe.</li>
+      <li><strong>Produtos Criados no Stripe:</strong> Você não cria o preço no código. Você entra no painel do Stripe (em Modo de Teste), vai em Produtos, clica em Adicionar Produto e cria a sua "Assinatura Mensal de Treinos" com o valor desejado. O Stripe vai gerar um código chamado Price ID (ex: <code>price_H5fg...</code>). Guarde esse código!</li>
+      <li><strong>Chaves Guardadas com Segurança (Regra de Ouro):</strong> No painel do Lovable, você verá uma opção dedicada chamada "Add API Key" ou nas configurações de Variáveis de Ambiente do Supabase. É lá que você cola a sua Chave Secreta (<code>sk_test_...</code>). Nunca cole a sua chave secreta no chat de conversa com a IA do Lovable, pois o chat pode expor o texto no histórico visual do código.</li>
+    </ol>
+    <h3>🔄 O Fluxo do Pagamento na Prática</h3>
+    <p>Depois de configurado, o caminho que o seu aluno vai fazer é super fluido:</p>
+    <blockquote>[Seu App: Clica em Assinar]<br>↓<br>[Redirecionado para o Stripe Checkout Seguro] (Digita o cartão 4242)<br>↓<br>[Stripe processa e aprova]<br>↓<br>[Retorno Automático para o Seu App]<br>↓<br>[Stripe avisa seu banco (Webhook) -&gt; Acesso Liberado!]</blockquote>
+    <h3>🧱 O Padrão de Paywall (Grátis vs. Premium)</h3>
+    <p>Como o seu app é de treinos, o modelo mais recomendado e que a IA do Lovable faz muito bem é o Paywall Dividido. No banco de dados do Supabase, nós criamos uma coluna na tabela de usuários chamada <code>subscription_status</code> (que pode ser <code>active</code> ou <code>trial_or_free</code>).</p>
+    <ul>
+      <li><strong>A Parte Grátis:</strong> A IA vai configurar o app para que qualquer usuário logado consiga visualizar treinos básicos (ex: "Treino de Adaptação" ou "Alongamento").</li>
+      <li><strong>A Parte Premium:</strong> Quando o usuário tentar clicar em um treino avançado (ex: "Hipertrofia Avançada"), o Lovable vai verificar o banco de dados.
+        <ul><li>Se o <code>subscription_status</code> não for <code>active</code>, o app bloqueia a tela com um componente visual bonito (o Paywall) dizendo: "Este treino é exclusivo para assinantes! Clique aqui para liberar todos os treinos por apenas R$ X/mês".</li>
+        <li>Se ele clicar, entra no fluxo de redirecionamento do Stripe que vimos acima.</li></ul></li>
+    </ul>
+    <div class="follow"><p>Se você já estiver pronta para ver isso acontecer, me diga:</p>
+      <ul><li>Qual é o Price ID (aquele código do produto que começa com <code>price_...</code>) que você gerou no Stripe?</li><li>Você quer que eu monte o prompt (comando) exato em português para você colar no chat do Lovable para ele criar esse Paywall e as tabelas com segurança?</li></ul></div>
+  </section>
+
+  <!-- 09 -->
+  <section class="turn">
+    <div class="sec">09 — O webhook de teste</div>
+    <div class="q"><span class="k">Pergunta</span>Tudo bem, mas antes de avançar para essa parte do Paywall, eu realmente quero me certificar de que entendi bem o …</div>
+    <p>Para que os testes rodem perfeitamente e o seu banco de dados (Supabase) saiba que o pagamento fictício com o cartão 4242 deu certo, você precisa configurar apenas mais um detalhe crucial: o <strong>Webhook de Teste</strong>.</p>
+    <p>Sem o webhook, o Stripe aprova o pagamento de mentira, mas o seu aplicativo Lovable não fica sabendo e não libera o acesso do aluno.</p>
+    <p>Para deixar tudo 100% pronto para os testes, certifique-se de cumprir este pequeno checklist entre o Stripe e o Lovable:</p>
+    <h4>1. Configurar o Webhook de Teste (O mensageiro)</h4>
+    <p>O Webhook é uma URL do seu banco de dados (Supabase) que o Stripe "chama" para avisar: "Ei, o usuário do e-mail tal acabou de pagar!".</p>
+    <ol>
+      <li>No painel do Stripe (em Modo de Teste), vá em Desenvolvedores &gt; Webhooks.</li>
+      <li>Clique em Adicionar endpoint.</li>
+      <li>No campo de URL, você vai colar o link da Edge Function de pagamento que o Lovable criar para você no Supabase.</li>
+      <li>Em "Eventos para enviar", selecione: <code>checkout.session.completed</code> (este evento avisa quando o pagamento foi aprovado) e <code>customer.subscription.deleted</code> (este avisa se a assinatura for cancelada).</li>
+    </ol>
+    <h4>2. O "Price ID" de Teste no Botão</h4>
+    <p>Quando você cria um produto no painel de testes do Stripe, ele gera um código de preço específico para o ambiente de testes (ex: <code>price_1Mst...</code>).</p>
+    <ul>
+      <li>Certifique-se de que o botão "Assinar" dentro do Lovable está usando esse Price ID de teste.</li>
+      <li>Se você usar um ID do modo real no ambiente de teste, o Stripe vai dar uma tela de erro.</li>
+    </ul>
+    <h4>3. Vincular o Usuário Logado</h4>
+    <p>No Lovable, certifique-se de que a função que dispara o botão de pagamento está enviando o ID do usuário do Supabase (<code>user.id</code>) para o Stripe dentro de um campo chamado <code>client_reference_id</code> ou nos <code>metadata</code>.</p>
+    <ul>
+      <li>Isso é fundamental para que, quando o cartão de teste for aprovado, o Stripe devolva esse mesmo ID e o seu banco de dados saiba exatamente qual usuário logado deve ser promovido a "Premium".</li>
+    </ul>
+    <p>Cumprindo esses três pontos junto com as chaves <code>_test_</code>, o seu ambiente estará perfeitamente blindado e pronto. Você poderá clicar no botão, preencher o cartão <code>4242</code> e ver a mágica da liberação automática acontecer instantaneamente.</p>
+    <div class="follow"><p>Se você quiser, posso te ajudar agora a:</p>
+      <ul><li>Montar o texto do comando para pedir pro Lovable criar a função de Webhook no Supabase.</li><li>Entender onde encontrar o link da URL do webhook dentro do seu projeto.</li><li>Explicar como simular um cancelamento de assinatura para ver se o app bloqueia o acesso de teste.</li></ul></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="turn">
+    <div class="sec">10 — Cuidados honestos antes de testar</div>
+    <div class="q"><span class="k">Pergunta</span>Vender o teste seguro + cuidados honestos: Ela testa tudo sem dinheiro real usando o modo de teste do Stripe e o …</div>
+    <p>Você captou perfeitamente o espírito da coisa!</p>
+    <p>Testar no ambiente de desenvolvimento é como fazer um treino com carga leve antes de ir para o campeonato: você ajusta tudo sem correr nenhum risco de machucar o bolso (seu ou dos seus alunos).</p>
+    <p>Para que o seu teste com o cartão <code>4242 4242 4242 4242</code> funcione redondo e você não perca tempo quebrando a cabeça com falhas bobas, existem três cuidados honestos que você precisa ter com o Lovable e o Stripe:</p>
+    <h3>1. O Stripe só fala com o seu app "Publicado" (Não funciona no Preview)</h3>
+    <p>Este é o erro número um de quem usa o Lovable. Quando você está editando o app dentro da plataforma, você está vendo um Preview (uma pré-visualização).</p>
+    <ul>
+      <li>Se você clicar no botão de assinar ali dentro, o Stripe até abre, mas quando o pagamento é aprovado, o Stripe tenta avisar o seu aplicativo e não encontra a rota certa.</li>
+      <li><strong>O que fazer:</strong> Você precisa dar Deploy (publicar) no seu app Lovable. O teste real do fluxo (clicar, pagar com 4242, voltar e ver o treino liberado) só funciona usando o link do app publicado na internet.</li>
+    </ul>
+    <h3>2. Olhe o "Rastro" no Painel do Stripe (Os Webhooks)</h3>
+    <p>Fez o pagamento de teste e o treino não liberou? Não entre em pânico. O próprio Stripe te dá o mapa do que aconteceu.</p>
+    <ul>
+      <li>No painel do Stripe, vá em Desenvolvedores &gt; Webhooks e clique na URL que você cadastrou.</li>
+      <li>Lá embaixo, existe uma aba chamada Tentativas de Envio (CLI/Webhook logs).</li>
+      <li>Se você vir uma bolinha <strong>Verde</strong> (Status 200), significa que o Stripe avisou o Lovable e o erro está na lógica do banco de dados.</li>
+      <li>Se vir uma bolinha <strong>Vermelha</strong> (Status 400 ou 500), significa que o Stripe tentou avisar, mas a URL que você colou está errada ou o seu app recusou o aviso. Isso economiza horas de adivinhação!</li>
+    </ul>
+    <h3>3. Os 3 Erros Comuns para Passar Longe</h3>
+    <p>Fique de olho nesses três detalhes para o seu teste não travar:</p>
+    <ul>
+      <li><strong>Misturar chaves:</strong> Usar a chave pública de teste (<code>pk_test_...</code>) com a chave secreta real (<code>sk_live_...</code>). Elas não se conversam. No teste, use apenas as chaves que têm <code>_test_</code> no nome.</li>
+      <li><strong>URL de Retorno Mal Configurada:</strong> Quando você cria o fluxo de pagamento, o Lovable pergunta para onde o usuário deve voltar após pagar. Se você configurar para voltar para <code>http://localhost:3000</code> (endereço de computador local), o seu aluno vai dar de cara com uma tela de erro quando pagar pelo celular, por exemplo. Certifique-se de que a URL de retorno seja o link real do seu app publicado (ex: <code>https://lovable.app</code>).</li>
+      <li><strong>Esquecer de clicar em "Apply" no Lovable:</strong> Sempre que a IA gerar o código de integração do Stripe para você, certifique-se de clicar no botão "Apply" na barra lateral do Lovable para que ele realmente salve as alterações no seu código antes de você testar.</li>
+    </ul>
+    <p>Fazer esse "checklist do sucesso" vai garantir que você coloque o bloco na rua com a certeza absoluta de que tudo funciona como um relógio.</p>
+    <div class="follow"><p>Para deixarmos o seu ambiente de testes totalmente redondo, me conta:</p>
+      <ul><li>O seu app Lovable já está com o primeiro Deploy feito (você já tem um link público dele)?</li><li>Você quer que eu te mande um modelo de checklist em texto para você ir marcando passo a passo enquanto faz o seu primeiro teste com o cartão 4242?</li></ul></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="turn">
+    <div class="sec">11 — Hora do deploy</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, adorei esse "checklist do sucesso"! Faz muito sentido garantir esses detalhes antes de testar. Meu app ainda não …</div>
+    <p>Que excelente notícia!</p>
+    <p>Você está dando o passo mais importante: colocar o seu projeto no mundo de forma estruturada e profissional.</p>
+    <p>Fazer o Deploy agora vai abrir as portas para você ver toda essa engrenagem funcionando ao vivo, e com certeza vai te dar um gás enorme quando você preencher o cartão 4242 e ver o seu próprio sistema aprovando o pagamento.</p>
+    <p>Vá em frente, faça a publicação com calma e curta esse processo de testes! Estarei por aqui torcendo pelo sucesso do seu app de treinos. Quando você estiver com tudo rodando e quiser dar o próximo passo (como criar as regras para bloquear o acesso de quem cancelar), é só chamar.</p>
+    <p>Arrebenta nos testes e até a próxima! 🏋️‍♀️🚀</p>
+    <div class="follow"><p>Assim que você fizer o deploy e rodar o primeiro teste, volte aqui para me contar:</p>
+      <ul><li>O pagamento fictício apareceu com a bolinha verde no painel do Stripe?</li><li>Os treinos premium foram liberados automaticamente no seu app publicado?</li></ul></div>
+    <p style="margin-top:10px">Se algo travar no meio do caminho, me diga qual foi o código do erro que apareceu para resolvermos juntos!</p>
+  </section>
+
+  <!-- 12 -->
+  <section class="turn" style="break-before:auto;page-break-before:auto;margin-top:26px">
+    <div class="sec">12 — Despedida</div>
+    <div class="q"><span class="k">Pergunta</span>Obrigada, adorei o apoio! Vou fazer o deploy com calma e testar tudo certinho. Assim que rodar o teste, volto pra te …</div>
+    <p>Maravilha!</p>
+    <p>Vá com calma, siga o passo a passo e aproveite esse momento — ver o seu primeiro fluxo de pagamento funcionando (mesmo que em teste) é uma sensação incrível de conquista! 🏋️‍♀️✨</p>
+    <p>Estarei por aqui aguardando o seu feedback. Se tudo der certo, comemoramos juntos; se algo travar, a gente resolve em dois tempos.</p>
+    <p>Até breve, uma excelente sessão de testes e muito sucesso no no-code! 🚀</p>
+    <div class="follow"><p>Assim que você concluir essa etapa, me avise:</p>
+      <ul><li>Se o Stripe redirecionou o usuário de volta para a página correta após o pagamento.</li><li>Se você quer ajuda para criar uma página de "Boas-vindas" personalizada para os novos assinantes.</li></ul></div>
+  </section>
+
+  <!-- 13: nota do curso -->
+  <section class="turn">
+    <div class="sec">13 — Referência oficial · nota da Formação</div>
+    <h3 style="margin-top:4px">O que a documentação atual diz sobre os pontos do diálogo</h3>
+    <p>As respostas acima vieram de uma pesquisa com IA e foram mantidas como estão, porque fazem parte do exercício. Vários pontos, porém, descrevem um jeito <strong>antigo ou manual</strong> de integrar o Stripe, ou contradizem o que o Lovable faz hoje (docs.lovable.dev, consultado em setembro de 2026). Use-os para treinar o senso crítico: <strong>confira sempre a fonte primária</strong>.</p>
+    <table>
+      <tr><th style="width:34%">O que o diálogo afirma</th><th>O que diz a documentação atual</th></tr>
+      <tr><td>Em 08:21 (seção 10): "o Stripe não funciona no Preview; publique o app para testar".</td><td>Não vale mais. Nos <strong>pagamentos nativos</strong>, o preview é justamente o <strong>ambiente de teste</strong>, e o checkout funciona nele logo após a configuração. Com a <strong>sua própria conta Stripe</strong>, o fluxo completo também é testado no preview (o checkout abre numa nova aba). A exceção é o <strong>portal do cliente</strong>, que não abre dentro do preview.</td></tr>
+      <tr><td>Em 05:56, 06:35 e 07:26 (seções 07 a 09): pegar <code>pk_test</code> e <code>sk_test</code>, criar o produto e o Price ID no painel, cadastrar o webhook à mão.</td><td>Esse é o caminho manual. Nos <strong>pagamentos nativos</strong> (plano Pro ou superior), o Lovable cria a conta, os produtos, os preços e os webhooks, <strong>sem chave para colar</strong>. Com a <strong>sua conta Stripe</strong>, entra só uma chave <strong>restrita</strong> (<code>rk_</code>) ou secreta (<code>sk_</code>) no formulário <strong>Connect Stripe</strong> (a publicável <code>pk_</code> não é aceita ali). Por padrão, sem webhooks: o app consulta o Stripe, e a assinatura é ligada ao usuário pelo <strong>e-mail</strong>.</td></tr>
+      <tr><td>Em 06:35 (seção 08): "criamos uma coluna <code>subscription_status</code> na tabela de usuários".</td><td>Perigoso se o próprio usuário puder atualizar essa linha: uma chamada à API e ele vira "active" sem pagar. O status deve ser gravado <strong>só pelo backend</strong>, a partir da confirmação do Stripe, e o app não pode alterá-lo.</td></tr>
+      <tr><td>Em 00:57 e 05:08 (seções 01 e 06): o Stripe "devolve um token que você guarda" e "a responsabilidade fica 100% com o Stripe; você fica totalmente livre de riscos".</td><td>Com o Checkout, o app não recebe nem guarda dado de cartão. O que se guarda são <strong>identificadores</strong> do cliente e da assinatura. O risco do <strong>cartão</strong> fica com o Stripe, mas não todos os riscos: as chaves, o acesso às contas, os dados pessoais dos clientes (LGPD) e a regra que libera o acesso continuam sendo seus.</td></tr>
+      <tr><td>Em 08:21 (seção 10): "esqueça de clicar em Apply e nada é salvo".</td><td>No Lovable atual, as mudanças feitas pelo agente entram direto no projeto; o que se aprova antes é o <strong>plano</strong>, no Plan mode. Se algo não mudou, confira o histórico de versões.</td></tr>
+      <tr><td>Em 02:43 (seção 03): a lista de cartões não foi gerada.</td><td>Os três cartões de teste mais usados: <code>4242 4242 4242 4242</code> (aprovado), <code>4000 0000 0000 0002</code> (recusado) e <code>4000 0000 0000 3220</code> (pede 3D Secure). Qualquer validade futura e qualquer CVC de 3 dígitos.</td></tr>
+    </table>
+    <div class="note">⚠️ <strong>Um ponto que o diálogo não cita:</strong> para entrar em produção com os pagamentos nativos, o site publicado precisa ter <strong>política de privacidade</strong>, <strong>termos de uso</strong> e <strong>política de reembolso</strong>. Sem elas, a verificação para e o checkout real não funciona.</div>
+    <div class="follow"><p><strong>Para se aprofundar:</strong> módulo 30 — Lovable: Integração com Gateway de Pagamento. A aula 01 compara os caminhos (nativos, Stripe próprio e AbacatePay com Pix), a aula 02 mostra por que o plano é decidido no servidor e a aula 03 integra o Stripe nativo e testa recusa, 3D Secure e aprovação.</p></div>
+    <div class="foot">Fontes: docs.lovable.dev (Add payments to your app · Connect your own Stripe account), consultados em setembro de 2026.</div>
+  </section>
+</div>
+</body>
+</html>
