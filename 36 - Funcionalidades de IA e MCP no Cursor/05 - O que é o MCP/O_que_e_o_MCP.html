@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>O que é o MCP</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.nxm{display:grid;grid-template-columns:1fr 70px 1fr;gap:0;align-items:center}
+.nxm .col{display:grid;gap:7px}
+.nxm .it{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:11.5px;text-align:center}
+.nxm .mid{position:relative;height:200px}
+.hub{display:grid;grid-template-columns:1fr 150px 1fr;gap:14px;align-items:center}
+.hub .core{background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:16px 10px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--accent-ink)}
+.hub .col{display:grid;gap:7px}
+.hub .it{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:11.5px}
+.hub .col.r .it{border-left:3px solid var(--good)}
+.hub .col.l .it{border-right:3px solid var(--accent)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Funcionalidades de IA e MCP no Cursor · Aula 5</div>
+    <h1>O que é<br><em>o MCP</em></h1>
+    <p class="lead">O <strong>Model Context Protocol</strong> é um padrão aberto para conectar aplicações de IA a sistemas externos: arquivos, bancos de dados, APIs, ferramentas e fluxos de trabalho. É o que deixa o agente do Cursor consultar o GitHub, controlar um navegador ou ler o seu banco sem você copiar e colar nada. Nesta aula: o problema que ele resolve, o que um servidor MCP oferece e como isso aparece no Cursor.</p>
+    <div class="chips"><span>Padrão aberto</span><span>"USB-C da IA"</span><span>Servidores MCP</span><span>Tools · Resources · Prompts</span><span>Local e remoto</span><span>Segurança</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em modelcontextprotocol.io (What is MCP, Architecture, Versioning) e cursor.com (Docs: Model Context Protocol; Help: MCP integrations) consultados em outubro de 2026 (protocolo 2026-07-28, Cursor 3.22)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O problema</span><span class="n">01</span></div>
+  <h2>Cada IA com cada ferramenta: <em>integração demais</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <p class="intro" style="margin-bottom:8px">Sem um padrão, cada aplicação de IA precisa de uma integração própria para cada ferramenta: o editor A fala com o GitHub de um jeito, o editor B de outro, e assim por diante. Com <strong>N</strong> aplicações e <strong>M</strong> ferramentas, são <strong>N × M</strong> integrações para escrever e manter.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Sem padrão</th><th>Com MCP</th></tr></thead>
+        <tbody>
+          <tr><td>4 apps × 5 ferramentas</td><td>20 integrações</td><td>4 clientes + 5 servidores = 9</td></tr>
+          <tr><td>Nova ferramenta</td><td>Uma integração por app</td><td>Um servidor MCP, serve para todos</td></tr>
+          <tr><td>Novo app de IA</td><td>Uma integração por ferramenta</td><td>Fala MCP e usa todos os servidores</td></tr>
+        </tbody></table></div>
+    </div>
+    <div>
+      <div class="card"><div class="k">E para quem usa?</div><p>Sem integração, sobra o trabalho manual: copiar a issue do GitHub, colar o resultado da consulta no banco, descrever o que aparece no navegador. A documentação do Cursor resume: em vez de explicar a estrutura do projeto repetidas vezes, <strong>integre diretamente com as suas ferramentas</strong>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Definição</span><span class="n">02</span></div>
+  <h2>Um padrão aberto, <em>como o USB-C</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="callout" style="margin-top:0;font-size:13px">"MCP (Model Context Protocol) é um padrão de código aberto para conectar aplicações de IA a sistemas externos." <span style="color:var(--muted)">— modelcontextprotocol.io</span></div>
+      <div class="card" style="margin-top:10px"><div class="k">A analogia oficial</div><p>Pense no MCP como uma <strong>porta USB-C para aplicações de IA</strong>. Assim como o USB-C padroniza a ligação entre aparelhos eletrônicos, o MCP padroniza a ligação entre aplicações de IA e sistemas externos.</p></div>
+    </div>
+    <div class="hub">
+      <div class="col l"><div class="it">Cursor</div><div class="it">Claude</div><div class="it">ChatGPT</div><div class="it">VS Code</div></div>
+      <div class="core">MCP<br><span style="font-size:10px;color:var(--muted)">um protocolo comum</span></div>
+      <div class="col r"><div class="it">Arquivos locais</div><div class="it">Bancos de dados</div><div class="it">GitHub · Notion</div><div class="it">Navegador</div></div>
+    </div>
+  </div>
+  <div class="callout good" style="margin-top:12px">O MCP define só <strong>como o contexto é trocado</strong>. Ele não decide como a aplicação usa o modelo de IA nem o que faz com o contexto recebido.</div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Possibilidades</span><span class="n">03</span></div>
+  <h2>O que o MCP <em>permite</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="k" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px">Exemplos da documentação oficial</div>
+      <ul class="bullets">
+        <li>Agentes que acessam seu Google Agenda e o Notion, como um assistente pessoal</li>
+        <li>O Claude Code gerando um app web inteiro a partir de um design do Figma</li>
+        <li>Chatbots de empresa ligados a vários bancos de dados para análise por chat</li>
+        <li>Modelos criando designs 3D no Blender e mandando para uma impressora 3D</li>
+      </ul>
+    </div>
+    <div>
+      <div class="k" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px">No dia a dia com o Cursor</div>
+      <ul class="checklist">
+        <li>Ler e criar issues e pull requests no <strong>GitHub</strong> (aula 08)</li>
+        <li>Abrir e testar a aplicação num <strong>navegador</strong> (aula 09)</li>
+        <li>Consultar o esquema e os dados de um <strong>banco</strong></li>
+        <li>Trazer requisitos do <strong>Notion</strong>, do <strong>Linear</strong> ou do <strong>Google Drive</strong></li>
+        <li>Pegar telas e medidas do <strong>Figma</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Quem ganha</span><span class="n">04</span></div>
+  <h2>Por que o MCP <em>importa</em></h2>
+  <div class="grid g3">
+    <div class="card"><div class="k">Desenvolvedores</div><p>Menos tempo e complexidade para construir uma aplicação de IA ou integrar com uma. Um servidor escrito uma vez funciona em vários clientes.</p></div>
+    <div class="card"><div class="k">Aplicações e agentes</div><p>Acesso a um ecossistema de fontes de dados, ferramentas e apps, que aumenta o que eles conseguem fazer.</p></div>
+    <div class="card"><div class="k">Usuários finais</div><p>Assistentes mais capazes, que acessam seus dados e agem em seu nome quando necessário.</p></div>
+  </div>
+  <div class="card" style="margin-top:12px"><div class="k">Suporte amplo</div><p>Assistentes como <strong>Claude</strong> e <strong>ChatGPT</strong>, ferramentas de desenvolvimento como <strong>Visual Studio Code</strong> e <strong>Cursor</strong>, e muitos outros suportam MCP. A ideia, nas palavras do site oficial: <strong>construa uma vez e integre em todo lugar</strong>.</p></div>
+  <div class="callout" style="margin-top:12px">Servidores MCP podem ser escritos em qualquer linguagem que consiga escrever no <code>stdout</code> ou servir um endpoint HTTP: Python, JavaScript, Go e outras. Há SDKs oficiais para C#, Go, Java, Kotlin, PHP, Python, Ruby, Rust, Swift e TypeScript.</div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Peças</span><span class="n">05</span></div>
+  <h2>Cliente <em>e servidor</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(4,1fr)">
+    <div class="n"><b>Host</b>A aplicação de IA, por exemplo o Cursor</div>
+    <div class="n"><b>Cliente MCP</b>Um por servidor, criado pelo host</div>
+    <div class="n"><b>Servidor MCP</b>Programa que oferece o contexto</div>
+    <div class="n key"><b>Sistema</b>GitHub, banco, navegador, arquivos…</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><div class="k">Servidor MCP</div><p>É o programa que expõe ferramentas e dados para o Cursor pelo protocolo. O agente chama essas ferramentas durante a conversa. Pode rodar <strong>na sua máquina</strong> ou <strong>em outro lugar</strong>, na internet.</p></div>
+    <div class="card"><div class="k">Cliente MCP</div><p>Fica dentro da aplicação de IA e mantém a conexão com um servidor. O Cursor cria um cliente para cada servidor configurado. Os detalhes da arquitetura são a <strong>aula 06</strong>.</p></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>O que oferece</span><span class="n">06</span></div>
+  <h2>Tools, resources <em>e prompts</em></h2>
+  <div class="grid g3">
+    <div class="card"><div class="k">Tools (ferramentas)</div><p>Funções que a IA pode <strong>executar</strong> para agir: operações em arquivos, chamadas de API, consultas ao banco.</p></div>
+    <div class="card"><div class="k">Resources (recursos)</div><p>Fontes de dados que dão <strong>contexto</strong>: conteúdo de arquivos, registros do banco, respostas de API.</p></div>
+    <div class="card"><div class="k">Prompts</div><p>Modelos de mensagem <strong>reutilizáveis</strong> que estruturam a interação com o modelo, como exemplos de uso.</p></div>
+  </div>
+  <div class="card" style="margin-top:12px"><div class="k">Exemplo da documentação: um servidor de banco de dados</div><p>Expõe <strong>tools</strong> para consultar o banco, um <strong>resource</strong> com o esquema das tabelas e um <strong>prompt</strong> com exemplos de como usar as ferramentas.</p></div>
+  <div class="callout good" style="margin-top:12px">Na prática, no Cursor, as <strong>tools</strong> são o que mais aparece: o agente decide sozinho quando chamar cada uma, do mesmo jeito que escolhe ler um arquivo ou rodar um comando. O Cursor também suporta resources, prompts e outros recursos do protocolo.</div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Onde roda</span><span class="n">07</span></div>
+  <h2>Servidores <em>locais e remotos</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Local</th><th>Remoto</th></tr></thead>
+    <tbody>
+      <tr><td>Onde roda</td><td>Na sua máquina, iniciado pelo Cursor</td><td>Num servidor na internet (ou na sua rede)</td></tr>
+      <tr><td>Transporte</td><td><code>stdio</code> (entrada e saída padrão do processo)</td><td><code>Streamable HTTP</code> (o Cursor também aceita <code>SSE</code>)</td></tr>
+      <tr><td>Como configurar</td><td>Um <strong>comando</strong>: <code>npx</code>, <code>python</code>, <code>docker</code>…</td><td>Uma <strong>URL</strong></td></tr>
+      <tr><td>Quem usa</td><td>Uma pessoa</td><td>Várias pessoas ao mesmo tempo</td></tr>
+      <tr><td>Autenticação</td><td>Manual, por variáveis de ambiente</td><td>OAuth ou token no cabeçalho</td></tr>
+      <tr><td>Exemplo</td><td>Servidor de arquivos locais, Playwright</td><td>GitHub remoto, Sentry</td></tr>
+    </tbody></table></div>
+  <div class="callout" style="margin-top:12px">Para dados sensíveis, a documentação do Cursor sugere servidores <strong>locais</strong> com <code>stdio</code>: o servidor roda na sua máquina, sob o seu controle.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>No Cursor</span><span class="n">08</span></div>
+  <h2>Como o MCP <em>aparece no Cursor</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><span class="b">1</span><div><strong>Instalar:</strong> pela página <strong>Customize</strong> (barra lateral) › <strong>MCPs</strong>, com um clique, ou escrevendo um <code>mcp.json</code>.</div></div>
+      <div class="step"><span class="b">2</span><div><strong>Usar:</strong> o agente usa as ferramentas listadas em <strong>Available Tools</strong> quando forem relevantes, inclusive no modo Plan. Você também pode pedir pelo nome.</div></div>
+      <div class="step"><span class="b">3</span><div><strong>Aprovar:</strong> por padrão, o Cursor pede aprovação antes de usar uma ferramenta MCP; a seta ao lado do nome mostra os argumentos. MCP segue os mesmos <strong>Run Modes</strong> dos comandos de terminal.</div></div>
+      <div class="step"><span class="b">4</span><div><strong>Ligar e desligar:</strong> em Customize, cada servidor tem uma chave; desligado, ele não carrega nem aparece no chat.</div></div>
+    </div>
+    <div>
+      <div class="term-title">.cursor/mcp.json · exemplo de servidor local</div>
+      <pre class="code">{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"server-name"</span>: {
+      "command": "npx",
+      "args": ["-y", "mcp-server"],
+      "env": { "API_KEY": "value" }
+    }
+  }
+}</pre>
+      <div class="term-title" style="margin-top:10px">Exemplo de servidor remoto</div>
+      <pre class="code">{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"server-name"</span>: {
+      "url": "http://localhost:3000/mcp",
+      "headers": { "API_KEY": "value" }
+    }
+  }
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Custo de contexto</span><span class="n">09</span></div>
+  <h2>Mais servidores <em>não é melhor</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <p class="intro" style="margin-bottom:8px">Cada servidor ligado traz suas <strong>instruções</strong> e o <strong>catálogo de ferramentas</strong> para a janela de contexto (categoria "MCP" no anel de contexto, visto no módulo 35). Muitos servidores = muitas ferramentas para o modelo escolher e menos espaço para o seu código.</p>
+      <ul class="checklist">
+        <li>Ligue só os servidores que o projeto usa</li>
+        <li>Desligue o resto em Customize, sem remover</li>
+        <li>Prefira servidores que deixam escolher conjuntos de ferramentas</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card"><div class="k">Projeto ou global?</div><p><code>.cursor/mcp.json</code> na pasta do projeto vale só ali e pode ir para o Git, para o time ter as mesmas ferramentas. <code>~/.cursor/mcp.json</code> vale em todos os projetos. Os dois são combinados; com o mesmo nome, o do projeto vence.</p></div>
+      <div class="callout warn" style="margin-top:10px">Se o <code>mcp.json</code> do projeto vai para o Git, <strong>não coloque tokens nele</strong>. Use variáveis como <code>${env:API_KEY}</code> (aula 08).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Segurança</span><span class="n">10</span></div>
+  <h2>Um servidor MCP <em>age em seu nome</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="callout danger" style="margin-top:0">A documentação do Cursor lembra: servidores MCP podem <strong>acessar serviços externos e executar código</strong> em seu nome. Entenda o que um servidor faz antes de instalar.</div>
+      <ul class="checklist" style="margin-top:10px">
+        <li><strong>Verifique a origem:</strong> só instale de desenvolvedores e repositórios confiáveis</li>
+        <li><strong>Revise as permissões:</strong> que dados e APIs o servidor vai acessar</li>
+        <li><strong>Limite as chaves:</strong> tokens com o mínimo de permissão necessário</li>
+        <li><strong>Audite o código:</strong> em integrações críticas, leia o código do servidor</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card"><div class="k">Segredos</div><p>Use variáveis de ambiente para chaves e tokens; nunca escreva o valor direto em arquivos versionados.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">Aprovação</div><p>Mantenha a aprovação das ferramentas MCP ligada no começo. Libere automaticamente só as ferramentas de <strong>leitura</strong> em que você confia.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">Injeção de prompt</div><p>Conteúdo vindo de fora (uma issue, uma página web) pode tentar dar ordens ao agente. Desconfie de ações que você não pediu.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">11</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O que é o MCP?</p>
+        <div class="opts"><div>A) Um modelo de IA do Cursor</div><div>B) Um padrão aberto para conectar apps de IA a sistemas externos</div><div>C) Uma extensão do VS Code</div><div>D) Um banco de dados</div></div>
+        <div class="answer"><b>B.</b> O "USB-C das aplicações de IA".</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Quais são as três primitivas que um servidor MCP oferece?</p>
+        <div class="opts"><div>A) Tools, resources e prompts</div><div>B) Rules, skills e hooks</div><div>C) Agent, Ask e Plan</div><div>D) GET, POST e DELETE</div></div>
+        <div class="answer"><b>A.</b> Ações, dados de contexto e modelos de mensagem.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Um servidor configurado com um comando <code>npx</code> é…</p>
+        <div class="opts"><div>A) Remoto, via HTTP</div><div>B) Local, via stdio</div><div>C) Um plugin de navegador</div><div>D) Uma rule</div></div>
+        <div class="answer"><b>B.</b> Remoto se configura com URL.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Por que não ligar todos os servidores MCP de uma vez?</p>
+        <div class="opts"><div>A) O Cursor só aceita um</div><div>B) Cada servidor ocupa contexto e amplia o que pode dar errado</div><div>C) Eles apagam as rules</div><div>D) Não há motivo</div></div>
+        <div class="answer"><b>B.</b> Ligue só o que o projeto usa.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Funcionalidades de IA e MCP no Cursor</div>
+    <h1 style="font-size:40px">Um protocolo,<br><em>muitas ferramentas</em></h1>
+    <p class="lead">O MCP troca N × M integrações por um padrão comum. <strong>Servidores</strong> oferecem <strong>tools</strong>, <strong>resources</strong> e <strong>prompts</strong>; rodam <strong>localmente</strong> (stdio) ou <strong>remotamente</strong> (HTTP). No Cursor, instale pelo <strong>Customize</strong> ou pelo <code>mcp.json</code>, ligue só o que usa e trate cada servidor como alguém agindo em seu nome.</p>
+    <div class="chips"><span>Padrão aberto</span><span>Host · cliente · servidor</span><span>stdio · Streamable HTTP</span><span>Customize › MCPs</span><span>Menos é mais</span></div>
+    <div class="next">Próxima aula → 06 · Arquitetura do Protocolo MCP</div>
+    <div class="source">Fontes: modelcontextprotocol.io (What is MCP, Architecture overview, Versioning); github.com/modelcontextprotocol/servers (lista de SDKs); cursor.com/docs/mcp; cursor.com/help/customization/mcp, consultados em outubro de 2026.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
