@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Projeto ToDo List: Desenvolvendo a Primeira Versão</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Funcionalidades de IA e MCP no Cursor · Aula 10</div>
+    <h1>Projeto ToDo List:<br><em>a primeira versão</em></h1>
+    <p class="lead">Hora de juntar tudo num projeto. Nesta aula, o agente do Cursor constrói a <strong>primeira versão</strong> de uma lista de tarefas em <strong>Python + Streamlit</strong>: adicionar, listar e remover tarefas. Você prepara o ambiente, escreve uma rule, revisa o plano, dá o prompt, roda, testa no navegador e faz o primeiro commit.</p>
+    <div class="chips"><span>Python + Streamlit</span><span>Rule do projeto</span><span>Plan → Agent</span><span>streamlit run</span><span>Teste no Browser</span><span>Primeiro commit</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em cursor.com/docs (Agent, Plan Mode, Rules, Browser) e docs.streamlit.io, consultados em outubro de 2026 (Cursor 3.22, Streamlit 1.65) · Código de referência testado em <code>projeto/app.py</code> · Tela do app: print real</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O projeto</span><span class="n">01</span></div>
+  <h2>Um app, <em>três aulas</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+    <div class="n key"><b>Aula 10 · hoje</b>Primeira versão: adicionar, listar e remover tarefas</div>
+    <div class="n"><b>Aula 11</b>Marcar tarefas como concluídas</div>
+    <div class="n"><b>Aula 12</b>Salvar as tarefas num banco de dados</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><div class="k">Por que Python + Streamlit</div><p>O <strong>Streamlit</strong> transforma um script Python num app web, sem HTML, CSS ou JavaScript. Um arquivo só já tem tela, campos e botões, e roda no navegador em <code>localhost</code>. É ótimo para ver o agente trabalhar sem se perder em configuração.</p></div>
+    <div class="card"><div class="k">O que você vai praticar</div><p>Ask para entender, <strong>Plan</strong> para revisar a abordagem, <strong>Agent</strong> para construir, <strong>rules</strong> para padronizar, <strong>Browser</strong> para testar (aula 09) e <strong>checkpoints</strong> e Git para voltar atrás (aula 01).</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Prefere outra tecnologia (HTML/JS, React, Flask)? O processo desta aula é o mesmo; só troque a stack no prompt e na rule.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Escopo</span><span class="n">02</span></div>
+  <h2>O que entra <em>na versão 1</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="k" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--good);margin-bottom:6px">Entra</div>
+      <ul class="checklist">
+        <li>Campo de texto e botão <strong>Adicionar</strong></li>
+        <li>Lista das tarefas com botão <strong>Remover</strong> em cada uma</li>
+        <li>Aviso ao tentar adicionar tarefa <strong>vazia</strong></li>
+        <li>Mensagem quando a lista estiver vazia e contador de tarefas</li>
+        <li>Textos da interface em <strong>português</strong></li>
+      </ul>
+    </div>
+    <div>
+      <div class="k" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--danger);margin-bottom:6px">Fica para depois</div>
+      <ul class="bullets">
+        <li>Marcar como concluída (aula 11)</li>
+        <li>Guardar as tarefas depois de recarregar a página (aula 12)</li>
+        <li>Login, prazos, categorias, edição</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Escopo escrito antes evita o agente "inventar" funcionalidades. Pedidos pequenos e verificáveis dão resultados melhores do que "faça um app completo".</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Preparação</span><span class="n">03</span></div>
+  <h2>Preparando <em>o ambiente</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Passo</th><th>Windows (PowerShell)</th><th>Linux e macOS</th></tr></thead>
+    <tbody>
+      <tr><td>Pasta do projeto</td><td><code>mkdir todo-app; cd todo-app</code></td><td><code>mkdir todo-app &amp;&amp; cd todo-app</code></td></tr>
+      <tr><td>Ambiente virtual</td><td><code>py -m venv .venv</code></td><td><code>python3 -m venv .venv</code></td></tr>
+      <tr><td>Ativar</td><td><code>.venv\Scripts\Activate.ps1</code></td><td><code>source .venv/bin/activate</code></td></tr>
+      <tr><td>Instalar</td><td colspan="2"><code>pip install streamlit</code></td></tr>
+      <tr><td>Git</td><td colspan="2"><code>git init</code></td></tr>
+      <tr><td>Abrir no Cursor</td><td colspan="2"><code>cursor .</code> (ou File › Open Folder)</td></tr>
+    </tbody></table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout" style="margin-top:0">No Debian/Ubuntu, se o <code>venv</code> reclamar de <code>ensurepip</code>, instale o pacote <code>python3-venv</code> (por exemplo, <code>sudo apt install python3-venv</code>).</div>
+    <div class="callout good" style="margin-top:0">Quer delegar? Peça ao agente para fazer esses passos: ele roda os comandos no terminal, com a sua aprovação (Run Modes).</div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Rule</span><span class="n">04</span></div>
+  <h2>Uma rule <em>para o projeto</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="term-title">.cursor/rules/projeto.mdc</div>
+      <pre class="code"><span class="c">---</span>
+<span class="k">description</span>: Padrões do projeto ToDo List
+<span class="k">alwaysApply</span>: true
+<span class="c">---</span>
+- Projeto em Python 3 com Streamlit, num único
+  arquivo app.py por enquanto.
+- Textos da interface e mensagens em português
+  do Brasil.
+- Código simples e legível, com nomes em
+  português; comentários só onde ajudam.
+- Não adicione bibliotecas além do Streamlit
+  sem perguntar.
+- Mantenha o requirements.txt atualizado.</pre>
+    </div>
+    <div>
+      <div class="card"><div class="k">Por que uma rule</div><p>Ela entra em <strong>todas</strong> as conversas do projeto, em qualquer modo. Assim você não repete "em português", "sem bibliotecas novas" a cada pedido, e as aulas 11 e 12 seguem o mesmo padrão.</p></div>
+      <div class="callout" style="margin-top:10px">Com <code>alwaysApply: true</code>, a rule vale sempre. Rules com <code>globs</code> valem só para certos arquivos (módulo 35).</div>
+      <div class="callout good" style="margin-top:10px">Também dá para pedir ao agente: <em>"crie uma rule do projeto com estes padrões"</em>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Plan</span><span class="n">05</span></div>
+  <h2>Primeiro <em>o plano</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <p class="intro" style="margin-bottom:8px">Mude para o modo <strong>Plan</strong> (<span class="kbd">Shift</span> + <span class="kbd">Tab</span>) e peça a abordagem antes do código. Você revisa e só depois o agente edita.</p>
+      <div class="promptbox"><span class="h">Planeje</span> a primeira versão de um app de lista de
+tarefas em Streamlit, num arquivo app.py.
+Funcionalidades: adicionar tarefa (campo + botão),
+listar as tarefas com um botão Remover em cada
+uma, avisar se a tarefa estiver vazia, mostrar
+uma mensagem quando não houver tarefas e um
+contador. Sem banco de dados: as tarefas ficam
+em st.session_state. Não escreva código ainda.</div>
+    </div>
+    <div>
+      <div class="k" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px">O que conferir no plano</div>
+      <ul class="checklist">
+        <li>Usa <code>st.session_state</code> para guardar a lista</li>
+        <li>Usa um formulário que limpa o campo depois de adicionar</li>
+        <li>Remover usa uma chave única por botão</li>
+        <li>Não inventou banco, login nem bibliotecas extras</li>
+        <li>Cria <code>requirements.txt</code></li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Discorda de algo? Responda no chat e peça um plano ajustado. Quando estiver bom, aprove e deixe o agente executar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Construção</span><span class="n">06</span></div>
+  <h2>O prompt <em>de construção</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <p class="intro" style="margin-bottom:8px">Se preferir ir direto no modo <strong>Agent</strong>, um prompt completo faz o mesmo papel. Ele diz o que construir, o que não fazer e como verificar:</p>
+      <div class="promptbox"><span class="h">Crie</span> a primeira versão de um app de lista de
+tarefas em Streamlit, no arquivo app.py:
+- título "Minhas tarefas";
+- formulário com o campo "Nova tarefa" e o botão
+  "Adicionar", que limpa o campo ao enviar;
+- avise com st.warning se a tarefa for vazia;
+- liste as tarefas, cada uma com um botão
+  "Remover", e mostre quantas são;
+- sem tarefas, mostre uma mensagem com st.info.
+Guarde a lista em st.session_state (sem banco).
+Crie o requirements.txt. No fim, rode o app e
+me diga a URL.</div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Parte do prompt</th><th>Função</th></tr></thead>
+        <tbody>
+          <tr><td>Arquivo e stack</td><td>Diz <strong>onde</strong> e <strong>com quê</strong></td></tr>
+          <tr><td>Lista de comportamentos</td><td>Vira o critério de "pronto"</td></tr>
+          <tr><td>"Sem banco"</td><td>Segura o escopo da v1</td></tr>
+          <tr><td>"Rode e me diga a URL"</td><td>Pede verificação, não só código</td></tr>
+        </tbody></table></div>
+      <div class="callout" style="margin-top:10px">Ditar (aula 02) funciona bem aqui: fale a lista de comportamentos e revise os nomes técnicos (<code>st.session_state</code>, <code>app.py</code>) antes de enviar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Resultado</span><span class="n">07</span></div>
+  <h2>O código <em>da versão 1</em></h2>
+  <div class="grid g2" style="align-items:start;grid-template-columns:1.25fr 1fr">
+    <pre class="code" style="font-size:9.2px">import streamlit as st
+
+st.set_page_config(page_title="ToDo List", page_icon="✅")
+st.title("✅ Minhas tarefas")
+
+<span class="c"># A lista vive na sessão do navegador: some ao recarregar</span>
+<span class="c"># a página (v1, sem banco).</span>
+<span class="k">if</span> "tarefas" <span class="k">not in</span> st.session_state:
+    st.session_state.tarefas = []
+
+<span class="k">with</span> st.form("nova_tarefa", clear_on_submit=True):
+    col_texto, col_botao = st.columns([4, 1], vertical_alignment="bottom")
+    texto = col_texto.text_input("Nova tarefa",
+                                 placeholder="O que você precisa fazer?")
+    adicionar = col_botao.form_submit_button("Adicionar",
+                                             width="stretch")
+
+<span class="k">if</span> adicionar:
+    texto = texto.strip()
+    <span class="k">if not</span> texto:
+        st.warning("Digite uma tarefa antes de adicionar.")
+    <span class="k">else</span>:
+        st.session_state.tarefas.append(texto)
+
+<span class="k">if not</span> st.session_state.tarefas:
+    st.info("Nenhuma tarefa ainda. Adicione a primeira acima.")
+<span class="k">else</span>:
+    st.caption(f"{len(st.session_state.tarefas)} tarefa(s)")
+    <span class="k">for</span> i, tarefa <span class="k">in</span> enumerate(st.session_state.tarefas):
+        col_tarefa, col_remover = st.columns([5, 1],
+                                             vertical_alignment="center")
+        col_tarefa.write(tarefa)
+        <span class="k">if</span> col_remover.button("Remover", key=f"remover_{i}"):
+            st.session_state.tarefas.pop(i)
+            st.rerun()</pre>
+    <div>
+      <div class="card"><div class="k">Como ler</div><ul class="bullets">
+        <li><strong>session_state:</strong> o Streamlit roda o script de novo a cada clique; o <code>session_state</code> guarda a lista entre essas execuções</li>
+        <li><strong>form + clear_on_submit:</strong> envia o campo e o limpa em seguida</li>
+        <li><strong>strip():</strong> trata "  " como vazio</li>
+        <li><strong>key única:</strong> cada botão Remover precisa de uma chave própria</li>
+        <li><strong>st.rerun():</strong> redesenha a lista logo após remover</li>
+      </ul></div>
+      <div class="callout" style="margin-top:10px">Código de referência na pasta da aula: <code>projeto/app.py</code> e <code>projeto/requirements.txt</code>. O do seu agente pode sair diferente, e tudo bem, desde que cumpra o escopo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Rodar</span><span class="n">08</span></div>
+  <h2>Rodando <em>o app</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="term-title">Terminal do Cursor (com a .venv ativada)</div>
+      <pre class="term">streamlit run app.py
+
+<span class="c">  You can now view your Streamlit app in your browser.
+  Local URL: http://localhost:8501</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A porta padrão do Streamlit é a <strong>8501</strong></li>
+        <li>Ao salvar <code>app.py</code>, a página oferece <strong>Rerun</strong> para atualizar</li>
+        <li><span class="kbd">Ctrl</span> + <span class="kbd">C</span> no terminal para parar o servidor</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card"><div class="k">Deixe o agente rodar</div><p>Se você pediu "rode o app", o agente executa o comando no terminal (com aprovação) e devolve a URL. Ele também percebe quando o servidor <strong>já está rodando</strong> e reaproveita a porta em vez de abrir outro.</p></div>
+      <div class="callout warn" style="margin-top:10px"><strong>"streamlit: command not found"</strong>: a <code>.venv</code> não está ativada no terminal, ou o Streamlit não foi instalado nela. Ative e rode <code>pip install -r requirements.txt</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Resultado</span><span class="n">09</span></div>
+  <h2>A versão 1 <em>funcionando</em></h2>
+  <img class="shot" style="max-height:330px;width:auto;margin:0 auto" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAJsBEwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoor578SeFo/F/wAVPihNdeINb0WbRtLsJrC707WLi1SzYxTMzmNHEbglQSHVgQORUtqKbeyKS5nZH0JRXy3Z/tQeK7zR9KXT9ElvtTttAsNUvreHw/qN+9/NPGW8qN7VCltkLkPLuBLY2gAmun8R/Gvxpp7eONatLLRI/DvhK7t4riwu4Zvt11G8MMrhXEgSJ1EpwCj7iMfL1rZ02pOPa/4O35maldJ9/wBVc99or5z0Dxvqfh/xN4s0vQobT+2PEXjiWyt7jUUZre2C6fFK8jorKzkLGQEDLknqMVv6T8ddW0/VY7XxNa6fBaWOqXeiapqNmHWIXCQLcQSIGY7UdCylSWKvgbj3i2ifkn96T/8AbkvN/O1Pe3m19zf+Tfy9L+20Vzfw517UvFPgjR9Z1a1isb3UIBcm2iBAiRyWjU5JO7YVz75rpKGnFtMSaaugrITxfoUvieTw2mtae/iGOD7U+lLcobpIcgeYYs7guWXkjHNa9eKWlhB/w1hfXX/CrJo5/wCwQP8AhYJnYxSDcoFuIyAgbqCykvgDI280JDPa6KKKQBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABXn3i34C+CfHOuXera3pl3eXN4kUd3Cuq3cVtdLHnyxLbpKsUgGTwyHqc16DRR1uBxuu/CPw3r2rWuptDe6Zf28MdqJ9G1K408yQIcpDJ5Eib0BJwrZxkgYBNclp37Pum3vjzxdr/iLzb+DVNUgvrWyh1K5W2ZYoIVT7RbhlikZZIyw3Bu3PYev0U02ndf1dp/mhNJq39djitR+DnhXVG1Vp7GdZNSv01SWWG9nikiukQIs0LI4ML7VAJQrnnOc1zXjr4IQa34MtfBOi2dlaeHLy+W81e7vbqaa8bbKsjFCwYySSEEGR5AVHZug9aooTta3S34Wt+S+4f8AX3/8O/vGxxrDGkaKERAFVR0AHQU6iikGwV59B8MdVh+Nlz45bxrrEmjy6YLFPChYmyjkypMwBYjJCjoobP8AFj5a9BooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDI8T+LNJ8G6YdQ1m9SxtAwTewLEsewVQST9BXG/8ADRfw/wD+g63/AIBz/wDxFch+1sM+F9DHreN/6Aa8RvLuz8OWcMawK8zLwoHJ9STXx+Y5xiMLiZUqajyxS1ab39GjzK+JnTqOKtZH07/w0X8P/wDoOt/4Bz//ABFH/DRfw/8A+g63/gHP/wDEV8b6jfvqVx50iohxgBBgYqrXhvibGX0jH7n/APJHG8wq9l/XzPtL/hov4f8A/Qdb/wAA5/8A4ij/AIaL+H//AEHW/wDAOf8A+Ir41sLC41S9gtLSFp7mZwkcSDJZj0Fey69+zPeaJ4PuNUOqpLf20BnmtgnyYAywDZ7DPbtXZh85zTFRlOjTi1HfR/8AyRrDFYiom4xWn9dz6E8G/FDw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q40+wluJoZ725v2a5ZWYSTytK4GAPlDOQO+MZJ61v1n0RXV+r+7oVdO/49f+2kn/AKGatVV07/j1/wC2kn/oZq1QAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBTuW8m+tZW4jIaLPozFSP/QcfiKuU2SNJo2R1DowwVYZBqsunLGMRzzxr2USZA+mc0AW6Kq/Ym/5+p/++h/hR9ib/n6n/wC+h/hQBaoqr9ib/n6n/wC+h/hR9ib/AJ+p/wDvof4UAWqKq/Ym/wCfqf8A76H+FH2Jv+fqf/vof4UAWqZLKkMbSOwVFGST2FQfYm/5+p/++h/hSrYRhw8jyTMpyPMbIB9cdKADT0ZLSPeNrtlyvoSScfrVmiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoqvd3DQKixp5k0h2opOBn1J7AUwW1y3L3hUntHGoA/PJoAt0VV+yT/8/sv/AHwn/wATR9kn/wCf2X/vhP8A4mgC1RVX7JP/AM/sv/fCf/E0fZJ/+f2X/vhP/iaALVFVfsk//P7L/wB8J/8AE0fZJ/8An9l/74T/AOJoAtUVV+yT/wDP7L/3wn/xNNdb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0JdRnjudS020W2ktryRFCBiJYXZCyqqsY2XIUdDzXc0U+Z3v/X9aIVtLGB4L8F2XgXSrjT7CW4mhnvbm/ZrllZhJPK0rgYA+UM5A74xknrW/RTJZUgjaSRgqKMknsKkZBp3/AB6/9tJP/QzVqq2noyWke8bXbLlfTJJx+tWaACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAGSRJNGySKHRhgqwyDUC2Pl8JcTov93fux+YJq1RQBW+yP8A8/U3/jv+FH2R/wDn6m/8d/wqzRQBW+yP/wA/U3/jv+FH2R/+fqb/AMd/wqzRQBW+yP8A8/U3/jv+FH2R/wDn6m/8d/wqzRQBW+yP/wA/U3/jv+FAsEMivI8k7Kcr5jZAPrgcZ98VZooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAILu4aBUWNPMmkO1FJwM+pPYCoxbXLcvdlT6RxqAPzyaWQf8TS3/AOuMn/oSVaoAq/ZZ/wDn8l/74T/4mj7LP/z+S/8AfCf/ABNWqKAKv2Wf/n8l/wC+E/8AiaPss/8Az+S/98J/8TVqigCr9ln/AOfyX/vhP/iaPss//P5L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Eblv3hCrhPmzk7Rmuj0L4M6J4eTwiltdX7jwzLdTWfmyIfMNwHD+ZhBkDzDjG3tnNZ6fAfTNOttKOja5rGianpsl40GqWrQPMY7qUyzRMskTRshYgjKZG1eeuVpt/XW36X8loP8Ar+v089zK079pPSrnTru+u9LuNOhh0WfVVWaVS7yW8zQ3NtgDG9JAgyCQ3mAisTV/2t9H0PxQNIvbfS7SS1mtLTUra412GPUIp51jO2C1K7p1TzFDNlOjbQ2DXXah+zv4V1HRPCmlu9/Hb+Hbr7XEyTrvu2Z/MkW4JU71kcB2A25IHQcVrN8LjaeM7vxBo3iXV9CXUZ47nUtNtFtpLa8kRQgYiWF2QsqqrGNlyFHQ81S5ebX+tfys7d9F3ZLvZ2/r/g6X7avsg+GXxFvPiN/bNz/YR0vS7G+uNPhuZboSPcyQzPG7BAvyp8owSckkjGACe5rA8F+C7LwLpVxp9hLcTQz3tzfs1yyswknlaVwMAfKGcgd8YyT1rfrPoiur9X93Qq6d/wAev/bST/0M1aqrp3/Hr/20k/8AQzVqgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCpct5V9ayNwhDxZ9CxUj/0HH4irdMliSaNo5FDowwVYZBqBbDYMJcTovZdwbH5gmgC1RVb7G/8Az9z/APjv/wATR9jf/n7n/wDHf/iaALNFVvsb/wDP3P8A+O//ABNH2N/+fuf/AMd/+JoAs0VW+xv/AM/c/wD47/8AE0fY3/5+5/8Ax3/4mgCzTJZVhjaR2CooLEnsKh+xv/z9z/8Ajv8A8TSCwQuryvJOVOVEjcA+uBgZ98UALp6MlnHvG12y5U9sknH61ZoooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z" alt="App Streamlit com o título Minhas tarefas, um formulário com o campo Nova tarefa e o botão Adicionar, o contador 3 tarefas e três tarefas listadas, cada uma com o botão Remover">
+  <div class="shot-cap">Print real do <code>projeto/app.py</code> rodando no Streamlit 1.65, com três tarefas de exemplo</div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Testar</span><span class="n">10</span></div>
+  <h2>Testando <em>com o agente</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="term-title">Teste pelo navegador (aula 09)</div>
+      <div class="promptbox">@Browser Abra o app em localhost:8501 e teste:
+1. adicionar "Estudar MCP" e "Revisar PR";
+2. clicar em Adicionar com o campo vazio;
+3. remover "Estudar MCP".
+Para cada passo, diga o que esperava e o que
+aconteceu. Não altere código.</div>
+      <div class="callout" style="margin-top:10px">Peça o relatório <strong>antes</strong> de pedir correções: assim você decide o que mudar.</div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Teste</th><th>Esperado</th></tr></thead>
+        <tbody>
+          <tr><td>Adicionar duas tarefas</td><td>Aparecem na ordem, contador "2 tarefa(s)", campo limpo</td></tr>
+          <tr><td>Adicionar vazio ou só espaços</td><td>Aviso "Digite uma tarefa antes de adicionar."</td></tr>
+          <tr><td>Remover uma tarefa</td><td>Some da lista na hora; contador "1 tarefa(s)"</td></tr>
+          <tr><td>Remover a última</td><td>Mensagem "Nenhuma tarefa ainda…"</td></tr>
+          <tr><td>Recarregar a página (F5)</td><td>A lista zera: esperado na v1, sem banco</td></tr>
+        </tbody></table></div>
+      <div class="callout good" style="margin-top:10px">O código de referência passou nesses testes com o <code>AppTest</code> do Streamlit (<code>streamlit.testing.v1</code>), que simula cliques sem abrir o navegador. Peça ao agente: <em>"crie testes com AppTest para estes casos"</em>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Iterar</span><span class="n">11</span></div>
+  <h2>Ajustes <em>e pontos de volta</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="k" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px">Pedidos pequenos de ajuste</div>
+      <div class="promptbox">Não deixe adicionar uma tarefa repetida; avise
+com st.warning.</div>
+      <div class="promptbox" style="margin-top:8px">Limite o texto da tarefa a 100 caracteres e
+mostre o contador de caracteres no campo.</div>
+      <div class="promptbox" style="margin-top:8px">Se eu clicar em Remover sem querer, quero poder
+desfazer a última remoção.</div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Um ajuste por mensagem; teste antes do próximo</li>
+        <li>Não gostou? <strong>Restore Checkpoint</strong> na mensagem anterior</li>
+        <li>Mudou de assunto? Conversa nova (<span class="kbd">Ctrl</span> + <span class="kbd">N</span>)</li>
+        <li>Ficou bom? <strong>Commit</strong> antes do próximo ajuste</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Cuidado com o escopo: "concluídas" e "salvar no banco" são das próximas aulas. Guarde a vontade.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="block">
+  <div class="pagehead"><span>Entrega</span><span class="n">12</span></div>
+  <h2>Checklist <em>e primeiro commit</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <ul class="checklist">
+        <li>Adiciona, lista e remove tarefas</li>
+        <li>Rejeita tarefa vazia com aviso</li>
+        <li>Mostra a mensagem de lista vazia e o contador</li>
+        <li>Textos em português</li>
+        <li><code>requirements.txt</code> com <code>streamlit</code></li>
+        <li><code>.venv</code> fora do Git</li>
+      </ul>
+    </div>
+    <div>
+      <div class="term-title">Terminal</div>
+      <pre class="term"><span class="c"># .gitignore</span>
+.venv/
+__pycache__/
+
+git add .
+git commit -m "ToDo List: primeira versão (adicionar, listar, remover)"</pre>
+      <div class="callout" style="margin-top:10px">Também dá para pedir ao agente: <em>"crie o .gitignore para Python e faça o commit da primeira versão"</em>. Leia a mensagem de commit antes de aprovar.</div>
+      <div class="callout good" style="margin-top:10px">Com o MCP do GitHub (aula 08), o agente ainda pode criar o repositório remoto e subir o código.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">13</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Onde a v1 guarda as tarefas?</p>
+        <div class="opts"><div>A) Num banco SQLite</div><div>B) Em st.session_state</div><div>C) Num arquivo .txt</div><div>D) No GitHub</div></div>
+        <div class="answer"><b>B.</b> Por isso somem ao recarregar a página.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para que serve a rule <code>.cursor/rules/projeto.mdc</code> com <code>alwaysApply: true</code>?</p>
+        <div class="opts"><div>A) Instalar o Streamlit</div><div>B) Aplicar os padrões do projeto em todas as conversas</div><div>C) Rodar o app</div><div>D) Bloquear o agente</div></div>
+        <div class="answer"><b>B.</b> Sem repetir as regras a cada pedido.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Qual comando roda o app?</p>
+        <div class="opts"><div>A) python app.py</div><div>B) streamlit run app.py</div><div>C) npm start</div><div>D) cursor run</div></div>
+        <div class="answer"><b>B.</b> Abre em localhost:8501.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Por que pedir um plano no modo Plan antes do código?</p>
+        <div class="opts"><div>A) É obrigatório</div><div>B) Para revisar a abordagem antes de qualquer edição</div><div>C) Fica mais barato sempre</div><div>D) O Agent não sabe criar arquivos</div></div>
+        <div class="answer"><b>B.</b> Você corrige o rumo antes do código existir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Funcionalidades de IA e MCP no Cursor</div>
+    <h1 style="font-size:40px">A primeira versão<br><em>está no ar</em></h1>
+    <p class="lead">Com escopo definido, uma <strong>rule</strong> do projeto, um <strong>plano</strong> revisado e um prompt com critério de pronto, o agente construiu o ToDo List em <strong>Streamlit</strong>: adicionar, listar e remover. Você rodou, testou pelo <strong>Browser</strong> e fez o primeiro <strong>commit</strong>. Na próxima aula, as tarefas ganham o estado de concluídas.</p>
+    <div class="chips"><span>Escopo antes</span><span>Rule · Plan · Agent</span><span>st.session_state</span><span>streamlit run app.py</span><span>Testar · commitar</span></div>
+    <div class="next">Próxima aula → 11 · Projeto ToDo List · Adicionando Tarefas Concluídas</div>
+    <div class="source">Fontes: cursor.com/docs (Agent Overview, Plan Mode, Rules, Browser); docs.streamlit.io (st.session_state, st.form, st.columns, st.rerun, AppTest), consultados em outubro de 2026. Código de referência em <code>projeto/app.py</code>, testado com Streamlit 1.65; a tela do app é um print real.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
