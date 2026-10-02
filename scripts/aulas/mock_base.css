@@ -1,0 +1,58 @@
+/* Base das telas ilustrativas do Cursor (1200x600). Uso no mockup:
+   <link rel="stylesheet" href="file:///…/scripts/aulas/mock_base.css">  — ver mock_cursor_exemplo.html */
+@page{size:1200px 600px;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;width:1200px;height:600px;background:#151515;font-family:Inter,system-ui,sans-serif;color:#d4d4d4;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow:hidden}
+/* janela */
+.win{position:absolute;inset:14px;border:1px solid #2e2e2e;border-radius:12px;overflow:hidden;background:#1b1b1b;display:flex;flex-direction:column}
+.bar{height:34px;background:#202020;border-bottom:1px solid #2b2b2b;display:flex;align-items:center;gap:7px;padding:0 12px;font-size:11.5px;color:#8b8f95}
+.bar i{width:11px;height:11px;border-radius:50%;background:#3a3a3a;display:inline-block}
+.bar .t{margin-left:14px}
+.body{flex:1;display:flex;min-height:0}
+/* explorer */
+.side{width:200px;background:#181818;border-right:1px solid #2b2b2b;padding:10px 10px;font-size:11.5px;color:#9aa0a6}
+.side .f{padding:3px 6px;border-radius:5px}.side .f.on{background:#2a2d2e;color:#e6e6e6}
+.side .lbl{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#6b7075;margin:4px 0 6px}
+/* editor */
+.ed{flex:1;padding:12px 16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.65;color:#c8c8c8;min-width:0;position:relative}
+.ed .ln{color:#555;display:inline-block;width:26px}
+.ed .add{background:#1e3324;display:block}.ed .del{background:#3a1f1f;display:block;color:#b89b9b}
+.ed .tabs{display:flex;gap:2px;margin:-12px -16px 10px;background:#181818;border-bottom:1px solid #2b2b2b}
+.ed .tabs span{padding:7px 14px;font-family:Inter,sans-serif;font-size:11px;color:#8b8f95}.ed .tabs span.on{background:#1b1b1b;color:#e6e6e6}
+.kw{color:#c792ea}.st{color:#c3e88d}.fn{color:#82aaff}.cm{color:#6b7075}
+/* painel do agente */
+.agent{width:440px;border-left:1px solid #2b2b2b;background:#191919;display:flex;flex-direction:column;padding:12px 14px;position:relative}
+.agent.wide{width:auto;flex:1}
+.ah{display:flex;justify-content:space-between;font-size:11px;color:#8b8f95;margin-bottom:10px}
+.msg{background:#2a2d2e;border-radius:10px;padding:9px 11px;font-size:12px;margin:0 0 10px auto;max-width:390px;color:#e6e6e6}
+.tool{font-size:11.5px;color:#8b8f95;margin:5px 0}.tool b{color:#c9cdd2;font-weight:500}
+.ans{font-size:12px;line-height:1.55;color:#d9d9d9;margin:6px 0}
+.ans code{font-family:'IBM Plex Mono',monospace;font-size:11px;background:#262626;border:1px solid #333;border-radius:4px;padding:0 4px;color:#e2c08d}
+.ref{display:inline-block;font-size:10.5px;border:1px solid #3a3a3a;border-radius:5px;padding:1px 6px;color:#8ab4f8;margin:2px 3px 2px 0}
+.todo{border:1px solid #2f2f2f;border-radius:8px;padding:7px 10px;font-size:11.3px;margin:8px 0}
+.todo div{margin:3px 0;color:#9aa0a6}.todo .ok{color:#7fb98f}.todo .now{color:#e6e6e6}
+.chk{font-size:10.5px;color:#6b7075;border-top:1px dashed #333;padding-top:5px;margin:8px 0}
+.inp{margin-top:auto;border:1px solid #444;border-radius:10px;padding:9px 11px;font-size:11.5px;color:#8b8f95;background:#1d1d1d;position:relative}
+.inp .r{display:flex;justify-content:space-between;align-items:center;margin-top:9px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #3a3a3a;border-radius:999px;padding:2px 9px;font-size:11px;color:#c9cdd2}
+.pill.blue{border-color:#3b82f6;color:#8ab4f8}
+.pill.green{border-color:#2f7d4f;color:#7fd3a0}
+.ic{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;border:1px solid #3a3a3a;color:#c9cdd2;font-size:12px}
+.menu{position:absolute;background:#232323;border:1px solid #3d3d3d;border-radius:9px;padding:5px;box-shadow:0 8px 24px rgba(0,0,0,.5);font-size:11.5px;z-index:5}
+.menu div{padding:6px 10px;border-radius:6px;display:flex;justify-content:space-between;gap:20px;color:#d4d4d4}
+.menu div.on{background:#2f3b52;color:#fff}
+.menu small{color:#7d8288}
+/* destaque (balão laranja) e botões */
+.call{position:absolute;background:#f0ab86;color:#1b1b1b;font-size:11px;font-weight:600;border-radius:6px;padding:3px 8px;z-index:6}
+.btn{display:inline-block;background:#e6e6e6;color:#111;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600}
+.btn.ghost{background:transparent;color:#c9cdd2;border:1px solid #444}
+/* configurações */
+.set{border:1px solid #2f2f2f;border-radius:10px;padding:12px 14px;font-size:12px;background:#1d1d1d}
+.set .row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #262626}
+.tg{width:30px;height:16px;border-radius:999px;background:#3b82f6;position:relative;display:inline-block}
+.tg:after{content:"";position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff}
+.tg.off{background:#444}.tg.off:after{right:auto;left:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#34d399;margin-right:6px}
+/* ícone de microfone: <span class="ic"><i class="mic"></i></span> */
+.mic{display:inline-block;width:11px;height:13px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='13' viewBox='0 0 11 13' fill='none' stroke='%23c9cdd2' stroke-width='1.3'%3E%3Crect x='3.2' y='0.8' width='4.6' height='7.4' rx='2.3'/%3E%3Cpath d='M1 6.2a4.5 4.5 0 0 0 9 0M5.5 10.7v1.8'/%3E%3C/svg%3E") no-repeat center}
+.mic.w{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='13' viewBox='0 0 11 13' fill='none' stroke='%23ffffff' stroke-width='1.3'%3E%3Crect x='3.2' y='0.8' width='4.6' height='7.4' rx='2.3'/%3E%3Cpath d='M1 6.2a4.5 4.5 0 0 0 9 0M5.5 10.7v1.8'/%3E%3C/svg%3E")}

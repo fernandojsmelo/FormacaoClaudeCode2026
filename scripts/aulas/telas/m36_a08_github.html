@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--MOCK_BASE-->
+<style>
+.tc{border:1px solid #3a3a3a;border-radius:9px;margin:8px 0;font-size:11.5px;overflow:hidden}
+.tc .h{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#222}
+.tc .h b{color:#e6e6e6;font-weight:500}
+.tc pre{margin:0;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#c8c8c8;background:#171717;border-top:1px solid #2b2b2b}
+.tc .a{display:flex;gap:6px;padding:7px 10px;border-top:1px solid #2b2b2b;background:#1d1d1d}
+.iss{font-size:11.5px;border-bottom:1px solid #262626;padding:5px 0;color:#c9cdd2}.iss span{color:#7d8288}
+.tl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9aa0a6;padding:3px 0}
+</style></head><body>
+<div class="win">
+ <div class="bar"><i></i><i></i><i></i><span class="t">todo-app — Cursor</span></div>
+ <div class="body">
+  <div class="agent" style="width:360px;border-left:0;border-right:1px solid #2b2b2b">
+   <div class="ah"><span>CUSTOMIZE › MCPs › github</span></div>
+   <div class="set">
+    <div class="row"><span><span class="dot"></span><b style="font-weight:500;color:#fff">github</b> · remoto</span><span class="tg"></span></div>
+    <div class="row" style="display:block;border-bottom:0"><div style="color:#7d8288;font-size:11px;margin-bottom:5px">https://api.githubcopilot.com/mcp/</div>
+     <div class="tl">✓ get_me</div><div class="tl">✓ list_issues</div><div class="tl">✓ issue_read</div><div class="tl">✓ issue_write</div><div class="tl">✓ list_pull_requests</div><div class="tl">✓ create_pull_request</div><div class="tl">✓ search_code</div><div class="tl" style="color:#6b7075">… e outras ferramentas</div></div>
+   </div>
+   <div class="ans" style="color:#7d8288;font-size:11px;margin-top:10px">Ponto verde = conectado. Clique numa ferramenta para desligá-la.</div>
+  </div>
+  <div class="agent wide" style="border-left:0">
+   <div class="ah"><span>AGENT · issues abertas</span><span>＋ ⋯</span></div>
+   <div class="msg">Liste as issues abertas do repositório fernando/todo-app com o rótulo bug e resuma cada uma em uma linha.</div>
+   <div class="tc"><div class="h"><span>⚙ MCP · <b>github</b> › list_issues</span><span style="color:#f0ab86">aguardando aprovação</span></div>
+<pre>{ "owner": "fernando", "repo": "todo-app",
+  "state": "OPEN", "labels": ["bug"] }</pre>
+    <div class="a"><span class="btn">Run</span><span class="btn ghost">Skip</span><span class="btn ghost">Allowlist list_issues</span></div></div>
+   <div class="ans">Depois de aprovar, o agente recebe a lista e responde:</div>
+   <div class="iss">#14 Tarefa vazia é aceita ao clicar em Adicionar <span>· bug</span></div>
+   <div class="iss">#17 Contador não atualiza depois de remover <span>· bug</span></div>
+   <div class="iss" style="border-bottom:0">#21 Acentos aparecem errados no título <span>· bug</span></div>
+   <div class="inp">Crie uma branch e corrija a #14…
+    <div class="r"><span><span class="pill blue">∞ Agent ▾</span> <span class="pill">Auto ▾</span></span><span><span class="ic"><i class="mic"></i></span> <span class="ic">↑</span></span></div></div>
+   <div class="call" style="right:30px;top:168px">os argumentos aparecem antes de aprovar</div>
+  </div>
+ </div>
+</div>
+</body></html>

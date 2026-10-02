@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--MOCK_BASE--></head><body>
+<div class="win">
+ <div class="bar"><i></i><i></i><i></i><span class="t">loja-web — Cursor</span></div>
+ <div class="body">
+  <div class="side"><div class="lbl">Explorer</div>
+   <div class="f">▾ src</div><div class="f">&nbsp;&nbsp;▾ components</div><div class="f on">&nbsp;&nbsp;&nbsp;&nbsp;LoginForm.tsx</div><div class="f">&nbsp;&nbsp;&nbsp;&nbsp;Header.tsx</div><div class="f">&nbsp;&nbsp;▾ lib</div><div class="f">&nbsp;&nbsp;&nbsp;&nbsp;auth.ts</div><div class="f">&nbsp;&nbsp;app.tsx</div><div class="f">package.json</div>
+  </div>
+  <div class="ed">
+   <div class="tabs"><span class="on">LoginForm.tsx</span><span>auth.ts</span></div>
+<span class="ln">12</span><span class="kw">export function</span> <span class="fn">LoginForm</span>() {<br>
+<span class="ln">13</span>&nbsp;&nbsp;<span class="kw">const</span> [email, setEmail] = useState(<span class="st">""</span>);<br>
+<span class="add"><span class="ln">14</span>&nbsp;&nbsp;<span class="kw">const</span> [erro, setErro] = useState&lt;string | null&gt;(<span class="kw">null</span>);</span>
+<span class="del"><span class="ln">15</span>&nbsp;&nbsp;<span class="kw">if</span> (!email) <span class="kw">return</span>;</span>
+<span class="add"><span class="ln">15</span>&nbsp;&nbsp;<span class="kw">if</span> (!validarEmail(email)) {</span>
+<span class="add"><span class="ln">16</span>&nbsp;&nbsp;&nbsp;&nbsp;setErro(<span class="st">"Informe um e-mail válido"</span>);</span>
+<span class="add"><span class="ln">17</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span>;</span>
+<span class="add"><span class="ln">18</span>&nbsp;&nbsp;}</span>
+<span class="ln">19</span>&nbsp;&nbsp;<span class="kw">await</span> <span class="fn">entrar</span>(email, senha);<br>
+<span class="ln">20</span>}<br><br>
+<span class="cm" style="font-family:Inter;font-size:11px">Diff da edição do agente · <span class="btn" style="font-size:10px;padding:2px 8px">Keep</span> <span class="btn ghost" style="font-size:10px;padding:2px 8px">Undo</span></span>
+  </div>
+  <div class="agent">
+   <div class="ah"><span>AGENT · validação do login</span><span>＋ ⋯</span></div>
+   <div class="msg">Valide o e-mail no formulário de login e mostre uma mensagem de erro amigável. Rode os testes no fim.</div>
+   <div class="tool">⌕ <b>Searched</b> "LoginForm" · 3 resultados</div>
+   <div class="tool">▤ <b>Read</b> LoginForm.tsx, lib/auth.ts</div>
+   <div class="todo"><div class="ok">✓ Achar o formulário e a função de login</div><div class="now">◐ Validar o e-mail e exibir o erro</div><div>○ Rodar os testes</div></div>
+   <div class="tool">✎ <b>Edited</b> LoginForm.tsx <span style="color:#7fb98f">+5</span> <span style="color:#d98080">−1</span></div>
+   <div class="chk">⟲ Checkpoint criado antes da edição · Restore</div>
+   <div class="tool">▷ <b>Run</b> npm test · aguardando aprovação</div>
+   <div class="inp">Send a follow-up…
+    <div class="r"><span><span class="pill blue">∞ Agent ▾</span> <span class="pill">Auto ▾</span></span><span><span class="ic"><i class="mic"></i></span> <span class="ic">↑</span></span></div>
+   </div>
+   <div class="menu" style="left:14px;bottom:62px;width:250px">
+    <div class="on">∞ Agent <small>edita e executa</small></div>
+    <div>? Ask <small>só leitura</small></div>
+    <div>☰ Plan <small>planeja antes</small></div>
+    <div>⚑ Debug <small>evidência em execução</small></div>
+   </div>
+   <div class="call" style="left:275px;bottom:150px">Shift + Tab alterna</div>
+  </div>
+ </div>
+</div>
+</body></html>

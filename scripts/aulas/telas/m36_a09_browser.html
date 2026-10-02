@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--MOCK_BASE-->
+<style>
+.bp{flex:1;display:flex;flex-direction:column;background:#202020}
+.url{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #2b2b2b;font-size:11.5px;color:#9aa0a6}
+.url .u{flex:1;background:#151515;border:1px solid #333;border-radius:6px;padding:4px 9px;color:#d4d4d4}
+.page{flex:1;background:#f7f5f2;color:#222;padding:22px 28px;position:relative;font-family:Inter,sans-serif}
+.page h3{margin:0 0 12px;font-size:20px}
+.page .in{display:flex;gap:8px;margin-bottom:12px}
+.page .in div{flex:1;border:1px solid #ccc;border-radius:6px;padding:7px 9px;background:#fff;font-size:12px;color:#333}
+.page .in b{background:#e0663a;color:#fff;border-radius:6px;padding:7px 12px;font-size:12px}
+.page .t{display:flex;justify-content:space-between;border-bottom:1px solid #e3ded7;padding:8px 2px;font-size:12.5px}
+.page .t span{color:#b45309;font-size:11px}
+.hl{outline:2px solid #3b82f6;outline-offset:2px;border-radius:6px}
+.cons{border-top:1px solid #2b2b2b;padding:7px 10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9aa0a6;background:#1b1b1b}
+.cons .e{color:#f87171}
+.act{font-size:11.5px;color:#8b8f95;margin:5px 0;display:flex;gap:6px}.act b{color:#c9cdd2;font-weight:500}
+.thumb{width:150px;height:84px;border-radius:6px;border:1px solid #3a3a3a;background:#f7f5f2;margin:4px 0 6px 18px;padding:8px;font-size:7px;color:#333}
+</style></head><body>
+<div class="win">
+ <div class="bar"><i></i><i></i><i></i><span class="t">todo-app — Cursor</span></div>
+ <div class="body">
+  <div class="agent" style="width:430px;border-left:0;border-right:1px solid #2b2b2b">
+   <div class="ah"><span>AGENT · testar o app no navegador</span><span>＋ ⋯</span></div>
+   <div class="msg">Abra o app que está rodando, adicione duas tarefas, remova uma e me diga se algo deu erro no console.</div>
+   <div class="act">◉ <b>Navigate</b> http://localhost:8501</div>
+   <div class="act">⌨ <b>Type</b> "Estudar MCP" no campo Nova tarefa</div>
+   <div class="act">◎ <b>Click</b> botão "Adicionar"</div>
+   <div class="act">⌨ <b>Type</b> "Revisar PR #22" · <b>Click</b> "Adicionar"</div>
+   <div class="act">◎ <b>Click</b> "Remover" em "Estudar MCP"</div>
+   <div class="act">▣ <b>Screenshot</b></div>
+   <div class="thumb"><b style="font-size:9px">Minhas tarefas</b><br><br>Revisar PR #22<br>───────────</div>
+   <div class="act">▤ <b>Console</b> 1 aviso, 0 erros</div>
+   <div class="ans">Funcionou: as duas tarefas entraram e a remoção atualizou a lista. O console tem só um aviso de fonte não carregada, sem erros.</div>
+   <div class="inp">Send a follow-up…
+    <div class="r"><span><span class="pill blue">∞ Agent ▾</span> <span class="pill">Auto ▾</span></span><span><span class="ic"><i class="mic"></i></span> <span class="ic">↑</span></span></div></div>
+  </div>
+  <div class="bp">
+   <div class="url"><span>←</span><span>→</span><span>↻</span><span class="u">localhost:8501</span><span>Browser</span></div>
+   <div class="page">
+    <h3>Minhas tarefas</h3>
+    <div class="in"><div>Nova tarefa…</div><b class="hl">Adicionar</b></div>
+    <div class="t">Revisar PR #22 <span>Remover</span></div>
+    <div class="call" style="right:28px;top:150px">o agente clica e digita como você</div>
+   </div>
+   <div class="cons">Console · <span>⚠ Failed to load font "Inter" (fallback usado)</span> · 0 errors</div>
+  </div>
+ </div>
+</div>
+</body></html>

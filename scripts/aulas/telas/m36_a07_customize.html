@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--MOCK_BASE-->
+<style>
+.nav{width:190px;background:#181818;border-right:1px solid #2b2b2b;padding:14px 10px;font-size:12px;color:#9aa0a6}
+.nav div{padding:6px 9px;border-radius:6px;margin:2px 0}.nav .on{background:#2a2d2e;color:#fff}
+.nav .lbl{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#6b7075;margin:4px 0 8px;padding:0 9px}
+.main{flex:1;padding:16px 20px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.top h1{font-size:17px;margin:0;color:#fff;font-weight:600}
+.search{border:1px solid #3a3a3a;border-radius:8px;padding:6px 10px;width:300px;font-size:11.5px;color:#7d8288}
+.tabs2{display:flex;gap:16px;font-size:11.5px;color:#8b8f95;border-bottom:1px solid #2b2b2b;margin-bottom:12px}
+.tabs2 span{padding:0 0 7px}.tabs2 .on{color:#fff;border-bottom:2px solid #f0ab86}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cd{border:1px solid #2f2f2f;border-radius:10px;padding:11px 12px;background:#1d1d1d;font-size:11px;color:#9aa0a6;position:relative;min-height:104px}
+.cd b{display:block;color:#e6e6e6;font-size:12.5px;margin-bottom:3px}
+.cd .lg{width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#111;float:left;margin-right:9px}
+.cd .act{position:absolute;right:10px;bottom:10px}
+.cd .tag{display:inline-block;font-size:9.5px;border:1px solid #3a3a3a;border-radius:999px;padding:0 6px;margin-top:6px;color:#9aa0a6}
+.inst{margin-top:14px;border:1px solid #2f2f2f;border-radius:10px;padding:8px 12px;font-size:11.5px}
+.inst .row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #262626}
+.inst .row:last-child{border-bottom:0}
+</style></head><body>
+<div class="win">
+ <div class="bar"><i></i><i></i><i></i><span class="t">Customize — Cursor</span></div>
+ <div class="body">
+  <div class="nav"><div class="lbl">Customize</div><div>Plugins</div><div>Rules</div><div>Skills</div><div class="on">MCPs</div><div>Subagents</div><div>Commands</div><div>Hooks</div>
+   <div class="lbl" style="margin-top:16px">Escopo</div><div>Usuário</div><div>Workspace</div><div>Time</div></div>
+  <div class="main">
+   <div class="top"><h1>MCPs</h1><span class="search">⌕ Buscar servidores…</span></div>
+   <div class="tabs2"><span class="on">Marketplace</span><span>Instalados (3)</span><span>Time</span><span>＋ Adicionar personalizado (mcp.json)</span></div>
+   <div class="cards">
+    <div class="cd"><span class="lg" style="background:#e6e6e6">GH</span><b>GitHub</b>Repositórios, issues, pull requests e Actions<div class="tag">oficial</div><span class="act btn ghost">Instalado ✓</span></div>
+    <div class="cd"><span class="lg" style="background:#a78bfa">Li</span><b>Linear</b>Issues e projetos do Linear<div class="tag">oficial · OAuth</div><span class="act btn">Add to Cursor</span></div>
+    <div class="cd"><span class="lg" style="background:#f472b6">Fi</span><b>Figma</b>Telas, componentes e medidas do design<div class="tag">oficial · OAuth</div><span class="act btn">Add to Cursor</span></div>
+    <div class="cd"><span class="lg" style="background:#e2e8f0">No</span><b>Notion</b>Páginas e bancos de dados do Notion<div class="tag">oficial · OAuth</div><span class="act btn">Add to Cursor</span></div>
+    <div class="cd"><span class="lg" style="background:#fb923c">Se</span><b>Sentry</b>Erros e eventos de produção<div class="tag">oficial · remoto</div><span class="act btn">Add to Cursor</span></div>
+    <div class="cd"><span class="lg" style="background:#34d399">Pw</span><b>Playwright</b>Automação de navegador<div class="tag">oficial · local (npx)</div><span class="act btn ghost">Instalado ✓</span></div>
+   </div>
+   <div class="inst">
+    <div class="row"><span><span class="dot"></span>github · <span style="color:#7d8288">remoto · 41 tools</span></span><span class="tg"></span></div>
+    <div class="row"><span><span class="dot"></span>playwright · <span style="color:#7d8288">local · 22 tools</span></span><span class="tg"></span></div>
+    <div class="row"><span><span class="dot" style="background:#555"></span>postgres-local · <span style="color:#7d8288">desligado</span></span><span class="tg off"></span></div>
+   </div>
+   <div class="call" style="right:22px;top:86px">um clique instala e autentica</div>
+  </div>
+ </div>
+</div>
+</body></html>

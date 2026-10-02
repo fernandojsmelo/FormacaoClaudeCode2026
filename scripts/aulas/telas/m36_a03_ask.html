@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--MOCK_BASE-->
+<style>.hl{background:#2a3550;display:block}.ans ol{margin:4px 0 6px 18px;padding:0}.ans li{margin:3px 0}</style></head><body>
+<div class="win">
+ <div class="bar"><i></i><i></i><i></i><span class="t">loja-web — Cursor</span></div>
+ <div class="body">
+  <div class="side"><div class="lbl">Explorer</div>
+   <div class="f">▾ src</div><div class="f">&nbsp;&nbsp;▾ lib</div><div class="f on">&nbsp;&nbsp;&nbsp;&nbsp;auth.ts</div><div class="f">&nbsp;&nbsp;&nbsp;&nbsp;session.ts</div><div class="f">&nbsp;&nbsp;▾ api</div><div class="f">&nbsp;&nbsp;&nbsp;&nbsp;login.ts</div><div class="f">&nbsp;&nbsp;▾ components</div><div class="f">&nbsp;&nbsp;&nbsp;&nbsp;LoginForm.tsx</div><div class="f">middleware.ts</div>
+  </div>
+  <div class="ed">
+   <div class="tabs"><span class="on">auth.ts</span><span>session.ts</span></div>
+<span class="ln">8</span><span class="kw">export async function</span> <span class="fn">entrar</span>(email, senha) {<br>
+<span class="hl"><span class="ln">9</span>&nbsp;&nbsp;<span class="kw">const</span> usuario = <span class="kw">await</span> db.usuarios.<span class="fn">buscarPorEmail</span>(email);</span>
+<span class="hl"><span class="ln">10</span>&nbsp;&nbsp;<span class="kw">const</span> ok = <span class="kw">await</span> <span class="fn">compararHash</span>(senha, usuario?.hash);</span>
+<span class="ln">11</span>&nbsp;&nbsp;<span class="kw">if</span> (!ok) <span class="kw">throw new</span> <span class="fn">ErroLogin</span>(<span class="st">"credenciais"</span>);<br>
+<span class="ln">12</span>&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">criarSessao</span>(usuario.id);<br>
+<span class="ln">13</span>}<br>
+<br><span class="cm">// sem edições: o modo Ask só lê</span>
+  </div>
+  <div class="agent" style="width:500px">
+   <div class="ah"><span>ASK · como funciona o login</span><span>＋ ⋯</span></div>
+   <div class="msg">Como funciona o fluxo de login? Onde a senha é conferida e o que acontece quando ela está errada?</div>
+   <div class="tool">⌕ <b>Searched</b> "login", "senha" · <b>Read</b> 4 arquivos</div>
+   <div class="ans">O login passa por três camadas:
+    <ol><li><b>Tela:</b> <code>LoginForm.tsx</code> envia e-mail e senha para <code>/api/login</code>.</li>
+    <li><b>API:</b> <code>api/login.ts</code> chama <code>entrar()</code>, que busca o usuário e compara a senha com o hash (linhas 9 e 10).</li>
+    <li><b>Sessão:</b> se der certo, <code>criarSessao()</code> grava um cookie; o <code>middleware.ts</code> confere esse cookie nas páginas protegidas.</li></ol>
+    Com a senha errada, <code>entrar()</code> lança <code>ErroLogin</code> e a API responde 401; o formulário mostra "credenciais inválidas".</div>
+   <div><span class="ref">auth.ts:8-13</span><span class="ref">login.ts:5-21</span><span class="ref">session.ts</span><span class="ref">middleware.ts</span></div>
+   <div class="inp">Pergunte mais…
+    <div class="r"><span><span class="pill green">? Ask ▾</span> <span class="pill">Auto ▾</span></span><span><span class="ic"><i class="mic"></i></span> <span class="ic">↑</span></span></div>
+   </div>
+   <div class="call" style="right:14px;bottom:100px">modo Ask: lê e explica, não edita</div>
+  </div>
+ </div>
+</div>
+</body></html>
