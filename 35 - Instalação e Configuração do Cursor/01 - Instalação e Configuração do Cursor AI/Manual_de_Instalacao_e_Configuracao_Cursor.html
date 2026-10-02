@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Manual de Instalação e Configuração do Cursor</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:10.6px;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+h1{font-family:var(--display);font-weight:600;font-size:34px;line-height:1.1;margin:0 0 12px}
+h1 em,h2 em{color:var(--accent-ink);font-style:italic}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:500}
+h3{font-size:11.6px;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+p{margin:0 0 7px}
+.muted{color:var(--muted)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 4px;border-radius:4px}
+section.sec{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
+section.sec.brk{page-break-before:always;break-before:page;border-top:none;margin-top:0;padding-top:0}
+.intro{color:var(--muted);margin:0 0 9px}
+/* header */
+.header{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.lead{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:3px 9px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:12px}
+/* toc */
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:14px}
+.toc div{font-size:10.4px;color:var(--muted);display:flex;gap:8px}
+.toc b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:18px}
+/* grid/cards */
+.grid{display:grid;gap:9px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;break-inside:avoid}
+.card .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:3px}
+.card p{margin:0;color:var(--muted);font-size:10.2px}
+/* tables */
+.table-wrap{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:6px 0 8px;break-inside:avoid}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:8.6px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 9px;font-weight:500}
+td{border-top:1px solid var(--border);padding:6px 9px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+/* code */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:9.8px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:6px 0 8px;break-inside:avoid}
+.term .c{color:var(--muted)}
+/* callouts */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:9px;padding:8px 11px;font-size:10.2px;margin:7px 0;break-inside:avoid}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+/* steps */
+.steps{display:grid;gap:6px;margin:6px 0 8px}
+.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 10px;break-inside:avoid}
+.step .b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:10px;display:flex;align-items:center;justify-content:center}
+.step div:last-child{font-size:10.2px}
+.checklist{list-style:none;padding:0;margin:4px 0 8px}
+.checklist li{position:relative;padding-left:17px;margin:4px 0}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+.bullets{list-style:none;padding:0;margin:4px 0 8px}
+.bullets li{position:relative;padding-left:14px;margin:4px 0}
+.bullets li::before{content:"●";position:absolute;left:0;top:.2em;color:var(--accent);font-size:.65em}
+.source{font-family:var(--mono);font-size:8.8px;color:var(--muted);line-height:1.6}
+.foot{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+h2,h3,.intro{break-after:avoid;page-break-after:avoid}
+section.sec.keep{break-inside:avoid;page-break-inside:avoid}
+h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
+</style>
+
+<style>
+.osbar{display:flex;align-items:center;gap:12px;background:var(--surface-2);border:1px solid var(--border-2);border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;margin:0 0 10px}
+.osbar .ic{font-size:24px;width:36px;text-align:center}
+.osbar b{font-family:var(--display);font-size:22px;font-weight:600}
+.osbar span{display:block;color:var(--muted);font-size:10.2px}
+.kbd{font-family:var(--mono);font-size:.9em;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="eyebrow"><span class="dot"></span>Instalação e Configuração do Cursor · Aula 1 · Manual</div>
+  <h1>Instalando e configurando<br><em>o Cursor</em></h1>
+  <p class="lead">Passo a passo completo, separado por sistema operacional: <strong>Windows</strong>, <strong>Linux</strong> e <strong>macOS</strong>. Para cada um: como saber se o computador é compatível, qual arquivo baixar, como instalar (todas as opções oficiais), como conferir que funcionou e o que fazer quando algo dá errado. Depois, a primeira configuração, o Cursor CLI, atualização e desinstalação.</p>
+  <div class="chips"><span>Windows 10/11 · x64 e ARM64</span><span>Ubuntu · Debian · Mint</span><span>Fedora · RHEL</span><span>AppImage</span><span>macOS Apple Silicon e Intel</span><span>Primeira configuração</span><span>Cursor CLI</span><span>Solução de problemas</span></div>
+  <div class="byline">Formação Claude Code 2026 · Baseado em cursor.com (Downloads, Docs: Quickstart e CLI Installation; Help: Download and install, Installation and startup, Network, Sign-in domains, Migrate from VS Code, Privacy, Themes, Extensions, Performance), consultados em outubro de 2026 (Cursor 3.22.12)</div>
+  <div class="toc">
+    <div><b>01</b>Antes de começar (todos os sistemas)</div><div><b>05</b>Primeira configuração (todos)</div>
+    <div><b>02</b>Windows</div><div><b>06</b>Cursor CLI nos três sistemas</div>
+    <div><b>03</b>Linux</div><div><b>07</b>Atualizar e desinstalar</div>
+    <div><b>04</b>macOS</div><div><b>08</b>Problemas comuns e checklist final</div>
+  </div>
+</div>
+
+<!-- 01 -->
+<section class="sec">
+  <h2><span class="n">01</span>Antes <em>de começar</em></h2>
+  <p class="intro">Vale para os três sistemas. Alguns minutos aqui evitam a maioria dos problemas depois.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Você vai precisar de</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>Uma conta no Cursor</td><td>O login ativa a IA. Dá para criar grátis em <code>cursor.com</code> (plano Hobby), com e-mail, Google ou GitHub</td></tr>
+      <tr><td>Internet estável</td><td>Os instaladores têm de 200 a 450 MB, e a IA funciona pela internet</td></tr>
+      <tr><td>Permissão de administrador (às vezes)</td><td>No Windows, só a versão "System" pede; no macOS, para arrastar para Aplicativos; no Linux, os comandos usam <code>sudo</code></td></tr>
+      <tr><td>Git instalado (recomendado)</td><td>Para desfazer o que o agente fizer, usar worktrees e trabalhar com GitHub</td></tr>
+      <tr><td>Uma pasta de projeto de teste</td><td>Para o primeiro contato sem medo de estragar nada</td></tr>
+    </tbody></table></div>
+  <h3>O que vamos instalar</h3>
+  <div class="grid g2">
+    <div class="card"><div class="k">Cursor (o aplicativo)</div><p>Editor de código com IA e a Agents Window. É o que as seções 02 a 04 instalam. Versão de referência deste manual: <strong>3.22.12</strong>.</p></div>
+    <div class="card"><div class="k">Cursor CLI (opcional)</div><p>O agente no terminal, comando <code>agent</code>. Tem instalação própria, na seção 06.</p></div>
+  </div>
+  <div class="callout warn"><strong>Baixe só do site oficial:</strong> <code>cursor.com/download</code> (ou <code>cursor.com/downloads</code>, com todas as versões). Instaladores de outros sites, grupos ou vídeos podem estar adulterados.</div>
+</section>
+
+<!-- WINDOWS -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">⊞</span><div><b>Windows</b><span>Windows 10 ou mais recente · processadores x64 (Intel/AMD) ou ARM64</span></div></div>
+  <h2><span class="n">02</span>Windows · <em>verificar e escolher o arquivo</em></h2>
+  <h3>Passo 1 · Confirme a versão e o tipo do processador</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Pressione <span class="kbd">Win</span> + <span class="kbd">I</span> para abrir as <strong>Configurações</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Vá em <strong>Sistema › Sobre</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Em <strong>Especificações do Windows</strong>, confira a <strong>Edição</strong>: precisa ser Windows 10 ou 11.</div></div>
+    <div class="step"><div class="b">4</div><div>Em <strong>Tipo de sistema</strong>: "processador baseado em x64" → versão <strong>x64</strong>; "processador baseado em ARM" → versão <strong>ARM64</strong>.</div></div>
+  </div>
+  <h3>Passo 2 · Escolha entre User e System</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Versão</th><th>Arquivo (x64)</th><th>Quando usar</th></tr></thead>
+    <tbody>
+      <tr><td><b>User</b> (recomendada)</td><td><code>CursorUserSetup-x64-3.22.12.exe</code></td><td>Instala só para o seu usuário, na sua pasta pessoal. Normalmente não pede senha de administrador</td></tr>
+      <tr><td><b>System</b></td><td><code>CursorSetup-x64-3.22.12.exe</code></td><td>Instala para todos os usuários do computador. Pede permissão de administrador</td></tr>
+    </tbody></table></div>
+  <p class="muted" style="margin-top:6px">Para ARM64, o nome troca <code>x64</code> por <code>arm64</code> (por exemplo, <code>CursorUserSetup-arm64-3.22.12.exe</code>). O instalador tem cerca de 210 MB. O número da versão muda com as atualizações.</p>
+  <h3>Passo 3 · Baixe</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Abra <code>cursor.com/download</code>: o site costuma detectar o Windows e oferecer o botão certo. Para escolher a variante, use <code>cursor.com/downloads</code> e clique em <strong>Windows (x64) (User)</strong> ou na opção que corresponde ao passo 1 e 2.</div></div>
+    <div class="step"><div class="b">2</div><div>O arquivo vai para a pasta <strong>Downloads</strong>.</div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">02</span>Windows · <em>instalar e conferir</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Dê <strong>dois cliques</strong> no instalador que você baixou.</div></div>
+    <div class="step"><div class="b">2</div><div>Se aparecer a tela azul do <strong>SmartScreen</strong> ("O Windows protegeu o computador"), confira se o arquivo veio do site oficial e clique em <strong>Mais informações › Executar assim mesmo</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Na versão <strong>System</strong>, o <strong>Controle de Conta de Usuário</strong> pergunta se o app pode fazer alterações: clique em <strong>Sim</strong>.</div></div>
+    <div class="step"><div class="b">4</div><div><strong>Aceite o contrato</strong> e siga o assistente. Mantenha a pasta de instalação padrão.</div></div>
+    <div class="step"><div class="b">5</div><div>Nas tarefas adicionais, deixe marcada a opção de <strong>adicionar ao PATH</strong> (se aparecer): ela permite abrir o Cursor pelo terminal com o comando <code>cursor</code>. Marque o atalho na área de trabalho, se quiser.</div></div>
+    <div class="step"><div class="b">6</div><div>Clique em <strong>Instalar</strong> e, no fim, em <strong>Concluir</strong>. O Cursor abre (ou procure "Cursor" no menu Iniciar).</div></div>
+  </div>
+  <p class="muted">As telas do assistente podem mudar entre versões; os nomes acima são os mais comuns.</p>
+  <h3>Como confirmar que deu certo</h3>
+  <ul class="checklist">
+    <li>"Cursor" aparece no <strong>menu Iniciar</strong> e abre sem erro</li>
+    <li>Em <strong>Configurações › Aplicativos › Aplicativos instalados</strong>, "Cursor" está na lista</li>
+    <li>No PowerShell, <code>cursor --version</code> mostra a versão (se você marcou o PATH; feche e reabra o terminal antes)</li>
+  </ul>
+  <h3>Problemas comuns no Windows</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>"Este aplicativo não pode ser executado no computador"</td><td>Arquitetura errada (x64 × ARM64). Volte ao passo 1</td></tr>
+      <tr><td>Tela em branco ao abrir</td><td>Saia do Cursor pela bandeja do sistema (perto do relógio), abra de novo; se continuar, execute <strong>como administrador</strong> (recomendação oficial)</td></tr>
+      <tr><td><code>cursor</code> não é reconhecido no terminal</td><td>Feche e reabra o terminal. Se persistir, reinstale marcando "adicionar ao PATH"</td></tr>
+      <tr><td>Antivírus bloqueou o instalador</td><td>Confirme a origem e libere só esse arquivo; não desligue o antivírus inteiro</td></tr>
+      <tr><td>IA não responde na rede da empresa</td><td>Veja a seção 08 (proxy, HTTP/1.1 e domínios liberados)</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- LINUX -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">🐧</span><div><b>Linux</b><span>Pacotes .deb (Debian/Ubuntu), .rpm (Fedora/RHEL) e AppImage · x64 e ARM64</span></div></div>
+  <h2><span class="n">03</span>Linux · <em>verificar e escolher o caminho</em></h2>
+  <h3>Passo 1 · Descubra a distribuição e a arquitetura</h3>
+  <div class="term"><span class="c"># Qual distribuição e versão</span>
+cat /etc/os-release
+<span class="c"># Qual arquitetura: x86_64 = x64 · aarch64 = ARM64</span>
+uname -m</div>
+  <h3>Passo 2 · Escolha o caminho</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Caminho</th><th>Para</th><th>Vantagem</th></tr></thead>
+    <tbody>
+      <tr><td><b>A · repositório apt</b> (recomendado)</td><td>Ubuntu, Debian, Mint, Pop!_OS</td><td>Ícone no menu, atualização automática e ferramentas de linha de comando</td></tr>
+      <tr><td><b>B · repositório dnf</b> (recomendado)</td><td>Fedora, RHEL e derivados</td><td>Mesmas vantagens</td></tr>
+      <tr><td><b>C · AppImage</b></td><td>Qualquer distro</td><td>Portátil, sem instalar; não cria ícone nem atualiza sozinho</td></tr>
+    </tbody></table></div>
+  <div class="callout">A documentação oficial prefere os pacotes <strong>apt</strong> e <strong>dnf</strong> ao AppImage. Também há os arquivos <code>.deb</code> e <code>.rpm</code> avulsos em <code>cursor.com/downloads</code> (por exemplo, <code>cursor_3.22.12_amd64.deb</code>, cerca de 210 MB), mas o repositório é melhor porque traz as atualizações.</div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">03</span>Linux · <em>A. Ubuntu, Debian e derivados</em></h2>
+  <p class="intro">Copie um comando por vez no terminal (<span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">T</span>). O <code>sudo</code> pede a sua senha.</p>
+  <div class="term"><span class="c"># 1. Pré-requisitos (curl e gpg) e a pasta de chaves</span>
+sudo apt update &amp;&amp; sudo apt install -y curl gpg
+sudo install -m 0755 -d /etc/apt/keyrings
+
+<span class="c"># 2. Chave GPG do Cursor (garante que os pacotes são oficiais)</span>
+curl -fsSL https://downloads.cursor.com/keys/anysphere.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/cursor.gpg &gt; /dev/null
+
+<span class="c"># 3. Repositório do Cursor</span>
+echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/cursor.gpg] https://downloads.cursor.com/aptrepo stable main" | sudo tee /etc/apt/sources.list.d/cursor.list &gt; /dev/null
+
+<span class="c"># 4. Atualizar e instalar</span>
+sudo apt update
+sudo apt install cursor</div>
+  <p class="muted">Os comandos 2 a 4 são os da documentação oficial. O passo 1 só garante que <code>curl</code>, <code>gpg</code> e a pasta <code>/etc/apt/keyrings</code> existem (versões antigas do Debian e do Ubuntu podem não ter a pasta).</p>
+  <h3>Como confirmar</h3>
+  <ul class="checklist">
+    <li>"Cursor" aparece no menu de aplicativos</li>
+    <li><code>cursor --version</code> no terminal mostra a versão</li>
+    <li><code>apt policy cursor</code> mostra o repositório <code>downloads.cursor.com</code></li>
+  </ul>
+  <div class="callout good">Daqui em diante, as atualizações chegam junto com as do sistema: <code>sudo apt update &amp;&amp; sudo apt upgrade</code>.</div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">03</span>Linux · <em>B. Fedora, Red Hat e derivados</em></h2>
+  <div class="term"><span class="c"># 1. Criar o arquivo do repositório</span>
+sudo tee /etc/yum.repos.d/cursor.repo &lt;&lt; 'EOF'
+[cursor]
+name=Cursor
+baseurl=https://downloads.cursor.com/yumrepo
+enabled=1
+gpgcheck=1
+gpgkey=https://downloads.cursor.com/keys/anysphere.asc
+EOF
+
+<span class="c"># 2. Instalar (na primeira vez, o dnf pede para aceitar a chave GPG: responda y)</span>
+sudo dnf install cursor</div>
+  <h3>Como confirmar</h3>
+  <ul class="checklist">
+    <li>"Cursor" aparece no menu de aplicativos</li>
+    <li><code>cursor --version</code> mostra a versão</li>
+    <li>Atualizações: <code>sudo dnf upgrade</code></li>
+  </ul>
+  <p class="muted">O pacote <code>.rpm</code> avulso (<code>cursor-3.22.12.el8.x86_64.rpm</code>) também existe em <code>cursor.com/downloads</code>, mas sem o repositório você precisa baixar cada atualização à mão.</p>
+</section>
+
+<section class="sec">
+  <h2><span class="n">03</span>Linux · <em>C. AppImage (qualquer distro)</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Em <code>cursor.com/downloads</code>, baixe <strong>Linux AppImage (x64)</strong> ou <strong>(ARM64)</strong>. O arquivo se chama, por exemplo, <code>Cursor-3.22.12-x86_64.AppImage</code> (cerca de 300 MB).</div></div>
+    <div class="step"><div class="b">2</div><div>Dê permissão de execução e rode:</div></div>
+  </div>
+  <div class="term">cd ~/Downloads
+chmod +x Cursor-*.AppImage
+./Cursor-*.AppImage</div>
+  <div class="callout warn"><strong>Erro sobre FUSE ou <code>libfuse.so.2</code>?</strong> AppImages precisam da biblioteca FUSE 2, que nem toda distro traz. No Ubuntu 22.04: <code>sudo apt install libfuse2</code>; no Ubuntu 24.04 ou mais novo: <code>sudo apt install libfuse2t64</code>. Ou prefira o caminho A ou B.</div>
+  <div class="callout">Dica: guarde o AppImage numa pasta fixa (por exemplo, <code>~/Aplicativos</code>) em vez de deixar em Downloads. A cada versão nova, baixe o novo arquivo e apague o antigo.</div>
+  <h3>Problemas comuns no Linux</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td><code>NO_PUBKEY</code> ou erro de assinatura no <code>apt update</code></td><td>Refaça o passo 2 da seção A (chave GPG) e confira o caminho <code>/etc/apt/keyrings/cursor.gpg</code></td></tr>
+      <tr><td><code>Unable to locate package cursor</code></td><td>O repositório não foi adicionado: refaça o passo 3 e rode <code>sudo apt update</code> de novo</td></tr>
+      <tr><td>AppImage não abre</td><td>Faltou <code>chmod +x</code> ou a biblioteca FUSE (veja acima)</td></tr>
+      <tr><td>Tela em branco</td><td>Feche completamente (pela bandeja, se houver) e abra de novo</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- MACOS -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">⌘</span><div><b>macOS</b><span>macOS 12 (Monterey) ou mais recente · Apple Silicon (M1, M2, M3, M4...) ou Intel</span></div></div>
+  <h2><span class="n">04</span>macOS · <em>verificar e baixar</em></h2>
+  <h3>Passo 1 · Confira o macOS e o processador</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Clique no <strong>menu Apple</strong> (o ícone da maçã, no canto superior esquerdo) › <strong>Sobre Este Mac</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Veja a versão do <strong>macOS</strong>: precisa ser 12 (Monterey) ou mais nova.</div></div>
+    <div class="step"><div class="b">3</div><div>Em <strong>Chip</strong> aparece "Apple M1/M2/M3/M4..." (Apple Silicon); em <strong>Processador</strong>, "Intel".</div></div>
+  </div>
+  <h3>Passo 2 · Escolha o arquivo</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Opção em cursor.com/downloads</th><th>Arquivo</th><th>Para</th></tr></thead>
+    <tbody>
+      <tr><td><b>Mac Universal</b></td><td><code>Cursor-darwin-universal.dmg</code> (~450 MB)</td><td>Qualquer Mac. Na dúvida, use esta</td></tr>
+      <tr><td><b>Mac (ARM64)</b></td><td><code>Cursor-darwin-arm64.dmg</code></td><td>Apple Silicon (arquivo menor)</td></tr>
+      <tr><td><b>Mac (x64)</b></td><td><code>Cursor-darwin-x64.dmg</code></td><td>Macs com Intel</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">04</span>macOS · <em>instalar e conferir</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Abra o <code>.dmg</code> baixado (dois cliques na pasta <strong>Downloads</strong>).</div></div>
+    <div class="step"><div class="b">2</div><div>Na janela que abre, <strong>arraste o ícone do Cursor para a pasta Aplicativos</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Ejete o disco do instalador (botão ⏏ no Finder) e, se quiser, apague o <code>.dmg</code>.</div></div>
+    <div class="step"><div class="b">4</div><div>Abra o Cursor pela pasta <strong>Aplicativos</strong> ou pelo Spotlight (<span class="kbd">Cmd</span> + <span class="kbd">Espaço</span>, digite "Cursor").</div></div>
+    <div class="step"><div class="b">5</div><div>Na primeira abertura, o macOS (Gatekeeper) avisa que o app foi baixado da internet: clique em <strong>Abrir</strong>.</div></div>
+  </div>
+  <div class="callout warn"><strong>Rode sempre a partir de Aplicativos</strong>, nunca de dentro do <code>.dmg</code>: assim as atualizações automáticas funcionam.</div>
+  <h3>Comando <code>cursor</code> no Terminal</h3>
+  <p>Abra a paleta de comandos (<span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>), procure <strong>Shell Command: Install 'cursor' command</strong> e execute. Depois, num Terminal novo, <code>cursor .</code> abre a pasta atual no Cursor.</p>
+  <p class="muted">Esse comando de paleta vem do VS Code, de onde o Cursor deriva; o nome exato pode variar entre versões.</p>
+  <h3>Problemas comuns no macOS</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td><strong>"Cursor está danificado"</strong></td><td>Segundo o Cursor, é um problema do macOS, não do download. Feche o Cursor e encerre os processos que sobrarem no <strong>Monitor de Atividade</strong>; espere um minuto e abra de novo. Se continuar: mova para o Lixo, esvazie, baixe de novo; em último caso, reinicie o Mac</td></tr>
+      <tr><td>Tela em branco</td><td>Saia com <span class="kbd">Cmd</span> + <span class="kbd">Q</span> e abra de novo; se persistir, apague e reinstale</td></tr>
+      <tr><td>Lento num Mac com Apple Silicon</td><td>Confira se não instalou a versão x64 (Intel), que roda emulada. Use Universal ou ARM64</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- 05 -->
+<section class="sec brk">
+  <h2><span class="n">05</span>Primeira configuração <em>(todos os sistemas)</em></h2>
+  <h3>Passo 1 · Entrar na conta</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Ao abrir pela primeira vez, clique para <strong>entrar</strong>: o navegador abre a página de login.</div></div>
+    <div class="step"><div class="b">2</div><div>Entre com e-mail, Google ou GitHub (ou crie a conta). Volte ao Cursor quando o navegador pedir.</div></div>
+  </div>
+  <div class="callout">Desde 30/09/2026 a página de login do Cursor fica em <code>accounts.spacex.ai</code> e <code>accounts.x.ai</code> (antes era <code>authenticator.cursor.sh</code>). Ninguém é desconectado; só redes com lista de sites liberados precisam se ajustar (seção 08).</div>
+  <h3>Passo 2 · Ajustes recomendados</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ajuste</th><th>Onde</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td><b>Importar do VS Code</b></td><td>Cursor Settings (<span class="kbd">Ctrl/Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">J</span>) › General › Account › <strong>VS Code Import</strong></td><td>Traz extensões, temas, configurações e atalhos</td></tr>
+      <tr><td><b>Privacy Mode</b></td><td>Cursor Settings › General</td><td>Seu código não é usado para treinar modelos</td></tr>
+      <tr><td><b>Modelo padrão</b></td><td>Cursor Settings › Models</td><td>Auto, ou um modelo da sua preferência</td></tr>
+      <tr><td><b>Run Mode</b></td><td>Cursor Settings › Agents › Approvals &amp; Execution</td><td>Deixe <strong>Auto-review</strong> (padrão) no começo</td></tr>
+      <tr><td><b>Tema claro/escuro</b></td><td>Paleta › <code>Preferences: Color Theme</code></td><td>Ex.: Cursor Dark, Default Light Modern</td></tr>
+      <tr><td><b>Tamanho e fonte</b></td><td>Settings (<span class="kbd">Ctrl/Cmd</span> + <span class="kbd">,</span>) › "Font Size", "Font Family"</td><td>Conforto de leitura</td></tr>
+      <tr><td><b>Canal de atualização</b></td><td>Cursor Settings</td><td><strong>Stable</strong> (padrão) ou Early Access (prévias)</td></tr>
+    </tbody></table></div>
+  <h3>Passo 3 · Teste rápido</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div><strong>File › Open Folder</strong> e escolha a pasta de teste.</div></div>
+    <div class="step"><div class="b">2</div><div>Abra o Agent: <span class="kbd">Ctrl</span> + <span class="kbd">I</span> (Mac: <span class="kbd">Cmd</span> + <span class="kbd">I</span>).</div></div>
+    <div class="step"><div class="b">3</div><div>Peça: <em>"Explique este projeto e diga por onde começar a ler."</em> Se vier uma resposta, está tudo funcionando.</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="sec brk">
+  <h2><span class="n">06</span>Cursor CLI <em>nos três sistemas</em></h2>
+  <p class="intro">Opcional. O CLI traz o agente para o terminal (comando <code>agent</code>), com os modos Agent, Plan e Ask. É diferente do comando <code>cursor</code>, que só abre o editor.</p>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <h3>Linux, macOS e Windows com WSL</h3>
+      <div class="term">curl https://cursor.com/install -fsS | bash
+
+<span class="c"># Se "agent" não for encontrado, coloque ~/.local/bin no PATH</span>
+<span class="c"># bash:</span>
+echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.bashrc
+source ~/.bashrc
+<span class="c"># zsh (padrão no macOS):</span>
+echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc
+source ~/.zshrc</div>
+    </div>
+    <div>
+      <h3>Windows (nativo, PowerShell)</h3>
+      <div class="term">irm 'https://cursor.com/install?win32=true' | iex</div>
+      <h3>Conferir, entrar e usar</h3>
+      <div class="term">agent --version   <span class="c"># confere a instalação</span>
+agent login       <span class="c"># entra na conta</span>
+agent             <span class="c"># sessão interativa</span>
+agent update      <span class="c"># atualiza (também atualiza sozinho)</span></div>
+      <div class="callout">Em servidores e CI, em vez de <code>agent login</code>, use a variável de ambiente <code>CURSOR_API_KEY</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="sec">
+  <h2><span class="n">07</span>Atualizar <em>e desinstalar</em></h2>
+  <h3>Atualizar</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Como</th></tr></thead>
+    <tbody>
+      <tr><td><b>Todos</b></td><td>O Cursor se atualiza sozinho. Para forçar: paleta (<span class="kbd">Ctrl/Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>) › <strong>Cursor: Attempt Update</strong> e reinicie quando pedir</td></tr>
+      <tr><td><b>Linux (apt / dnf)</b></td><td><code>sudo apt update &amp;&amp; sudo apt upgrade</code> · <code>sudo dnf upgrade</code></td></tr>
+      <tr><td><b>Linux (AppImage)</b></td><td>Baixe o AppImage novo e apague o antigo</td></tr>
+      <tr><td><b>CLI</b></td><td><code>agent update</code></td></tr>
+    </tbody></table></div>
+  <h3>Desinstalar</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Remover o aplicativo</th></tr></thead>
+    <tbody>
+      <tr><td><b>Windows</b></td><td>Configurações › Aplicativos › Aplicativos instalados › Cursor › <strong>Desinstalar</strong></td></tr>
+      <tr><td><b>macOS</b></td><td>Saia do Cursor e arraste-o de Aplicativos para o <strong>Lixo</strong></td></tr>
+      <tr><td><b>Linux</b></td><td><code>sudo apt remove cursor</code> · <code>sudo dnf remove cursor</code> · ou apague o AppImage</td></tr>
+    </tbody></table></div>
+  <div class="callout warn">Desinstalar o aplicativo normalmente não apaga as configurações nem o histórico de conversas. Eles ficam na pasta <code>.cursor</code> da sua pasta pessoal e na pasta de dados do aplicativo (por exemplo, <code>~/.config/Cursor</code> no Linux, <code>~/Library/Application Support/Cursor</code> no macOS, <code>%APPDATA%\Cursor</code> no Windows). Apague-as só se quiser começar do zero; os locais podem variar entre versões.</div>
+</section>
+
+<!-- 08 -->
+<section class="sec brk">
+  <h2><span class="n">08</span>Problemas comuns <em>e checklist final</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Problema</th><th>Solução oficial</th></tr></thead>
+    <tbody>
+      <tr><td>A IA não responde atrás de proxy (ex.: Zscaler)</td><td>Cursor Settings › <strong>Network</strong> › <strong>HTTP Compatibility Mode</strong> = <strong>HTTP/1.1</strong> e reinicie (alguns proxies bloqueiam HTTP/2)</td></tr>
+      <tr><td>Não sei se é a rede</td><td>Cursor Settings › Network › <strong>Run Diagnostics</strong></td></tr>
+      <tr><td>Firewall da empresa</td><td>Peça à TI para liberar <code>*.cursor.sh</code>, <code>*.cursor-cdn.com</code>, <code>*.cursorapi.com</code>, <code>*.cursorvm.com</code> e, para o login, <code>*.spacex.ai</code> e <code>*.x.ai</code> (no mínimo <code>accounts.spacex.ai</code>, <code>accounts.x.ai</code>, <code>auth.x.ai</code>)</td></tr>
+      <tr><td>Erros de DNS depois de usar VPN</td><td>Feche o Cursor por completo e abra de novo (não basta recarregar a janela)</td></tr>
+      <tr><td>Mensagem de "atividade suspeita"</td><td>Desligue a VPN, abra uma conversa nova, espere alguns minutos ou entre com outro método (Google ou GitHub)</td></tr>
+      <tr><td>Cursor lento ou pesado</td><td>Teste sem extensões: <code>cursor --disable-extensions</code>. Coloque pastas geradas (<code>dist/</code>, <code>build/</code>, <code>.next/</code>) no <code>.cursorignore</code></td></tr>
+      <tr><td>Disco cheio por causa do Cursor</td><td>Paleta › <strong>Delete Old Chats…</strong> e depois <strong>GC Agent KV Blobs</strong>; ajuste a limpeza de worktrees (padrão: 25 worktrees ou 50 GB)</td></tr>
+      <tr><td>Uma extensão do VS Code não aparece</td><td>O Cursor usa o Open VSX. Procure uma alternativa lá (ou uma versão da Anysphere)</td></tr>
+      <tr><td>Um modelo não aparece</td><td>Pode estar indisponível na sua região: use Auto ou outro modelo</td></tr>
+    </tbody></table></div>
+  <h3>Checklist final</h3>
+  <ul class="checklist">
+    <li>Cursor instalado a partir do site oficial, na arquitetura certa</li>
+    <li>Abre sem erro e entrou na conta</li>
+    <li>Comando <code>cursor</code> funcionando no terminal (opcional)</li>
+    <li>Configurações do VS Code importadas (se você usava)</li>
+    <li>Privacy Mode ligado e Run Mode em Auto-review</li>
+    <li>Pasta de teste aberta e primeiro pedido ao Agent respondido</li>
+    <li>Cursor CLI instalado e <code>agent --version</code> funcionando (opcional)</li>
+  </ul>
+  <div class="foot">
+    <p class="source">Fontes: cursor.com/downloads (arquivos e tamanhos da versão 3.22.12); cursor.com/docs (Quickstart, CLI Installation); cursor.com/help (Download and install, Installation and startup, Network, proxy, and remote connections, Which domains does Cursor sign-in need?, Migrate from VS Code, Privacy and data, Themes, Extensions, Performance, CLI), consultados em outubro de 2026. Passos do assistente do Windows, permissões de execução do AppImage, biblioteca FUSE, verificação do sistema e pastas de dados seguem o comportamento padrão de cada sistema operacional e podem variar; nomes de telas e versões mudam com as atualizações.</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
