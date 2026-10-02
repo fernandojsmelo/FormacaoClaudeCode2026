@@ -1,0 +1,7 @@
+Programar com agentes de IA mudou a forma de construir software. O agente lê o projeto, entende o pedido, edita os arquivos e roda os testes. O desenvolvedor passa a revisar mais e a digitar menos. Mas o agente não adivinha: ele trabalha com o contexto que recebe. Um pedido claro, com o arquivo certo e um critério de pronto, gera um código melhor do que um pedido vago.
+
+No Cursor, o agente usa ferramentas para buscar no código, editar arquivos e executar comandos no terminal. Com o MCP, o agente ganha novas ferramentas: consulta o GitHub, abre o navegador, lê um banco de dados. Cada servidor MCP traz ferramentas e ocupa contexto, por isso vale ligar só o que o projeto usa.
+
+O ciclo de trabalho é simples. Primeiro, entender o código com perguntas. Depois, planejar a mudança. Em seguida, pedir ao agente que escreva o código e os testes. Por fim, testar no navegador, revisar o diff e fazer o commit. Quando o agente erra, o desenvolvedor volta ao checkpoint, ajusta o pedido e tenta de novo.
+
+Projetos pequenos ensinam muito. Uma lista de tarefas mostra como guardar dados. Um jogo mostra como lidar com imagens e placar. Um analisador de texto mostra como contar palavras e desenhar uma nuvem de palavras. Um gerador de currículo mostra como montar documentos e salvar no banco de dados. Em todos eles, o agente faz o trabalho pesado e o desenvolvedor decide o que é bom o bastante.
