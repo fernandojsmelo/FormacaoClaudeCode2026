@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Resumo — Role Play 38</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.7pt;line-height:1.52}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:21pt;line-height:1.18;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 8px}
+.byline{font-family:var(--mono);font-size:8.5pt;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:6px}
+section.turn{break-before:page;page-break-before:always}
+section.turn.first{break-before:auto;page-break-before:auto;margin-top:18px}
+.sec{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+.q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-style:italic;color:var(--ink);margin-bottom:14px}
+.q .k{font-family:var(--mono);font-style:normal;font-size:8pt;color:var(--muted);display:block;margin-bottom:3px}
+p{margin:0 0 8px}
+h3{font-family:var(--display);font-weight:600;font-size:12.5pt;margin:12px 0 5px;color:var(--ink);break-after:avoid}
+h4{font-size:10pt;margin:11px 0 5px;color:var(--accent-ink);break-after:avoid}
+ul,ol{margin:0 0 8px;padding-left:20px}
+li{margin:3px 0}
+strong{color:var(--accent-ink);font-weight:600}
+code{font-family:var(--mono);font-size:8.6pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 4px}
+table{width:100%;border-collapse:collapse;font-size:9.1pt;margin:6px 0 12px;border:1px solid var(--border-2)}
+tr{break-inside:avoid}
+th{background:var(--surface-2);font-family:var(--mono);font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+blockquote{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--mono);font-size:8.6pt;line-height:1.55;color:var(--ink);break-inside:avoid}
+.follow{background:var(--good-soft);border:1px solid #35493B;border-radius:10px;padding:8px 13px;margin-top:10px;break-inside:avoid}
+.follow p{margin-bottom:4px}
+.follow ul{margin:0}
+.err{color:var(--muted);font-style:italic}
+.note{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin-top:12px;break-inside:avoid}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:10px;break-before:avoid}
+blockquote div{margin:0 0 2px;white-space:pre-wrap}
+.codenote{font-family:var(--mono);font-size:7.6pt;color:var(--muted);margin:-6px 0 10px}
+.flow{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-radius:8px;font-family:var(--mono);font-size:8.4pt;line-height:1.5;text-align:center;break-inside:avoid}
+.flow .ar{color:var(--accent);margin:2px 0}
+ol ol{margin:4px 0 2px}
+body{font-size:9.3pt;line-height:1.47}
+body{font-size:10.6pt;line-height:1.62}
+table{break-inside:avoid}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · Role play 38</div>
+  <h1>Make sem fatura surpresa: operações, gatilhos e cenários econômicos</h1>
+  <p class="lead">Resumo da pesquisa feita durante a prática "O Especialista em Automação e a Gestora com Medo da 'Fatura Surpresa'": como o Make cobra por operações, a simulação de gasto do fluxo formulário → CRM → e-mail → Slack, os blocos básicos (cenário, módulos e mapeamento de dados), a diferença entre gatilhos agendados e instantâneos e as regras de ouro para não estourar o plano.</p>
+  <div class="byline">Fernando Melo · 1º de outubro de 2026 · Pesquisa no Modo IA do Google, 09:38</div>
+
+  <!-- 01 -->
+  <section class="turn first">
+    <div class="sec">01 — Como o Make cobra (e como não gastar uma fortuna)</div>
+    <div class="q"><span class="k">Pergunta</span>Oi! Eu quero automatizar uma coisa simples: quando alguém preenche meu formulário, cadastrar no CRM, mandar um e-…</div>
+    <p>O <strong>Make cobra por "operações" consumidas</strong>, e não pela quantidade de fluxos (cenários) que você roda.</p>
+    <p>Se você não estruturar seu fluxo com cuidado, uma única pessoa preenchendo o formulário pode gastar dezenas de operações de uma vez, esgotando seu plano rapidamente.</p>
+    <p>Para o fluxo que você deseja criar (<strong>Formulário→ CRM→ E-mail→ Slack</strong>), você gastará, em média, <strong>entre 3 e 4 operações por execução</strong>, desde que configure tudo corretamente.</p>
+    <p>Abaixo, explico como o Make contabiliza isso e o plano de ação para você não tomar sustos na fatura.</p>
+    <h3>Como o Make funciona de verdade (O que é uma Operação?)</h3>
+    <p>Toda vez que um módulo (um "balãozinho" do fluxo) faz alguma coisa com sucesso, <strong>1 operação é consumida</strong>.</p>
+    <p>Se o seu fluxo tem 4 passos e todos funcionam, você gasta 4 operações. O perigo mora nos detalhes:</p>
+    <ul>
+      <li><strong>Módulos de Busca (Search):</strong> Se você buscar um cliente no CRM e ele encontrar 10 registros, o Make vai processar os próximos passos <strong>10 vezes</strong> (uma para cada registro encontrado), multiplicando o gasto.</li>
+      <li><strong>Gatilhos de Agendamento (Polling):</strong> Se o seu formulário não enviar os dados instantaneamente (Instant/Webhook) e o Make precisar ir até lá checar a cada 15 minutos se há novas respostas, <strong>cada checagem gasta 1 operação</strong>, mesmo que ninguém tenha preenchido nada. Isso dá cerca de 2.800 operações no mês apenas "olhando" para o formulário vazio.</li>
+    </ul>
+    <h3>Simulação de Gasto: Seu Cenário na Prática</h3>
+    <p>Assumindo que você use um gatilho instantâneo (Webhook), veja o peso de cada passo no seu bolso:</p>
+    <table>
+      <tr><th>Passo no Make</th><th>Ação Realizada</th><th>Consumo de Operações</th></tr>
+      <tr><td>1. Gatilho (Formulário)</td><td>Recebe os dados do lead (Webhook Instantâneo).</td><td>1</td></tr>
+      <tr><td>2. Ação (CRM)</td><td>Cria ou atualiza o contato.</td><td>1</td></tr>
+      <tr><td>3. Ação (E-mail)</td><td>Dispara o e-mail de boas-vindas.</td><td>1</td></tr>
+      <tr><td>4. Ação (Slack)</td><td>Envia a notificação para o canal do time.</td><td>1</td></tr>
+      <tr><td>Total por Lead</td><td>Fluxo perfeito e otimizado</td><td>4 operações</td></tr>
+    </table>
+    <p>Se você receber <strong>500 leads no mês</strong>, gastará cerca de <strong>2.000 operações</strong>. O plano gratuito do Make oferece 1.000 operações mensais, então para esse volume você já precisaria do primeiro plano pago (Core), que costuma oferecer 10.000 operações e atende com muita folga.</p>
+    <h3>3 Regras de Ouro para Não Gastar uma Fortuna</h3>
+    <p>Para garantir que seu fluxo seja econômico e eficiente, siga estas diretrizes ao montá-lo:</p>
+    <ol>
+      <li><strong>Use apenas Gatilhos "Instant" (Webhooks):</strong><ol><li>Ao escolher o módulo do formulário (ex: Typeform, Jotform, Elementor), certifique-se de que ele tem a etiqueta verde <strong>"INSTANT"</strong>.</li><li>Isso garante que o Make só rode quando alguém preencher o formulário, zerando o desperdício de checagens vazias.</li></ol></li>
+      <li><strong>Cuidado com Filtros e Roteadores (Routers):</strong><ol><li>Filtros posicionados <strong>entre</strong> os módulos não gastam operações se a condição não for estanha.</li><li>No entanto, se você colocar um Roteador e enviar os mesmos dados para 3 caminhos diferentes sem filtros rígidos, você vai triplicar o consumo dos passos seguintes.</li></ol></li>
+      <li><strong>Ative os Alertas de Consumo e Limites:</strong><ol><li>Vá em <strong>Organization &gt; Settings</strong> no seu painel do Make.</li><li>Ative as notificações para receber alertas por e-mail quando atingir 50%, 80% e 100% do seu limite mensal.</li><li><strong>Muito importante:</strong> Deixe a opção de <strong>"Auto-upgrade"</strong> ou compra automática de operações desativada se quiser ter controle total sobre o valor final da fatura.</li></ol></li>
+    </ol>
+    <div class="follow"><p>Para eu te ajudar a desenhar esse fluxo sem erros, me conta:</p>
+    <ul>
+      <li>Qual <strong>aplicativo de formulário</strong> você vai usar?</li>
+      <li>Qual é o seu <strong>CRM</strong> (HubSpot, Pipedrive, etc.)?</li>
+      <li>Quantos <strong>leads cadastrados por mês</strong> você estima receber?</li>
+    </ul></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="turn">
+    <div class="sec">02 — O que é o Make: resultados da Web</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar o que é o Make e os blocos básicos: Uma plataforma visual de automação onde ela conecta apps (Gmail, Slack, …</div>
+    <div class="follow"><p>Confira os principais resultados da Web para saber mais sobre esse tema:</p>
+    <ul>
+      <li>Make IA: o que é, como criar agentes e automatizar tudo sem código · <em>Alura</em></li>
+      <li>Conheça a Make, plataforma que automatiza tarefas para te ajudar ... · <em>Exame</em></li>
+      <li>Make: O Que É, Como Funciona e Por Que Você Deveria Usar ... · <em>Henrique Arsego</em></li>
+      <li>Introdução ao Make - O que é o Make - YouTube · <em>YouTube</em></li>
+      <li>Conhecendo o Make, sistema integrador - CV CRM · <em>CV CRM</em></li>
+      <li>Conceitos Essenciais | Automação com Make - Rocketseat · <em>Rocketseat</em></li>
+      <li>Tutorial do Make.com para Iniciantes (2026) – Guia Completo · <em>YouTube</em></li>
+      <li>Automações: Passo a passo para iniciantes - YouTube · <em>YouTube</em></li>
+      <li>Make | Central de Ajuda - EAD Plataforma · <em>EAD Plataforma</em></li>
+      <li>Make - Conheça mais sobre a ferramenta - Digitaliza.ai · <em>Digitaliza.ai</em></li>
+    </ul></div>
+  </section>
+
+  <!-- 03 -->
+  <section class="turn">
+    <div class="sec">03 — O que é o Make: resultados da Web (2ª busca)</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar o que é o Make e os blocos básicos: Uma plataforma visual de automação onde ela conecta apps (Gmail, Slack, …</div>
+    <div class="follow"><p>Confira os principais resultados da Web para saber mais sobre esse tema:</p>
+    <ul>
+      <li>Make IA: o que é, como criar agentes e automatizar tudo sem código · <em>Alura</em></li>
+      <li>Conheça a Make, plataforma que automatiza tarefas para te ajudar ... · <em>Exame</em></li>
+      <li>Make: O Que É, Como Funciona e Por Que Você Deveria Usar ... · <em>Henrique Arsego</em></li>
+      <li>AI Workflow Automation Software &amp; Tools - Make · <em>Make</em></li>
+      <li>Introdução ao Make - O que é o Make - YouTube · <em>YouTube</em></li>
+      <li>Conhecendo o Make, sistema integrador - CV CRM · <em>CV CRM</em></li>
+      <li>Conceitos Essenciais | Automação com Make - Rocketseat · <em>Rocketseat</em></li>
+      <li>Tutorial do Make.com para Iniciantes (2026) – Guia Completo · <em>YouTube</em></li>
+      <li>Publicação de Rodrigo Silva - LinkedIn · <em>LinkedIn</em></li>
+      <li>Make | Central de Ajuda - EAD Plataforma · <em>EAD Plataforma</em></li>
+    </ul></div>
+  </section>
+
+  <!-- 04 -->
+  <section class="turn">
+    <div class="sec">04 — Os blocos básicos do Make</div>
+    <div class="q"><span class="k">Pergunta</span>gostaria da explicações</div>
+    <p>Com certeza!</p>
+    <p>Vamos dar um passo atrás e entender a anatomia do <strong>Make</strong> de um jeito bem visual e simples.</p>
+    <p>O Make é uma <strong>plataforma visual de automação sem código</strong>. Em vez de contratar um programador para escrever linhas e linhas de códigos ligando o seu formulário ao seu CRM, você faz isso arrastando e soltando blocos dentro de uma tela em branco (chamada de <strong>Canvas</strong>).</p>
+    <p>O grande diferencial do Make é que você <strong>vê o dado fluindo em tempo real</strong>. Quando um fluxo roda, uma bolha com um número aparece em cima de cada bloco, mostrando exatamente o que saiu de um aplicativo e entrou no outro.</p>
+    <p>Para você começar sem medo, o Make se resume a <strong>três blocos básicos</strong>:</p>
+    <h3>1. Cenário (Scenario)</h3>
+    <p>É o seu <strong>fluxo de automação completo</strong>. É o mapa do caminho que o dado vai percorrer. No seu caso, o projeto de "pegar o lead do formulário, salvar no CRM, mandar e-mail e avisar o Slack" é <strong>um único cenário</strong>. Você pode ligar e desligar esse cenário com uma simples chave de <strong>ON / OFF</strong>.</p>
+    <h3>2. Módulos (Modules)</h3>
+    <p>São as <strong>"caixinhas" ou "balões"</strong> que representam os aplicativos dentro do seu Canvas (ex: o balão do Slack, o balão do Gmail). Cada módulo faz uma tarefa bem específica e eles se dividem em três tipos principais:</p>
+    <ul>
+      <li><strong>Gatilho (Trigger):</strong> É o ponto de partida. Ele fica "vigiando" o primeiro aplicativo para dar o aviso de início. <strong>Exemplo:</strong> "Quando um NOVO formulário for preenchido". Ele sempre tem o ícone de um raiozinho ou relógio e fica no começo do fluxo.</li>
+      <li><strong>Ação (Action):</strong> É o comando de fazer algo em outro aplicativo. <strong>Exemplo:</strong> "CRIE um contato no CRM" ou "ENVIE uma mensagem no Slack".</li>
+      <li><strong>Busca (Search):</strong> É o módulo que procura por algo que já existe. <strong>Exemplo:</strong> "PROCURE se esse e-mail já está cadastrado no CRM" antes de criar um novo.</li>
+    </ul>
+    <h3>3. Mapeamento de Dados (Data Mapping)</h3>
+    <p>É a mágica de <strong>conectar as informações</strong> de uma caixinha na outra. Quando você clica dentro de um módulo de Ação (como o do Slack), o Make abre uma janela e te mostra todas as informações que o módulo anterior (o Formulário) coletou.</p>
+    <ul>
+      <li>Você clica na caixinha de texto do Slack e seleciona a tag <strong>Nome</strong> e <strong>Telefone</strong> que vieram do formulário.</li>
+      <li>Isso cria um link dinâmico: sempre que uma pessoa nova preencher, o Make substitui aquelas tags pelos dados reais daquela pessoa específica.</li>
+    </ul>
+    <h3>Resumo Visual do seu Fluxo no Canvas</h3>
+    <p>No seu painel, o seu fluxo vai se parecer literalmente com uma corrente de círculos conectados da esquerda para a direita:</p>
+    <blockquote><div>[ Ícone do Formulário ] ─── [ Ícone do CRM ] ─── [ Ícone do E-mail ] ─── [ Ícone do Slack ]</div><div>       (Gatilho)                (Ação 1)              (Ação 2)              (Ação 3)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Quando alguém preencher o formulário, você verá uma luzinha correndo por essa linha, ativando cada módulo um por um. Se algo der errado (por exemplo, se o CRM estiver fora do ar), o Make vai pintar uma bolinha vermelha bem em cima do módulo do CRM, te mostrando exatamente onde o dado travou.</p>
+    <p>Para darmos o próximo passo e começarmos a montar isso na prática, você prefere que eu te explique <strong>como criar a conta e configurar o primeiro bloco (o gatilho)</strong> ou quer tirar alguma dúvida sobre <strong>como os dados passam de um bloco para o outro</strong>?</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="turn">
+    <div class="sec">05 — Gatilhos e o custo</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar gatilhos (e por que importam para o custo): Todo cenário começa com um gatilho — instantâneo (webhook: …</div>
+    <p><strong>Entender a diferença entre os tipos de gatilhos é o segredo número um para manter sua automação barata e evitar surpresas na fatura do Make</strong>.</p>
+    <p>Todo cenário começa obrigatoriamente com um <strong>Gatilho (Trigger)</strong>, que é o bloco responsável por dar o "start" no fluxo. Existem dois tipos de gatilhos no Make, e a escolha entre eles muda completamente o quanto você vai pagar no final do mês.</p>
+    <h3>1. Gatilho Agendado (Polling / Scheduled) 🕒</h3>
+    <p>Esse gatilho funciona por <strong>checagem periódica</strong>. Ele não sabe quando algo acontece, então ele precisa ir até o aplicativo de tempos em tempos (ex: a cada 15 minutos, a cada hora) para perguntar: <strong>"Tem algum dado novo aí?"</strong>.</p>
+    <ul>
+      <li><strong>O perigo para o seu bolso:</strong> Cada checa que ele faz consome 1 operação, mesmo que não haja nenhum dado novo.</li>
+      <li><strong>A conta matemática do prejuízo:</strong> Se você configurar o Make para checar seu formulário a cada 15 minutos, ele vai rodar 4 vezes por hora. Isso dá 96 vezes por dia, totalizando cerca de <strong>2.880 operações no mês apenas olhando para o vento</strong>, sem que ninguém tenha preenchido um único formulário. No plano gratuito (que dá 1.000 operações), sua automação pararia de funcionar logo na primeira semana do mês sem ter cadastrado nenhum lead.</li>
+    </ul>
+    <h3>2. Gatilho Instantâneo (Webhook) ⚡</h3>
+    <p>Esse é o modelo ideal e mais inteligente. Em vez de o Make ficar perguntando se há novidades, o próprio aplicativo do formulário avisa o Make no exato segundo em que alguém clica em "Enviar". É como uma campainha: o Make fica "dormindo" e só acorda quando a campainha toca.</p>
+    <ul>
+      <li><strong>Por que ele é muito mais barato:</strong> Ele só consome 1 operação quando um evento real acontece.</li>
+      <li><strong>A conta matemática do lucro:</strong> Se você receber 100 formulários preenchidos no mês, o gatilho vai rodar exatamente 100 vezes e consumir apenas <strong>100 operações</strong>. Zero desperdício.</li>
+    </ul>
+    <h3>Como identificar cada um no Make?</h3>
+    <div class="follow"><p>Quando você estiver montando seu cenário e for escolher o primeiro bloco, o Make te mostra o tipo de gatilho com etiquetas bem claras:</p>
+    <ul>
+      <li><strong>Procure pela etiqueta verde "INSTANT":</strong> Sempre que um aplicativo tiver essa marcação (com o desenho de um raiozinho), significa que ele usa Webhook. É esse que você deve escolher para o seu formulário.</li>
+      <li><strong>Etiqueta "WATCH" com relógio:</strong> Se o módulo tiver apenas um reloginho, ele é agendado. Use apenas se o aplicativo em questão não tiver a opção "Instant".</li>
+    </ul>
+<p>Agora que você já sabe como proteger seu bolso escolhendo o gatilho certo, quer que eu te mostre <strong>como criar e configurar o bloco do Webhook na prática</strong> para começar a receber os dados do seu formulário, ou prefere entender <strong>como o Make faz para enviar esses dados para o seu CRM</strong>?</p></div>
+  </section>
+
+  <!-- 06 -->
+  <section class="turn">
+    <div class="sec">06 — O modelo de operações e cuidados de custo</div>
+    <div class="q"><span class="k">Pergunta</span>Desmistificar o modelo de "operações" + cuidados de custo: No Make, cada módulo que roda conta como uma operação…</div>
+    <p>Para não tomar sustos na fatura do Make, você precisa dominar a matemática por trás das <strong>operações</strong>.</p>
+    <p>Muitas pessoas acham que o Make cobra por "lead cadastrado" ou por "cenário ativo", mas a realidade é diferente: a cobrança é feita pelo <strong>número de caixinhas que são ativadas</strong> ao longo do caminho.</p>
+    <p>A regra básica é muito simples: <strong>Custo = (Quantidade de módulos ativados) × (Quantidade de vezes que o fluxo roda)</strong>.</p>
+    <p>Se o seu fluxo tem <strong>4 passos</strong> (Formulário → CRM → E-mail → Slack) e ele funciona do início ao fim para 1 lead, você gastou <strong>4 operações</strong>. Se entrarem 100 leads, você gastará 400 operações.</p>
+    <h3>Os Detalhes Escondidos do Consumo</h3>
+    <p>O erro de quem estoura o limite do plano é não entender o que acontece nos bastidores. Veja o que também gasta operação:</p>
+    <ul>
+      <li><strong>Filtros:</strong> Um filtro serve para barrar um dado (ex: "só passe se o e-mail for corporativo"). Se o dado passa pelo filtro, ele <strong>não</strong> cobra operação. Mas se o filtro barra o dado, aquela checagem <strong>custa 1 operação</strong> para o Make dizer "daqui você não passa".</li>
+      <li><strong>Erros de Execução:</strong> Se o módulo do CRM der um erro porque o telefone veio formatado errado, o Make gasta operações nos módulos que rodaram <strong>antes</strong> do erro acontecer.</li>
+      <li><strong>Buscas (Search) que trazem muitos dados:</strong> Se você pedir para o CRM procurar "clientes de São Paulo" e ele encontrar 50 pessoas, o Make vai rodar os módulos seguintes (E-mail e Slack) <strong>50 vezes</strong>, consumindo dezenas de operações de uma lapada só.</li>
+    </ul>
+    <h3>4 Dicas de Ouro para Blindar seu Bolso</h3>
+    <p>Para montar sua automação sem medo de gastar uma fortuna, decore e aplique estas quatro regras de ouro:</p>
+    <ul>
+      <li><strong>1. Coloque Filtros logo no começo:</strong> Se você quer descartar leads curiosos ou testes, coloque o filtro <strong>imediatamente após o gatilho</strong> do formulário. Se o lead for inválido, o fluxo morre ali, gastando apenas 2 operações (1 do gatilho + 1 do filtro barrado), economizando as operações do CRM, E-mail e Slack.</li>
+      <li><strong>2. Use sempre o "Max number of results" (Limite de Resultados):</strong> Sempre que usar um módulo de busca ou listagem, procure pelo campo "Max number of results" nas configurações dele. Digite <strong>1</strong> se você só precisa achar um cliente específico. Se deixar em branco, o Make pode trazer centenas de resultados desnecessários e multiplicar seu custo.</li>
+      <li><strong>3. Prefira sempre Webhook (Instant) a Agendamento:</strong> Como vimos antes, o Webhook só acorda o Make quando o formulário é preenchido. O agendamento fica rodando no vazio e torrando seu limite.</li>
+      <li><strong>4. Monitore as Estatísticas (Dashboard):</strong> No painel inicial do Make, clique em <strong>Dashboard</strong>. Lá você vê um gráfico de pizza mostrando quais cenários estão engolindo mais operações. Se notar uma linha subindo rápido demais, você consegue pausar o fluxo antes de estourar o limite do mês.</li>
+    </ul>
+    <p>Agora que você já entendeu o modelo de custos, qual o próximo passo ideal para você?</p>
+    <ul>
+      <li>Queremos escolher o <strong>aplicativo de formulário</strong> e ver se ele aceita o Gatilho Instantâneo (Webhook)?</li>
+      <li>Prefere desenhar a lógica de <strong>como o CRM vai procurar se o lead já existe</strong> antes de cadastrar?</li>
+      <li>Ou quer ver como <strong>ativar os alertas de e-mail</strong> no painel do Make para nunca estourar o plano?</li>
+    </ul>
+    <div class="foot">Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos. Nas seções 02 e 03, a busca devolveu apenas a lista de links, reproduzida com título e fonte.</div>
+  </section>
+</div>
+</body>
+</html>
