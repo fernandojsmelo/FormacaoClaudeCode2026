@@ -118,9 +118,9 @@ h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
   <h2>Resumo <em>da tentativa</em></h2>
   <div class="score">
     <div><b>4</b><span>Perguntas</span></div>
-    <div><b style="color:var(--good)">2</b><span>Corretas</span></div>
-    <div><b style="color:var(--danger)">2</b><span>Incorretas</span></div>
-    <div><b>50%</b><span>Acertos</span></div>
+    <div><b style="color:var(--good)">3</b><span>Corretas</span></div>
+    <div><b style="color:var(--danger)">1</b><span>Incorreta</span></div>
+    <div><b>75%</b><span>Acertos</span></div>
   </div>
   <div class="table-wrap"><table>
     <thead><tr><th>Pergunta</th><th>Tema</th><th>Resultado</th></tr></thead>
@@ -128,9 +128,9 @@ h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
       <tr><td>1</td><td>Onde os agentes de IA para código mais aceleram o trabalho (preencher a lacuna)</td><td><span class="badge no">Incorreto</span></td></tr>
       <tr><td>2</td><td>Risco de segurança ao aceitar código gerado sem revisão</td><td><span class="badge ok">Correto</span></td></tr>
       <tr><td>3</td><td>Tarefas em que um agente de IA pode ajudar</td><td><span class="badge ok">Correto</span></td></tr>
-      <tr><td>4</td><td>Afirmação FALSA sobre o uso prático dos agentes</td><td><span class="badge no">Incorreto</span></td></tr>
+      <tr><td>4</td><td>Afirmação FALSA sobre o uso prático dos agentes</td><td style="white-space:nowrap"><span class="badge ok">Correto · gabarito corrigido</span></td></tr>
     </tbody></table></div>
-  <p class="muted" style="margin-top:10px">Contagem calculada a partir das marcações "Correto" e "Incorreto" do registro original.</p>
+  <p class="muted" style="margin-top:10px">Contagem com o gabarito da pergunta 4 corrigido pelo curso. No registro original da plataforma, a pergunta 4 constava como incorreta, e o resultado era 2 corretas e 2 incorretas (50%).</p>
 </section>
 
 <!-- Q1 -->
@@ -165,13 +165,13 @@ h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
 
 <!-- Q4 -->
 <section class="sec brk">
-  <div class="qhead"><span class="n">Pergunta 4</span><span class="badge no">Incorreto</span></div>
+  <div class="qhead"><span class="n">Pergunta 4</span><span class="badge ok">Correto · gabarito corrigido</span></div>
   <div class="stmt">Qual das seguintes afirmações sobre o <em>uso prático</em> de Agentes de IA para Código é FALSA?</div>
-  <div class="opt key"><span class="lab">Resposta correta</span>Eles podem sugerir a estrutura de classes e métodos com base em comandos textuais.</div>
+  <div class="opt"><span class="lab" style="color:var(--muted)">Marcada como correta no registro original · afirmação verdadeira</span>Eles podem sugerir a estrutura de classes e métodos com base em comandos textuais.</div>
   <div class="opt">Eles são treinados em vastos conjuntos de dados de código público.</div>
-  <div class="opt sel-no"><span class="lab">Sua resposta está incorreta</span>Eles não precisam de acesso ao contexto do código-fonte existente para funcionar corretamente.</div>
+  <div class="opt sel-ok"><span class="lab">Sua resposta está correta · gabarito corrigido</span>Eles não precisam de acesso ao contexto do código-fonte existente para funcionar corretamente.</div>
   <div class="opt">Eles podem sugerir o preenchimento de código diretamente em IDEs (Ambientes de Desenvolvimento Integrado) populares.</div>
-  <div class="note"><b class="t">Nota do curso · possível erro de gabarito</b>A pergunta pede a afirmação <strong>FALSA</strong>. A alternativa marcada como "Resposta correta" (sugerir estrutura de classes e métodos a partir de comandos de texto) é <strong>verdadeira</strong>. Já a alternativa respondida ("não precisam de acesso ao contexto do código-fonte existente") é a afirmação falsa: agentes como o Claude Code e o Antigravity dependem justamente de ler o projeto para funcionar bem. O registro acima foi mantido como no original; vale reportar o possível erro na plataforma do curso.</div>
+  <div class="note"><b class="t">Nota do curso · gabarito corrigido</b>A pergunta pede a afirmação <strong>FALSA</strong>. A plataforma marcou como "Resposta correta" a alternativa sobre sugerir estrutura de classes e métodos a partir de comandos de texto, mas essa afirmação é <strong>verdadeira</strong>. A afirmação falsa é a que foi respondida ("não precisam de acesso ao contexto do código-fonte existente"): agentes como o Claude Code e o Antigravity dependem justamente de ler o projeto para funcionar bem. Por isso o gabarito foi corrigido aqui e a resposta conta como certa. Vale reportar o erro na plataforma do curso.</div>
 </section>
 
 <!-- Comentários -->
@@ -191,7 +191,7 @@ h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
     <li>Dê contexto: projeto com as pastas certas e regras do projeto</li>
     <li>Use o agente no repetitivo; mantenha as decisões de negócio com você</li>
   </ul>
-  <div class="foot"><p class="source">Reprodução do registro de resultado do "Simulado 1 - Agentes de IA para Código" (Tentativa 1), impresso da plataforma do curso em 01/10/2026 às 16:26, originalmente com 6 páginas. Perguntas, alternativas e marcações mantidas como no original; notas e esta página de revisão acrescentadas pelo curso. Formação Claude Code 2026 · Fim do módulo 33.</p></div>
+  <div class="foot"><p class="source">Reprodução do registro de resultado do "Simulado 1 - Agentes de IA para Código" (Tentativa 1), impresso da plataforma do curso em 01/10/2026 às 16:26, originalmente com 6 páginas. Perguntas, alternativas e marcações mantidas como no original, exceto o gabarito da pergunta 4, corrigido pelo curso (no original: 2 corretas, 50%); notas e esta página de revisão acrescentadas pelo curso. Formação Claude Code 2026 · Fim do módulo 33.</p></div>
 </section>
 
 </div>
