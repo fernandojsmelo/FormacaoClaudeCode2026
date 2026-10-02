@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Manual de Instalação e Configuração do AntiGravity</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:10.6px;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+h1{font-family:var(--display);font-weight:600;font-size:34px;line-height:1.1;margin:0 0 12px}
+h1 em,h2 em{color:var(--accent-ink);font-style:italic}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:500}
+h3{font-size:11.6px;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+p{margin:0 0 7px}
+.muted{color:var(--muted)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 4px;border-radius:4px}
+section.sec{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
+section.sec.brk{page-break-before:always;break-before:page;border-top:none;margin-top:0;padding-top:0}
+.intro{color:var(--muted);margin:0 0 9px}
+/* header */
+.header{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.lead{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:3px 9px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:12px}
+/* toc */
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:14px}
+.toc div{font-size:10.4px;color:var(--muted);display:flex;gap:8px}
+.toc b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:18px}
+/* grid/cards */
+.grid{display:grid;gap:9px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;break-inside:avoid}
+.card .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:3px}
+.card p{margin:0;color:var(--muted);font-size:10.2px}
+/* tables */
+.table-wrap{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:6px 0 8px;break-inside:avoid}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:8.6px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 9px;font-weight:500}
+td{border-top:1px solid var(--border);padding:6px 9px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+/* code */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:9.8px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:6px 0 8px;break-inside:avoid}
+.term .c{color:var(--muted)}
+/* callouts */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:9px;padding:8px 11px;font-size:10.2px;margin:7px 0;break-inside:avoid}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+/* steps */
+.steps{display:grid;gap:6px;margin:6px 0 8px}
+.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 10px;break-inside:avoid}
+.step .b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:10px;display:flex;align-items:center;justify-content:center}
+.step div:last-child{font-size:10.2px}
+.checklist{list-style:none;padding:0;margin:4px 0 8px}
+.checklist li{position:relative;padding-left:17px;margin:4px 0}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+.bullets{list-style:none;padding:0;margin:4px 0 8px}
+.bullets li{position:relative;padding-left:14px;margin:4px 0}
+.bullets li::before{content:"●";position:absolute;left:0;top:.2em;color:var(--accent);font-size:.65em}
+.source{font-family:var(--mono);font-size:8.8px;color:var(--muted);line-height:1.6}
+.foot{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+h2,h3,.intro{break-after:avoid;page-break-after:avoid}
+section.sec.keep{break-inside:avoid;page-break-inside:avoid}
+h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
+</style>
+
+<style>
+.osbar{display:flex;align-items:center;gap:12px;background:var(--surface-2);border:1px solid var(--border-2);border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;margin:0 0 10px}
+.osbar .ic{font-size:24px;width:36px;text-align:center}
+.osbar b{font-family:var(--display);font-size:22px;font-weight:600}
+.osbar span{display:block;color:var(--muted);font-size:10.2px}
+.kbd{font-family:var(--mono);font-size:.9em;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="eyebrow"><span class="dot"></span>Introdução ao Antigravity · Aula 3 · Manual de instalação</div>
+  <h1>Instalando e configurando<br><em>o AntiGravity</em></h1>
+  <p class="lead">Um passo a passo completo, separado por sistema operacional: <strong>Windows</strong>, <strong>Linux</strong> e <strong>macOS</strong>. Para cada um: como saber se o seu computador é compatível, onde baixar, como instalar (todas as opções), o primeiro acesso, como confirmar que deu certo, os problemas mais comuns, como atualizar e como desinstalar. No fim, a configuração inicial recomendada e a instalação do <strong>Antigravity CLI</strong> (<code>agy</code>) nos três sistemas.</p>
+  <div class="chips"><span>Windows 10/11</span><span>Ubuntu · Debian · Mint</span><span>Fedora · RHEL · SUSE</span><span>macOS Apple Silicon e Intel</span><span>Primeira configuração</span><span>Antigravity CLI</span><span>Solução de problemas</span></div>
+  <div class="byline">Formação Claude Code 2026 · Baseado em antigravity.google (Download, Download for Linux, Releases) e antigravity.google/docs (Getting started, CLI: Installation and auth, CLI: Troubleshooting, Settings, Permissions), consultados em outubro de 2026 · Versão de referência: Antigravity 2.0 v2.19.1. Nomes de botões podem variar entre versões.</div>
+  <div class="toc">
+    <div><b>01</b>Antes de começar (todos os sistemas)</div><div><b>05</b>Primeira configuração (todos)</div>
+    <div><b>02</b>Windows</div><div><b>06</b>Antigravity CLI nos três sistemas</div>
+    <div><b>03</b>Linux</div><div><b>07</b>Atualizar e desinstalar</div>
+    <div><b>04</b>macOS</div><div><b>08</b>Problemas comuns e checklist final</div>
+  </div>
+</div>
+
+<!-- 01 -->
+<section class="sec">
+  <h2><span class="n">01</span>Antes <em>de começar</em></h2>
+  <p class="intro">Vale para os três sistemas. Cinco minutos aqui evitam a maioria dos problemas depois.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Você vai precisar de</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>Uma conta Google pessoal</td><td>O login ativa os agentes. Segundo o FAQ oficial, contas do Google Workspace (de empresa ou escola) podem não funcionar; use uma conta <code>@gmail.com</code> se tiver problema</td></tr>
+      <tr><td>Internet estável</td><td>Para baixar o instalador (algumas centenas de MB) e para os agentes funcionarem</td></tr>
+      <tr><td>Permissão de administrador</td><td>Windows e macOS pedem para instalar; no Linux, os comandos usam <code>sudo</code></td></tr>
+      <tr><td>Navegador atualizado (de preferência o Google Chrome)</td><td>O login abre no navegador, e o agente usa o Chrome para testar páginas</td></tr>
+      <tr><td>Git instalado (recomendado)</td><td>Projetos versionados permitem desfazer o que o agente fizer e usar o modo worktree</td></tr>
+    </tbody></table></div>
+  <h3>O que exatamente vamos instalar</h3>
+  <div class="grid g3">
+    <div class="card"><div class="k">Antigravity 2.0</div><p>O aplicativo principal, voltado a agentes. É o que este manual instala.</p></div>
+    <div class="card"><div class="k">Antigravity IDE (opcional)</div><p>O editor de código. Durante a instalação do 2.0, o instalador pergunta se você quer instalar (ou manter) a IDE também.</p></div>
+    <div class="card"><div class="k">Antigravity CLI (opcional)</div><p>O agente no terminal, comando <code>agy</code>. Instalação própria, na seção 06.</p></div>
+  </div>
+  <div class="callout warn"><strong>Baixe só do site oficial:</strong> <code>antigravity.google/download</code>. Instaladores em sites de terceiros, grupos ou vídeos podem estar adulterados.</div>
+</section>
+
+<!-- WINDOWS -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">⊞</span><div><b>Windows</b><span>Windows 10 (64 bits) ou Windows 11 · processadores x64 (Intel/AMD) ou ARM64</span></div></div>
+  <h2><span class="n">02</span>Windows · <em>verificar e baixar</em></h2>
+  <h3>Passo 1 · Confirme a versão e o tipo do processador</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Pressione <span class="kbd">Win</span> + <span class="kbd">I</span> para abrir as <strong>Configurações</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Vá em <strong>Sistema › Sobre</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Em <strong>Especificações do Windows</strong>, confira a <strong>Edição</strong> e a <strong>Versão</strong>: precisa ser Windows 10 ou 11.</div></div>
+    <div class="step"><div class="b">4</div><div>Em <strong>Tipo de sistema</strong>: "sistema operacional de 64 bits, processador baseado em x64" → baixe a versão <strong>x64</strong>. Se aparecer "processador baseado em ARM" → baixe a versão <strong>ARM64</strong>.</div></div>
+  </div>
+  <div class="callout">A maioria dos computadores com Windows usa <strong>x64</strong>. ARM64 aparece em alguns notebooks recentes (por exemplo, com processadores Snapdragon). Windows de 32 bits não é suportado.</div>
+  <h3>Passo 2 · Baixe o instalador</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Abra <code>antigravity.google/download</code> no navegador e clique na aba <strong>Windows</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Clique em <strong>Download for x64</strong> (ou <strong>Download for ARM64</strong>, conforme o passo 1).</div></div>
+    <div class="step"><div class="b">3</div><div>O arquivo baixado se chama <code>Antigravity-x64.exe</code> (ou <code>Antigravity-arm64.exe</code>) e vai para a pasta <strong>Downloads</strong>.</div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">02</span>Windows · <em>instalar</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Abra a pasta <strong>Downloads</strong> e dê <strong>dois cliques</strong> no arquivo <code>Antigravity-x64.exe</code>.</div></div>
+    <div class="step"><div class="b">2</div><div>Se aparecer a tela azul do <strong>SmartScreen</strong> ("O Windows protegeu o computador"), confira se o arquivo veio do site oficial e clique em <strong>Mais informações › Executar assim mesmo</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Se o <strong>Controle de Conta de Usuário</strong> perguntar "Deseja permitir que este aplicativo faça alterações?", clique em <strong>Sim</strong>.</div></div>
+    <div class="step"><div class="b">4</div><div>Leia e <strong>aceite o contrato de licença</strong> e os termos de uso.</div></div>
+    <div class="step"><div class="b">5</div><div>Escolha a <strong>pasta de instalação</strong>: deixe a padrão, a menos que tenha um motivo para mudar. Clique em <strong>Avançar</strong>.</div></div>
+    <div class="step"><div class="b">6</div><div>Em <strong>tarefas adicionais</strong>, marque se quiser um atalho na área de trabalho. Clique em <strong>Instalar</strong>.</div></div>
+    <div class="step"><div class="b">7</div><div>Se o instalador perguntar sobre a <strong>Antigravity IDE</strong>, escolha instalá-la também, se quiser o editor (é o recomendado para quem programa).</div></div>
+    <div class="step"><div class="b">8</div><div>Ao terminar, clique em <strong>Concluir</strong>. O Antigravity abre (ou procure "Antigravity" no menu Iniciar).</div></div>
+  </div>
+  <div class="callout warn">Se aparecer a pergunta <strong>"Keep Both"</strong> ou <strong>"Replace"</strong> (manter as duas versões ou substituir), a documentação oficial orienta escolher <strong>Replace</strong>.</div>
+  <h3>Como confirmar que deu certo</h3>
+  <ul class="checklist">
+    <li>"Antigravity" aparece no <strong>menu Iniciar</strong> e abre sem erro</li>
+    <li>O ícone do 2.0 tem <strong>fundo branco</strong>; o da IDE, uma <strong>grade preta</strong></li>
+    <li>Em <strong>Configurações › Aplicativos › Aplicativos instalados</strong>, "Antigravity" está na lista</li>
+  </ul>
+  <h3>Problemas comuns no Windows</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>"Este aplicativo não pode ser executado no computador"</td><td>Você baixou a arquitetura errada (x64 × ARM64). Volte ao passo 1</td></tr>
+      <tr><td>Antivírus bloqueou o instalador</td><td>Confirme a origem (site oficial) e libere apenas esse arquivo; não desative o antivírus inteiro</td></tr>
+      <tr><td>Instalação travou no meio</td><td>Feche o instalador pelo Gerenciador de Tarefas (<span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">Esc</span>), reinicie o computador e rode de novo</td></tr>
+      <tr><td>Rede da empresa bloqueia o download ou o login</td><td>Fale com a TI: proxies e firewalls corporativos podem bloquear o serviço</td></tr>
+    </tbody></table></div>
+  <div class="callout">No Windows, o novo sistema de permissões e o sandbox ainda funcionam do jeito anterior (veja o Manual do AntiGravity, aula 02): a configuração de execução de comandos fica em <strong>Settings</strong>, com as opções Request Review, Proceed in Sandbox e Always Proceed.</div>
+</section>
+
+<!-- LINUX -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">🐧</span><div><b>Linux</b><span>glibc ≥ 2.28 e glibcxx ≥ 3.4.25 · por exemplo Ubuntu 20+, Debian 10+, Fedora 36+, RHEL 8+ · x64 ou ARM64</span></div></div>
+  <h2><span class="n">03</span>Linux · <em>verificar</em></h2>
+  <p class="intro">No Linux há três caminhos. Escolha <strong>um</strong>, conforme a sua distribuição:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Caminho</th><th>Para</th><th>Vantagem</th></tr></thead>
+    <tbody>
+      <tr><td>A · Repositório <code>.deb</code> (apt)</td><td>Ubuntu, Debian, Linux Mint, Pop!_OS e derivados</td><td>Ícone no menu e <strong>atualizações automáticas</strong> com o sistema</td></tr>
+      <tr><td>B · Repositório <code>.rpm</code> (dnf)</td><td>Fedora, Red Hat (RHEL), Rocky, Alma, SUSE</td><td>Idem</td></tr>
+      <tr><td>C · Arquivo <code>.tar.gz</code></td><td>Outras distribuições, ou sem acesso de administrador ao sistema de pacotes</td><td>Funciona em qualquer distro compatível; você cuida de atalho e atualização</td></tr>
+    </tbody></table></div>
+  <h3>Confira a compatibilidade no terminal</h3>
+  <div class="term"><span class="c"># versão da glibc (precisa ser 2.28 ou maior)</span>
+ldd --version | head -n 1
+
+<span class="c"># arquitetura: x86_64 = baixe x64 · aarch64 = baixe ARM64</span>
+uname -m
+
+<span class="c"># nome e versão da distribuição</span>
+cat /etc/os-release | head -n 4</div>
+  <div class="callout">Abra o terminal com <span class="kbd">Ctrl</span>+<span class="kbd">Alt</span>+<span class="kbd">T</span> (Ubuntu e muitas distros) ou procure "Terminal" no menu. Copie os comandos <strong>uma linha por vez</strong> e pressione <span class="kbd">Enter</span>. Quando pedir a senha do <code>sudo</code>, digite a sua senha de usuário: ela não aparece na tela enquanto você digita, e isso é normal.</div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">03</span>Linux · <em>A. Ubuntu, Debian e derivados</em></h2>
+  <p class="intro">Comandos oficiais da página "Download for Linux". Eles cadastram a chave e o repositório do Antigravity, e depois instalam o pacote.</p>
+  <h3>1 · Adicionar a chave e o repositório</h3>
+  <div class="term">sudo mkdir -p /etc/apt/keyrings
+
+curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | \
+  sudo gpg --dearmor --yes -o /etc/apt/keyrings/antigravity-repo-key.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | \
+  sudo tee /etc/apt/sources.list.d/antigravity.list > /dev/null</div>
+  <h3>2 · Atualizar a lista de pacotes</h3>
+  <div class="term">sudo apt update</div>
+  <h3>3 · Instalar</h3>
+  <div class="term">sudo apt install antigravity</div>
+  <div class="grid g2">
+    <div class="card"><div class="k">O que cada parte faz</div><p><code>keyrings</code> guarda a chave que prova que os pacotes vêm do Google; o arquivo em <code>sources.list.d</code> diz ao apt onde buscar; <code>apt install</code> baixa e instala.</p></div>
+    <div class="card"><div class="k">Se faltar o curl ou o gpg</div><p>Instale antes: <code>sudo apt install curl gpg</code>.</p></div>
+  </div>
+  <div class="callout warn">Os comandos com <code>\</code> no fim da linha continuam na linha de baixo. Copie o bloco inteiro de cada comando, sem cortar no meio.</div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">03</span>Linux · <em>B. Fedora, Red Hat e SUSE</em></h2>
+  <h3>1 · Adicionar o repositório</h3>
+  <div class="term">sudo tee /etc/yum.repos.d/antigravity.repo &lt;&lt; EOL
+[antigravity-rpm]
+name=Antigravity RPM Repository
+baseurl=https://us-central1-yum.pkg.dev/projects/antigravity-auto-updater-dev/antigravity-rpm
+enabled=1
+gpgcheck=0
+EOL</div>
+  <h3>2 · Atualizar o cache e instalar</h3>
+  <div class="term">sudo dnf makecache
+sudo dnf install antigravity</div>
+  <div class="callout">Copie desde <code>sudo tee</code> até a linha <code>EOL</code>, inclusive: é um único comando que cria o arquivo do repositório. Em SUSE, o gerenciador costuma ser o <code>zypper</code>; a página oficial mostra os comandos com <code>dnf</code>.</div>
+  <div class="callout warn">O arquivo oficial usa <code>gpgcheck=0</code> (sem verificação de assinatura dos pacotes). É o que a página de download indica; se a sua política de segurança exigir assinatura, consulte a TI antes.</div>
+</section>
+
+<section class="sec brk">
+  <h2><span class="n">03</span>Linux · <em>C. Arquivo .tar.gz (qualquer distro)</em></h2>
+  <p class="intro">O <code>.tar.gz</code> é uma versão <strong>portátil</strong> (feita em Electron): o programa já vem pronto para rodar, sem assistente de instalação. Por isso é normal "não achar o instalador" dentro dele.</p>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Em <code>antigravity.google/download</code>, aba <strong>Linux</strong>, baixe <strong>Download for x64</strong> (ou ARM64). O arquivo é <code>Antigravity.tar.gz</code>.</div></div>
+    <div class="step"><div class="b">2</div><div>Extraia na pasta Downloads.</div></div>
+    <div class="step"><div class="b">3</div><div>Mova a pasta para <code>/opt</code>, ajuste o <code>chrome-sandbox</code> e rode.</div></div>
+  </div>
+  <div class="term">cd ~/Downloads
+tar -xvzf Antigravity.tar.gz
+ls                                  <span class="c"># veja o nome da pasta criada (ex.: Antigravity-x64)</span>
+
+sudo mv Antigravity-x64 /opt/antigravity
+ls /opt/antigravity                 <span class="c"># encontre o executável principal</span>
+
+<span class="c"># permissões do sandbox do Chromium/Electron</span>
+sudo chown root:root /opt/antigravity/chrome-sandbox
+sudo chmod 4755 /opt/antigravity/chrome-sandbox
+
+/opt/antigravity/antigravity        <span class="c"># abre o Antigravity</span></div>
+  <h3>Criar um atalho no menu de aplicativos</h3>
+  <div class="term">cat &gt; ~/.local/share/applications/antigravity.desktop &lt;&lt; EOF
+[Desktop Entry]
+Name=Antigravity
+Exec=/opt/antigravity/antigravity
+Type=Application
+Categories=Development;
+EOF</div>
+  <div class="callout warn">Os nomes da pasta extraída e do executável podem mudar entre versões. Use <code>ls</code> para conferir e ajuste os comandos. No caminho C, a <strong>atualização é manual</strong>: baixe o novo <code>.tar.gz</code> e substitua a pasta em <code>/opt</code>.</div>
+  <h3>Como confirmar que deu certo (A, B ou C)</h3>
+  <ul class="checklist">
+    <li>Caminhos A e B: "Antigravity" aparece no menu de aplicativos</li>
+    <li>A: <code>apt policy antigravity</code> mostra a versão instalada · B: <code>dnf info antigravity</code></li>
+    <li>O aplicativo abre e mostra a tela de boas-vindas ou de login</li>
+  </ul>
+  <h3>Problemas comuns no Linux</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>Erro de <code>GLIBC_2.28 not found</code></td><td>A distribuição é antiga demais; atualize-a (ex.: Ubuntu 20.04 ou maior)</td></tr>
+      <tr><td>"The SUID sandbox helper binary was found, but is not configured correctly"</td><td>Faltou o <code>chown</code>/<code>chmod 4755</code> do <code>chrome-sandbox</code> (caminho C)</td></tr>
+      <tr><td><code>apt update</code> reclama da chave (NO_PUBKEY)</td><td>Refaça o comando do <code>curl … gpg --dearmor</code> e depois <code>sudo apt update</code></td></tr>
+      <tr><td>Login no navegador não volta para o app</td><td>Confira se há um navegador padrão definido e se o keyring (GNOME Keyring ou KWallet) está desbloqueado</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- MACOS -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">⌘</span><div><b>macOS</b><span>macOS 12 (Monterey) ou mais recente · Apple Silicon (M1, M2, M3, M4…) ou Intel</span></div></div>
+  <h2><span class="n">04</span>macOS · <em>verificar e baixar</em></h2>
+  <h3>Passo 1 · Descubra o seu chip e a versão</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Clique no menu <strong>Apple</strong> (o ícone da maçã) no canto superior esquerdo › <strong>Sobre Este Mac</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Em <strong>Chip</strong>, se aparecer "Apple M1", "M2", "M3"… → baixe <strong>Apple Silicon</strong>. Se aparecer <strong>Processador</strong> "Intel" → baixe <strong>Intel</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Confira a versão do macOS: precisa ser 12 (Monterey) ou mais nova. A documentação recomenda versões que ainda recebem atualizações de segurança da Apple (em geral, a atual e as duas anteriores).</div></div>
+  </div>
+  <div class="callout warn">A página de "Getting started" diz que <strong>x86 (Intel) não é suportado</strong>, enquanto a página de download oferece um botão para Intel. Se o seu Mac é Intel, use o download oficial e, se houver erro ao abrir, a alternativa é o CLI (seção 06).</div>
+  <h3>Passo 2 · Baixe o instalador</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Abra <code>antigravity.google/download</code> e clique na aba <strong>macOS</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Clique em <strong>Download for Apple Silicon</strong> ou <strong>Download for Intel</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>O arquivo <code>Antigravity.dmg</code> vai para a pasta <strong>Downloads</strong>.</div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2><span class="n">04</span>macOS · <em>instalar</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Dê dois cliques em <code>Antigravity.dmg</code>. Abre uma janela com o ícone do Antigravity e um atalho para a pasta <strong>Aplicativos</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div><strong>Arraste</strong> o ícone do Antigravity para a pasta <strong>Aplicativos</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Se o Finder perguntar se quer <strong>"Manter Ambos"</strong> ou <strong>"Substituir"</strong> (Keep Both / Replace), escolha <strong>Substituir</strong>, como orienta a documentação.</div></div>
+    <div class="step"><div class="b">4</div><div>Ejete o disco do instalador: na barra lateral do Finder, clique na seta ⏏ ao lado de "Antigravity".</div></div>
+    <div class="step"><div class="b">5</div><div>Abra o Antigravity pela pasta <strong>Aplicativos</strong>, pelo Launchpad ou pelo Spotlight (<span class="kbd">⌘</span>+<span class="kbd">Espaço</span>, digite "Antigravity").</div></div>
+    <div class="step"><div class="b">6</div><div>Na primeira vez, o macOS avisa que o app foi baixado da internet: confira o nome e clique em <strong>Abrir</strong>.</div></div>
+    <div class="step"><div class="b">7</div><div>Se o app perguntar sobre a <strong>Antigravity IDE</strong>, aceite instalá-la se quiser o editor.</div></div>
+  </div>
+  <div class="callout">Para deixar no Dock: com o app aberto, clique com o botão direito no ícone do Dock › <strong>Opções › Manter no Dock</strong>.</div>
+  <h3>Como confirmar que deu certo</h3>
+  <ul class="checklist">
+    <li>"Antigravity" está na pasta <strong>Aplicativos</strong> (não rode direto de dentro do <code>.dmg</code>)</li>
+    <li>Abre sem aviso de erro e mostra a tela de boas-vindas ou de login</li>
+    <li>No Dock, o 2.0 tem ícone de <strong>fundo branco</strong>; a IDE, de <strong>grade preta</strong></li>
+  </ul>
+  <h3>Problemas comuns no macOS</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>"Não é possível abrir porque o desenvolvedor não pode ser verificado"</td><td><strong>Ajustes do Sistema › Privacidade e Segurança</strong>, role até a mensagem sobre o Antigravity e clique em <strong>Abrir Mesmo Assim</strong> (só se o arquivo veio do site oficial)</td></tr>
+      <tr><td>"O app está danificado"</td><td>Apague o app, baixe o <code>.dmg</code> de novo e confira se escolheu o chip certo</td></tr>
+      <tr><td>Atualizações não instalam</td><td>O app pode ter sido aberto de dentro do <code>.dmg</code>; mova-o para Aplicativos</td></tr>
+      <tr><td>O CLI pede acesso ao Chaveiro</td><td>Permita o acesso: é onde a sessão fica guardada com segurança (seção 06)</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- 05 -->
+<section class="sec brk">
+  <h2><span class="n">05</span>Primeira configuração <em>(todos os sistemas)</em></h2>
+  <h3>1 · Entrar com a conta Google</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Na tela inicial, clique para entrar. O navegador abre a página de login do Google.</div></div>
+    <div class="step"><div class="b">2</div><div>Escolha a sua <strong>conta pessoal</strong> e autorize. O navegador avisa que pode voltar ao aplicativo.</div></div>
+    <div class="step"><div class="b">3</div><div>De volta ao app, você já está conectado. Se travar, feche e abra de novo o Antigravity.</div></div>
+  </div>
+  <h3>2 · Importar configurações (IDE, opcional)</h3>
+  <p>Na Antigravity IDE, você pode começar do zero ou <strong>importar configurações, extensões e temas</strong> de outros editores, como o Visual Studio Code ou o Cursor.</p>
+  <h3>3 · Escolher o preset de permissões</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Preset (Settings › General)</th><th>Recomendação</th></tr></thead>
+    <tbody>
+      <tr><td>Default</td><td><strong>Comece por aqui.</strong> Comandos rodam no sandbox; para sair dele, o agente pede permissão</td></tr>
+      <tr><td>Request Review</td><td>Para quem quer aprovar cada comando (mais lento, mais controle)</td></tr>
+      <tr><td>Turbo</td><td>Evite: sem perguntas e sem restrições. Só em máquinas descartáveis</td></tr>
+    </tbody></table></div>
+  <h3>4 · Criar o primeiro projeto</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Crie uma pasta de teste (ex.: <code>projetos/teste-antigravity</code>) e, se tiver Git, rode <code>git init</code> nela.</div></div>
+    <div class="step"><div class="b">2</div><div>No app: ícone de pasta com <strong>+</strong> › <strong>New Project</strong> › <strong>Add Folder</strong> › escolha a pasta › <strong>Create</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Mande o primeiro pedido: <em>"Crie um arquivo index.html com uma página de boas-vindas e abra no navegador"</em>. Escolha <strong>Local mode</strong> e <strong>Planning mode</strong>.</div></div>
+    <div class="step"><div class="b">4</div><div>Revise o plano (Artifact), aprove e confira o resultado.</div></div>
+  </div>
+  <h3>5 · Ajustes recomendados</h3>
+  <ul class="checklist">
+    <li><strong>Settings › Agent:</strong> política de revisão em <strong>Request review</strong></li>
+    <li><strong>Modelo:</strong> comece com um Gemini Flash; use o Pro para tarefas mais difíceis</li>
+    <li><strong>Regras do projeto:</strong> crie um <code>AGENTS.md</code> na raiz com as convenções (idioma, estilo, o que não mexer)</li>
+    <li><strong>Navegador:</strong> use um perfil separado do Chrome para o agente</li>
+    <li><strong>Coleta de dados:</strong> revise em Settings as opções de dados e telemetria</li>
+  </ul>
+</section>
+
+<!-- 06 -->
+<section class="sec brk">
+  <h2><span class="n">06</span>Antigravity CLI <em>nos três sistemas</em></h2>
+  <p class="intro">O CLI é instalado separado do aplicativo, por um script oficial. O mesmo script serve para <strong>atualizar</strong>.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Comando de instalação</th><th>Onde o <code>agy</code> fica</th></tr></thead>
+    <tbody>
+      <tr><td>macOS e Linux (Terminal)</td><td><code>curl -fsSL https://antigravity.google/cli/install.sh | bash</code></td><td><code>~/.local/bin/agy</code></td></tr>
+      <tr><td>Windows (PowerShell)</td><td><code>irm https://antigravity.google/cli/install.ps1 | iex</code></td><td rowspan="2"><code>C:\Users\&lt;você&gt;\AppData\Local\agy\bin</code></td></tr>
+      <tr><td>Windows (Prompt de Comando)</td><td><code>curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></td></tr>
+    </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><div class="k">Flags opcionais</div><p><code>--skip-aliases</code>: não mexe em aliases antigos de <code>agy</code>/<code>antigravity</code> no seu shell. <code>--skip-path</code>: não altera o PATH do seu perfil.</p></div>
+    <div class="card"><div class="k">Primeiro uso</div><p>Feche e abra o terminal, entre na pasta do projeto (<code>cd …</code>) e rode <code>agy</code>. Ele pergunta o esquema de cores, o modo de exibição (Alt-Screen ou Inline) e se você confia na pasta.</p></div>
+  </div>
+  <h3>Login no CLI</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Situação</th><th>Como funciona</th></tr></thead>
+    <tbody>
+      <tr><td>No seu computador</td><td>O <code>agy</code> procura a sessão no cofre do sistema (Chaveiro do macOS, Secret Service/D-Bus no Linux, Gerenciador de Credenciais do Windows). Se não achar, abre o navegador para você entrar</td></tr>
+      <tr><td>Por SSH (servidor remoto)</td><td>O <code>agy</code> mostra uma URL. Abra-a no navegador do seu computador, entre, copie o <strong>código</strong> exibido e cole no terminal remoto</td></tr>
+      <tr><td>Sem navegador (CI, automação)</td><td>Use uma chave da API Gemini (Google AI Studio): <code>"modelProvider": "gemini"</code> em <code>~/.gemini/antigravity-cli/settings.json</code> e a variável <code>GEMINI_API_KEY</code>. Só a variável, sozinha, não tem efeito</td></tr>
+    </tbody></table></div>
+  <h3>"agy: command not found"</h3>
+  <div class="term"><span class="c"># macOS / Linux: adicione ao fim do ~/.zshrc (macOS) ou ~/.bashrc (Linux)</span>
+export PATH="$HOME/.local/bin:$PATH"
+source ~/.zshrc        <span class="c"># ou: source ~/.bashrc</span>
+
+<span class="c"># Windows (PowerShell): adiciona a pasta do agy ao PATH do usuário</span>
+[System.Environment]::SetEnvironmentVariable("Path",
+  [System.Environment]::GetEnvironmentVariable("Path","User") + ";$env:LOCALAPPDATA\agy\bin", "User")
+<span class="c"># depois feche e abra o terminal</span></div>
+  <div class="callout warn">A página de solução de problemas oficial usa, no exemplo do Windows, o caminho <code>C:\Program Files\Google\antigravity-cli</code>, diferente da pasta onde o instalador coloca o <code>agy</code> (<code>AppData\Local\agy\bin</code>). Use a pasta onde o arquivo <code>agy.exe</code> realmente está.</div>
+</section>
+
+<!-- 07 -->
+<section class="sec">
+  <h2><span class="n">07</span>Atualizar <em>e desinstalar</em></h2>
+  <h3>Atualizar</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Instalação</th><th>Como atualizar</th></tr></thead>
+    <tbody>
+      <tr><td>Aplicativo (Windows, macOS, Linux)</td><td><strong>Automático</strong> por padrão: o app avisa quando há atualização. Para ficar numa versão antiga, mude <strong>Update: Mode</strong> para <em>manual</em> ou <em>none</em> nas configurações</td></tr>
+      <tr><td>Linux · caminho A</td><td>Junto com o sistema: <code>sudo apt update &amp;&amp; sudo apt upgrade</code></td></tr>
+      <tr><td>Linux · caminho B</td><td><code>sudo dnf upgrade antigravity</code></td></tr>
+      <tr><td>Linux · caminho C</td><td>Baixe o novo <code>.tar.gz</code> e substitua a pasta em <code>/opt/antigravity</code></td></tr>
+      <tr><td>CLI</td><td>Rode o mesmo script de instalação; ele também tem atualização automática em segundo plano</td></tr>
+    </tbody></table></div>
+  <h3>Desinstalar</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Como</th></tr></thead>
+    <tbody>
+      <tr><td>Windows</td><td><strong>Configurações › Aplicativos › Aplicativos instalados</strong> › Antigravity › <strong>⋯ › Desinstalar</strong></td></tr>
+      <tr><td>macOS</td><td>Arraste "Antigravity" da pasta <strong>Aplicativos</strong> para o <strong>Lixo</strong> e esvazie o Lixo</td></tr>
+      <tr><td>Linux A / B</td><td><code>sudo apt remove antigravity</code> · <code>sudo dnf remove antigravity</code> (e, se quiser, apague o arquivo do repositório em <code>sources.list.d</code> ou <code>yum.repos.d</code>)</td></tr>
+      <tr><td>Linux C</td><td><code>sudo rm -rf /opt/antigravity</code> e o atalho <code>~/.local/share/applications/antigravity.desktop</code></td></tr>
+      <tr><td>CLI</td><td>Apague o executável <code>agy</code> (<code>~/.local/bin/agy</code> ou a pasta <code>AppData\Local\agy</code>)</td></tr>
+    </tbody></table></div>
+  <div class="callout danger">As configurações e conversas ficam em pastas dentro de <code>~/.gemini</code> (por exemplo, <code>~/.gemini/antigravity</code> e <code>~/.gemini/antigravity-cli</code>). <strong>Não apague a pasta <code>~/.gemini</code> inteira</strong>: ela também guarda regras globais (<code>AGENTS.md</code>) e pode ser usada por outras ferramentas do Google. Apague só as subpastas do Antigravity, e só se quiser zerar tudo.</div>
+</section>
+
+<!-- 08 -->
+<section class="sec brk">
+  <h2><span class="n">08</span>Problemas comuns <em>e checklist final</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>Sistema</th><th>Solução</th></tr></thead>
+    <tbody>
+      <tr><td>Não consigo fazer login</td><td>Todos</td><td>Conta Workspace, país não atendido ou idade não verificada: tente uma conta <code>@gmail.com</code> pessoal</td></tr>
+      <tr><td><code>secret keyring is locked</code></td><td>Linux</td><td>Desbloqueie o GNOME Keyring/KWallet; em SSH, inicie o D-Bus: <code>export $(dbus-launch)</code></td></tr>
+      <tr><td>CLI trava pedindo o Chaveiro</td><td>macOS</td><td>App <strong>Acesso às Chaves</strong> › item do Antigravity CLI › Obter Informações › Controle de Acesso: permita o <code>agy</code></td></tr>
+      <tr><td><code>agy: command not found</code></td><td>Todos</td><td>Pasta do <code>agy</code> fora do PATH (seção 06)</td></tr>
+      <tr><td>Aviso de <code>update.lock</code></td><td>CLI</td><td>Outro processo de atualização em andamento; espere alguns minutos e tente de novo</td></tr>
+      <tr><td>Colar imagem no CLI por SSH falha</td><td>CLI</td><td>Use terminais com suporte (iTerm2, Ghostty); no tmux: <code>set -s set-clipboard on</code></td></tr>
+      <tr><td>Comandos do agente falham por falta de rede</td><td>macOS/Linux</td><td>O sandbox corta a rede: aprove rodar fora dele quando o agente pedir</td></tr>
+    </tbody></table></div>
+  <h3>Checklist final</h3>
+  <ul class="checklist">
+    <li>Antigravity 2.0 instalado a partir do site oficial, na versão certa para o meu processador</li>
+    <li>Abre normalmente e estou conectado com a minha conta Google</li>
+    <li>(Opcional) Antigravity IDE instalada; (opcional) <code>agy</code> responde no terminal</li>
+    <li>Preset de permissões <strong>Default</strong> e revisão em <strong>Request review</strong></li>
+    <li>Primeiro projeto criado numa pasta de teste versionada com Git</li>
+    <li>Primeiro pedido executado e Artifact revisado</li>
+  </ul>
+  <div class="foot">
+    <p class="source">Fontes: antigravity.google/download, /download/linux e /releases; antigravity.google/docs (Getting started, CLI: Installation and auth, CLI: Troubleshooting, Settings, Permissions, FAQ), consultados em outubro de 2026 (Antigravity 2.0 v2.19.1). Passos de instalação no Windows e o caminho .tar.gz no Linux também conferidos com o material de pesquisa original desta aula. Passos de sistema operacional (SmartScreen, Gatekeeper, Sobre Este Mac, atalho .desktop) seguem o comportamento padrão de cada sistema e podem variar conforme a versão. Formação Claude Code 2026 · Próxima aula → Overview da IDE.</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Instalando e Configurando o AntiGravity</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{font-family:var(--mono);font-size:.88em;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface-2)}
+</style>
+
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Introdução ao Antigravity · Aula 3</div>
+    <h1>Instalando e configurando<br><em>o AntiGravity</em></h1>
+    <p class="lead">Nesta aula, colocamos o Antigravity para rodar no seu computador. Vemos o que instalar (o app 2.0, a IDE e o CLI), como escolher o download certo para <strong>Windows</strong>, <strong>Linux</strong> e <strong>macOS</strong>, os caminhos de instalação de cada sistema, o primeiro login, a configuração de segurança recomendada e o primeiro projeto. O passo a passo completo, com todos os detalhes e soluções de problemas, está no <strong>Manual de Instalação e Configuração</strong> que acompanha esta aula.</p>
+    <div class="chips"><span>O que instalar</span><span>Windows</span><span>Linux: .deb · .rpm · .tar.gz</span><span>macOS: Apple Silicon · Intel</span><span>Primeiro login</span><span>Preset Default</span><span>CLI agy</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em antigravity.google (Download, Download for Linux, Releases) e antigravity.google/docs (Getting started, CLI: Installation and auth, CLI: Troubleshooting, Settings, Permissions), consultados em outubro de 2026 · Versão de referência: 2.19.1</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Visão geral</span><span class="n">01</span></div>
+  <h2>O que <em>vamos instalar</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Peça</th><th>O que é</th><th>Precisa?</th><th>Como instala</th></tr></thead>
+    <tbody>
+      <tr><td><b>Antigravity 2.0</b></td><td>O app de agentes (projetos, conversas, Artifacts)</td><td><strong>Sim</strong>: é o principal</td><td>Instalador do site oficial</td></tr>
+      <tr><td><b>Antigravity IDE</b></td><td>O editor de código com IA</td><td>Recomendado para quem programa</td><td>Oferecido durante a instalação do 2.0</td></tr>
+      <tr><td><b>Antigravity CLI</b> (<code>agy</code>)</td><td>O agente no terminal</td><td>Opcional</td><td>Script de uma linha</td></tr>
+    </tbody></table></div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><div class="k">Antes de tudo</div><p>Uma <strong>conta Google pessoal</strong> (contas Workspace podem falhar; use <code>@gmail.com</code>).</p></div>
+    <div class="card"><div class="k">Só do site oficial</div><p><code>antigravity.google/download</code>. Instaladores de outros lugares podem estar adulterados.</p></div>
+    <div class="card"><div class="k">Tenha Git</div><p>Projetos versionados permitem desfazer o que o agente fizer e usar o modo worktree.</p></div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Requisitos</span><span class="n">02</span></div>
+  <h2>Qual download <em>é o seu?</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Versão mínima</th><th>Como descobrir o processador</th><th>Escolha</th></tr></thead>
+    <tbody>
+      <tr><td><b>Windows</b></td><td>Windows 10 (64 bits)</td><td><span class="kbd">Win</span>+<span class="kbd">I</span> › Sistema › Sobre › <strong>Tipo de sistema</strong></td><td>x64 (quase todos) ou ARM64</td></tr>
+      <tr><td><b>Linux</b></td><td>glibc ≥ 2.28 (Ubuntu 20+, Debian 10+, Fedora 36+, RHEL 8+)</td><td>Terminal: <code>uname -m</code> e <code>ldd --version</code></td><td>x86_64 → x64 · aarch64 → ARM64</td></tr>
+      <tr><td><b>macOS</b></td><td>macOS 12 (Monterey)</td><td>Menu Apple › <strong>Sobre Este Mac</strong> › Chip</td><td>Apple Silicon (M1, M2…) ou Intel</td></tr>
+    </tbody></table></div>
+  <div class="callout warn" style="margin-top:12px">Divergência oficial: a documentação diz que Mac Intel (x86) não é suportado, mas a página de download oferece o botão Intel. Se o seu Mac é Intel, tente o download oficial; se não abrir, use o CLI.</div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Windows</span><span class="n">03</span></div>
+  <h2>Instalando <em>no Windows</em></h2>
+  <div class="flow">
+    <div class="n"><b>1 · Baixar</b>Aba Windows › <strong>Download for x64</strong> (ou ARM64): <code>Antigravity-x64.exe</code>.</div>
+    <div class="n"><b>2 · Executar</b>Dois cliques. SmartScreen: <strong>Mais informações › Executar assim mesmo</strong>.</div>
+    <div class="n"><b>3 · Aceitar</b>Contrato de licença e pasta padrão. <strong>Avançar</strong>.</div>
+    <div class="n"><b>4 · Instalar</b>Atalho na área de trabalho (opcional) › <strong>Instalar</strong>. IDE, se quiser.</div>
+    <div class="n key"><b>5 · Concluir</b><strong>Concluir</strong> e abrir pelo menu Iniciar.</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><div class="k">Se aparecer "Keep Both" ou "Replace"</div><p>A documentação orienta escolher <strong>Replace</strong>.</p></div>
+    <div class="card"><div class="k">No Windows, a segurança é a anterior</div><p>O novo sistema de permissões e o sandbox ainda são de macOS e Linux. No Windows, a execução de comandos se configura em Settings (Request Review, Proceed in Sandbox, Always Proceed).</p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Linux</span><span class="n">04</span></div>
+  <h2>Três caminhos <em>no Linux</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">A · Ubuntu, Debian, Mint</div><p>Repositório apt: ícone no menu e atualização com o sistema.</p></div>
+<div class="term" style="margin-top:8px"><span class="c"># (depois de cadastrar a
+# chave e o repositório —
+# comandos no manual)</span>
+sudo apt update
+sudo apt install antigravity</div>
+    </div>
+    <div>
+      <div class="card"><div class="k">B · Fedora, RHEL, SUSE</div><p>Repositório rpm em <code>/etc/yum.repos.d</code>.</p></div>
+<div class="term" style="margin-top:8px"><span class="c"># (depois de criar o
+# antigravity.repo —
+# comando no manual)</span>
+sudo dnf makecache
+sudo dnf install antigravity</div>
+    </div>
+    <div>
+      <div class="card"><div class="k">C · .tar.gz (qualquer distro)</div><p>Versão portátil: não tem instalador, já vem pronta para rodar.</p></div>
+<div class="term" style="margin-top:8px">tar -xvzf Antigravity.tar.gz
+sudo mv Antigravity-x64 \
+  /opt/antigravity
+<span class="c"># + ajuste do chrome-sandbox</span>
+/opt/antigravity/antigravity</div>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:12px">Os comandos completos de A, B e C (chave, repositório, permissões do <code>chrome-sandbox</code> e atalho no menu) estão no manual, copiados da página oficial "Download for Linux".</div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>macOS</span><span class="n">05</span></div>
+  <h2>Instalando <em>no macOS</em></h2>
+  <div class="flow">
+    <div class="n"><b>1 · Baixar</b>Aba macOS › <strong>Apple Silicon</strong> ou <strong>Intel</strong>: <code>Antigravity.dmg</code>.</div>
+    <div class="n"><b>2 · Abrir o .dmg</b>Dois cliques no arquivo baixado.</div>
+    <div class="n"><b>3 · Arrastar</b>O ícone do Antigravity para <strong>Aplicativos</strong>. "Substituir", se perguntar.</div>
+    <div class="n"><b>4 · Ejetar</b>O disco do instalador, na barra lateral do Finder.</div>
+    <div class="n key"><b>5 · Abrir</b>Por Aplicativos ou Spotlight (<span class="kbd">⌘</span>+<span class="kbd">Espaço</span>). Confirme <strong>Abrir</strong>.</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="callout warn" style="margin-top:0"><strong>"Desenvolvedor não verificado"?</strong> Ajustes do Sistema › Privacidade e Segurança › <strong>Abrir Mesmo Assim</strong>, só se o arquivo veio do site oficial.</div>
+    <div class="callout" style="margin-top:0">Não rode o app de dentro do <code>.dmg</code>: ele precisa estar em <strong>Aplicativos</strong> para atualizar sozinho.</div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Configuração</span><span class="n">06</span></div>
+  <h2>Primeiro login <em>e segurança</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div>Abra o app e clique para entrar: o navegador abre o login do Google.</div></div>
+      <div class="step"><div class="b">2</div><div>Escolha a <strong>conta pessoal</strong>, autorize e volte ao app.</div></div>
+      <div class="step"><div class="b">3</div><div>Na IDE, se quiser, importe configurações do VS Code ou do Cursor.</div></div>
+      <div class="step"><div class="b">4</div><div>Em <strong>Settings › General</strong>, deixe o preset <strong>Default</strong>.</div></div>
+      <div class="step"><div class="b">5</div><div>Em <strong>Settings › Agent</strong>, revisão em <strong>Request review</strong>.</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Preset</th><th>Use?</th></tr></thead>
+      <tbody>
+        <tr><td><b>Default</b></td><td><strong>Sim.</strong> Comandos no sandbox; para sair dele, o agente pede permissão</td></tr>
+        <tr><td><b>Request Review</b></td><td>Se quiser aprovar cada comando</td></tr>
+        <tr><td><b>Turbo</b></td><td>Não, exceto em máquinas descartáveis</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Primeiro uso</span><span class="n">07</span></div>
+  <h2>O primeiro <em>projeto</em></h2>
+  <div class="flow">
+    <div class="n"><b>1 · Pasta</b>Crie <code>projetos/teste-antigravity</code> e rode <code>git init</code>.</div>
+    <div class="n"><b>2 · Projeto</b>Pasta com <strong>+</strong> › New Project › Add Folder › Create.</div>
+    <div class="n"><b>3 · Pedido</b>"Crie um index.html de boas-vindas e abra no navegador."</div>
+    <div class="n"><b>4 · Modos</b>Local mode + Planning mode.</div>
+    <div class="n key"><b>5 · Revisar</b>Leia o plano (Artifact), aprove e confira.</div>
+  </div>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card"><div class="k">Regras do projeto</div><p>Crie um <code>AGENTS.md</code> na raiz: idioma, estilo, o que não mexer.</p></div>
+    <div class="card"><div class="k">Modelo</div><p>Comece com um Gemini Flash; use o Pro em tarefas difíceis.</p></div>
+    <div class="card"><div class="k">Navegador</div><p>Um perfil separado do Chrome para o agente, longe das suas contas.</p></div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Terminal</span><span class="n">08</span></div>
+  <h2>O CLI <em>nos três sistemas</em></h2>
+  <div class="grid g2" style="align-items:start">
+<div class="term"><span class="c"># macOS e Linux (Terminal) → ~/.local/bin/agy</span>
+curl -fsSL https://antigravity.google/cli/install.sh | bash
+
+<span class="c"># Windows (PowerShell) → AppData\Local\agy\bin</span>
+irm https://antigravity.google/cli/install.ps1 | iex
+
+<span class="c"># depois: feche e abra o terminal</span>
+cd ~/projetos/teste-antigravity
+agy</div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Login</th><th>Como</th></tr></thead>
+        <tbody>
+          <tr><td><b>Local</b></td><td>Usa o cofre do sistema (Chaveiro, Secret Service, Gerenciador de Credenciais) ou abre o navegador</td></tr>
+          <tr><td><b>SSH</b></td><td>Mostra uma URL; você entra no navegador local e cola o código no terminal</td></tr>
+          <tr><td><b>CI</b></td><td>Chave da API Gemini + <code>modelProvider</code> no settings.json</td></tr>
+        </tbody></table></div>
+      <div class="callout" style="margin-top:8px"><code>agy: command not found</code>? A pasta do <code>agy</code> não está no PATH. Correção para cada sistema no manual.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Manutenção</span><span class="n">09</span></div>
+  <h2>Atualizar <em>e desinstalar</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Atualizar</th><th>Como</th></tr></thead>
+      <tbody>
+        <tr><td><b>App</b></td><td>Automático por padrão (opção <strong>Update: Mode</strong> para manual ou nenhum)</td></tr>
+        <tr><td><b>Linux A / B</b></td><td><code>apt upgrade</code> / <code>dnf upgrade</code></td></tr>
+        <tr><td><b>Linux C</b></td><td>Novo <code>.tar.gz</code> em <code>/opt</code></td></tr>
+        <tr><td><b>CLI</b></td><td>Mesmo script; também se atualiza sozinho</td></tr>
+      </tbody></table></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Desinstalar</th><th>Como</th></tr></thead>
+      <tbody>
+        <tr><td><b>Windows</b></td><td>Configurações › Aplicativos › Antigravity › Desinstalar</td></tr>
+        <tr><td><b>macOS</b></td><td>Arrastar de Aplicativos para o Lixo</td></tr>
+        <tr><td><b>Linux</b></td><td><code>apt remove</code> / <code>dnf remove</code> / apagar <code>/opt/antigravity</code></td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="callout danger" style="margin-top:12px">Para "zerar" o Antigravity, apague só as subpastas dele dentro de <code>~/.gemini</code> (como <code>antigravity</code> e <code>antigravity-cli</code>). <strong>Nunca a pasta <code>~/.gemini</code> inteira</strong>: ela guarda regras globais e pode ser usada por outras ferramentas.</div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Diagnóstico</span><span class="n">10</span></div>
+  <h2>Os problemas <em>mais comuns</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>Sistema</th><th>Solução rápida</th></tr></thead>
+    <tbody>
+      <tr><td>Não consigo entrar</td><td>Todos</td><td>Conta <code>@gmail.com</code> pessoal; idade verificada</td></tr>
+      <tr><td>"Não pode ser executado neste computador"</td><td>Windows</td><td>Arquitetura errada: x64 × ARM64</td></tr>
+      <tr><td><code>GLIBC_2.28 not found</code></td><td>Linux</td><td>Distribuição antiga demais</td></tr>
+      <tr><td>Erro do SUID sandbox</td><td>Linux (.tar.gz)</td><td><code>chown root:root</code> e <code>chmod 4755</code> no <code>chrome-sandbox</code></td></tr>
+      <tr><td>"Desenvolvedor não verificado"</td><td>macOS</td><td>Privacidade e Segurança › Abrir Mesmo Assim</td></tr>
+      <tr><td><code>secret keyring is locked</code></td><td>Linux (CLI)</td><td>Desbloquear o keyring; em SSH, <code>export $(dbus-launch)</code></td></tr>
+      <tr><td>Comando do agente sem rede</td><td>macOS/Linux</td><td>O sandbox corta a rede: aprove rodar fora quando pedido</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- QUIZ -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">11</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Onde descobrir se o seu Windows é x64 ou ARM64?</p>
+        <div class="opts"><div>A) No Painel de Controle de som</div><div>B) Configurações › Sistema › Sobre › Tipo de sistema</div><div>C) No navegador</div><div>D) Não importa</div></div>
+        <div class="answer"><b>B.</b> E baixe a versão correspondente.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. No Ubuntu, qual caminho dá atualização automática?</p>
+        <div class="opts"><div>A) O .tar.gz</div><div>B) O repositório apt oficial</div><div>C) Baixar de um grupo</div><div>D) Nenhum</div></div>
+        <div class="answer"><b>B.</b> Atualiza junto com o sistema.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Qual preset de permissões usar no começo?</p>
+        <div class="opts"><div>A) Turbo</div><div>B) Default: comandos no sandbox, perguntando para sair dele</div><div>C) Nenhum</div><div>D) Always Proceed</div></div>
+        <div class="answer"><b>B.</b> Turbo só em máquinas descartáveis.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. <code>agy: command not found</code> depois de instalar o CLI. Causa?</p>
+        <div class="opts"><div>A) O CLI não existe</div><div>B) A pasta do agy não está no PATH do terminal</div><div>C) Falta internet</div><div>D) Conta errada</div></div>
+        <div class="answer"><b>B.</b> Ajuste o PATH e reabra o terminal.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Recapitulando</div>
+    <h1 style="font-size:40px">Instalado, conectado<br><em>e com segurança ligada</em></h1>
+    <p class="lead">Instalamos o Antigravity 2.0 (e, se quiser, a IDE) escolhendo o download certo para o processador: o .exe no Windows; o repositório apt, o rpm ou o .tar.gz no Linux; o .dmg no macOS. Entramos com a conta Google pessoal, deixamos o preset Default e a revisão em Request review, criamos o primeiro projeto numa pasta versionada e vimos o CLI <code>agy</code>, como atualizar, desinstalar e resolver os problemas mais comuns. Todos os detalhes estão no manual que acompanha a aula.</p>
+    <div class="chips"><span>x64 · ARM64 · Apple Silicon</span><span>.exe · .deb · .rpm · .tar.gz · .dmg</span><span>Conta @gmail.com</span><span>Default + Request review</span><span>AGENTS.md</span><span>agy</span></div>
+    <div class="next">Próxima aula → Overview da IDE</div>
+    <div class="source">Material complementar: Manual_de_Instalacao_e_Configuracao_AntiGravity.pdf (nesta pasta). Fontes: antigravity.google (Download, Download for Linux, Releases) e antigravity.google/docs (Getting started, CLI: Installation and auth, CLI: Troubleshooting, Settings, Permissions), consultados em outubro de 2026.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

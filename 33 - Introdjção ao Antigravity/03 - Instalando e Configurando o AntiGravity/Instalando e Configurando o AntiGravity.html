@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Como instalar o Antigravity IDE (Standalone) — pesquisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:10.6px;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+h1{font-family:var(--display);font-weight:600;font-size:34px;line-height:1.1;margin:0 0 12px}
+h1 em,h2 em{color:var(--accent-ink);font-style:italic}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:500}
+h3{font-size:11.6px;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+p{margin:0 0 7px}
+.muted{color:var(--muted)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 4px;border-radius:4px}
+section.sec{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
+section.sec.brk{page-break-before:always;break-before:page;border-top:none;margin-top:0;padding-top:0}
+.intro{color:var(--muted);margin:0 0 9px}
+/* header */
+.header{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.lead{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:3px 9px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:12px}
+/* toc */
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:14px}
+.toc div{font-size:10.4px;color:var(--muted);display:flex;gap:8px}
+.toc b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:18px}
+/* grid/cards */
+.grid{display:grid;gap:9px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;break-inside:avoid}
+.card .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:3px}
+.card p{margin:0;color:var(--muted);font-size:10.2px}
+/* tables */
+.table-wrap{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:6px 0 8px;break-inside:avoid}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:8.6px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 9px;font-weight:500}
+td{border-top:1px solid var(--border);padding:6px 9px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+/* code */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:9.8px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:6px 0 8px;break-inside:avoid}
+.term .c{color:var(--muted)}
+/* callouts */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:9px;padding:8px 11px;font-size:10.2px;margin:7px 0;break-inside:avoid}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+/* steps */
+.steps{display:grid;gap:6px;margin:6px 0 8px}
+.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 10px;break-inside:avoid}
+.step .b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:10px;display:flex;align-items:center;justify-content:center}
+.step div:last-child{font-size:10.2px}
+.checklist{list-style:none;padding:0;margin:4px 0 8px}
+.checklist li{position:relative;padding-left:17px;margin:4px 0}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+.bullets{list-style:none;padding:0;margin:4px 0 8px}
+.bullets li{position:relative;padding-left:14px;margin:4px 0}
+.bullets li::before{content:"●";position:absolute;left:0;top:.2em;color:var(--accent);font-size:.65em}
+.source{font-family:var(--mono);font-size:8.8px;color:var(--muted);line-height:1.6}
+.foot{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+h2,h3,.intro{break-after:avoid;page-break-after:avoid}
+section.sec.keep{break-inside:avoid;page-break-inside:avoid}
+h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
+</style>
+
+<style>
+.q{font-family:var(--display);font-size:16px;font-weight:600;margin:14px 0 6px;color:var(--ink)}
+.src{font-family:var(--mono);font-size:8.8px;color:var(--accent-ink)}
+.ref{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:8px 11px;margin:6px 0;break-inside:avoid}
+.ref b{display:block;font-size:10.4px}.ref span{color:var(--muted);font-size:9.8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="eyebrow"><span class="dot"></span>Introdução ao Antigravity · Aula 3 · Material de pesquisa</div>
+  <h1>Como instalar o<br><em>Antigravity IDE (Standalone)</em></h1>
+  <p class="lead">Registro de uma pesquisa feita no Google (Modo IA) em 01/10/2026, às 16:15, com as respostas e as fontes indicadas. É o material de pesquisa original desta aula, reproduzido no padrão visual do curso. Para o passo a passo completo e conferido na documentação oficial, use o <strong>Manual de Instalação e Configuração</strong> desta pasta.</p>
+  <div class="byline">Pesquisa: "como instalar Antigravity IDE (Standalone)" · Google, Modo IA · 01/10/2026 16:15 · Conteúdo das respostas mantido como no original; foram retirados apenas elementos de interface do navegador.</div>
+</div>
+
+<section class="sec">
+  <p class="q">como instalar Antigravity IDE (Standalone)</p>
+  <p>Para instalar o Google Antigravity IDE (Standalone), acesse o site oficial, baixe o instalador compatível com o seu sistema operacional (Windows, macOS ou Linux) e execute o arquivo seguindo as instruções na tela. <span class="src">Google Antigravity +2</span></p>
+  <h3>Passo a Passo para Instalação</h3>
+  <ul class="bullets">
+    <li><strong>Baixe o instalador:</strong> Acesse a página oficial do Google Antigravity Download e escolha a versão desktop autônoma (Standalone) para o seu sistema (ex: Windows x64, Apple Silicon ou Intel para macOS, ou pacote .deb / .tar.gz para Linux).</li>
+    <li><strong>Execute o arquivo:</strong> Abra o instalador baixado no seu computador.</li>
+    <li><strong>Aceite os termos:</strong> Leia e aceite o contrato de licença e termos de uso.</li>
+    <li><strong>Defina o local:</strong> Escolha o diretório de instalação padrão ou personalize se preferir, depois clique em avançar.</li>
+    <li><strong>Conclua a instalação:</strong> Selecione tarefas adicionais (como criar atalho na área de trabalho) e clique em Instalar e depois em Concluir. <span class="src">Google Antigravity +6</span></li>
+  </ul>
+  <h3>Configuração Inicial</h3>
+  <ul class="bullets">
+    <li><strong>Abra o aplicativo:</strong> Inicie o Antigravity IDE após a conclusão.</li>
+    <li><strong>Faça login:</strong> Autentique-se com a sua conta Google para ativar os recursos de IA e agentes integrados (como o Gemini).</li>
+    <li><strong>Importe configurações (Opcional):</strong> Escolha se deseja iniciar do zero ou importar configurações, extensões e temas de outros editores como o Visual Studio Code ou Cursor. <span class="src">YouTube · Marcio Marq… +3</span></li>
+  </ul>
+  <p class="muted">Veja uma demonstração detalhada do processo de instalação e configuração inicial do Antigravity IDE:</p>
+  <div class="ref"><b>How to Install and Setup Google Antigravity IDE on Windows 11</b><span>YouTube · ProgrammingKnowledge · 21 mil visualizações · há 7 meses · 14:35</span></div>
+  <p class="muted">Se você tiver alguma dúvida sobre a instalação em um sistema operacional específico (como Linux ou macOS) ou sobre a configuração dos agentes de IA, me avise!</p>
+  <h3>Fontes indicadas</h3>
+  <div class="ref"><b>Google Antigravity · Google Antigravity - Download</b><span>Google Antigravity releases &amp; specs: * Antigravity 2.0 (v2.15.1): macOS, Windows, Linux; min reqs glibc &gt;= 2.28, glibcxx &gt;= 3.4.25...</span></div>
+  <div class="ref"><b>Google Antigravity · Google Antigravity - Download</b><span>Releases: Antigravity 2.0 (v2.12.0 for macOS, Windows, Linux; minimum glibc &gt;= 2.28, glibcxx &gt;= 3.4.25); Antigravity CLI (v1.1.25 ...</span></div>
+  <div class="ref"><b>COMO BAIXAR E INSTALAR O ANTIGRAVITY DO GOOGLE ...</b><span>YouTube · Rodrigo - Dicas e Tutoriais · 7:37 · "COMO BAIXAR E INSTALAR O ANTIGRAVITY DO GOOGLE PASSO A PASSO fala pessoal no vídeo de hoje eu vou mostrar para vocês como…"</span></div>
+</section>
+
+<section class="sec brk">
+  <p class="q">baixei o arquivo Antigravity IDE.tar.gz amis não encontro o instalador</p>
+  <p>É perfeitamente normal não encontrar um arquivo executável clássico de instalação (como um .exe ou .deb) dentro do pacote .tar.gz do Google Antigravity IDE.</p>
+  <p>No Linux, o arquivo .tar.gz disponibilizado pelo Google traz uma versão portátil (portable build em Electron). Isso significa que o próprio programa já está ali dentro, pronto para rodar, sem a necessidade de um assistente de instalação. <span class="src">Reddit · r/google_antigr… +1</span></p>
+  <p>Para abrir o IDE e deixá-lo integrado ao seu sistema, siga o passo a passo abaixo pelo terminal:</p>
+  <h3>1. Extraia os arquivos</h3>
+  <p>Abra o terminal na pasta onde você baixou o arquivo (geralmente a pasta Downloads) e execute o comando para extrair:</p>
+  <div class="term">cd ~/Downloads
+tar -xvzf Antigravity.tar.gz</div>
+  <p class="muted">(Nota: Substitua Antigravity.tar.gz pelo nome exato do arquivo que você baixou).</p>
+  <h3>2. Mova para a pasta do sistema e execute</h3>
+  <p>A extração vai gerar uma pasta chamada algo como Antigravity-x64. Você pode mover essa pasta para o diretório /opt (onde ficam os softwares adicionais do Linux) e rodar o executável principal: <span class="src">Reddit · r/google_antigr… +1</span></p>
+  <div class="term"><span class="c"># Move os arquivos para a pasta do sistema</span>
+sudo mv Antigravity-x64 /opt/antigravity
+<span class="c"># Ajusta as permissões do sandbox (necessário por ser baseado em El</span>
+sudo chown root:root /opt/antigravity/chrome-sandbox
+sudo chmod 4755 /opt/antigravity/chrome-sandbox
+<span class="c"># Executa o Antigravity IDE diretamente</span>
+/opt/antigravity/antigravity</div>
+  <p class="muted">(Caso o nome do executável final mude, liste os arquivos com ls /opt/antigravity para identificar o arquivo executável principal).</p>
+  <h3>Alternativa muito mais simples (Via Repositório Oficial)</h3>
+  <p>Se você usa Ubuntu, Debian, Mint ou derivados, você não precisa sofrer configurando o .tar.gz manualmente. O Google disponibiliza um repositório oficial que cria os ícones no menu e gerencia atualizações automaticamente. <span class="src">Google Antigravity +1</span></p>
+  <p>Você pode instalar rodando estes três comandos no terminal: <span class="src">Google Antigravity</span></p>
+  <div class="term"><span class="c"># 1. Adiciona a chave e o repositório oficial do Google Antigravity</span>
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg
+echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] ht
+<span class="c"># 2. Atualiza a lista de pacotes</span>
+sudo apt update
+<span class="c"># 3. Instala o programa de forma definitiva</span>
+sudo apt install antigravity</div>
+  <div class="callout warn">Nota do curso: no material original, as linhas do <code>curl</code> e do <code>echo</code> aparecem <strong>cortadas</strong> pela página. Os comandos completos, copiados da página oficial "Download for Linux", estão no Manual de Instalação e Configuração (seção 03, caminho A).</div>
+  <p class="muted">Se preferir manter a versão .tar.gz, me avise se deu tudo certo para rodar o executável ou se você quer ajuda para criar um atalho no menu de aplicativos do seu sistema!</p>
+  <h3>Fontes indicadas</h3>
+  <div class="ref"><b>Reddit · r/google_antigravity · Installing Antigravity 2.0 on Ubuntu - Reddit</b><span>22 de mai. de 2026 — What you download is a portable Electron build (Antigravity-x64) every step to make it launchable 1.1 Extract the files. 1.2 Mov...</span></div>
+  <div class="ref"><b>pedropaulo.net · Como instalar o Google Antigravity IDE no Ubuntu usando o ...</b><span>13 de jul. de 2026 — O Google Antigravity IDE possui. Linux em formato .tar.gz, para Ubuntu e Linux Mint. pode ser necessário configurar manualmente o...</span></div>
+  <div class="ref"><b>Google Antigravity · Download for Linux - Google Antigravity</b><span>Update the package cache. Install the package. sudo apt install antigravity. 1. Add the repository to /etc/yum.repos.d. 2. Update ...</span></div>
+  <div class="foot"><p class="source">Reprodução do material de pesquisa original (5 páginas impressas do navegador em 01/10/2026), no tema escuro do curso. Versões citadas nas fontes (v2.12.0, v2.15.1) eram as da época da pesquisa; em outubro de 2026 a página de download indica a v2.19.1. Formação Claude Code 2026.</p></div>
+</section>
+
+</div>
+</body>
+</html>
