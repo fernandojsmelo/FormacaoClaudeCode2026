@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Manual de Configurações Iniciais do Cursor</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:10.6px;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+h1{font-family:var(--display);font-weight:600;font-size:34px;line-height:1.1;margin:0 0 12px}
+h1 em,h2 em{color:var(--accent-ink);font-style:italic}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:500}
+h3{font-size:11.6px;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+p{margin:0 0 7px}
+.muted{color:var(--muted)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 4px;border-radius:4px}
+section.sec{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
+section.sec.brk{page-break-before:always;break-before:page;border-top:none;margin-top:0;padding-top:0}
+.intro{color:var(--muted);margin:0 0 9px}
+/* header */
+.header{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.lead{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:3px 9px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:12px}
+/* toc */
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:14px}
+.toc div{font-size:10.4px;color:var(--muted);display:flex;gap:8px}
+.toc b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:18px}
+/* grid/cards */
+.grid{display:grid;gap:9px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;break-inside:avoid}
+.card .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:3px}
+.card p{margin:0;color:var(--muted);font-size:10.2px}
+/* tables */
+.table-wrap{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:6px 0 8px;break-inside:avoid}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:8.6px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 9px;font-weight:500}
+td{border-top:1px solid var(--border);padding:6px 9px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+/* code */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:9.8px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:6px 0 8px;break-inside:avoid}
+.term .c{color:var(--muted)}
+/* callouts */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:9px;padding:8px 11px;font-size:10.2px;margin:7px 0;break-inside:avoid}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+/* steps */
+.steps{display:grid;gap:6px;margin:6px 0 8px}
+.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 10px;break-inside:avoid}
+.step .b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:10px;display:flex;align-items:center;justify-content:center}
+.step div:last-child{font-size:10.2px}
+.checklist{list-style:none;padding:0;margin:4px 0 8px}
+.checklist li{position:relative;padding-left:17px;margin:4px 0}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+.bullets{list-style:none;padding:0;margin:4px 0 8px}
+.bullets li{position:relative;padding-left:14px;margin:4px 0}
+.bullets li::before{content:"●";position:absolute;left:0;top:.2em;color:var(--accent);font-size:.65em}
+.source{font-family:var(--mono);font-size:8.8px;color:var(--muted);line-height:1.6}
+.foot{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+h2,h3,.intro{break-after:avoid;page-break-after:avoid}
+section.sec.keep{break-inside:avoid;page-break-inside:avoid}
+h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
+</style>
+
+<style>
+.osbar{display:flex;align-items:center;gap:12px;background:var(--surface-2);border:1px solid var(--border-2);border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;margin:0 0 10px}
+.osbar .ic{font-size:24px;width:36px;text-align:center}
+.osbar b{font-family:var(--display);font-size:22px;font-weight:600}
+.osbar span{display:block;color:var(--muted);font-size:10.2px}
+.kbd{font-family:var(--mono);font-size:.9em;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="eyebrow"><span class="dot"></span>Instalação e Configuração do Cursor · Aula 3 · Manual</div>
+  <h1>Configurações iniciais<br><em>do Cursor</em></h1>
+  <p class="lead">O que configurar logo depois de instalar, explicado passo a passo e separado por sistema: <strong>Windows</strong>, <strong>Linux</strong> e <strong>macOS</strong>. As telas de configuração são as mesmas nos três; mudam os <strong>atalhos</strong>, os <strong>locais dos arquivos</strong>, o <strong>terminal padrão</strong>, a <strong>sandbox</strong> dos comandos do agente e alguns detalhes de rede.</p>
+  <div class="chips"><span>Cursor Settings</span><span>Settings do editor</span><span>Run Mode e sandbox</span><span>Terminal padrão</span><span>Arquivos de configuração</span><span>Windows · Linux · macOS</span></div>
+  <div class="byline">Formação Claude Code 2026 · Baseado em cursor.com (Docs: VS Code Migration, Run Modes e Sandboxing, Terminal, Ignore file, CLI Configuration, Keyboard Shortcuts; Help: Privacy, Network, Themes, Tab, API keys, Extensions) e code.visualstudio.com (Settings), consultados em outubro de 2026 (Cursor 3.22)</div>
+  <div class="toc">
+    <div><b>01</b>As três telas e o roteiro (todos)</div><div><b>05</b>Ajustes comuns, passo a passo (todos)</div>
+    <div><b>02</b>Windows</div><div><b>06</b>Arquivos de configuração por sistema</div>
+    <div><b>03</b>Linux</div><div><b>07</b>Levar a configuração para outra máquina</div>
+    <div><b>04</b>macOS</div><div><b>08</b>Problemas comuns e checklist final</div>
+  </div>
+</div>
+
+<!-- 01 -->
+<section class="sec">
+  <h2><span class="n">01</span>As três telas <em>e o roteiro</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tela</th><th>Windows / Linux</th><th>macOS</th><th>O que tem</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cursor Settings</b></td><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">J</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">J</span></td><td>A parte de IA: conta, privacidade, modelos, agentes, Tab, indexação, rede</td></tr>
+      <tr><td><b>Settings (editor)</b></td><td><span class="kbd">Ctrl</span> + <span class="kbd">,</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">,</span></td><td>Herdado do VS Code: fonte, tema, formatação, terminal, arquivos</td></tr>
+      <tr><td><b>Keyboard Shortcuts</b></td><td><span class="kbd">Ctrl</span> + <span class="kbd">R</span>, <span class="kbd">Ctrl</span> + <span class="kbd">S</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">R</span>, <span class="kbd">Cmd</span> + <span class="kbd">S</span></td><td>Todos os atalhos, inclusive os da IA</td></tr>
+    </tbody></table></div>
+  <h3>Roteiro recomendado (cerca de 15 minutos)</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Faça a parte do <strong>seu sistema</strong> (seção 02, 03 ou 04): atalhos, terminal padrão e sandbox.</div></div>
+    <div class="step"><div class="b">2</div><div>Siga os <strong>ajustes comuns</strong> da seção 05, na ordem.</div></div>
+    <div class="step"><div class="b">3</div><div>Confira os <strong>arquivos de configuração</strong> da seção 06 e guarde onde ficam.</div></div>
+    <div class="step"><div class="b">4</div><div>Feche com o <strong>checklist</strong> da seção 08.</div></div>
+  </div>
+  <div class="callout">A interface do Cursor é em inglês. Os nomes de menus e opções neste manual aparecem como estão na tela, entre aspas ou em negrito, e podem mudar entre versões.</div>
+</section>
+
+<!-- WINDOWS -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">⊞</span><div><b>Windows</b><span>Atalhos com Ctrl · terminal PowerShell · comandos do agente sem sandbox documentada</span></div></div>
+  <h2><span class="n">02</span>Windows · <em>terminal e comandos do agente</em></h2>
+  <h3>Passo 1 · Escolha o terminal padrão</h3>
+  <p>O agente roda os comandos no <strong>primeiro perfil de terminal disponível</strong>. No Windows, isso costuma ser o <strong>PowerShell</strong>. Se o seu projeto usa comandos de Linux (por exemplo, scripts <code>.sh</code>), prefira o <strong>Git Bash</strong> ou o <strong>WSL</strong>.</p>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Paleta (<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>) › <strong>Terminal: Select Default Profile</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Escolha <strong>PowerShell</strong>, <strong>Git Bash</strong> (aparece se o Git for Windows estiver instalado), <strong>Command Prompt</strong> ou uma distribuição do <strong>WSL</strong>.</div></div>
+    <div class="step"><div class="b">3</div><div>Abra um terminal novo (<span class="kbd">Ctrl</span> + <span class="kbd">`</span>) e confira se abriu o escolhido.</div></div>
+  </div>
+  <h3>Passo 2 · Defina o Run Mode com cuidado</h3>
+  <p>A documentação do Cursor descreve a <strong>sandbox</strong> de comandos só para macOS e Linux. No Windows, trate os comandos do agente como execução direta na sua máquina:</p>
+  <ul class="checklist">
+    <li>Cursor Settings › <strong>Agents › Approvals &amp; Execution</strong>: mantenha <strong>Auto-review</strong> (padrão) ou use <strong>Allowlist</strong> se quiser aprovar mais coisas à mão</li>
+    <li>Evite <strong>Run Everything</strong> fora de máquinas ou pastas descartáveis</li>
+    <li>Se usar WSL, abra o projeto <strong>dentro do WSL</strong> para os comandos rodarem lá</li>
+  </ul>
+</section>
+
+<section class="sec">
+  <h2><span class="n">02</span>Windows · <em>detalhes do sistema</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ajuste</th><th>Como</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td><b>Fim de linha</b></td><td>Settings (<span class="kbd">Ctrl</span> + <span class="kbd">,</span>) › procure <code>files.eol</code> › <code>\n</code></td><td>Projetos compartilhados com Linux/macOS costumam usar LF; o Windows usa CRLF por padrão</td></tr>
+      <tr><td><b>Git</b></td><td>Instale o Git for Windows (git-scm.com) e reinicie o Cursor</td><td>Source Control, checkpoints, worktrees e o Git Bash dependem dele</td></tr>
+      <tr><td><b>Comando <code>cursor</code></b></td><td>Se não funcionar no terminal, reinstale marcando "adicionar ao PATH"</td><td>Para abrir pastas pelo terminal (<code>cursor .</code>)</td></tr>
+      <tr><td><b>Fonte</b></td><td>Instale a fonte no Windows (botão direito no arquivo › Instalar) e use o nome em <strong>Font Family</strong></td><td>Ex.: JetBrains Mono, Fira Code</td></tr>
+    </tbody></table></div>
+  <h3>Onde ficam os arquivos no Windows</h3>
+  <div class="table-wrap"><table>
+    <tbody>
+      <tr><td>Configurações do editor (<code>settings.json</code>)</td><td><code>%APPDATA%\Cursor\User\settings.json</code></td></tr>
+      <tr><td>Configurações do Cursor e do agente</td><td><code>%USERPROFILE%\.cursor\</code> (ex.: <code>permissions.json</code>, <code>mcp.json</code>)</td></tr>
+      <tr><td>Configuração do CLI</td><td><code>$env:USERPROFILE\.cursor\cli-config.json</code></td></tr>
+    </tbody></table></div>
+  <p class="muted">A pasta <code>%APPDATA%\Cursor\User</code> segue o padrão herdado do VS Code; a do CLI vem da documentação do Cursor. Para abrir o <code>settings.json</code> sem procurar a pasta: paleta › <strong>Preferences: Open User Settings (JSON)</strong>.</p>
+</section>
+
+<!-- LINUX -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">🐧</span><div><b>Linux</b><span>Atalhos com Ctrl · terminal bash ou zsh · sandbox com Landlock (kernel 6.2+)</span></div></div>
+  <h2><span class="n">03</span>Linux · <em>sandbox dos comandos do agente</em></h2>
+  <p>No Linux, o Cursor isola os comandos do agente com <strong>Landlock</strong> (arquivos) e <strong>seccomp</strong> (chamadas de sistema). Requisitos:</p>
+  <ul class="checklist">
+    <li><strong>Kernel 6.2 ou mais novo</strong>, com Landlock v3</li>
+    <li><strong>User namespaces sem privilégio</strong> habilitados</li>
+  </ul>
+  <div class="term"><span class="c"># Versão do kernel (precisa ser 6.2 ou maior)</span>
+uname -r
+<span class="c"># Landlock ativo no kernel? (deve aparecer "landlock" na lista)</span>
+cat /sys/kernel/security/lsm</div>
+  <div class="callout">Se o kernel não atender, o Cursor <strong>não falha</strong>: ele passa a pedir sua aprovação antes de rodar comandos. A instalação desktop já traz o perfil AppArmor necessário; só o <strong>CLI avulso</strong> e ambientes remotos podem precisar do pacote <code>cursor-sandbox-apparmor</code> (ver a documentação de Run Modes).</div>
+  <div class="callout warn">Dentro da sandbox, <code>id -u</code> mostra <code>0</code> (root dentro de um namespace isolado), não o seu usuário. Scripts que precisam do seu UID real devem ler <code>CURSOR_ORIG_UID</code> e <code>CURSOR_ORIG_GID</code>.</div>
+  <h3>Terminal padrão</h3>
+  <p>Paleta › <strong>Terminal: Select Default Profile</strong> › <strong>bash</strong>, <strong>zsh</strong> ou <strong>fish</strong>. Use o mesmo shell do seu dia a dia, para o agente encontrar as mesmas ferramentas (node, python, docker...).</p>
+</section>
+
+<section class="sec">
+  <h2><span class="n">03</span>Linux · <em>prompt, fontes e arquivos</em></h2>
+  <h3>Prompts pesados atrapalham o agente</h3>
+  <p>Temas como Powerlevel10k podem embaralhar a saída que o agente lê. O Cursor define a variável <code>CURSOR_AGENT</code> nas sessões dele; use-a para simplificar o prompt só nessas horas:</p>
+  <div class="term"><span class="c"># ~/.bashrc · prompt simples quando o Cursor roda o terminal</span>
+if [[ -n "$CURSOR_AGENT" ]]; then
+  PS1='\u@\h \W \$ '
+fi</div>
+  <h3>Fontes</h3>
+  <div class="term"><span class="c"># Exemplo no Ubuntu/Debian: instalar a Fira Code</span>
+sudo apt install fonts-firacode
+<span class="c"># depois, em Settings › Font Family: 'Fira Code', e Font Ligatures: true</span></div>
+  <h3>Onde ficam os arquivos no Linux</h3>
+  <div class="table-wrap"><table>
+    <tbody>
+      <tr><td>Configurações do editor (<code>settings.json</code>)</td><td><code>~/.config/Cursor/User/settings.json</code></td></tr>
+      <tr><td>Configurações do Cursor e do agente</td><td><code>~/.cursor/</code> (<code>permissions.json</code>, <code>sandbox.json</code>, <code>mcp.json</code>)</td></tr>
+      <tr><td>Configuração do CLI</td><td><code>~/.cursor/cli-config.json</code> (ou <code>$XDG_CONFIG_HOME/cursor/cli-config.json</code>)</td></tr>
+    </tbody></table></div>
+  <p class="muted">O caminho <code>~/.config/Cursor/User</code> segue o padrão herdado do VS Code. Atalho: paleta › <strong>Preferences: Open User Settings (JSON)</strong>.</p>
+</section>
+
+<!-- MACOS -->
+<section class="sec brk">
+  <div class="osbar"><span class="ic">⌘</span><div><b>macOS</b><span>Atalhos com Cmd · terminal zsh · sandbox com Seatbelt, sem configuração</span></div></div>
+  <h2><span class="n">04</span>macOS · <em>atalhos, terminal e sandbox</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tema</th><th>No macOS</th></tr></thead>
+    <tbody>
+      <tr><td><b>Atalhos</b></td><td>Onde o Windows/Linux usa <span class="kbd">Ctrl</span>, o Mac usa <span class="kbd">Cmd</span>: <span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">J</span> (Cursor Settings), <span class="kbd">Cmd</span> + <span class="kbd">,</span> (Settings), <span class="kbd">Cmd</span> + <span class="kbd">I</span> (Agent). <span class="kbd">Alt</span> vira <span class="kbd">Option</span>. O terminal continua em <span class="kbd">Ctrl</span> + <span class="kbd">`</span></td></tr>
+      <tr><td><b>Terminal padrão</b></td><td><strong>zsh</strong>, o shell padrão do macOS. Para trocar: paleta › <strong>Terminal: Select Default Profile</strong></td></tr>
+      <tr><td><b>Sandbox</b></td><td>Usa o <strong>Seatbelt</strong> (<code>sandbox-exec</code>) do próprio macOS. Requisito: Cursor 2.0 ou mais novo. <strong>Nenhuma configuração extra</strong></td></tr>
+      <tr><td><b>Comando <code>cursor</code></b></td><td>Paleta › <strong>Shell Command: Install 'cursor' command</strong>; depois, num Terminal novo, <code>cursor .</code></td></tr>
+      <tr><td><b>Prompt pesado</b></td><td>No <code>~/.zshrc</code>, pule o tema quando <code>CURSOR_AGENT</code> estiver definida (exemplo abaixo)</td></tr>
+    </tbody></table></div>
+  <div class="term"><span class="c"># ~/.zshrc · desliga o Powerlevel10k quando o Cursor roda o terminal</span>
+if [[ -n "$CURSOR_AGENT" ]]; then
+  # pula o tema
+else
+  [[ -r ~/.p10k.zsh ]] &amp;&amp; source ~/.p10k.zsh
+fi</div>
+  <h3>Onde ficam os arquivos no macOS</h3>
+  <div class="table-wrap"><table>
+    <tbody>
+      <tr><td>Configurações do editor (<code>settings.json</code>)</td><td><code>~/Library/Application Support/Cursor/User/settings.json</code></td></tr>
+      <tr><td>Configurações do Cursor e do agente</td><td><code>~/.cursor/</code></td></tr>
+      <tr><td>Configuração do CLI</td><td><code>~/.cursor/cli-config.json</code></td></tr>
+    </tbody></table></div>
+  <p class="muted">A pasta <code>Library</code> fica oculta no Finder: use <span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">G</span> e cole o caminho, ou abra pela paleta › <strong>Preferences: Open User Settings (JSON)</strong>.</p>
+</section>
+
+<!-- 05 -->
+<section class="sec brk">
+  <h2><span class="n">05</span>Ajustes comuns, <em>passo a passo (todos)</em></h2>
+  <h3>A · Cursor Settings › General</h3>
+  <ul class="checklist">
+    <li><strong>VS Code Import</strong> (em Account): se você usava o VS Code, clique em <strong>Import</strong> para trazer extensões, temas, configurações e atalhos</li>
+    <li><strong>Privacy Mode</strong>: ligado, para seu código não ser usado em treinamento (nas equipes, já vem ligado)</li>
+    <li><strong>Canal de atualização</strong>: <strong>Stable</strong> (Early Access traz prévias menos estáveis)</li>
+  </ul>
+  <h3>B · Cursor Settings › Models</h3>
+  <ul class="checklist">
+    <li>Modelo padrão: <strong>Auto</strong> para começar (detalhes na próxima aula, "Models e Rules")</li>
+    <li>Chave de API própria (opcional): cole a chave do provedor e clique em <strong>Save</strong></li>
+  </ul>
+  <h3>C · Cursor Settings › Agents › Approvals &amp; Execution</h3>
+  <ul class="checklist">
+    <li><strong>Auto-review</strong> (padrão): lista de permitidos + sandbox (macOS/Linux) + classificador</li>
+    <li>Quer aprovar sempre um tipo de comando? Peça ao agente: "quero aprovar todo comando de deploy"; ele ajusta o <code>permissions.json</code></li>
+  </ul>
+  <h3>D · Cursor Settings › Tab</h3>
+  <ul class="checklist">
+    <li>Deixe o Tab ligado; desligue só para tipos de arquivo em que atrapalha (ex.: Markdown)</li>
+    <li>O indicador <strong>Cursor Tab</strong> no canto inferior direito pausa ou desliga rapidamente</li>
+  </ul>
+  <h3>E · Cursor Settings › Indexing e Network</h3>
+  <ul class="checklist">
+    <li><strong>Hierarchical Cursor Ignore</strong> (Indexing › Ignore Files): procura <code>.cursorignore</code> nas pastas acima do projeto</li>
+    <li><strong>Network › Run Diagnostics</strong> se a IA falhar; <strong>HTTP Compatibility Mode</strong> = HTTP/1.1 atrás de proxy corporativo</li>
+  </ul>
+</section>
+
+<section class="sec">
+  <h2><span class="n">05</span>Ajustes comuns · <em>editor e privacidade dos arquivos</em></h2>
+  <h3>F · Settings do editor (<span class="kbd">Ctrl/Cmd</span> + <span class="kbd">,</span>)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Procure por</th><th>Sugestão</th></tr></thead>
+    <tbody>
+      <tr><td><code>Font Size</code> · <code>Font Family</code> · <code>Font Ligatures</code></td><td>Tamanho confortável e uma fonte de programação</td></tr>
+      <tr><td><code>Auto Detect Color Scheme</code></td><td>Ligue para seguir o tema claro/escuro do sistema</td></tr>
+      <tr><td><code>Format On Save</code></td><td>Ligue, se o projeto tem formatador (Prettier, Black...)</td></tr>
+      <tr><td><code>Auto Save</code></td><td><code>afterDelay</code> ou <code>onFocusChange</code></td></tr>
+      <tr><td><code>workbench.activityBar.orientation</code></td><td>No Cursor, a Activity Bar é <strong>horizontal</strong> por padrão; mude para <code>vertical</code> e reinicie, se preferir o jeito do VS Code</td></tr>
+    </tbody></table></div>
+  <h3>G · Idioma</h3>
+  <ul class="checklist">
+    <li><strong>Interface em português:</strong> instale a extensão <strong>Portuguese (Brazil) Language Pack</strong> (<span class="kbd">Ctrl/Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">X</span>), depois paleta › <strong>Configure Display Language</strong> › <code>pt-br</code> e reinicie. Os menus próprios do Cursor podem continuar em inglês</li>
+    <li><strong>Respostas da IA em português:</strong> crie uma <strong>User Rule</strong> "Responda sempre em português do Brasil" (barra lateral › <strong>Customize › Rules</strong>; ela sincroniza com a sua conta)</li>
+  </ul>
+  <h3>H · Arquivos que a IA não deve ler</h3>
+  <ul class="checklist">
+    <li>No projeto: <code>.cursorignore</code> na raiz, com a mesma sintaxe do <code>.gitignore</code></li>
+    <li>Em todos os projetos: a lista global de ignorados (vem vazia). Sugestões da documentação: <code>**/.env</code>, <code>**/.env.*</code>, <code>**/credentials.json</code>, <code>**/secrets.json</code>, <code>**/*.key</code>, <code>**/*.pem</code>, <code>**/id_rsa</code></li>
+    <li>Já ignorados por padrão: o <code>.gitignore</code>, arquivos de lock, <code>.env*</code>, <code>.git/</code> e vários binários e documentos (PDF, planilhas)</li>
+  </ul>
+  <div class="callout warn">O <code>.cursorignore</code> bloqueia o Agent, o Tab, o Ctrl+K e as menções com <code>@</code>, mas <strong>não</strong> o terminal nem as ferramentas MCP. Segredo de verdade não fica no projeto.</div>
+</section>
+
+<!-- 06 -->
+<section class="sec brk">
+  <h2><span class="n">06</span>Arquivos de configuração <em>por sistema</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Arquivo</th><th>Windows</th><th>Linux</th><th>macOS</th></tr></thead>
+    <tbody>
+      <tr><td><b>settings.json</b> (editor)</td><td><code>%APPDATA%\Cursor\User\</code></td><td><code>~/.config/Cursor/User/</code></td><td><code>~/Library/Application Support/Cursor/User/</code></td></tr>
+      <tr><td><b>keybindings.json</b> (atalhos)</td><td colspan="3">Na mesma pasta do <code>settings.json</code></td></tr>
+      <tr><td><b>permissions.json</b> (Auto-review)</td><td><code>%USERPROFILE%\.cursor\</code></td><td colspan="2"><code>~/.cursor/</code></td></tr>
+      <tr><td><b>sandbox.json</b></td><td>Sem sandbox documentada</td><td colspan="2"><code>~/.cursor/sandbox.json</code></td></tr>
+      <tr><td><b>mcp.json</b> (servidores MCP)</td><td><code>%USERPROFILE%\.cursor\</code></td><td colspan="2"><code>~/.cursor/</code></td></tr>
+      <tr><td><b>cli-config.json</b> (CLI)</td><td><code>$env:USERPROFILE\.cursor\</code></td><td colspan="2"><code>~/.cursor/</code></td></tr>
+    </tbody></table></div>
+  <h3>E dentro de cada projeto (todos os sistemas)</h3>
+  <div class="table-wrap"><table>
+    <tbody>
+      <tr><td><code>.cursorignore</code></td><td>Arquivos fora do alcance da IA</td></tr>
+      <tr><td><code>.cursor/rules/*.mdc</code> · <code>AGENTS.md</code></td><td>Regras do projeto para o agente</td></tr>
+      <tr><td><code>.cursor/permissions.json</code> · <code>.cursor/sandbox.json</code></td><td>Regras de execução do projeto (somadas às suas)</td></tr>
+      <tr><td><code>.cursor/mcp.json</code> · <code>.cursor/hooks.json</code></td><td>Ferramentas MCP e hooks do projeto</td></tr>
+      <tr><td><code>.cursor/cli.json</code></td><td>Permissões do CLI no projeto</td></tr>
+    </tbody></table></div>
+  <div class="callout">Os arquivos da pasta <code>.cursor</code> do projeto podem ir para o Git: assim a equipe inteira usa as mesmas regras. Os da sua pasta pessoal valem só para você.</div>
+</section>
+
+<!-- 07 -->
+<section class="sec">
+  <h2><span class="n">07</span>Levar a configuração <em>para outra máquina</em></h2>
+  <h3>Do VS Code para o Cursor</h3>
+  <p>Um clique em <strong>VS Code Import</strong> (seção 05-A) resolve na mesma máquina.</p>
+  <h3>Entre máquinas: perfis</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Na máquina de origem (VS Code ou Cursor): paleta › <strong>Preferences: Open Profiles (UI)</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>No perfil, menu de três pontos › <strong>Export Profile</strong>, para um arquivo ou um GitHub Gist.</div></div>
+    <div class="step"><div class="b">3</div><div>Na máquina de destino, no Cursor: <strong>Preferences: Open Profiles (UI)</strong> › seta ao lado de <em>New Profile</em> › <strong>Import Profile</strong>.</div></div>
+    <div class="step"><div class="b">4</div><div>Cole a URL do Gist ou escolha o arquivo, clique em <strong>Import</strong> e ative o perfil (ícone de visto).</div></div>
+  </div>
+  <div class="callout warn">Perfis levam as configurações do <strong>editor</strong>. Os arquivos de <code>~/.cursor</code> (permissões, MCP, CLI) e as rules pessoais você copia à mão ou recria. Cuidado para não levar chaves de API em arquivos compartilhados.</div>
+</section>
+
+<!-- 08 -->
+<section class="sec brk">
+  <h2><span class="n">08</span>Problemas comuns <em>e checklist final</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Problema</th><th>Sistema</th><th>Solução</th></tr></thead>
+    <tbody>
+      <tr><td>O agente pede aprovação para todo comando</td><td>Linux</td><td>Kernel abaixo de 6.2 ou sem Landlock: a sandbox não sobe e o Cursor pede aprovação. Atualize o kernel ou use a Allowlist</td></tr>
+      <tr><td>Saída do terminal cortada ou bagunçada</td><td>Linux, macOS</td><td>Prompt pesado (Powerlevel10k): use a variável <code>CURSOR_AGENT</code> para simplificar</td></tr>
+      <tr><td>Comandos de Linux falham no agente</td><td>Windows</td><td>O terminal padrão é PowerShell: troque para Git Bash ou abra o projeto no WSL</td></tr>
+      <tr><td>Arquivos aparecem todos modificados no Git</td><td>Windows</td><td>Fim de linha CRLF × LF: ajuste <code>files.eol</code> e a configuração <code>core.autocrlf</code> do Git</td></tr>
+      <tr><td>Não acho o <code>settings.json</code></td><td>Todos</td><td>Paleta › <strong>Preferences: Open User Settings (JSON)</strong></td></tr>
+      <tr><td>A IA não responde na rede da empresa</td><td>Todos</td><td>Network › HTTP/1.1 e Run Diagnostics; peça à TI os domínios liberados</td></tr>
+      <tr><td>Respostas em inglês</td><td>Todos</td><td>User Rule pedindo português do Brasil, ou escreva o pedido em português</td></tr>
+    </tbody></table></div>
+  <h3>Checklist final</h3>
+  <ul class="checklist">
+    <li>Terminal padrão escolhido e testado</li>
+    <li>Run Mode em Auto-review; sandbox ativa (macOS, Linux 6.2+) ou aprovações conferidas (Windows)</li>
+    <li>VS Code importado (se usava) e Privacy Mode ligado</li>
+    <li>Modelo em Auto e canal Stable</li>
+    <li>Fonte, tema e formatação ao salvar do seu jeito</li>
+    <li>Lista global de ignorados com <code>.env</code>, chaves e credenciais</li>
+    <li>User Rule de idioma criada</li>
+    <li>Você sabe onde ficam o <code>settings.json</code> e a pasta <code>~/.cursor</code></li>
+  </ul>
+  <div class="foot">
+    <p class="source">Fontes: cursor.com/docs (VS Code Migration, Run Modes e Sandboxing, Terminal, Ignore file, CLI Configuration, Keyboard Shortcuts, Agent Overview) e cursor.com/help (Privacy and data, Network, Themes and appearance, Tab completion, Bring your own API key, Extensions), consultados em outubro de 2026. Os caminhos do <code>settings.json</code>, o perfil de terminal de cada sistema, o pacote de idioma e o ajuste de fim de linha seguem o comportamento herdado do VS Code e podem variar entre versões.</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
