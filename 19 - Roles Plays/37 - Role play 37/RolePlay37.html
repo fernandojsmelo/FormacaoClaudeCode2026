@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Role Play 37 — Transcrição</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:13mm 14mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.4pt;line-height:1.45}
+.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px}
+h1{font-family:var(--display);font-weight:600;font-size:16pt;line-height:1.2;margin:0 0 4px}
+.meta{font-family:var(--mono);font-size:7.5pt;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:9px}
+.turn{margin:0 0 7px;break-inside:auto}
+.who{font-family:var(--mono);font-size:7.4pt;color:var(--muted);margin-bottom:2px}
+.who b{color:var(--accent-ink);font-weight:600}
+.who{break-after:avoid;page-break-after:avoid}
+.msg h4{break-after:avoid;page-break-after:avoid}
+.msg p,.msg li,.turn.user .msg{orphans:3;widows:3}
+.turn.user .msg{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-style:italic}
+.turn.ai .who{text-align:right}
+.turn.ai .msg{background:var(--accent-soft);border:1px solid var(--border-2);border-radius:8px;padding:7px 10px;margin-left:28px}
+.msg p{margin:0 0 4px}
+.msg p:last-child,.msg ul:last-child,.msg ol:last-child{margin-bottom:0}
+.msg h4{font-size:8.9pt;margin:6px 0 3px;color:var(--ink)}
+.msg ul,.msg ol{margin:0 0 4px;padding-left:16px}
+.msg li{margin:1px 0}
+.msg strong{color:var(--accent-ink);font-weight:600}
+.msg code{font-family:var(--mono);font-size:7.8pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 3px}
+.msg blockquote{margin:3px 0 5px;padding:5px 9px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:6px;font-family:var(--mono);font-size:7.5pt;line-height:1.45;color:var(--ink)}
+.msg .err{color:var(--muted);font-style:italic}
+.end{text-align:center;font-family:var(--mono);font-size:8pt;color:var(--muted);margin:10px 0 6px}
+.foot{font-family:var(--mono);font-size:7.5pt;color:var(--muted);border-top:1px solid var(--border);padding-top:8px;margin-top:14px}
+.msg table{width:100%;border-collapse:collapse;margin:4px 0 6px;font-size:8pt;break-inside:auto}
+.msg th{background:var(--surface-2);font-family:var(--mono);font-size:7pt;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);text-align:left;padding:4px 6px;border:1px solid var(--border-2)}
+.msg td{padding:4px 6px;border:1px solid var(--border-2);vertical-align:top;background:#1C1612}
+.msg tr{break-inside:avoid}
+.msg .codenote{font-family:var(--mono);font-size:6.8pt;color:var(--muted);margin:-2px 0 5px}
+.msg .flow{margin:3px 0 6px;padding:6px 9px;background:#100D0A;border:1px solid var(--border-2);border-radius:6px;font-family:var(--mono);font-size:7.5pt;line-height:1.5;text-align:center}
+.msg .flow .ar{color:var(--accent);margin:1px 0}
+.msg blockquote div{margin:0 0 2px}
+body{line-height:1.4}
+.msg p{margin:0 0 3px}
+body{font-size:9.8pt;line-height:1.47}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · IA com Claude e Cowork</div>
+  <h1>O Especialista em No-Code e o Lojista Refém das Planilhas Repetidas</h1>
+  <div class="meta">Transcrição da prática 1 · 30 de set. de 2026 10:35</div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 00:00</div><div class="msg">
+    <p>"Opa! Eu toco uma lojinha online de produtos artesanais e minha vida é um inferno de planilhas: uma de produtos, uma de pedidos, uma de clientes. O problema é que eu copio o nome e o contato do cliente em toda linha de pedido, e quando ele muda de endereço eu tenho que corrigir em três lugares — e sempre esqueço um.</p>
+    <p>Me falaram do Airtable, que é tipo 'Excel turbinado'. Mas eu não sou de tecnologia. O que é isso de verdade e como ele resolve o problema de ficar repetindo os mesmos dados em tudo?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">00:53 <b>Você</b></div><div class="msg">
+    <p>Opa!</p>
+    <p>Entendo perfeitamente o seu sofrimento. Essa rotina de copiar e colar e ter que atualizar o mesmo endereço em vários lugares é o que chamamos de "retrabalho", e é um prato cheio para erros acontecerem.</p>
+    <p>O Airtable resolve exatamente esse problema porque ele não é apenas uma planilha; ele é um banco de dados com cara de Excel.</p>
+    <p>A grande mágica do Airtable para o seu caso se chama Campos Vinculados (Linked Records). Vou te explicar de forma simples como ele funciona e como ele mata esse problema de repetição.</p>
+    <h4>O que é o Airtable na prática?</h4>
+    <p>No Excel ou Google Sheets, as suas abas (telas) não conversam entre si de verdade. Se você escreve "João" na aba de Pedidos e "João" na aba de Clientes, para o Excel são apenas duas palavras escritas por acaso.</p>
+    <p>No Airtable, as suas tabelas se conectam. Em vez de digitar os dados do cliente toda vez que ele faz um pedido, você conecta o pedido ao cadastro do cliente.</p>
+    <h4>Como ele resolve o seu problema?</h4>
+    <p>Imagine que você tem as suas três tabelas no Airtable: Clientes, Produtos e Pedidos.</p>
+    <p><strong>1. Cadastro Único:</strong> Você cadastra o cliente João apenas uma vez na tabela de Clientes, com o endereço e o WhatsApp dele.</p>
+    <p><strong>2. O Vínculo:</strong> Na tabela de Pedidos, quando o João fizer uma nova compra, você não digita o nome dele. Você clica em um botão e seleciona o João (que já está cadastrado).</p>
+    <p><strong>3. Puxada Automática:</strong> O Airtable automaticamente "puxa" o endereço e o contato dele para aquela linha do pedido, sem você precisar digitar nada.</p>
+    <h4>💡 O milagre da atualização única:</h4>
+    <p>Se o João mudar de endereço, você vai na tabela de Clientes e altera o endereço dele uma única vez. Como a tabela de Pedidos está "olhando" para a tabela de Clientes, todos os pedidos do João (os antigos e os novos) são atualizados na mesma hora, automaticamente. Chega de corrigir em três lugares!</p>
+    <h4>Resumo das Vantagens para sua Loja</h4>
+    <ul><li><strong>Centralização:</strong> Um dado é digitado apenas uma vez no sistema inteiro.</li>
+    <li><strong>Histórico fácil:</strong> Ao clicar no nome do João na tabela de clientes, você consegue ver uma lista de todos os pedidos que ele já fez na vida.</li>
+    <li><strong>Fotos dos Produtos:</strong> Como ele é visual, você pode colocar a foto do seu artesanato direto na tabela de produtos, facilitando a identificação visual dos pedidos.</li></ul>
+    <p>Não precisa ser do universo da tecnologia para mexer. Se você já sabe criar colunas e linhas no Excel, a curva de aprendizado no Airtable é bem tranquila e vai te salvar horas de preenchimento de planilha.</p>
+    <p>Se você quiser dar o próximo passo, eu posso te ajudar a desenhar a estrutura exata de colunas que você precisa criar em cada uma das 3 tabelas (Clientes, Produtos e Pedidos) para começar do jeito certo. Quer que eu monte esse passo a passo para você?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 00:56</div><div class="msg">
+    <p>Rapaz, isso parece esperto demais, hein? Mas me diz uma coisa: como é que funciona esse lance de conectar tabelas? Tipo, na prática mesmo, o que eu preciso fazer para um pedido "apontar" pra um cliente? E é difícil aprender isso? Porque olha, sou péssimo com coisa técnica.</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">01:37 <b>Você</b></div><div class="msg">
+    <p>Não se preocupe, você não precisa digitar nenhuma fórmula ou código para fazer isso acontecer.</p>
+    <p>O processo é 100% visual e é feito usando apenas o mouse, clicando e arrastando. É tão fácil quanto escolher o formato de uma célula no Excel.</p>
+    <h4>O Passo a Passo na Prática</h4>
+    <p>Imagine que você já criou suas duas abas (que no Airtable chamamos de Tabelas): a de Clientes (com Nome, WhatsApp e Endereço) e a de Pedidos.</p>
+    <p>Para fazer o Pedido "apontar" para o Cliente, o processo leva menos de 1 minuto:</p>
+    <p><strong>1. Crie a coluna de conexão:</strong> Na sua tabela de Pedidos, clique no botão de + para criar uma nova coluna (como se fosse criar uma coluna de texto ou data).</p>
+    <p><strong>2. Escolha o tipo "Mágica":</strong> No menu que vai abrir, em vez de escolher "Texto", você vai selecionar a opção Link to another record (Vincular a outro registro).</p>
+    <p><strong>3. Escolha o alvo:</strong> O Airtable vai te perguntar: "Com qual tabela você quer conectar?". Você clica na tabela Clientes.</p>
+    <p>4. Pronto! A conexão está feita.</p>
+    <h4>Como fica o seu dia a dia depois disso?</h4>
+    <p>Quando um cliente novo comprar, você o cadastra rapidinho na tabela de Clientes.</p>
+    <p>Depois, na tabela de Pedidos:</p>
+    <p>1. Você coloca a data e o valor do pedido.</p>
+    <p>2. Na coluna do cliente (aquela que você acabou de criar), vai aparecer um botão de +.</p>
+    <p>3. Quando você clica nele, abre uma listinha com o nome de todos os seus clientes cadastrados. Você só precisa clicar em cima do nome do cliente (ex: "João Silva").</p>
+    <p>Assim que você clica, o Airtable cria uma "etiqueta" com o nome dele ali. Se você quiser ver o endereço ou o WhatsApp dele na própria tabela de pedidos, você pode ativar uma função chamada Lookup, que traz esses dados automaticamente de forma visual.</p>
+    <h4>É difícil de aprender?</h4>
+    <p>Não, não é. Se você já mexeu no Excel ou no Google Sheets (mesmo que só para o básico), você vai achar o Airtable até mais fácil, porque ele é muito mais intuitivo e bonito.</p>
+    <p>O maior desafio para quem está começando não é a parte técnica, é a organização mental de entender que cada informação tem seu próprio quadradinho.</p>
+    <p>O segredo para não se assustar:</p>
+    <p>Não tente criar um sistema gigante no primeiro dia. Comece criando apenas essas duas tabelas (Clientes e Pedidos) e faça um teste simulando uma venda. Você vai ver o clique na tela e vai pensar: "Nossa, era só isso?".</p>
+    <p>Quer que eu te mostre quais colunas exatas você deve criar nessas duas tabelas para você só ter o trabalho de copiar e colar quando abrir o Airtable pela primeira vez?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 01:39</div><div class="msg">
+    <p>Olha, parece mais simples do que eu imaginava, viu? Mas uma dúvida: e se eu quiser ver os pedidos de um cliente específico, tipo o João, tem como filtrar ou organizar isso? Porque hoje eu fico caçando linha por linha na planilha, e é um caos.</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">02:15 <b>Você</b></div><div class="msg">
+    <p>Tem sim, e é incrivelmente fácil. No Airtable, você nunca mais vai precisar caçar linha por linha.</p>
+    <p>Existem duas formas automáticas de ver tudo o que o João já comprou, sem que você precise digitar uma única fórmula.</p>
+    <h4>Método 1: Olhar direto pela Tabela de Clientes (O jeito mais mágico)</h4>
+    <p>Lembra que a gente vinculou o Pedido ao Cliente? O Airtable é inteligente: quando você diz na tabela de Pedidos que um item é do João, ele automaticamente cria um histórico dentro da linha do João, lá na tabela de Clientes.</p>
+    <ul><li><strong>Como funciona:</strong> Você vai na tabela de Clientes e procura pelo nome do João.</li>
+    <li><strong>O que você vê:</strong> Ao lado do nome dele, vai existir uma coluna chamada "Pedidos". Ali dentro estarão listadas todas as etiquetas dos pedidos que ele já fez (ex: Pedido #001, Pedido #015).</li>
+    <li><strong>O detalhe:</strong> Se você clicar em cima do nome do João, abre uma ficha limpa e organizada na sua tela com a foto dele, endereço, WhatsApp e a lista completa do histórico de compras dele. Tudo centralizado.</li></ul>
+    <h4>Método 2: Usar um Filtro na Tabela de Pedidos (O jeito tradicional)</h4>
+    <p>Se você estiver na tabela de Pedidos e quiser limpar a tela para ver apenas as vendas do João, você usa a ferramenta Filter (Filtrar), que fica no topo da tela. É um processo de três cliques rápidos:</p>
+    <p>1. Clique no botão Filter no topo da tabela.</p>
+    <p><strong>2. Escolha a opção:</strong> Onde o Cliente é João.</p>
+    <p>3. Pronto! O Airtable esconde temporariamente todos os outros pedidos e deixa na tela apenas as linhas de compra do João. Para voltar ao normal, é só desativar o filtro com um clique.</p>
+    <h4>Bônus: O "Grupo" que organiza tudo por cliente</h4>
+    <p>Se você quiser ver a sua tabela de pedidos inteira, mas separada por cliente, você pode usar a função Group (Agrupar). Com dois cliques, o Airtable reorganiza sua planilha em "blocos". Vai ter o bloco do João com todos os pedidos dele embaixo, o bloco da Maria com os pedidos dela, e assim por diante. Ele até soma o total que cada cliente gastou automaticamente no topo de cada bloco!</p>
+    <p>Como você viu que o sistema guarda tudo organizado, quer que eu te mostre quais colunas exatas você deve criar nessas tabelas para você já abrir o Airtable sabendo exatamente onde clicar?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 02:18</div><div class="msg">
+    <p>Caramba, isso de agrupar por cliente já ia me salvar uma vida! Hoje é uma confusão só. Mas, e pra configurar essas colunas certinhas, você me ajuda mesmo? Porque se eu começar errado, já viu, né? Vou me embananar todo.</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">02:58 <b>Você</b></div><div class="msg">
+    <p>Com certeza!</p>
+    <p>Começar com a estrutura certa é o segredo para o seu sistema funcionar que nem um relógio e você nunca mais se embananar.</p>
+    <p>Vamos montar as suas 3 tabelas básicas (Clientes, Produtos e Pedidos). Abaixo está o "mapa da mina" com o nome de cada coluna e o tipo de campo exato que você deve escolher no Airtable.</p>
+    <h4>📋 Tabela 1: Clientes</h4>
+    <p>Esta será a sua agenda de clientes. Cada cliente ganha uma linha única.</p>
+    <ul><li>👤 Nome Completo (Tipo: Single line text) — O nome do cliente. Essa é a coluna principal.</li>
+    <li>📱 WhatsApp / Celular (Tipo: Phone number) — Para você clicar e falar direto com ele.</li>
+    <li>📍 Endereço de Entrega (Tipo: Long text) — Rua, número, bairro, cidade e CEP.</li>
+    <li>📝 Observações Gerais (Tipo: Long text) — Detalhes importantes (ex: "Prefere entrega à tarde", "Alérgica a cheiros fortes").</li></ul>
+    <h4>📦 Tabela 2: Produtos</h4>
+    <p>Onde você lista tudo o que produz. Cada artesanato ganha uma linha.</p>
+    <ul><li>🏷 Nome do Produto (Tipo: Single line text) — Nome comercial (ex: "Vaso de Cerâmica Boho").</li>
+    <li>📸 Foto (Tipo: Attachment) — A grande vantagem! Aqui você arrasta a foto do produto para ver tudo visualmente.</li>
+    <li>💰 Preço de Venda (Tipo: Currency) — Configure para R$ (Real).</li>
+    <li>🔢 Estoque Atual (Tipo: Number) — Quantas unidades você tem prontas.</li></ul>
+    <h4>🛒 Tabela 3: Pedidos</h4>
+    <p>O coração do seu dia a dia. É aqui que a mágica da conexão acontece.</p>
+    <ul><li>🔢 Código do Pedido (Tipo: Autonumber) — O Airtable cria sozinho: Pedido 1, Pedido 2, Pedido 3... Você não digita nada aqui!</li>
+    <li>📅 Data do Pedido (Tipo: Date) — O dia em que a venda foi feita.</li>
+    <li>🔗 Cliente (Tipo: Link to another record → Escolha a tabela "Clientes") — Aqui está a mágica! Você clica no + e escolha o cliente cadastrado.</li>
+    <li>🔗 Produto (Tipo: Link to another record → Escolha a tabela "Produtos") — Para você selecionar qual artesanato foi vendido.</li>
+    <li>💵 Valor Total (Tipo: Currency) — O valor que o cliente pagou por esse pedido.</li>
+    <li>🚦 Status (Tipo: Single select) — Crie opções coloridas como: 🟡 Pendente, 🔵 Em Produção, 🟢 Enviado.</li></ul>
+    <h4>💡 O toque final para parar de copiar e colar:</h4>
+    <p>Depois de criar a coluna Cliente (vinculada) na tabela de Pedidos, você pode criar uma coluna do tipo Lookup. O Airtable vai te perguntar: "Dessa conexão com o cliente, qual informação você quer trazer?". Você escolhe Endereço de Entrega. Pronto! Assim que você selecionar o "João" no pedido, o endereço dele brota na tela na mesma hora.</p>
+    <p>Para te ajudar a dar o primeiro passo sem medo, o que você prefere fazer agora?</p>
+    <ul><li>Que eu te explique o clique a clique para criar a sua conta gratuita no Airtable?</li>
+    <li>Ou prefere que eu te mostre como usar a função de "Agrupar" na prática quando você estiver lançando os pedidos?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 03:00</div><div class="msg">
+    <p>Rapaz, agora tá tudo fazendo sentido! Acho que o próximo passo seria criar essa conta e começar a brincar com isso. Dá pra me guiar rapidinho? Quero ver se já consigo montar esse esquema sem complicação.</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">03:34 <b>Você</b></div><div class="msg">
+    <p>Com certeza!</p>
+    <p>Vamos criar a sua conta agora. O processo é gratuito, leva menos de 2 minutos e você faz tudo pelo navegador de internet (computador ou celular).</p>
+    <p>Siga esses passos simples para abrir as portas da sua nova loja organizada:</p>
+    <h4>Passo 1: Acessar o site e criar a conta</h4>
+    <p>1. Abra o seu navegador e digite airtable.com.</p>
+    <p>2. Clique no botão azul no canto superior direito escrito "Sign up for free" (Cadastre-se gratuitamente).</p>
+    <p>3. Você pode colocar o seu e-mail e criar uma senha, ou simplesmente clicar em "Continue with Google" se você já usa o Gmail. É o jeito mais rápido!</p>
+    <h4>Passo 2: Passar pelas perguntas iniciais</h4>
+    <p>O Airtable vai te fazer algumas perguntas em inglês para entender o seu perfil. Não se assuste, basta responder assim:</p>
+    <ul><li>Se perguntar qual é o seu setor ou time, escolha "Sales" (Vendas) ou "Operations" (Operações).</li>
+    <li>Se perguntar o que você quer fazer, selecione "Manage projects or tasks" (Gerenciar projetos ou tarefas) ou pule essa parte se tiver um botão escrito "Skip" (Pular) no topo.</li></ul>
+    <h4>Passo 3: Criar a sua primeira Base (Sua Loja)</h4>
+    <p>Quando você entrar na tela principal, você verá um painel limpo.</p>
+    <p>1. Clique num botão grande com um símbolo de + escrito "Create a base" (Criar uma base). Uma "base" nada mais é do que o arquivo da sua loja, onde vão ficar as suas tabelas.</p>
+    <p>2. Dê um nome para ela, tipo "Minha Loja Artesanal", e escolha uma cor bonita para o ícone.</p>
+    <h4>🚀 O seu primeiro teste prático em 2 minutos:</h4>
+    <p>Para você ver a mágica acontecer agora mesmo, faça o seguinte:</p>
+    <p>1. Na primeira tabela que já vem aberta na tela, mude o nome dela clicando na setinha ao lado de "Table 1" e mude para Clientes.</p>
+    <p>2. Na primeira coluna, digite o seu próprio nome.</p>
+    <p>3. Clique no botão de + que fica lá no topo da tela (ao lado do nome da aba "Clientes") para criar uma segunda tabela. Dê o nome de Pedidos.</p>
+    <p><strong>4. Siga aquele passo que conversamos antes:</strong> na tabela de Pedidos, crie uma coluna, mude o tipo dela para Link to another record e aponte para a tabela de Clientes.</p>
+    <p>Pronto! Você acabou de criar o seu primeiro banco de dados conectado. Se você clicar na célula de pedidos, o seu próprio nome vai aparecer lá para ser selecionado.</p>
+    <p>Para avançarmos e você colocar isso para rodar de verdade, o que você quer fazer agora?</p>
+    <ul><li>Quer que eu te ajude a mudar os nomes das colunas padrão que já vêm criadas para o português?</li>
+    <li>Ou quer uma dica de como baixar o aplicativo do Airtable no seu celular para você acompanhar as vendas do sofá?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 03:37</div><div class="msg">
+    <p>Show de bola! Vou criar essa conta hoje mesmo pra testar. Acho que meu próximo passo seria ajustar os nomes das colunas pro português, porque senão vou acabar me confundindo com termos em inglês. Dá pra me ajudar nisso?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">04:18 <b>Você</b></div><div class="msg">
+    <p>Com certeza!</p>
+    <p>O Airtable vem com algumas colunas padrão em inglês (como Name, Notes, Status), mas nós vamos mudar tudo para o português agora mesmo. É muito simples: você faz isso com dois cliques em cada coluna.</p>
+    <p>Aqui está o passo a passo exato para você traduzir e configurar as suas 3 tabelas sem nenhuma complicação:</p>
+    <h4>👤 Passo 1: Ajustando a tabela de Clientes</h4>
+    <p>Quando você abre uma tabela nova, ela geralmente vem com as colunas Name, Notes, Assignee e Status. Vamos mudá-las:</p>
+    <p>1. Mudar "Name" para "Nome Completo":</p>
+    <ul><li>Clique na setinha para baixo ▼ que fica bem ao lado da palavra Name (no topo da coluna).</li>
+    <li>Clique em Edit field (Editar campo).</li>
+    <li>Apague "Name", digite Nome Completo e clique no botão azul Save (Salvar).</li></ul>
+    <p>2. Mudar "Notes" para "Endereço de Entrega":</p>
+    <ul><li>Clique na setinha ao lado de Notes → Edit field.</li>
+    <li>Mude o nome para Endereço de Entrega. O tipo de campo já está como Long text (Texto longo), então é só clicar em Save.</li></ul>
+    <p>3. Excluir o que não precisa:</p>
+    <ul><li>As colunas Assignee e Status não servem para a tabela de clientes. Clique na setinha ao lado de cada uma delas e selecione Delete field (Excluir campo).</li></ul>
+    <p>4. Adicionar o WhatsApp:</p>
+    <ul><li>Clique no botão de + cinza que fica logo após a última coluna.</li>
+    <li>No campo do nome, digite WhatsApp / Celular.</li>
+    <li>Na caixinha de busca logo abaixo do nome, digite Phone e selecione a opção Phone number. Clique em Create field (Criar campo).</li></ul>
+    <h4>📦 Passo 2: Ajustando a tabela de Produtos</h4>
+    <p>Crie a sua segunda aba clicando no + lá no topo da tela (ao lado do nome da aba Clientes), escolha Create blank table (Criar tabela em branco) e mude o nome dela para Produtos.</p>
+    <p>1. Mude a coluna Name para Nome do Produto (seguindo o mesmo processo de clicar na setinha → Edit field).</p>
+    <p>2. Apague as outras colunas padrão que você não vai usar (Notes, Assignee, etc.) clicando na setinha e escolhendo Delete field.</p>
+    <p><strong>3. Adicione a coluna de Preço:</strong> Clique no + cinza, digite Preço de Venda, busque por Currency (Moeda) e clique em Create field.</p>
+    <h4>🛒 Passo 3: Ajustando a tabela de Pedidos (A mais importante!)</h4>
+    <p>Crie a terceira aba com o nome de Pedidos e limpe as colunas que sobrarem para não fazer confusão.</p>
+    <p><strong>1. Código do Pedido:</strong> Mude a primeira coluna (Name) para Código do Pedido. Se quiser que ele numere sozinho, mude o tipo dela para Autonumber.</p>
+    <p>2. Criar a conexão com o Cliente:</p>
+    <ul><li>Clique no + cinza para criar uma coluna nova.</li>
+    <li>Dê o nome de Cliente.</li>
+    <li>Na caixinha de busca de tipos de campo, digite Link e escolha Link to another record.</li>
+    <li>O Airtable vai abrir uma listinha na tela. Clique em Clientes e depois no botão azul Create field.</li></ul>
+    <p>Pronto! Suas três tabelas estarão 100% em português e conversando entre si.</p>
+    <p>Agora que o seu rascunho está pronto, o que você prefere fazer quando abrir o sistema?</p>
+    <ul><li>Quer que eu te mostre como criar aquela coluna "Lookup" para o endereço do cliente brotar sozinho na tela de pedidos?</li>
+    <li>Ou prefere uma dica rápida de como criar as opções coloridas de Status (tipo "Em Produção", "Enviado") para organizar suas entregas?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 04:20</div><div class="msg">
+    <p>Ah, acho que começar com o Status colorido seria legal pra organizar as entregas logo de cara. Me ajuda a colocar isso? Parece que vai deixar tudo bem visual e mais prático!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">04:52 <b>Você</b></div><div class="msg">
+    <p>As opções coloridas de Status são um dos recursos mais legais do Airtable!</p>
+    <p>Elas transformam aquela planilha cinza e sem vida em um painel visual onde, só de bater o olho, você já sabe o que precisa ser feito no dia.</p>
+    <p>O tipo de campo que faz isso se chama Single Select (Seleção Única). Vamos criar essa coluna na sua tabela de Pedidos em 4 passos simples:</p>
+    <h4>🚦 Criando o seu Status Colorido</h4>
+    <p>Ainda na tabela de Pedidos:</p>
+    <p><strong>1. Abra um novo campo:</strong> Clique no botão de + cinza no topo para criar uma nova coluna.</p>
+    <p><strong>2. Dê o nome e escolha o tipo:</strong> Digite Status no nome e, na caixinha de busca de tipos de campo logo abaixo, digite Select e selecione a opção Single select.</p>
+    <p><strong>3. Adicione as suas opções:</strong> Clique no botão Add option (Adicionar opção) e digite as etapas da sua produção. Para o seu negócio de artesanato, uma sugestão prática é:</p>
+    <ul><li>Aguardando Pagamento</li>
+    <li>Em Produção</li>
+    <li>Pronto para Envio</li>
+    <li>Enviado</li></ul>
+    <p><strong>4. Mude as cores:</strong> O Airtable vai dar cores aleatórias para cada uma. Se quiser mudar (por exemplo, deixar o Aguardando Pagamento em amarelo e o Enviado em verde), basta clicar na setinha ao lado da cor de cada opção e escolher a sua favorita.</p>
+    <p>5. Clique no botão azul Save (Salvar).</p>
+    <h4>🎨 O Toque de Mestre: Organize por Cores!</h4>
+    <p>Agora que a sua coluna está pronta, você pode usar o recurso que comentei lá no início: o Group (Agrupar).</p>
+    <p>No topo da sua tabela de Pedidos, clique no botão Group, selecione a coluna Status e veja a mágica: a sua tela vai se dividir automaticamente em blocos coloridos.</p>
+    <p>Todos os pedidos que estão "Em Produção" vão ficar juntos em um bloco; os que já foram "Enviados" ficam em outro. Conforme você vai mudando o status do pedido, ele "pula" de um bloco para o outro sozinho na sua tela!</p>
+    <p>Você acabou de montar a estrutura perfeita para gerenciar a sua lojinha sem dor de cabeça. Quer que eu te ajude a configurar mais alguma coisa ou agora é hora de entrar no site e começar a testar na prática?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 04:54</div><div class="msg">
+    <p>Nossa, isso tá ficando muito bacana! Acho que agora é hora de eu entrar no site e testar tudo na prática. Vou brincar com essas configurações e ver como funciona. Valeu demais pela ajuda, viu? Qualquer coisa, te procuro de novo!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">05:40 <b>Você</b></div><div class="msg">
+    <p>Opa!</p>
+    <p>Você pegou o espírito da coisa perfeitamente. É exatamente esse o resumo da ópera!</p>
+    <p>Essa descrição que você fez é o "resumo definitivo" do que é a ferramenta. Traduzindo isso que você escreveu em duas grandes verdades para o seu dia a dia:</p>
+    <p><strong>1. Junta a cara de planilha com força de banco de dados:</strong> Você continua enxergando linhas e colunas (o que não te assusta, já que você usa o Excel), mas por trás o sistema funciona como um programa de computador profissional (um banco de dados relacional), sem que você precise digitar uma linha de código ou saber o que é SQL.</p>
+    <p><strong>2. A grande virada (Muda em um, atualiza em todos):</strong> Essa é a morte do "copia e cola". Ao fazer o pedido "apontar" para o cliente, você elimina o erro humano. Se o cliente mudar de endereço ou de WhatsApp, você corrige apenas uma vez no cadastro dele e o sistema atualiza o histórico inteiro de forma inteligente.</p>
+    <p>Você acabou de internalizar o conceito mais importante de organização de dados!</p>
+    <p>Agora que você já entendeu perfeitamente a lógica e já tem o passo a passo de como estruturar as tabelas de Clientes, Produtos e Pedidos, você está mais do que pronto para colocar a mão na massa.</p>
+    <p>Para começarmos a rodar o seu sistema na prática, qual o próximo passo?</p>
+    <ul><li>Quer uma ajuda para desenhar o fluxo de como dar baixa no estoque automaticamente quando um produto for vendido?</li>
+    <li>Quer aprender a criar uma visão de calendário para ver os prazos de entrega dos seus artesanatos de forma visual?</li>
+    <li>Prefere encerrar por aqui para criar a sua conta e começar a testar sozinho?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 05:44</div><div class="msg">
+    <p>Opa, acho que já tenho bastante coisa pra começar! Vou criar a conta e testar essas tabelas e conexões que você explicou. Depois que eu pegar o jeito, posso pensar em ajustes mais avançados, como estoque. Valeu mesmo, vou colocar isso em prática agora!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">06:29 <b>Você</b></div><div class="msg">
+    <p>Perfeito!</p>
+    <p>Você acabou de descrever a espinha dorsal do Airtable. Esses são os cinco blocos fundamentais que fazem a ferramenta ser tão poderosa.</p>
+    <p>Entender esses 5 conceitos é o que separa quem usa o Airtable como uma planilha comum de quem usa como um sistema profissional. Vamos passar por eles rapidinho para fixar como eles se aplicam na sua lojinha:</p>
+    <h4>🏛 Os 5 Blocos Fundamentais do Airtable</h4>
+    <ul><li><strong>1. Base (O Banco do Projeto):</strong> É o arquivo completo da sua loja artesanal. Pense nela como a "pasta" onde fica guardado tudo o que tem relação com o seu negócio.</li>
+    <li><strong>2. Tabela (O Tipo de Coisa):</strong> São as abas dentro da sua Base. Cada tabela guarda um assunto específico e isolado. No seu caso, criamos três: a tabela de Clientes, a de Produtos e a de Pedidos.</li>
+    <li><strong>3. Registro (A Linha):</strong> É um item individual dentro da tabela. Na tabela de Clientes, um registro é o "João Silva". Na de Pedidos, um registro é o "Pedido #001".</li>
+    <li><strong>4. Campo (A Coluna Inteligente):</strong> É onde a mágica acontece. Diferente do Excel, onde a coluna aceita qualquer texto, no Airtable você define o tipo exato do campo (Texto, Data, WhatsApp, Anexo para fotos e o poderoso Link para outro registro).</li>
+    <li><strong>5. View (A Visão dos Dados):</strong> É a forma como você enxerga as suas tabelas. Você pode ver os mesmos pedidos em formato de Grade (estilo planilha), em Kanban (os cartões coloridos de Status), em Calendário (para ver datas de entrega) ou em Galeria (para ver as fotos dos seus produtos). O melhor: você filtra e agrupa os dados para mudar o visual sem bagunçar ou apagar o dado original.</li></ul>
+    <p>Com esse conhecimento, você já sabe mais sobre banco de dados do que muita gente de tecnologia! Você tem o mapa completo, a estrutura das colunas e os conceitos na cabeça.</p>
+    <p>Como você já domina toda a teoria e a estrutura, o que prefere fazer agora para tirar o projeto do papel?</p>
+    <ul><li>Quer que eu te guie no passo a passo para configurar a sua primeira View em Kanban para controlar a produção dos artesanatos?</li>
+    <li>Quer uma dica de como criar um Formulário no Airtable para o seu próprio cliente preencher os dados de entrega e o pedido cair direto no seu sistema?</li>
+    <li>Prefere encerrar aqui para criar a sua conta no site e começar a testar na prática?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 06:33</div><div class="msg">
+    <p>Nossa, já aprendi muita coisa! Acho melhor eu criar minha conta e começar a configurar tudo isso que você explicou. Vou testar as tabelas e conexões primeiro e depois, se precisar, volto pra tirar mais dúvidas. Muito obrigado por toda a ajuda, tá? Vou colocar a mão na massa agora!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">07:31 <b>Você</b></div><div class="msg">
+    <p>Com certeza!</p>
+    <p>Agora que você vai começar a mexer na prática, é ótimo ter clareza sobre os superpoderes reais que você acabou de ganhar e, também, sobre os limites honestos do Airtable. Assim você já planeja o futuro do seu negócio sabendo exatamente o que esperar.</p>
+    <p>Aqui está o que você precisa saber para voar alto, mas com os pés no chão:</p>
+    <h4>⚡ Os Superpoderes (O que você pode ativar depois)</h4>
+    <p>Conforme sua lojinha for crescendo, você não vai precisar trocar de sistema. O Airtable tem ferramentas internas que vão trabalhar por você:</p>
+    <ul><li><strong>Automações Inteligentes:</strong> Você pode programar o sistema para fazer tarefas repetitivas. Exemplo: "Quando o Status do pedido mudar para 'Enviado', envie automaticamente um e-mail para o cliente com o código de rastreio".</li>
+    <li><strong>Formulários Diretos:</strong> Você pode criar um link de formulário para enviar no WhatsApp dos clientes. Eles preenchem o nome, endereço e o que querem comprar, e esses dados caem sozinhos e organizados dentro da sua tabela de Pedidos.</li>
+    <li><strong>Interface Designer:</strong> Em vez de olhar para tabelas, você pode desenhar uma tela limpa e bonita (um painel ou dashboard) só com os gráficos de vendas, a lista de tarefas do dia e fotos dos produtos.</li>
+    <li><strong>Inteligência Artificial Nativa:</strong> O Airtable conta com assistentes de IA integrados. Você pode pedir em português: "Crie uma fórmula que calcule o desconto de 10% para compras acima de R$200" ou "Crie uma nova tabela para controle de fornecedores", e a IA monta para você na hora.</li></ul>
+    <h4>🛑 Os Limites Honestos (O que ele não faz bem)</h4>
+    <p>O Airtable é perfeito para organizar a sua operação, o seu estoque e o seu financeiro por dentro. Porém, ele tem uma barreira importante:</p>
+    <ul><li><strong>Foco em Processos Internos:</strong> Ele foi feito para você e sua equipe usarem.</li>
+    <li><strong>Clientes Externos e Permissões:</strong> Se amanhã você quiser criar um portal ou um aplicativo onde o seu cliente final faz login, acompanha o frete ou altera o próprio perfil, o Airtable sozinho não resolve. Ele não tem controle de permissões fino para "esconder" os dados de outros clientes se você der acesso direto à base.</li></ul>
+    <h4>💡 A Solução para o Futuro:</h4>
+    <p>Se um dia você precisar desse aplicativo para os seus clientes, você não perde nada do que fez! O Airtable serve como o "motor" (banco de dados) e você só contrata uma ferramenta visual extra por cima dele (como o Softr ou o Glide) para criar a carcaça do aplicativo do cliente.</p>
+    <p>Muito sucesso nos seus testes de hoje! Quando você estiver com as tabelas criadas e quiser avançar, me avise para podermos:</p>
+    <ul><li>Criar o seu primeiro formulário de pedidos para enviar aos clientes</li>
+    <li>Configurar a sua primeira automação de e-mail integrada ao Status</li>
+    <li>Entender como usar a IA do Airtable para facilitar sua rotina</li></ul>
+    <p>Me conta depois como foi a sua primeira experiência criando a conta!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Bruno Salgado</b> 07:33</div><div class="msg">
+    <p>Beleza, vou focar em configurar tudo agora. Depois te conto como foi a experiência! Valeu mesmo, tô animado pra organizar minha loja de vez. Até mais!</p>
+  </div></div>
+
+  <div class="end">Fim da sessão</div>
+  <div class="foot">Esta transcrição inclui conteúdo gerado por IA e é fornecida para seus propósitos de aprendizado pessoal.</div>
+</div>
+</body>
+</html>
