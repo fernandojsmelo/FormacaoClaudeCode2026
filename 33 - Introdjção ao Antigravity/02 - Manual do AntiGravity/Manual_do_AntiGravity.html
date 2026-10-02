@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Manual do AntiGravity</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:10.6px;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+h1{font-family:var(--display);font-weight:600;font-size:34px;line-height:1.1;margin:0 0 12px}
+h1 em,h2 em{color:var(--accent-ink);font-style:italic}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:500}
+h3{font-size:11.6px;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+p{margin:0 0 7px}
+.muted{color:var(--muted)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 4px;border-radius:4px}
+section.sec{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
+section.sec.brk{page-break-before:always;break-before:page;border-top:none;margin-top:0;padding-top:0}
+.intro{color:var(--muted);margin:0 0 9px}
+/* header */
+.header{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.lead{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:3px 9px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:12px}
+/* toc */
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:14px}
+.toc div{font-size:10.4px;color:var(--muted);display:flex;gap:8px}
+.toc b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:18px}
+/* grid/cards */
+.grid{display:grid;gap:9px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;break-inside:avoid}
+.card .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:3px}
+.card p{margin:0;color:var(--muted);font-size:10.2px}
+/* tables */
+.table-wrap{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:6px 0 8px;break-inside:avoid}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:8.6px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 9px;font-weight:500}
+td{border-top:1px solid var(--border);padding:6px 9px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+/* code */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:9.8px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:6px 0 8px;break-inside:avoid}
+.term .c{color:var(--muted)}
+/* callouts */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:9px;padding:8px 11px;font-size:10.2px;margin:7px 0;break-inside:avoid}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+/* steps */
+.steps{display:grid;gap:6px;margin:6px 0 8px}
+.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 10px;break-inside:avoid}
+.step .b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:10px;display:flex;align-items:center;justify-content:center}
+.step div:last-child{font-size:10.2px}
+.checklist{list-style:none;padding:0;margin:4px 0 8px}
+.checklist li{position:relative;padding-left:17px;margin:4px 0}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+.bullets{list-style:none;padding:0;margin:4px 0 8px}
+.bullets li{position:relative;padding-left:14px;margin:4px 0}
+.bullets li::before{content:"●";position:absolute;left:0;top:.2em;color:var(--accent);font-size:.65em}
+.source{font-family:var(--mono);font-size:8.8px;color:var(--muted);line-height:1.6}
+.foot{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+h2,h3,.intro{break-after:avoid;page-break-after:avoid}
+section.sec.keep{break-inside:avoid;page-break-inside:avoid}
+h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- CAPA / CABEÇALHO -->
+<div class="header">
+  <div class="eyebrow"><span class="dot"></span>Introdução ao Antigravity · Aula 2 · Manual de referência</div>
+  <h1>Manual do<br><em>AntiGravity</em></h1>
+  <p class="lead">Um guia de consulta para o dia a dia com o <strong>Google Antigravity 2.0</strong>, com notas sobre o <strong>CLI</strong> e a <strong>IDE</strong>: onde fica cada coisa, como criar projetos e conversas, escolher modelo e modo, revisar Artifacts, controlar permissões e o sandbox, usar os slash commands, agendar tarefas e personalizar o agente com rules, skills, subagentes, hooks, MCP e plugins. No fim, uma tabela de equivalências para quem já usa o Claude Code e um guia de solução de problemas.</p>
+  <div class="chips"><span>Projetos</span><span>Modos e modelos</span><span>Artifacts</span><span>Permissões e sandbox</span><span>Slash commands</span><span>Rules · Skills · Hooks · MCP</span><span>Plugins</span><span>Solução de problemas</span></div>
+  <div class="byline">Formação Claude Code 2026 · Baseado na documentação oficial em antigravity.google/docs (Features, Projects, Permissions, Settings, Agent settings, Artifacts, Artifact review, Slash commands, Plan, Boost, Teamwork, Models, Rules, Skills, Subagents, Hooks, Sidecars, MCP, Plugins, Marketplace, Terminal sandbox, Remote Control, Plans, FAQ), consultada em outubro de 2026 (Antigravity 2.0 v2.19.1).</div>
+  <div class="toc">
+    <div><b>01</b>Antes de começar</div><div><b>10</b>Rules, skills e subagentes</div>
+    <div><b>02</b>A interface do Antigravity 2.0</div><div><b>11</b>Hooks, sidecars e MCP</div>
+    <div><b>03</b>Projetos</div><div><b>12</b>Plugins e Marketplace</div>
+    <div><b>04</b>Conversas, modos e modelos</div><div><b>13</b>Navegador e Remote Control</div>
+    <div><b>05</b>Artifacts e revisão</div><div><b>14</b>CLI e IDE em uma página</div>
+    <div><b>06</b>Permissões</div><div><b>15</b>Planos, cotas e créditos</div>
+    <div><b>07</b>Terminal sandbox</div><div><b>16</b>Equivalências com o Claude Code</div>
+    <div><b>08</b>Slash commands</div><div><b>17</b>Solução de problemas</div>
+    <div><b>09</b>Tarefas agendadas</div><div><b>18</b>Glossário e fontes</div>
+  </div>
+</div>
+
+<!-- 01 -->
+<section class="sec">
+  <h2><span class="n">01</span>Antes <em>de começar</em></h2>
+  <p class="intro">O Antigravity tem várias "superfícies". Este manual foca no <strong>Antigravity 2.0</strong>, o aplicativo desktop voltado a agentes; quando algo for diferente no CLI ou na IDE, isso aparece indicado.</p>
+  <div class="grid g3">
+    <div class="card"><div class="k">Antigravity 2.0</div><p>Central de comando para conversar com agentes, acompanhar tarefas em segundo plano e revisar Artifacts. Não é um editor de código.</p></div>
+    <div class="card"><div class="k">Antigravity CLI</div><p>Interface no terminal, aberta com o comando <code>agy</code> dentro da pasta do projeto.</p></div>
+    <div class="card"><div class="k">Antigravity IDE</div><p>Editor completo com IA (completar com Tab, painel do agente, revisão de mudanças).</p></div>
+  </div>
+  <h3>Conta e requisitos</h3>
+  <ul class="checklist">
+    <li>Uma <strong>conta Google pessoal</strong> em país atendido. Segundo o FAQ oficial, contas do Google Workspace podem falhar; nesse caso, use um endereço <code>@gmail.com</code></li>
+    <li>Idade verificada na conta Google (o FAQ informa que há restrição de idade)</li>
+    <li>Sistema compatível: macOS 12+, Windows 10 (64 bits)+ ou Linux com glibc ≥ 2.28 (detalhes no manual de instalação da aula 03)</li>
+    <li>Uma pasta de projeto <strong>versionada com Git</strong>: é o seu botão de desfazer</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="sec brk">
+  <h2><span class="n">02</span>A interface <em>do Antigravity 2.0</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Área</th><th>O que tem</th></tr></thead>
+    <tbody>
+      <tr><td>Barra lateral · Projects</td><td>Seus projetos (cada um com pastas, configurações e permissões próprias) e o botão de pasta com <strong>+</strong> para criar um novo</td></tr>
+      <tr><td>Barra lateral · Conversations</td><td>As conversas com agentes, inclusive as avulsas (fora de projetos)</td></tr>
+      <tr><td>Barra lateral · Scheduled Tasks</td><td>Tarefas agendadas que disparam agentes num horário</td></tr>
+      <tr><td>Barra lateral · Customizations</td><td>Skills, hooks, MCP e o <strong>Marketplace</strong> de plugins</td></tr>
+      <tr><td>Centro · Conversa</td><td>Caixa de mensagem (com <code>@</code> para citar arquivos, <code>/</code> para comandos e microfone), seletor de modelo e os passos do agente</td></tr>
+      <tr><td>Painel de Artifacts</td><td>Planos, listas de tarefas, walkthroughs, capturas e gravações do navegador</td></tr>
+      <tr><td>Settings</td><td>Preferências gerais, presets de permissão, abas por projeto, agente, personalizações, atalhos e coleta de dados</td></tr>
+    </tbody></table></div>
+  <h3>Atalhos de teclado essenciais</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ação</th><th>macOS</th><th>Windows / Linux</th></tr></thead>
+    <tbody>
+      <tr><td>Escolher conversa</td><td>⌘K</td><td>Ctrl + K</td></tr>
+      <tr><td>Buscar arquivo</td><td>⌘P</td><td>Ctrl + P</td></tr>
+      <tr><td>Focar na caixa de mensagem</td><td>⌘L</td><td>Ctrl + L</td></tr>
+      <tr><td>Nova conversa</td><td>⌘N</td><td>Ctrl + N</td></tr>
+      <tr><td>Conversa anterior / seguinte</td><td>⌥ ↑ / ↓</td><td>Alt + ↑ / ↓</td></tr>
+    </tbody></table></div>
+  <div class="callout">Os atalhos podem ser vistos e personalizados em <strong>Settings › Shortcuts</strong>.</div>
+</section>
+
+<!-- 03 -->
+<section class="sec brk">
+  <h2><span class="n">03</span><em>Projetos</em></h2>
+  <p class="intro">Um <strong>projeto</strong> é a configuração de pastas que define o ambiente e o alcance do agente. No modelo antigo (workspace), o agente ficava preso a um único repositório; no 2.0, um projeto pode reunir várias pastas, por exemplo o front-end e o back-end, com configurações e permissões próprias.</p>
+  <h3>Criar um projeto</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Na barra lateral, clique no ícone de pasta com <strong>+</strong> e em <strong>New Project</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Clique em <strong>Add Folder</strong> e escolha uma ou mais pastas locais ou repositórios Git.</div></div>
+    <div class="step"><div class="b">3</div><div>Clique em <strong>Create</strong>.</div></div>
+    <div class="step"><div class="b">4</div><div>(Opcional) Ajuste as configurações do projeto: preset de permissão, permissões específicas e personalizações.</div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Aspecto</th><th>Workspace (modelo antigo)</th><th>Projeto (2.0)</th></tr></thead>
+    <tbody>
+      <tr><td>Alcance</td><td>Um repositório local</td><td>Uma ou várias pastas</td></tr>
+      <tr><td>Configurações</td><td>Herdadas da máquina</td><td>Próprias do projeto</td></tr>
+      <tr><td>Permissões</td><td>Amplas, globais</td><td>Herdam as globais e somam as do projeto</td></tr>
+      <tr><td>Personalizações</td><td>Globais ou por workspace</td><td>Skills, MCP e hooks de cada pasta, mais os globais</td></tr>
+    </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><div class="k">Conversas avulsas</div><p>Para algo rápido, inicie uma conversa fora de qualquer projeto. Ela roda numa <strong>pasta temporária local</strong> (scratch), com configurações e permissões próprias, além das globais.</p></div>
+    <div class="card"><div class="k">Permissões que aprendem</div><p>Permissões concedidas durante uma conversa podem ficar salvas no projeto: o agente "aprende" ações confiáveis e para de perguntar sobre elas.</p></div>
+  </div>
+  <div class="callout warn">Inclua no projeto <strong>só as pastas necessárias</strong>. Um projeto na sua pasta de usuário inteira dá ao agente acesso a documentos, chaves e configurações que nada têm a ver com a tarefa.</div>
+</section>
+
+<!-- 04 -->
+<section class="sec">
+  <h2><span class="n">04</span>Conversas, <em>modos e modelos</em></h2>
+  <h3>Iniciar um agente</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Com o projeto aberto, escreva o objetivo na caixa de mensagem (ex.: "Adicione uma página de FAQ ao site") e pressione <strong>Enter</strong>.</div></div>
+    <div class="step"><div class="b">2</div><div>Escolha onde o agente vai trabalhar: <strong>Local mode</strong> (direto nas suas pastas) ou <strong>New worktree mode</strong> (num Git worktree isolado).</div></div>
+    <div class="step"><div class="b">3</div><div>Escolha como ele vai trabalhar: <strong>Planning mode</strong> ou <strong>Fast mode</strong> (tabela abaixo).</div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Modo de execução</th><th>Como funciona</th><th>Use para</th></tr></thead>
+    <tbody>
+      <tr><td>Planning mode</td><td>Pesquisa o código, organiza o trabalho em grupos de tarefas e produz um <strong>plano de implementação</strong> (Artifact) antes de agir</td><td>Funcionalidades, refatorações, qualquer coisa que toque vários arquivos</td></tr>
+      <tr><td>Fast mode</td><td>Executa direto, sem fase de planejamento</td><td>Renomear uma variável, rodar um comando, pequenos ajustes</td></tr>
+    </tbody></table></div>
+  <h3>Modelos disponíveis (página Models)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Free e AI Plus</th><th>AI Pro</th><th>AI Ultra</th><th>Enterprise</th></tr></thead>
+    <tbody>
+      <tr><td>Gemini 3.8 / 3.7 / 3.6 Flash</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Gemini 3.1 Pro</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Claude Sonnet 4.6 e Opus 4.6 (thinking)</td><td>✓</td><td>✓</td><td>✓</td><td>—</td></tr>
+      <tr><td>GPT-OSS-120b</td><td>✓</td><td>✓</td><td>✓</td><td>—</td></tr>
+    </tbody></table></div>
+  <ul class="bullets">
+    <li>O modelo é escolhido no <strong>seletor abaixo da caixa de mensagem</strong>. Os modelos Gemini Flash oferecem níveis de esforço (Fast, Low, Medium, High); o Gemini 3.1 Pro, Low e High.</li>
+    <li>A escolha <strong>vale para a conversa inteira</strong>. Se você trocar com o agente rodando, ele termina o passo atual com o modelo anterior.</li>
+    <li>Em <strong>View Usage</strong>, você vê o quanto resta das cotas semanal e de 5 horas, separadas para Gemini e para Claude/GPT.</li>
+  </ul>
+  <div class="callout">O microfone ao lado da caixa de mensagem faz <strong>transcrição ao vivo</strong>: você vê o texto enquanto fala e pode corrigir antes de enviar.</div>
+</section>
+
+<!-- 05 -->
+<section class="sec brk">
+  <h2><span class="n">05</span><em>Artifacts</em> e revisão</h2>
+  <p class="intro">Um <strong>Artifact</strong> é uma entrega estruturada que o agente cria para cumprir a tarefa e mostrar o progresso e o raciocínio. É por eles que você verifica o trabalho, sem ler cada chamada de ferramenta.</p>
+  <div class="grid g3">
+    <div class="card"><div class="k">Plano de implementação</div><p>O que será feito, em quais arquivos e em que ordem. Gerado no Planning mode e pelo <code>/plan</code>.</p></div>
+    <div class="card"><div class="k">Lista de tarefas e walkthrough</div><p>O andamento passo a passo e, no fim, a explicação das mudanças.</p></div>
+    <div class="card"><div class="k">Capturas e gravações</div><p>Evidências visuais do navegador: como a página ficou, o teste que o agente fez.</p></div>
+  </div>
+  <h3>Política de revisão (Settings › Agent)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Política</th><th>Comportamento</th></tr></thead>
+    <tbody>
+      <tr><td>Request review (recomendada)</td><td>O agente <strong>para</strong> ao gerar um plano ou um diff, avisa você e espera a aprovação. Você revisa, comenta e aprova</td></tr>
+      <tr><td>Always proceed</td><td>O agente nunca para para revisão: executa o plano assim que o cria</td></tr>
+    </tbody></table></div>
+  <div class="callout good"><strong>Comente direto no Artifact</strong>, como num documento compartilhado: "mostre só as perguntas publicadas". O agente incorpora o comentário sem precisar recomeçar.</div>
+  <div class="callout warn"><strong>Always proceed</strong> só faz sentido em projetos de teste ou tarefas muito bem definidas. No dia a dia, deixe a revisão ligada.</div>
+</section>
+
+<!-- 06 -->
+<section class="sec">
+  <h2><span class="n">06</span><em>Permissões</em></h2>
+  <p class="intro">O Antigravity usa um motor de permissões único, com três listas: <strong>Deny</strong> (proibido), <strong>Ask</strong> (pergunta antes) e <strong>Allow</strong> (liberado). Elas valem para comandos de terminal, arquivos, ferramentas MCP e leitura ou ação em páginas da web.</p>
+  <h3>Presets (Settings › General › Permission Settings)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Preset</th><th>Sandbox</th><th>Comandos no terminal</th></tr></thead>
+    <tbody>
+      <tr><td>Default</td><td>Ligado</td><td>Liberados <strong>dentro</strong> do sandbox; perguntam para rodar fora dele</td></tr>
+      <tr><td>Request Review</td><td>Desligado</td><td>Sempre perguntam</td></tr>
+      <tr><td>Turbo</td><td>Desligado</td><td>Liberados sem perguntar, sem restrição</td></tr>
+    </tbody></table></div>
+  <h3>O que acontece com o que não está em nenhuma lista</h3>
+  <ul class="checklist">
+    <li>Ler e escrever arquivos <strong>dentro das pastas do projeto</strong>: liberado</li>
+    <li>Ler ou agir em páginas da web: <strong>pergunta</strong> antes</li>
+    <li>Comandos, ferramentas MCP e arquivos fora do projeto: <strong>pergunta</strong> antes</li>
+  </ul>
+  <div class="grid g2">
+    <div class="card"><div class="k">Por projeto</div><p>Cada projeto pode sobrescrever o preset global em <strong>Settings › Projects</strong>. Ao ser criado, o projeto segue o global ("Inherit General").</p></div>
+    <div class="card"><div class="k">No Windows</div><p>O novo sistema de permissões ainda está disponível só em macOS e Linux. No Windows valem as configurações anteriores: execução de comandos com <strong>Request Review</strong>, <strong>Proceed in Sandbox</strong> ou <strong>Always Proceed</strong>, e acesso a arquivos fora da pasta como Always Allow, Always Ask ou Always Deny.</p></div>
+  </div>
+  <div class="callout danger"><strong>Turbo</strong> deixa o agente rodar qualquer comando na sua máquina sem perguntar. Use apenas em ambientes descartáveis (uma máquina virtual, um contêiner de testes).</div>
+</section>
+
+<!-- 07 -->
+<section class="sec brk">
+  <h2><span class="n">07</span>Terminal <em>sandbox</em></h2>
+  <p class="intro">O sandbox isola os comandos que o agente roda no terminal, usando recursos do próprio sistema operacional: não há máquina virtual nem imagem Docker para gerenciar, e não há atraso para iniciar.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Tecnologia</th><th>O que faz</th></tr></thead>
+    <tbody>
+      <tr><td>Linux</td><td>Namespaces do kernel</td><td>Isola o sistema de arquivos, esconde os processos do computador e corta a rede</td></tr>
+      <tr><td>macOS</td><td><code>sandbox-exec</code> (perfis Seatbelt)</td><td>Restringe o acesso a arquivos e as conexões de rede</td></tr>
+      <tr><td>Windows</td><td>Comportamento anterior</td><td>Sandbox ligado ou desligado no preset personalizado</td></tr>
+    </tbody></table></div>
+  <div class="grid g2">
+    <div class="card"><div class="k">Pode</div><p>Escrever nas pastas do projeto, em pastas temporárias e em caches de build; ler pastas do sistema como <code>/usr</code> e <code>/etc</code>, para as ferramentas funcionarem.</p></div>
+    <div class="card"><div class="k">Não pode</div><p>Ler arquivos sensíveis como <code>~/.ssh</code> e <code>.env</code>; ver o que não foi montado; acessar a rede fora dos domínios que você aprovou.</p></div>
+  </div>
+  <div class="callout">Alguns comandos não funcionam no sandbox, como os que precisam de rede ou de serviços do sistema. O agente pode pedir para rodá-los <strong>fora</strong>, com privilégios totais; esse pedido <strong>sempre</strong> espera a sua aprovação, a menos que exista uma regra de allow ou deny para aquele comando.</div>
+</section>
+
+<!-- 08 -->
+<section class="sec">
+  <h2><span class="n">08</span><em>Slash commands</em></h2>
+  <p class="intro">Digite <code>/</code> na caixa de mensagem para ver os comandos. Os principais:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Comando</th><th>O que faz</th><th>Onde</th></tr></thead>
+    <tbody>
+      <tr><td><code>/plan</code></td><td>Planejamento estruturado e exploração do código <strong>antes</strong> de executar; gera um plano revisável</td><td>2.0 e CLI</td></tr>
+      <tr><td><code>/goal</code></td><td>Roda até a tarefa terminar, sem pedir sua opinião no meio</td><td>2.0</td></tr>
+      <tr><td><code>/grill-me</code></td><td>Faz perguntas para alinhar o plano antes de implementar</td><td>2.0</td></tr>
+      <tr><td><code>/schedule</code></td><td>Agenda uma instrução para uma vez ou com repetição</td><td>2.0</td></tr>
+      <tr><td><code>/browser</code></td><td>Libera e controla o uso do navegador (Google Chrome) pelo agente</td><td>2.0</td></tr>
+      <tr><td><code>/plugin</code></td><td>Gerencia plugins do Marketplace ou cria pacotes próprios</td><td>2.0</td></tr>
+      <tr><td><code>/boost</code></td><td>Raciocínio profundo com vários agentes (orquestrador, coordenadores e executores) para bugs difíceis e refatorações complexas</td><td>2.0 e CLI · Pro, Ultra e Enterprise</td></tr>
+      <tr><td><code>/teamwork-preview</code></td><td>Uma equipe de agentes para projetos grandes, que podem levar dias</td><td>2.0 e CLI · planos pagos</td></tr>
+      <tr><td><code>/agents</code>, <code>/diff</code>, <code>/resume</code>, <code>/permissions</code>, <code>/credits</code>, <code>/codesearch</code></td><td>Gerenciar subagentes, ver mudanças, retomar conversas, permissões, créditos e busca no código</td><td>CLI (e parte no 2.0)</td></tr>
+    </tbody></table></div>
+  <div class="callout warn"><code>/goal</code> tira você do meio do caminho. Para pedidos amplos, comece com <code>/grill-me</code> ou <code>/plan</code>; deixe o <code>/goal</code> para tarefas bem delimitadas.</div>
+  <div class="callout">Skills também podem virar comandos: no CLI, a documentação descreve a conversão de skills em slash commands.</div>
+</section>
+
+<!-- 09 -->
+<section class="sec keep">
+  <h2><span class="n">09</span>Tarefas <em>agendadas</em></h2>
+  <p class="intro"><strong>Scheduled Tasks</strong> enviam mensagens a um agente num horário definido, uma vez ou de forma recorrente, como um "cron" de agentes. A documentação cita o uso do Gemini 3.8 Flash para essas tarefas.</p>
+  <div class="grid g2">
+    <div class="card"><div class="k">Exemplos</div><p>Toda segunda às 8h: "verifique links quebrados no site e gere um relatório". Todo dia: "resuma as issues novas do repositório".</p></div>
+    <div class="card"><div class="k">Como criar</div><p>Pela seção <strong>Scheduled Tasks</strong> da barra lateral ou com <code>/schedule</code> na conversa.</p></div>
+  </div>
+  <div class="callout warn">Tarefas agendadas consomem cota como qualquer conversa, e o FAQ alerta sobre o que acontece quando o computador <strong>entra em suspensão</strong>: o aplicativo precisa estar rodando para a tarefa disparar.</div>
+</section>
+
+<!-- 10 -->
+<section class="sec brk">
+  <h2><span class="n">10</span>Rules, skills <em>e subagentes</em></h2>
+  <h3>Rules: instruções permanentes</h3>
+  <p>Padrões de código, convenções e restrições de arquitetura que valem para todas as conversas, diferente de um prompt que vale para uma só.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Escopo</th><th>Onde (Antigravity 2.0)</th></tr></thead>
+    <tbody>
+      <tr><td>Projeto</td><td><code>AGENTS.md</code>, <code>GEMINI.md</code> ou <code>.agents/rules/*.md</code> na raiz ou em qualquer subpasta</td></tr>
+      <tr><td>Global</td><td><code>~/.gemini/AGENTS.md</code>, <code>~/.gemini/GEMINI.md</code> ou <code>~/.gemini/config/rules/*.md</code></td></tr>
+    </tbody></table></div>
+  <h3>Skills: pacotes de conhecimento</h3>
+  <p>Skills seguem um <strong>padrão aberto</strong> (agentskills.io): uma pasta com um arquivo <code>SKILL.md</code> que traz instruções, boas práticas e, se quiser, scripts e dados. O agente vê o nome e a descrição de cada skill e lê a que for útil para a tarefa.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Escopo</th><th>Onde (CLI; no 2.0, gerencie em Customizations)</th></tr></thead>
+    <tbody>
+      <tr><td>Projeto</td><td><code>&lt;raiz&gt;/.agents/skills/&lt;skill&gt;/</code></td></tr>
+      <tr><td>Global</td><td><code>~/.gemini/antigravity-cli/skills/&lt;skill&gt;/</code></td></tr>
+      <tr><td>Plugin</td><td><code>~/.gemini/antigravity-cli/plugins/&lt;nome&gt;/skills/</code></td></tr>
+    </tbody></table></div>
+  <div class="callout">Boas práticas da documentação: <strong>skills focados</strong>, <strong>descrições claras</strong> (é por elas que o agente decide usar), scripts como "caixas-pretas" e árvores de decisão para casos com escolhas.</div>
+  <h3>Subagentes personalizados</h3>
+  <p>Arquivos <code>.md</code> que definem agentes especializados para trabalhos em paralelo (builds, geração de vários arquivos, pesquisas), enquanto a conversa principal continua.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Escopo</th><th>Onde</th></tr></thead>
+    <tbody>
+      <tr><td>Projeto</td><td><code>.agents/agents/&lt;nome&gt;.md</code> ou <code>.agents/agents/&lt;nome&gt;/agent.md</code></td></tr>
+      <tr><td>Global</td><td><code>~/.gemini/config/agents/&lt;nome&gt;.md</code></td></tr>
+      <tr><td>Plugin</td><td><code>plugins/&lt;plugin&gt;/agents/</code></td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- 11 -->
+<section class="sec">
+  <h2><span class="n">11</span>Hooks, sidecars <em>e MCP</em></h2>
+  <h3>Hooks</h3>
+  <p>Rodam scripts ou comandos em pontos do ciclo do agente, antes ou depois de uma ação: aplicar regras, rodar linters, formatar arquivos (por exemplo, o <code>prettier</code> depois de cada escrita), registrar diagnósticos.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Escopo</th><th>Onde</th></tr></thead>
+    <tbody>
+      <tr><td>Projeto</td><td><code>.agents/hooks.json</code></td></tr>
+      <tr><td>Global</td><td><code>~/.gemini/config/hooks.json</code></td></tr>
+      <tr><td>No 2.0</td><td>Ver e ligar/desligar em <strong>Settings › Customizations › Hooks</strong></td></tr>
+    </tbody></table></div>
+  <h3>Sidecars</h3>
+  <p>Processos em segundo plano que rodam junto com o Antigravity. Ele os inicia e reinicia se travarem. Servem para scripts persistentes, tarefas recorrentes e reações a eventos.</p>
+  <h3>MCP (Model Context Protocol)</h3>
+  <p>Conecta o agente a ferramentas externas (bancos de dados, GitHub, Airtable…), como vimos no módulo 31.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Escopo</th><th>Onde</th></tr></thead>
+    <tbody>
+      <tr><td>Global</td><td><code>~/.gemini/config/mcp_config.json</code></td></tr>
+      <tr><td>Projeto</td><td><code>.agents/mcp_config.json</code></td></tr>
+      <tr><td>IDE</td><td><strong>MCP Store</strong>: menu <strong>…</strong> do painel do agente › MCP Servers › Install</td></tr>
+    </tbody></table></div>
+  <div class="term"><span class="c">// .agents/mcp_config.json — servidor remoto (exemplo)</span>
+{
+  "mcpServers": {
+    "deepwiki": { "serverUrl": "https://mcp.deepwiki.com/mcp" }
+  }
+}</div>
+  <div class="callout warn">Para servidores remotos (SSE, Streamable HTTP ou WebSocket), o campo é <code>serverUrl</code>; os campos antigos <code>url</code> e <code>httpUrl</code> não são aceitos. E, como no módulo 31: conecte só servidores confiáveis, com tokens de escopo mínimo.</div>
+</section>
+
+<!-- 12 -->
+<section class="sec brk">
+  <h2><span class="n">12</span>Plugins <em>e Marketplace</em></h2>
+  <p class="intro">Um <strong>plugin</strong> empacota skills, subagentes, rules, servidores MCP e hooks num único pacote, fácil de instalar e compartilhar.</p>
+  <div class="term">plugins/&lt;nome-do-plugin&gt;/
+├── plugin.json        <span class="c"># obrigatório: identifica o plugin</span>
+├── mcp_config.json    <span class="c"># opcional: servidores MCP</span>
+├── hooks.json         <span class="c"># opcional: hooks</span>
+├── skills/&lt;skill&gt;/SKILL.md
+├── agents/&lt;agente&gt;.md
+└── rules/&lt;regra&gt;.md</div>
+  <div class="term"><span class="c">// plugin.json</span>
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "faq-da-formacao",
+  "description": "Regras e skills para manter a FAQ do curso."
+}</div>
+  <h3>Instalar do Marketplace (Antigravity 2.0)</h3>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div>Na barra lateral, abra a aba <strong>Customizations</strong> (abaixo de Scheduled Tasks).</div></div>
+    <div class="step"><div class="b">2</div><div>Clique em <strong>Marketplace</strong> para ver os plugins disponíveis.</div></div>
+    <div class="step"><div class="b">3</div><div>Clique num cartão para ver o que o plugin traz (skills, MCP, hooks…).</div></div>
+    <div class="step"><div class="b">4</div><div>Clique em <strong>+</strong> para instalar. Para gerenciar depois, use <code>/plugin</code>.</div></div>
+  </div>
+  <div class="callout danger">Um plugin pode trazer <strong>hooks</strong> (comandos que rodam sozinhos) e <strong>servidores MCP</strong> (acesso a sistemas externos). Leia o que ele contém antes de instalar, como faria com uma extensão de navegador.</div>
+</section>
+
+<!-- 13 -->
+<section class="sec keep">
+  <h2><span class="n">13</span>Navegador <em>e Remote Control</em></h2>
+  <div class="grid g2">
+    <div class="card"><div class="k">Navegador</div><p>Com <code>/browser</code>, o agente usa o Google Chrome para testar o que construiu: abre páginas, clica, tira capturas e grava a sessão (browser recordings). A documentação prevê listas de sites permitidos e bloqueados e o uso de um <strong>perfil separado do Chrome</strong>.</p></div>
+    <div class="card"><div class="k">Remote Control</div><p>Conecta-se com segurança às suas sessões do Antigravity 2.0 e do CLI que estão rodando nas suas máquinas, a partir de qualquer navegador. Útil para tarefas longas: você acompanha e conduz o agente longe da mesa.</p></div>
+  </div>
+  <div class="callout warn">Use um <strong>perfil separado do Chrome</strong> para o agente: assim ele não navega logado nas suas contas pessoais (banco, e-mail, redes sociais).</div>
+</section>
+
+<!-- 14 -->
+<section class="sec brk">
+  <h2><span class="n">14</span>CLI e IDE <em>em uma página</em></h2>
+  <h3>Antigravity CLI</h3>
+  <div class="term"><span class="c"># instalar (detalhes por sistema no manual da aula 03)</span>
+curl -fsSL https://antigravity.google/cli/install.sh | bash       <span class="c"># macOS e Linux</span>
+irm https://antigravity.google/cli/install.ps1 | iex              <span class="c"># Windows (PowerShell)</span>
+
+<span class="c"># abrir dentro do projeto</span>
+cd ~/projetos/site-do-curso
+agy</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Item</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td>Executável</td><td>macOS/Linux: <code>~/.local/bin/agy</code> · Windows: <code>C:\Users\&lt;você&gt;\AppData\Local\agy\bin</code></td></tr>
+      <tr><td>Configurações</td><td><code>~/.gemini/antigravity-cli/settings.json</code> (só grava o que difere do padrão)</td></tr>
+      <tr><td>Primeiro uso</td><td>Esquema de cores, modo de exibição (Alt-Screen ou Inline) e confiança na pasta</td></tr>
+      <tr><td>Ver hooks ativos</td><td><code>/hooks</code></td></tr>
+    </tbody></table></div>
+  <h3>Antigravity IDE</h3>
+  <ul class="bullets">
+    <li><strong>Tab completion</strong> ilimitado e comandos inline, para editar com as próprias mãos</li>
+    <li><strong>Painel lateral do agente</strong>, com grupos de tarefas e a <strong>MCP Store</strong></li>
+    <li><strong>Revisão de mudanças</strong> no editor, arquivo por arquivo</li>
+    <li>Extensões do Antigravity também para VS Code, Visual Studio, JetBrains, Zed e Xcode (lista da documentação)</li>
+  </ul>
+</section>
+
+<!-- 15 -->
+<section class="sec">
+  <h2><span class="n">15</span>Planos, <em>cotas e créditos</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Plano</th><th>Cota</th><th>Extra</th></tr></thead>
+    <tbody>
+      <tr><td>Sem plano (Free)</td><td>Cota "significativa", renovada <strong>semanalmente</strong></td><td>—</td></tr>
+      <tr><td>Google AI Pro</td><td>Alta, renovada a cada <strong>5 horas</strong> até o limite semanal</td><td>Créditos de IA comprados; <code>/boost</code> e <code>/teamwork-preview</code></td></tr>
+      <tr><td>Google AI Ultra</td><td>A mais generosa, renovada a cada 5 horas</td><td>Pool flexível de créditos</td></tr>
+      <tr><td>Enterprise</td><td>Pelo Gemini Enterprise, com termos do Google Cloud</td><td>—</td></tr>
+    </tbody></table></div>
+  <ul class="bullets">
+    <li>Todos os planos têm <strong>todos os recursos</strong> (tarefas agendadas, CLI) e Tab ilimitado.</li>
+    <li>A cota acompanha a <strong>quantidade de trabalho</strong> do agente: tarefas simples rendem mais pedidos.</li>
+    <li>Ao esgotar a cota de um modelo, a opção <strong>AI Credit Overages</strong> decide: <strong>Never</strong> (espera a cota renovar) ou <strong>Always</strong> (usa créditos e volta à cota quando ela renovar).</li>
+    <li>Não há <strong>BYOK</strong> (usar a sua própria chave de API) nem endpoint próprio.</li>
+  </ul>
+  <div class="callout">Acompanhe o consumo em <strong>Settings</strong> (uso por modelo), em <strong>View Usage</strong> no seletor de modelos ou com <code>/credits</code> no CLI.</div>
+</section>
+
+<!-- 16 -->
+<section class="sec keep">
+  <h2><span class="n">16</span>Equivalências <em>com o Claude Code</em></h2>
+  <p class="intro">Se você chegou até aqui no curso, já conhece estas ideias. A tabela ajuda a "traduzir" o que você sabe (equivalências aproximadas: os detalhes de cada ferramenta diferem).</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Conceito</th><th>Claude Code</th><th>Antigravity</th></tr></thead>
+    <tbody>
+      <tr><td>Instruções do projeto</td><td><code>CLAUDE.md</code></td><td><code>AGENTS.md</code> / <code>GEMINI.md</code> / <code>.agents/rules/</code></td></tr>
+      <tr><td>Instruções globais</td><td><code>~/.claude/CLAUDE.md</code></td><td><code>~/.gemini/AGENTS.md</code> / <code>GEMINI.md</code></td></tr>
+      <tr><td>Skills</td><td><code>.claude/skills/</code> com <code>SKILL.md</code></td><td><code>.agents/skills/</code> com <code>SKILL.md</code></td></tr>
+      <tr><td>Subagentes</td><td><code>.claude/agents/*.md</code></td><td><code>.agents/agents/*.md</code></td></tr>
+      <tr><td>Hooks</td><td>Em <code>settings.json</code></td><td><code>.agents/hooks.json</code></td></tr>
+      <tr><td>MCP</td><td><code>.mcp.json</code> / <code>claude mcp</code></td><td><code>.agents/mcp_config.json</code></td></tr>
+      <tr><td>Planejar antes de agir</td><td>Plan mode</td><td>Planning mode / <code>/plan</code></td></tr>
+      <tr><td>Trabalho isolado</td><td>Git worktrees</td><td>New worktree mode</td></tr>
+      <tr><td>Abrir no terminal</td><td><code>claude</code></td><td><code>agy</code></td></tr>
+    </tbody></table></div>
+  <div class="callout warn">O FAQ do Antigravity esclarece que <strong>não é possível usar o login do Antigravity em softwares de terceiros</strong> (o próprio FAQ cita Claude Code, OpenClaw e OpenCode). Cada ferramenta usa a sua conta e a sua cota.</div>
+</section>
+
+<!-- 17 -->
+<section class="sec brk">
+  <h2><span class="n">17</span>Solução <em>de problemas</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sintoma</th><th>Causa provável</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>Não consigo entrar</td><td>Conta do Google Workspace, país não atendido ou idade não verificada</td><td>Tente uma conta <code>@gmail.com</code> pessoal; confira a idade na conta Google</td></tr>
+      <tr><td>"Inelegível" para um plano Google One AI</td><td>Restrições da conta ou da região</td><td>Veja o FAQ oficial; o plano gratuito continua disponível</td></tr>
+      <tr><td>O agente pergunta tudo o tempo todo</td><td>Preset Request Review ou comandos fora do sandbox</td><td>Use o preset Default e adicione comandos confiáveis à lista Allow do projeto</td></tr>
+      <tr><td>Comando falha só quando o agente roda</td><td>O sandbox bloqueia rede ou serviço do sistema</td><td>Aprove a execução fora do sandbox ou crie uma regra para o comando</td></tr>
+      <tr><td>Servidor MCP remoto não conecta</td><td>Campo <code>url</code> em vez de <code>serverUrl</code></td><td>Corrija o <code>mcp_config.json</code></td></tr>
+      <tr><td>Tarefa agendada não disparou</td><td>Computador em suspensão ou aplicativo fechado</td><td>Mantenha o app aberto e o computador ativo no horário</td></tr>
+      <tr><td>"Limite atingido"</td><td>Cota semanal ou de 5 horas esgotada</td><td>Espere a renovação, troque de modelo ou use créditos (Pro/Ultra)</td></tr>
+      <tr><td>O agente não usa o navegador</td><td>O uso do navegador é explícito</td><td>Use <code>/browser</code> no pedido</td></tr>
+      <tr><td>Mudanças que eu não queria</td><td>Local mode com revisão desligada</td><td>Desfaça com Git; use worktree e Request review</td></tr>
+    </tbody></table></div>
+  <div class="callout">Para suporte, o FAQ indica os canais oficiais em antigravity.google/support. Antes de abrir um chamado, anote a versão do app (Settings) e o que estava fazendo.</div>
+</section>
+
+<!-- 18 -->
+<section class="sec">
+  <h2><span class="n">18</span>Glossário <em>e fontes</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Termo</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td>Agente</td><td>Sistema de raciocínio em várias etapas, movido por um modelo de ponta, que lê o código, usa ferramentas e executa tarefas</td></tr>
+      <tr><td>Projeto</td><td>Conjunto de pastas, configurações e permissões em que o agente trabalha</td></tr>
+      <tr><td>Artifact</td><td>Entrega estruturada do agente: plano, tarefas, walkthrough, capturas, gravações</td></tr>
+      <tr><td>Worktree</td><td>Cópia de trabalho isolada de um repositório Git, para o agente mexer sem afetar a sua</td></tr>
+      <tr><td>Preset</td><td>Conjunto de permissões pronto: Default, Request Review, Turbo</td></tr>
+      <tr><td>Sandbox</td><td>Isolamento dos comandos do agente no terminal</td></tr>
+      <tr><td>Rule / Skill</td><td>Instrução permanente / pacote de conhecimento com <code>SKILL.md</code></td></tr>
+      <tr><td>Hook / Sidecar</td><td>Comando em pontos do ciclo do agente / processo em segundo plano gerenciado</td></tr>
+      <tr><td>Plugin</td><td>Pacote com skills, agentes, rules, MCP e hooks</td></tr>
+    </tbody></table></div>
+  <div class="foot">
+    <p class="source">Fontes: documentação oficial em antigravity.google/docs (Getting started, Features, Projects, Permissions, Settings, Agent settings, Artifacts, Artifact review, Slash commands, Plan, Boost, Teamwork, Models, Rules, Skills, Subagents, Hooks, Sidecars, MCP, Plugins, Marketplace, Terminal sandbox, Remote Control, Plans e FAQ) e blog oficial (Introducing Google Antigravity 2.0, 19/05/2026), consultados em outubro de 2026, versão 2.19.1. Observação: a página Features chama os presets de "Default, Full machine e Unrestricted", enquanto Settings e Terminal sandbox usam "Default, Request Review e Turbo"; este manual segue as duas últimas. O produto evolui rápido: nomes de menus, comandos, modelos e limites podem mudar. Formação Claude Code 2026 · Próxima aula → Instalando e configurando o AntiGravity (com manual para Windows, Linux e macOS).</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
