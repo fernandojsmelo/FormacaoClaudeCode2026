@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilização de Strings</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 7</div>
+    <h1>Utilização<br><em>de strings</em></h1>
+    <p class="lead">Strings são sequências de caracteres, e boa parte do trabalho de um programa é lidar com texto: nomes, mensagens, arquivos, respostas de usuários. Nesta aula: os jeitos de escrever uma string, caracteres especiais, índices positivos e negativos, fatias, por que strings não podem ser alteradas e como percorrer letra por letra.</p>
+    <div class="chips"><span>' " """</span><span>\n · \t · r""</span><span>Índices</span><span>Fatias [i:j:passo]</span><span>len()</span><span>Imutável</span><span>in</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Text; Built-in Types: Text Sequence Type; Lexical analysis: string literals), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Criando</span><span class="n">01</span></div>
+  <h2>Aspas simples, duplas <em>e triplas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>criando.py</b></div>
+      <pre class="code">simples = 'texto com aspas simples'
+duplas = "texto com aspas duplas"
+com_apostrofo = "Copo d'água"  <span class="c"># duplas fora, simples dentro</span>
+com_aspas = 'Ele disse "oi"'             <span class="c"># e vice-versa</span>
+varias_linhas = """Linha 1
+Linha 2"""
+print(simples)
+print(com_apostrofo)
+print(com_aspas)
+print(varias_linhas)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">texto com aspas simples
+Copo d'água
+Ele disse "oi"
+Linha 1
+Linha 2</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>'...'</code> e <code>"..."</code> são equivalentes</li>
+        <li>Escolha a que <strong>não</strong> aparece no texto: "Copo d'água"</li>
+        <li><code>"""..."""</code> aceita várias linhas</li>
+        <li>Escolha um padrão e use sempre o mesmo no projeto</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Especiais</span><span class="n">02</span></div>
+  <h2>Caracteres <em>de escape</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>escapes.py</b></div>
+      <pre class="code">print("Coluna1\tColuna2")         <span class="c"># \t = tabulação</span>
+print("Linha 1\nLinha 2")         <span class="c"># \n = quebra de linha</span>
+print("Ele disse \"oi\"")         # \" = aspas dentro de aspas
+print("C:\\pasta\\arquivo.txt")   <span class="c"># \\ = uma barra invertida</span>
+print(r"C:\pasta\novo.txt")       # r"...": string crua</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Coluna1	Coluna2
+Linha 1
+Linha 2
+Ele disse "oi"
+C:\pasta\arquivo.txt
+C:\pasta\novo.txt</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Escape</th><th>Significa</th></tr></thead>
+        <tbody>
+          <tr><td>\n</td><td>Quebra de linha</td></tr>
+          <tr><td>\t</td><td>Tabulação</td></tr>
+          <tr><td>\" e \'</td><td>Aspas dentro de aspas iguais</td></tr>
+          <tr><td>\\</td><td>Uma barra invertida</td></tr>
+        </tbody></table></div>
+      <div class="callout warn" style="margin-top:10px">Caminhos do Windows têm <code>\</code>: em <code>"C:\novo"</code>, o <code>\n</code> vira quebra de linha! Use <code>r"..."</code> (string crua) ou barras normais: <code>"C:/novo"</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Índices</span><span class="n">03</span></div>
+  <h2>Cada caractere <em>tem uma posição</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>indices.py</b></div>
+      <pre class="code">palavra = "Python"
+<span class="c">#          P y t h o n</span>
+<span class="c"># índice:  0 1 2 3 4 5</span>
+<span class="c"># negativo:-6 ... -2 -1</span>
+print(palavra[0])     <span class="c"># P</span>
+print(palavra[5])     <span class="c"># n</span>
+print(palavra[-1])    <span class="c"># n (último)</span>
+print(palavra[-2])    <span class="c"># o</span>
+print(len(palavra))   <span class="c"># 6 caracteres</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">P
+n
+n
+o
+6</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Letra</th><th>P</th><th>y</th><th>t</th><th>h</th><th>o</th><th>n</th></tr></thead>
+        <tbody>
+          <tr><td>Índice</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+          <tr><td>Negativo</td><td>-6</td><td>-5</td><td>-4</td><td>-3</td><td>-2</td><td>-1</td></tr>
+        </tbody></table></div>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A contagem começa em <strong>0</strong></li>
+        <li>O último é <code>len(s) - 1</code>, ou simplesmente <code>-1</code></li>
+        <li>Índices negativos contam do fim</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Fatias</span><span class="n">04</span></div>
+  <h2>Fatias: <em>[início:fim:passo]</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>fatias.py</b></div>
+      <pre class="code">palavra = "Python"
+print(palavra[0:2])    <span class="c"># Py   (do 0 até antes do 2)</span>
+print(palavra[2:])     <span class="c"># thon (do 2 até o fim)</span>
+print(palavra[:4])     <span class="c"># Pyth (do começo até antes do 4)</span>
+print(palavra[::2])    <span class="c"># Pto  (de 2 em 2)</span>
+print(palavra[::-1])   <span class="c"># nohtyP (invertida)</span>
+print(palavra[1:100])  <span class="c"># ython (fatia não dá erro)</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Py
+thon
+Pyth
+Pto
+nohtyP
+ython</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O <strong>início entra</strong>, o <strong>fim não</strong>: <code>[0:2]</code> pega as posições 0 e 1</li>
+        <li>Sem início: desde o começo. Sem fim: até o final</li>
+        <li>Passo: de quanto em quanto; negativo anda de trás para frente</li>
+        <li><code>[::-1]</code> inverte o texto</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">As mesmas regras de índices e fatias valem para <strong>listas</strong> e <strong>tuplas</strong> (aulas 09 e 10). Aprende uma vez, usa três.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">05</span></div>
+  <h2>Fora do texto: <em>IndexError</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>erro_indice.py</b></div>
+      <pre class="code">palavra = "Python"
+print(palavra[6])</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "erro_indice.py", line 2, in &lt;module&gt;
+    print(palavra[6])
+          ~~~~~~~^^^
+IndexError: string index out of range</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>"Python" tem 6 letras: índices de 0 a 5</li>
+        <li>Pedir o índice 6 é pedir uma letra que não existe</li>
+        <li>Fatias são tolerantes: <code>palavra[1:100]</code> não dá erro (seção 04)</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Clássico erro "de um a mais": achar que o último índice é igual ao tamanho. O último é <strong>tamanho − 1</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Imutável</span><span class="n">06</span></div>
+  <h2>Strings <em>não mudam</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>imutavel.py</b> · tentar trocar uma letra</div>
+      <pre class="code">palavra = "Python"
+palavra[0] = "J"</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "imutavel.py", line 2, in &lt;module&gt;
+    palavra[0] = "J"
+    ~~~~~~~^^^
+TypeError: 'str' object does not support item assignment</pre>
+    </div>
+    <div>
+      <div class="lbl"><b>imutavel_ok.py</b> · criar uma nova</div>
+      <pre class="code">palavra = "Python"
+nova = "J" + palavra[1:]   <span class="c"># cria uma string nova</span>
+print(nova)
+print(palavra)             <span class="c"># a original continua igual</span></pre>
+      <pre class="out" style="margin-top:6px">Jython
+Python</pre>
+      <div class="callout" style="margin-top:10px">Strings são <strong>imutáveis</strong>: toda "alteração" (inclusive os métodos da aula 08) cria uma string <strong>nova</strong>. Por isso é preciso guardar o resultado numa variável.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Percorrendo</span><span class="n">07</span></div>
+  <h2>Letra por letra, <em>in e *</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>percorrer.py</b></div>
+      <pre class="code">for letra in "Ana":
+    print(letra)
+print("n" in "Ana")    <span class="c"># True</span>
+print("A" * 3)         <span class="c"># AAA</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">A
+n
+a
+True
+AAA</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>for letra in texto:</code> passa por cada caractere, em ordem</li>
+        <li>O <code>for</code> é o assunto da <strong>aula 14</strong>: aqui é só uma prévia</li>
+        <li><code>in</code> procura um trecho dentro do texto</li>
+        <li><code>len()</code> conta os caracteres, inclusive espaços</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Fatiando <em>um nome</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> peça um nome completo e mostre a primeira e a última letra, as três primeiras, o nome ao contrário e o tamanho.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: fatiando um nome</span>
+nome = input("Nome completo: ").strip()
+print("Primeira letra:", nome[0])
+print("Última letra:", nome[-1])
+print("Três primeiras:", nome[:3])
+print("Ao contrário:", nome[::-1])
+print("Tamanho:", len(nome))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída (digitou "Carla Dias")</div>
+      <pre class="out">Nome completo: Carla Dias
+Primeira letra: C
+Última letra: s
+Três primeiras: Car
+Ao contrário: saiD alraC
+Tamanho: 10</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O espaço também conta no tamanho: 10</li>
+        <li>Desafio: mostre só o primeiro nome (dica: <code>.find(" ")</code>, aula 08)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Em s = "Python", quanto vale s[-1]?</p>
+        <div class="opts"><div>A) P</div><div>B) n</div><div>C) o</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b> -1 é o último.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Quanto vale "Python"[1:4]?</p>
+        <div class="opts"><div>A) "Pyt"</div><div>B) "yth"</div><div>C) "ytho"</div><div>D) "yt"</div></div>
+        <div class="answer"><b>B.</b> Do 1 até antes do 4.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O que acontece em s[0] = "J"?</p>
+        <div class="opts"><div>A) Troca a letra</div><div>B) TypeError: strings são imutáveis</div><div>C) IndexError</div><div>D) Nada</div></div>
+        <div class="answer"><b>B.</b> Crie uma nova: "J" + s[1:].</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Como escrever o caminho C:\novo sem problema?</p>
+        <div class="opts"><div>A) "C:\novo"</div><div>B) r"C:\novo"</div><div>C) 'C:\novo'</div><div>D) """C:\novo"""</div></div>
+        <div class="answer"><b>B.</b> String crua: \n não vira quebra.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Texto é uma<br><em>sequência</em></h1>
+    <p class="lead">Strings se escrevem com aspas simples, duplas ou triplas, usam escapes como <code>\n</code> e <code>\t</code> (ou <code>r"..."</code> para não usar). Cada caractere tem índice a partir de <strong>0</strong>, fatias seguem <code>[início:fim:passo]</code> com o fim de fora, e strings são <strong>imutáveis</strong>.</p>
+    <div class="chips"><span>Índice 0 e -1</span><span>[i:j:passo]</span><span>[::-1]</span><span>IndexError</span><span>Imutável</span></div>
+    <div class="next">Próxima aula → 08 · Operações e Métodos em Strings</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/introduction.html#text; docs.python.org/3/library/stdtypes.html#text-sequence-type-str; docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
