@@ -1,0 +1,9 @@
+$ mypy com_erros.py
+com_erros.py:9: error: List item 0 has incompatible type "str"; expected "float"  [list-item]
+com_erros.py:9: error: List item 1 has incompatible type "str"; expected "float"  [list-item]
+com_erros.py:10: error: Argument 1 to "saudacao" has incompatible type "int"; expected "str"  [arg-type]
+com_erros.py:11: error: Incompatible types in assignment (expression has type "float", variable has type "int")  [assignment]
+Found 4 errors in 1 file (checked 1 source file)
+
+$ mypy ex_estoque.py
+Success: no issues found in 1 source file
