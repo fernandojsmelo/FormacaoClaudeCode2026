@@ -64,3 +64,12 @@ Resumo (`parse_google.py`): `q|` (pergunta), `h|`/`h4|`, `p|`, `li|`, `n|` (item
 - **Código**: o resumo corta as linhas à direita e a transcrição perde a indentação; use o texto completo da transcrição com indentação de 4 espaços, sem inventar linhas.
 - **Negrito como código**: em algumas impressões o parser marca negrito como `<code>`; confira com uma imagem da página e troque por `<strong>`.
 - Nunca resumir nem inventar conteúdo. Compare palavra por palavra com o original no fim.
+
+## Recursos extras (Role plays 41 a 43)
+
+- **`codigo_xml.py`** refaz os blocos de código da transcrição com o texto e o recuo exatos do PDF (o XML do `pdftohtml -xml -i` guarda o recuo que o `parse_rp.py` perde): `python3 scripts/roleplay/codigo_xml.py RolePlayNN.pdf rpNN.txt rpNN.codigo.txt`. Os blocos completos da transcrição servem depois para completar o código cortado à direita no resumo (mesma ordem; mantenha as linhas em branco do resumo).
+- **Emojis do react-pdf** viram o caractere alto do surrogate (`=` para D83D, `<` para D83C, `>` para D83E) seguido do byte baixo em cp1252; emojis do plano básico viram só o byte baixo. Já vistos: `=€` 🚀, `<‰` 🎉, `=%` 🔥, `=Á` 📁, `>„` 🪄, `>Ÿ` 🪟, `<O` 🍏, `='` 🐧, `L` ❌, `³` ↳, `ñ` ⏱.
+- **Byte nulo**: o `parse_rp.py` pode deixar um `\x00` num cabeçalho de turno partido; o `grep` passa a tratar o arquivo como binário. Corrija com Python, incluindo o `\x00` no padrão.
+- **Diagramas em texto do resumo** perdem o recuo no `parse_google.py`. No XML, as linhas em `left=156` começam na margem do bloco e as em `left=166` têm um espaço a mais; case as linhas em sequência (não por dicionário, porque `│` e `▼` se repetem).
+- **Seções só com links** ("Confira os principais resultados da Web..."): reproduza como `li| Título · <em>Fonte</em>`, montando o título pelos trechos da linha 33 px abaixo do nome da fonte no XML (ou no topo da página seguinte) e descartando as abas (Tudo, Imagens, Vídeos...) que caem na mesma altura.
+- **Texto sobreposto** no original atrapalha o `seqdiff.py`; para a comparação final, extraia as palavras pelo XML de cada PDF.
