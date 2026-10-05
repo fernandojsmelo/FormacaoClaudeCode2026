@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Resumo — Role Play 44</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.7pt;line-height:1.52}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:21pt;line-height:1.18;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 8px}
+.byline{font-family:var(--mono);font-size:8.5pt;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:6px}
+section.turn{break-before:page;page-break-before:always}
+section.turn.first{break-before:auto;page-break-before:auto;margin-top:18px}
+.sec{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+.q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-style:italic;color:var(--ink);margin-bottom:14px}
+.q .k{font-family:var(--mono);font-style:normal;font-size:8pt;color:var(--muted);display:block;margin-bottom:3px}
+p{margin:0 0 8px}
+h3{font-family:var(--display);font-weight:600;font-size:12.5pt;margin:12px 0 5px;color:var(--ink);break-after:avoid}
+h4{font-size:10pt;margin:11px 0 5px;color:var(--accent-ink);break-after:avoid}
+ul,ol{margin:0 0 8px;padding-left:20px}
+li{margin:3px 0}
+strong{color:var(--accent-ink);font-weight:600}
+code{font-family:var(--mono);font-size:8.6pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 4px}
+table{width:100%;border-collapse:collapse;font-size:9.1pt;margin:6px 0 12px;border:1px solid var(--border-2)}
+tr{break-inside:avoid}
+th{background:var(--surface-2);font-family:var(--mono);font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+blockquote{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--mono);font-size:8.6pt;line-height:1.55;color:var(--ink);break-inside:avoid}
+.follow{background:var(--good-soft);border:1px solid #35493B;border-radius:10px;padding:8px 13px;margin-top:10px;break-inside:avoid}
+.follow p{margin-bottom:4px}
+.follow ul{margin:0}
+.err{color:var(--muted);font-style:italic}
+.note{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin-top:12px;break-inside:avoid}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:10px;break-before:avoid}
+blockquote div{margin:0 0 2px;white-space:pre-wrap}
+.codenote{font-family:var(--mono);font-size:7.6pt;color:var(--muted);margin:-6px 0 10px}
+.flow{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-radius:8px;font-family:var(--mono);font-size:8.4pt;line-height:1.5;text-align:center;break-inside:avoid}
+.flow .ar{color:var(--accent);margin:2px 0}
+ol ol{margin:4px 0 2px}
+body{font-size:9.3pt;line-height:1.47}
+blockquote div{min-height:1.2em}
+body{font-size:11.2pt;line-height:1.72}
+table{break-inside:avoid}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · Role play 44</div>
+  <h1>Estruturas de dados em Python: de “lista pra tudo” a um sistema de estoque</h1>
+  <p class="lead">Resumo da pesquisa feita durante a prática "O Especialista em Python e o Iniciante que “Usa Lista pra Tudo”": lista, tupla, set e dicionário, por que a busca em lista é lenta, o erro "unhashable", e um controle de estoque construído passo a passo (cadastro, baixa, relatório, menu, JSON, try/except, orientação a objetos, módulos, histórico de vendas e interface com Tkinter), além de laços e list comprehension.</p>
+  <div class="byline">Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 09:49</div>
+
+  <!-- 01 -->
+  <section class="turn first">
+    <div class="sec">01 — Lista, tupla, set e dicionário</div>
+    <div class="q"><span class="k">Pergunta</span>"Opa! Eu tô aprendendo Python e, confesso, uso lista pra tudo — é a única que eu entendo direito. Mas aí aparecem …</div>
+    <p>Fala aí!</p>
+    <p>Cara, relaxa, esse é <strong>o clássico "muro" que todo mundo bate</strong> quando começa a avançar no Python. Usar lista para tudo funciona no começo, mas como você já sentiu na pele, elas cobram o preço em lentidão (quando ficam gigantes) e em complexidade (quando você precisa buscar algo "pelo nome").</p>
+    <p>Para você nunca mais esquecer: o que muda não é só o parêntese ou a chave, é o <strong>superpoder oculto</strong> de cada uma.</p>
+    <p>Aqui está o resumo definitivo para você escolher a estrutura certa e salvar o desempenho do seu código:</p>
+    <h3>📊 Comparativo Direto: Qual usar?</h3>
+    <table>
+      <tr><th>Estrutura</th><th>Símbolo</th><th>É Ordenada?</th><th>Aceita Duplicados?</th><th>Pode Alterar? (Mutável)</th><th>Superpoder / Quando usar?</th></tr>
+      <tr><td><strong>Lista</strong></td><td><code>[ ]</code></td><td>Sim</td><td>Sim</td><td>Sim</td><td><strong>Acessar por posição (índice).</strong> Use quando a ordem importa e você vai mexer nos dados toda hora.</td></tr>
+      <tr><td><strong>Tupla</strong></td><td><code>( )</code></td><td>Sim</td><td>Sim</td><td>❌ Não</td><td><strong>Garantia de segurança.</strong> Use para dados que nunca devem mudar (ex: coordenadas X e Y, meses do ano).</td></tr>
+      <tr><td><strong>Set (Conjunto)</strong></td><td><code>{ }</code></td><td>❌ Não</td><td>❌ Não</td><td>Sim</td><td><strong>Busca instantânea e remoção de duplicados.</strong> Use para testar se algo existe ali dentro num piscar de olhos.</td></tr>
+      <tr><td><strong>Dicionário</strong></td><td><code>{k: v}</code></td><td>Sim*</td><td>❌ Chaves não</td><td>Sim</td><td><strong>Buscar "pelo nome" (Chave).</strong> Perfeito para associar uma informação a outra (ex: Nome do produto -&gt; Preço).</td></tr>
+    </table>
+    <p><em>*Nota: Os dicionários mantêm a ordem de inserção a partir do Python 3.7.</em></p>
+    <h3>🔍 Por que sua busca ficou lenta? (Lista vs. Set)</h3>
+    <p>Imagine que a <strong>Lista</strong> é uma fila indiana de pessoas. Se você perguntar "O Waldo está aí?", o Python precisa olhar o rosto da primeira pessoa, da segunda, da terceira... até o final. Se a lista tiver 1 milhão de itens e o Waldo for o último, o Python vai fazer 1 milhão de checagens. É por isso que ficou lento!</p>
+    <p>Já o <strong>Set (Conjunto)</strong> usa uma mágica chamada Hashtable. Imagine que o Set é um armário cheio de gavetas numeradas. Quando você joga um item lá dentro, o Python calcula exatamente em qual gaveta ele deve ficar. Para checar se o Waldo está lá, o Python vai <strong>direto na gaveta dele</strong>. Não importa se o Set tem 10 itens ou 10 milhões, a busca é <strong>instantânea</strong>.</p>
+    <p>Veja a diferença de desempenho conforme o volume de dados cresce:</p>
+    <p><svg viewBox="0 0 480 268" width="100%" style="max-width:520px;display:block;margin:6px auto 10px;background:#100D0A;border:1px solid #3A2F24;border-radius:6px" font-family="Inter,sans-serif" font-size="9" fill="#AE9F8C"><text x="240" y="14" text-anchor="middle" font-size="11" fill="#F3ECE2">Tempo de Busca: Lista vs Set</text><text x="52" y="214" text-anchor="end">0</text><line x1="60" x2="460" y1="210" y2="210" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="195" text-anchor="end">10</text><line x1="60" x2="460" y1="191" y2="191" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="176" text-anchor="end">20</text><line x1="60" x2="460" y1="172" y2="172" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="157" text-anchor="end">30</text><line x1="60" x2="460" y1="153" y2="153" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="138" text-anchor="end">40</text><line x1="60" x2="460" y1="134" y2="134" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="119" text-anchor="end">50</text><line x1="60" x2="460" y1="115" y2="115" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="100" text-anchor="end">60</text><line x1="60" x2="460" y1="96" y2="96" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="81" text-anchor="end">70</text><line x1="60" x2="460" y1="77" y2="77" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="62" text-anchor="end">80</text><line x1="60" x2="460" y1="58" y2="58" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="43" text-anchor="end">90</text><line x1="60" x2="460" y1="39" y2="39" stroke="#3A2F24" stroke-width="0.6"/><text x="52" y="24" text-anchor="end">100</text><line x1="60" x2="460" y1="20" y2="20" stroke="#3A2F24" stroke-width="0.6"/><text x="60" y="232" text-anchor="middle">0M</text><text x="100" y="232" text-anchor="middle">0.1M</text><text x="140" y="232" text-anchor="middle">0.2M</text><text x="180" y="232" text-anchor="middle">0.3M</text><text x="220" y="232" text-anchor="middle">0.4M</text><text x="260" y="232" text-anchor="middle">0.5M</text><text x="300" y="232" text-anchor="middle">0.6M</text><text x="340" y="232" text-anchor="middle">0.7M</text><text x="380" y="232" text-anchor="middle">0.8M</text><text x="420" y="232" text-anchor="middle">0.9M</text><text x="460" y="232" text-anchor="middle">1M</text><line x1="60" y1="210" x2="460" y2="20" stroke="#6FA8F2" stroke-width="2"/><line x1="60" y1="210" x2="460" y2="210" stroke="#DE8B62" stroke-width="2.4"/><text x="260" y="250" text-anchor="middle">Número de Elementos (N)</text><text x="16" y="115" text-anchor="middle" transform="rotate(-90 16 115)">Tempo de Busca (Tempo Relativo)</text><rect x="80" y="26" width="10" height="3" fill="#6FA8F2"/><text x="94" y="30">Lista (Busca Linear)</text><rect x="200" y="26" width="10" height="3" fill="#DE8B62"/><text x="214" y="30">Set (Busca Instantânea)</text></svg></p>
+    <h3>💡 Resolvendo seus dois problemas reais</h3>
+    <p>Abaixo, veja como aplicar o <strong>Dicionário</strong> e o <strong>Set</strong> para resolver exatamente o que te travou:</p>
+    <h4>1. Procurar dados "pelo nome" (Dicionário)</h4>
+    <p>Em vez de criar uma lista e tentar adivinhar a posição do item, use chaves <code>{}</code> com o formato <code>chave: valor</code>.</p>
+    <blockquote><div># Com Dicionário, você busca direto pela "chave" (o nome)</div><div>produtos = {</div><div>    "notebook": 4500.00,</div><div>    "mouse": 150.00,</div><div>    "teclado": 300.00</div><div>}</div><div># Buscando o preço "pelo nome" de forma direta:</div><div>preco_mouse = produtos["mouse"]</div><div>print(f"O preço do mouse é R$ {preco_mouse}")  # Saída: R$ 150.00</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>2. Checagem ultra rápida sem lentidão (Set)</h4>
+    <p>Se você tem uma base gigante e só precisa saber se um item "está lá dentro" ou não, converta sua lista para um Set ou crie direto como Set.</p>
+    <blockquote><div># Criando um Set (repare que não tem o formato chave:valor do dicionário)</div><div>usuarios_bloqueados = {"ana123", "joao_silva", "maria_dev", "waldo"}</div><div>usuario_tentando_logar = "waldo"</div><div># Essa checagem ocorre de forma instantânea, mesmo com milhões de usuários</div><div>if usuario_tentando_logar in usuarios_bloqueados:</div><div>    print("Acesso negado! Usuário bloqueado.")</div><div>else:</div><div>    print("Acesso permitido!")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🎯 Resumo da ópera para o seu dia a dia:</h3>
+    <ul>
+      <li>Quer guardar dados onde a <strong>posição fixa</strong> importa (ex: 1º lugar, 2º lugar)? ➡ <strong>Lista</strong> <code>[]</code>.</li>
+      <li>Quer guardar dados que <strong>não podem ser alterados</strong> de jeito nenhum? ➡ <strong>Tupla</strong> <code>()</code>.</li>
+      <li>Quer <strong>eliminar duplicados</strong> ou fazer <strong>buscas ultra rápidas</strong>? ➡ <strong>Set</strong> <code>{}</code>.</li>
+      <li>Quer <strong>vincular uma informação a outra</strong> para buscar por texto/código? ➡ <strong>Dicionário</strong> <code>{:}</code>.</li>
+    </ul>
+  </section>
+
+  <!-- 02 -->
+  <section class="turn">
+    <div class="sec">02 — Lista em set ou como chave: unhashable</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, cê explicou de um jeito que fez tudo parecer bem mais claro! Esse lance do armário cheio de gavetas para o S…</div>
+    <p>Que bom que os exemplos ajudaram a clarear as coisas! Fico muito feliz.</p>
+    <p>E você tem um excelente faro para problemas: <strong>sim, isso dá um erro clássico no Python!</strong></p>
+    <p>Se você tentar colocar uma lista dentro de um <code>set</code> ou usá-la como chave de um dicionário, o Python vai travar o seu código na hora e jogar esse erro na sua tela:</p>
+    <blockquote><div>TypeError: unhashable type: 'list'</div></blockquote>
+    <h3>🛑 Por que isso acontece? O mistério do "Unhashable"</h3>
+    <p>Lembra da metáfora do <strong>Set</strong> como um armário cheio de gavetas numeradas? Para o Python saber exatamente em qual gaveta colocar um item, ele usa uma função matemática que calcula uma "identidade única" (um número fixo) para aquele item. Esse processo se chama <strong>Hash</strong>.</p>
+    <p>Para que um objeto possa ter esse número fixo (ou seja, ser hashable), ele precisa ser <strong>imutável</strong>. O Python precisa ter certeza absoluta de que o item nunca vai mudar de cara. Se ele mudasse, o cálculo do Hash mudaria, e o Python perderia o item de vista dentro do armário.</p>
+    <ul>
+      <li><strong>O problema da Lista:</strong> A lista é <strong>mutável</strong>. Você pode adicionar, remover ou alterar itens dela a qualquer momento.</li>
+      <li>Se o Python permitisse uma lista como chave de um dicionário ou dentro de um set, você poderia criar a lista, guardá-la lá dentro e, depois, alterar o conteúdo dela. O "endereço" da gaveta mudaria e o sistema inteiro quebraria.</li>
+    </ul>
+    <h3>🛠 Como resolver isso no seu código?</h3>
+    <p>Sempre que você precisar de uma "lista" que sirva como chave de dicionário ou que vá dentro de um set, você deve usar uma <strong>Tupla</strong> <code>( )</code>.</p>
+    <p>Como a tupla é <strong>imutável</strong> (não muda nunca), o Python consegue calcular o Hash dela com total segurança.</p>
+    <h4>Exemplo 1: Coordenadas de um mapa (Dicionário)</h4>
+    <p>Imagine que você quer mapear o nome de cidades usando as coordenadas geográficas (Latitude e Longitude) como chave:</p>
+    <blockquote><div># ❌ ERRO: Usar lista como chave dá TypeError</div><div># locais = { [12.34, 56.78]: "São Paulo" }</div><div># ✅ CORRETO: Usar tupla (imutável) funciona perfeitamente!</div><div>locais = {</div><div>    (12.34, 56.78): "São Paulo",</div><div>    (98.76, 54.32): "Teresina"</div><div>}</div><div># Buscando a cidade pela coordenada:</div><div>print(locais[(12.34, 56.78)])  # Saída: São Paulo</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>Exemplo 2: Histórico de combinações de jogos (Set)</h4>
+    <p>Imagine que você quer registrar as combinações de números sortados na loteria para garantir que nenhuma se repita:</p>
+    <blockquote><div># ✅ CORRETO: Guardando tuplas dentro de um Set</div><div>jogos_sorteados = set()</div><div>jogo_de_hoje = (4, 8, 15, 16, 23, 42)  # Tupla</div><div>jogos_sorteados.add(jogo_de_hoje)  # Funciona perfeitamente!</div><div>print(jogos_sorteados)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Ficou clara essa diferença entre o que pode e o que não pode mudar no Python? Se quiser, me conta <strong>qual é o projeto ou script</strong> que você está tentando criar agora, e a gente pode <strong>desenhar juntos a melhor estrutura de dados</strong> para ele!</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="turn">
+    <div class="sec">03 — Links: estruturas de dados no estoque</div>
+    <div class="q"><span class="k">Pergunta</span>Caramba, agora entendi o lance do "unhashable"! Faz total sentido: se o Python não consegue confiar que o item vai …</div>
+    <div class="follow"><p>Confira os principais resultados da Web para saber mais sobre esse tema:</p>
+    <ul>
+      <li>In Python, when to use a Dictionary, List or Set? - Stack Overflow · <em>Stack Overflow</em></li>
+      <li>List, Tuple, Set, or Dictionary? How to Choose the Right Python Data ... · <em>Medium</em></li>
+      <li>Inventory Management Series EP 12 | Avoid Duplicate Records · <em>YouTube</em></li>
+      <li>Choosing Python Data Structures | List vs Tuple vs Dict vs Set · <em>ApX Machine Learning</em></li>
+      <li>How to manage double code entries for inventory in Excel (Same ... · <em>Microsoft Community Hub</em></li>
+      <li>How would you design a database to eliminate duplicate entries? · <em>Reddit</em></li>
+      <li>Python Dictionaries and Sets: Your ULTIMATE Data Structure Guide · <em>YouTube</em></li>
+      <li>The Best Data Structure For Storing Non-Duplicate Items In Python · <em>freeCodeCamp</em></li>
+      <li>Python: Lists vs. Tuples vs. Sets vs. Dictionaries · <em>Python in Plain English</em></li>
+      <li>Best Data Structure For Storing Non Duplicate Items In Python · <em>YouTube</em></li>
+    </ul></div>
+  </section>
+
+  <!-- 04 -->
+  <section class="turn">
+    <div class="sec">04 — Exemplos para o estoque</div>
+    <div class="q"><span class="k">Pergunta</span>gostaria que você coloca-se ums exemplos</div>
+    <p>Com certeza!</p>
+    <p>Vamos colocar a mão na massa com exemplos práticos.</p>
+    <p>Para um <strong>controle de estoque</strong>, a melhor estratégia é usar um <strong>Dicionário</strong> onde a <strong>Chave é o código do produto</strong> e o <strong>Valor são os detalhes do produto</strong> (que também podem ser outro dicionário).</p>
+    <p>O grande truque aqui é que <strong>o próprio Dicionário já resolve o seu problema de duplicatas automaticamente!</strong> Como as chaves de um dicionário precisam ser únicas, se você tentar adicionar um produto com um código que já existe, o Python apenas atualiza as informações em vez de criar um item duplicado.</p>
+    <p>Veja abaixo três exemplos práticos de como estruturar e manipular isso no seu projeto:</p>
+    <h4>1. Criando o Estoque e Evitando Duplicatas (O jeito ideal)</h4>
+    <p>Aqui, usamos o código do produto (uma string ou número) como a chave. Se você tentar cadastrar o mesmo código duas vezes, o segundo apenas atualiza o primeiro.</p>
+    <blockquote><div># Inicializando nosso estoque como um dicionário</div><div>estoque = {</div><div>    "PROD001": {"nome": "Teclado Mecânico", "quantidade": 15, "preco": 250.00},</div><div>    "PROD002": {"nome": "Mouse Gamer", "quantidade": 30, "preco": 120.00}</div><div>}</div><div># --- TESTANDO AS DUPLICATAS ---</div><div># Se tentarmos adicionar um novo produto com o código PROD001 (que já existe):</div><div>novo_cadastro = "PROD001"</div><div>estoque[novo_cadastro] = {"nome": "Teclado Mecânico RGB", "quantidade": 20, "preco": 280.00}</div><div># O Python não duplica! Ele apenas atualiza as informações do PROD001:</div><div>print(estoque["PROD001"]["nome"])        # Saída: Teclado Mecânico RGB</div><div>print(f"Total de itens no estoque: {len(estoque)}")  # Saída: 2 (não virou 3!)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>2. Buscando Dados "Pelo Código" Instantaneamente</h4>
+    <p>Esqueça os loops <code>for</code> para procurar itens. Com o dicionário, a busca pelo código é direta e imediata.</p>
+    <blockquote><div>codigo_buscado = "PROD002"</div><div># Verificando se o código existe antes de acessar (para não dar erro no programa)</div><div>if codigo_buscado in estoque:</div><div>    produto = estoque[codigo_buscado]</div><div>    print(f"📦 Produto Encontrado!")</div><div>    print(f"Nome: {produto['nome']} | Qtd: {produto['quantidade']} | Preço: R$ {produto['preco']}")</div><div>else:</div><div>    print("❌ Código de produto não encontrado.")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>3. E onde o Set entraria se você quisesse usá-lo?</h4>
+    <p>Você pode usar um <code>Set</code> em paralelo para criar <strong>filtros rápidos</strong>. Por exemplo, imagine que você quer saber, em tempo real, quais produtos estão <strong>esgotados</strong> (quantidade igual a zero) para mandar para o fornecedor:</p>
+    <blockquote><div># Estoque atualizado com um item zerado</div><div>estoque = {</div><div>    "PROD001": {"nome": "Teclado Mecânico", "quantidade": 15},</div><div>    "PROD002": {"nome": "Mouse Gamer", "quantidade": 0}, # Esgotado</div><div>    "PROD003": {"nome": "Fone de Ouvido", "quantidade": 0}  # Esgotado</div><div>}</div><div># Criando um Set para monitorar produtos esgotados</div><div>produtos_esgotados = set()</div><div># Alimentando o Set (percorrendo o estoque)</div><div>for codigo, info in estoque.items():</div><div>    if info["quantidade"] == 0:</div><div>        produtos_esgotados.add(codigo)</div><div># Agora você tem uma lista de alertas ultra rápida e sem duplicatas</div><div>print(f"🚨 Alerta de reposição para os códigos: {produtos_esgotados}")</div><div># Saída: {'PROD002', 'PROD003'}</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>O que achou dessa estrutura usando o <strong>código como chave</strong>? Se quiser, podemos escrever juntos as funções de <code>adicionar_produto()</code> ou <code>dar_baixa_no_estoque()</code> usando essa lógica para o seu projeto! Qual funcionalidade você quer criar agora?</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="turn">
+    <div class="sec">05 — A função adicionar_produto()</div>
+    <div class="q"><span class="k">Pergunta</span>Caramba, que completo! Esse mix de Dicionário e Set parece perfeito pro meu controle de estoque. Gostei muito dessa …</div>
+    <p>Bora, com certeza!</p>
+    <p>Vamos desenhar essa função juntos de um jeito bem profissional, mas super simples de entender.</p>
+    <p>Para a nossa função <code>adicionar_produto()</code>, vamos criar uma lógica inteligente:</p>
+    <ol>
+      <li>Se o código do produto <strong>já existir</strong>, ela avisa e atualiza apenas a quantidade em estoque (somando o que chegou ao que já tinha).</li>
+      <li>Se o código <strong>for novo</strong>, ela cria o cadastro do zero.</li>
+    </ol>
+    <p>Aqui está o código completo estruturado para o seu projeto:</p>
+    <blockquote><div># 1. Iniciamos o nosso estoque (Dicionário)</div><div>estoque = {</div><div>    "PROD001": {"nome": "Teclado Mecânico", "quantidade": 15, "preco": 250.00},</div><div>    "PROD002": {"nome": "Mouse Gamer", "quantidade": 30, "preco": 120.00}</div><div>}</div><div># 2. Criamos a função inteligente</div><div>def adicionar_produto(codigo, nome, quantidade, preco):</div><div>    # Verificamos se o código já existe no dicionário do estoque</div><div>    if codigo in estoque:</div><div>        # Se já existe, somamos a nova quantidade à quantidade antiga (Baixa automática de reposição)</div><div>        estoque[codigo]["quantidade"] += quantidade</div><div>        # Atualizamos o preço, caso tenha mudado no fornecedor</div><div>        estoque[codigo]["preco"] = preco</div><div>        print(f"🔄 Produto {codigo} já existia! Estoque atualizado para {estoque[codigo]['quantidade']} unidades.")</div><div>    else:</div><div>        # Se não existe, cria um cadastro novinho em folha</div><div>        estoque[codigo] = {</div><div>            "nome": nome,</div><div>            "quantidade": quantidade,</div><div>            "preco": preco</div><div>        }</div><div>        print(f"✨ Sucesso: Novo produto [{nome}] cadastrado com o código {codigo}!")</div><div># --- HORA DE TESTAR A FUNÇÃO NO SEU PROJETO ---</div><div>print("--- Estado Inicial do Estoque ---")</div><div>print(estoque)</div><div>print("-" * 35)</div><div># Teste 1: Cadastrando um produto totalmente novo</div><div>adicionar_produto("PROD003", "Monitor 24 Polegadas", 10, 899.90)</div><div># Teste 2: Tentando cadastrar o PROD001 de novo (Chegaram mais 5 teclados no estoque)</div><div>adicionar_produto("PROD001", "Teclado Mecânico", 5, 260.00)</div><div>print("-" * 35)</div><div>print("--- Estado Final do Estoque ---")</div><div># Veja como o PROD001 agora tem 20 unidades (15 anteriores + 5 novas) e o preço atualizou!</div><div>import pprint</div><div>pprint.pprint(estoque)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💡 Por que essa função é ótima para o seu projeto?</h3>
+    <ul>
+      <li><strong>Evita erros humanos:</strong> Você nunca vai ter dois produtos "PROD001" perdidos no sistema bagunçando as contas.</li>
+      <li><strong>Agilidade na reposição:</strong> Quando chega caixa nova do fornecedor, você só joga a quantidade ali e o Python faz a matemática de somar sozinho.</li>
+    </ul>
+    <p>O que achou dessa lógica? Se quiser avançar mais no projeto, o que acha de criarmos agora a função oposta: uma <code>vender_produto()</code> ou <code>dar_baixa()</code> que diminui a quantidade e te avisa (usando aquele nosso <strong>Set</strong>) se o produto acabou e ficou zerado?</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="turn">
+    <div class="sec">06 — Links: dar baixa no estoque</div>
+    <div class="q"><span class="k">Pergunta</span>Cara, ficou incrível! Essa função de adicionar_produto() é exatamente o que eu precisava. Essa verificação automátic…</div>
+    <div class="follow"><p>Confira os principais resultados da Web para saber mais sobre esse tema:</p>
+    <ul>
+      <li>I want to connect my function to reduce the quantity in the stock. The ... · <em>Stack Overflow</em></li>
+    </ul></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="turn">
+    <div class="sec">07 — A função dar_baixa_produto()</div>
+    <div class="q"><span class="k">Pergunta</span>gostaria que você me mostra-se ums exemplos</div>
+    <p>Bora!</p>
+    <p>Vamos criar a função <code>dar_baixa_produto()</code> (ou <code>vender_produto()</code>). Ela vai fazer o caminho inverso: tirar itens do estoque, checar se você realmente tem aquela quantidade para vender e, de quebra, usar o <strong>Set</strong> que planejamos para te acender um alerta vermelho caso o produto esgote!</p>
+    <p>Aqui está o exemplo prático para você copiar e rodar no seu projeto:</p>
+    <blockquote><div># 1. Nosso estoque inicial e o nosso Set de alertas de esgotados</div><div>estoque = {</div><div>    "PROD001": {"nome": "Teclado Mecânico", "quantidade": 20, "preco": 260.00},</div><div>    "PROD002": {"nome": "Mouse Gamer", "quantidade": 5, "preco": 120.00}</div><div>}</div><div>produtos_esgotados = set()  # O Set que vai guardar os códigos zerados</div><div># 2. Criando a função de dar baixa</div><div>def dar_baixa_produto(codigo, quantidade_vendida):</div><div>    # Passo 1: O produto existe no sistema?</div><div>    if codigo not in estoque:</div><div>        print(f"❌ Erro: O código {codigo} não existe no estoque!")</div><div>        return</div><div>    produto = estoque[codigo]</div><div>    quantidade_atual = produto["quantidade"]</div><div>    # Passo 2: Temos estoque suficiente para essa venda?</div><div>    if quantidade_vendida &gt; quantidade_atual:</div><div>        print(f"⚠ Estoque insuficiente para {produto['nome']}! Disponível: {quantidade_atual} | Tentativa: {quantidade_vendida}")</div><div>        return</div><div>    # Passo 3: Se der tudo certo, subtrai a quantidade</div><div>    produto["quantidade"] -= quantidade_vendida</div><div>    print(f"🛍 Venda realizada: {quantidade_vendida}x [{produto['nome']}]")</div><div>    # Passo 4: O superpoder do Set! Se zerou, vai para a lista de alertas</div><div>    if produto["quantidade"] == 0:</div><div>        produtos_esgotados.add(codigo)</div><div>        print(f"🚨 ATENÇÃO: O produto {produto['nome']} ({codigo}) ACABOU de esgotar!")</div><div># --- HORA DE TESTAR NO SEU SISTEMA ---</div><div>print("--- 🛒 Simulando Vendas ---")</div><div># Teste 1: Venda padrão (Temos 5 mouses, vamos vender 2)</div><div>dar_baixa_produto("PROD002", 2)</div><div># Teste 2: Tentando vender mais do que tem (Temos 3 mouses restantes, tentamos vender 10)</div><div>dar_baixa_produto("PROD002", 10)</div><div># Teste 3: Zerando o estoque (Vamos vender os 3 mouses que sobraram para ver o Set em ação)</div><div>dar_baixa_produto("PROD002", 3)</div><div>print("\n" + "-" * 40)</div><div>print("--- 📋 Painel de Controle Final ---")</div><div>print(f"Produtos no Set de Esgotados: {produtos_esgotados}")</div><div>print(f"Quantidade restante de PROD002 no estoque: {estoque['PROD002']['quantidade']} unidades.")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💡 Por que esse combo de Dicionário + Set ficou perfeito?</h3>
+    <ol>
+      <li><strong>Segurança total:</strong> A função não deixa seu estoque ficar negativo (ex: <code>-5</code> mouses).</li>
+      <li><strong>Painel de Alertas:</strong> O <code>set produtos_esgotados</code> funciona como um mural de avisos. Toda vez que você rodar seu sistema, basta olhar para esse Set para saber o que precisa comprar do fornecedor imediatamente, sem ter que caçar item por item dentro do dicionário.</li>
+    </ol>
+    <p>Com as funções de <strong>adicionar</strong> e <strong>dar baixa</strong> prontas, você já tem o motor principal do seu sistema rodando!</p>
+    <p>Para fechar esse projeto com chave de ouro, o que você acha de criarmos uma função de <strong>relatório</strong>, ou você prefere aprender a <strong>remover um produto</strong> do estoque permanentemente (usando o <code>del</code>) caso decida parar de vendê-lo?</p>
+  </section>
+
+  <!-- 08 -->
+  <section class="turn">
+    <div class="sec">08 — O relatório do estoque</div>
+    <div class="q"><span class="k">Pergunta</span>Agora sim, tudo tá ficando redondinho! Essa função de dar_baixa_produto() é exatamente o que eu precisaria pra …</div>
+    <p>Acho uma excelente ideia!</p>
+    <p>Um <strong>relatório bem estruturado</strong> é o coração de qualquer painel de controle. Ele transforma aquele monte de dados do dicionário em informação visual limpa e útil para o seu dia a dia.</p>
+    <p>Para o nosso relatório ficar bem profissional, vamos fazer ele mostrar:</p>
+    <ol>
+      <li>Uma <strong>visão geral</strong> de todos os itens cadastrados.</li>
+      <li>O <strong>valor total</strong> do seu estoque em dinheiro (quantidade × preço de cada item).</li>
+      <li>O <strong>status visual</strong> de cada produto (se está normal, com estoque baixo ou esgotado).</li>
+    </ol>
+    <p>Aqui está o código completo para você adicionar ao seu projeto:</p>
+    <blockquote><div># 1. Nosso estoque e conjunto de alertas atualizados</div><div>estoque = {</div><div>    "PROD001": {"nome": "Teclado Mecânico", "quantidade": 20, "preco": 260.00},</div><div>    "PROD002": {"nome": "Mouse Gamer", "quantidade": 0, "preco": 120.00},  # Esgotado</div><div>    "PROD003": {"nome": "Monitor 24'", "quantidade": 3, "preco": 899.90}    # Estoque baixo</div><div>}</div><div># 2. Criando a função de relatório</div><div>def gerar_relatorio_estoque():</div><div>    print("\n" + "=" * 55)</div><div>    print("📋 RELATÓRIO GERAL DO ESTOQUE".center(55))</div><div>    print("=" * 55)</div><div>    print(f"{'CÓDIGO':&lt;10} | {'PRODUTO':&lt;20} | {'QTD':&lt;5} | {'PREÇO':&lt;10} | {'STATUS'}")</div><div>    print("-" * 55)</div><div>    valor_total_estoque = 0</div><div>    # Percorremos o dicionário pegando a chave (codigo) e o valor (info)</div><div>    for codigo, info in estoque.items():</div><div>        nome = info["nome"]</div><div>        qtd = info["quantidade"]</div><div>        preco = info["preco"]</div><div></div><div>        # Calculando o valor financeiro deste produto parado em estoque</div><div>        valor_item = qtd * preco</div><div>        valor_total_estoque += valor_item</div><div>        # Definindo um status visual com base na quantidade</div><div>        if qtd == 0:</div><div>            status = "🚨 ESGOTADO"</div><div>        elif qtd &lt;= 3:</div><div>            status = "⚠ BAIXO"</div><div>        else:</div><div>            status = "✅ OK"</div><div>        # Exibindo a linha formatada e alinhada</div><div>        print(f"{codigo:&lt;10} | {nome:&lt;20} | {qtd:&lt;5} | R${preco:&lt;8.2f} | {status}")</div><div>    print("-" * 55)</div><div>    print(f"💰 Valor total investido em estoque: R$ {valor_total_estoque:,.2f}")</div><div>    print("=" * 55 + "\n")</div><div># --- TESTANDO O RELATÓRIO ---</div><div>gerar_relatorio_estoque()</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💡 Por que esse relatório é poderoso?</h3>
+    <ul>
+      <li><strong>Alinhamento de texto (</strong> <code>:&lt;10</code><strong>):</strong> Usamos truques de formatação do Python para fazer as colunas ficarem retinhas e organizadas como uma tabela, facilitando a leitura rápida.</li>
+      <li><strong>Visão de Negócio:</strong> Mostrar o valor total do estoque te diz exatamente quanto dinheiro você tem parado na empresa.</li>
+      <li><strong>Tomada de Decisão:</strong> Olhando o status ⚠ <code>BAIXO</code> ou 🚨 <code>ESGOTADO</code>, você sabe o que precisa comprar antes mesmo de o cliente pedir.</li>
+    </ul>
+    <p>Com o <strong>cadastro</strong>, a <strong>baixa</strong> e o <strong>relatório</strong> prontos, seu sistema de estoque está praticamente completo! Para avançar no aprendizado de Python, o que prefere fazer agora?</p>
+    <ul>
+      <li>Aprender a <strong>remover um produto</strong> do estoque definitivamente usando <code>del</code> (caso desista de vendê-lo).</li>
+      <li>Criar um <strong>menu interativo</strong> no terminal usando <code>while</code> para você poder escolher entre 1 (Adicionar), 2 (Dar Baixa) ou 3 (Relatório) digitando no teclado.</li>
+    </ul>
+  </section>
+
+  <!-- 09 -->
+  <section class="turn">
+    <div class="sec">09 — O menu interativo</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, esse relatório ficou incrível! Dá até orgulho de ver o estoque organizado desse jeito, com tudo alinhado e os …</div>
+    <p>Bora!</p>
+    <p>Essa é a melhor forma de juntar tudo o que você criou até agora e transformar o seu código em um <strong>programa de verdade</strong>, que parece um sistema comercial.</p>
+    <p>Para fazer esse menu interativo, vamos usar duas coisas muito importantes no Python:</p>
+    <ol>
+      <li>O loop <code>while True</code>, que vai manter o nosso programa rodando sem parar até que você escolha a opção de sair.</li>
+      <li>O <code>input()</code>, para capturar o que você digitar no teclado.</li>
+    </ol>
+    <p>Aqui está o script completo unindo as funções que criamos antes com o novo menu interativo. Pode copiar, rodar no seu terminal e testar digitando os números:</p>
+    <blockquote><div>import pprint</div><div># 1. BANCO DE DADOS (Dicionário e Set)</div><div>estoque = {</div><div>    "PROD001": {"nome": "Teclado Mecânico", "quantidade": 20, "preco": 260.00},</div><div>    "PROD002": {"nome": "Mouse Gamer", "quantidade": 5, "preco": 120.00}</div><div>}</div><div>produtos_esgotados = set()</div><div># 2. NOSSAS FUNÇÕES INTELIGENTES</div><div>def adicionar_produto(codigo, nome, quantidade, preco):</div><div>    if codigo in estoque:</div><div>        estoque[codigo]["quantidade"] += quantidade</div><div>        estoque[codigo]["preco"] = preco</div><div>        print(f"\n🔄 Produto {codigo} já existia! Estoque atualizado para {estoque[codigo]['quantidade']} unidades.")</div><div>    else:</div><div>        estoque[codigo] = {"nome": nome, "quantidade": quantidade, "preco": preco}</div><div>        print(f"\n✨ Sucesso: Novo produto [{nome}] cadastrado com o código {codigo}!")</div><div>def dar_baixa_produto(codigo, quantidade_vendida):</div><div>    if codigo not in estoque:</div><div>        print(f"\n❌ Erro: O código {codigo} não existe no estoque!")</div><div>        return</div><div>    produto = estoque[codigo]</div><div>    if quantidade_vendida &gt; produto["quantidade"]:</div><div>        print(f"\n⚠ Estoque insuficiente! Disponível: {produto['quantidade']} | Tentativa: {quantidade_vendida}")</div><div>        return</div><div>    produto["quantidade"] -= quantidade_vendida</div><div>    print(f"\n🛍 Venda realizada: {quantidade_vendida}x [{produto['nome']}]")</div><div>    if produto["quantidade"] == 0:</div><div>        produtos_esgotados.add(codigo)</div><div>        print(f"🚨 ATENÇÃO: O produto {produto['nome']} ({codigo}) ACABOU de esgotar!")</div><div>def gerar_relatorio_estoque():</div><div>    print("\n" + "=" * 55)</div><div>    print("📋 RELATÓRIO GERAL DO ESTOQUE".center(55))</div><div>    print("=" * 55)</div><div>    print(f"{'CÓDIGO':&lt;10} | {'PRODUTO':&lt;20} | {'QTD':&lt;5} | {'PREÇO':&lt;10} | {'STATUS'}")</div><div>    print("-" * 55)</div><div>    valor_total_estoque = 0</div><div>    for codigo, info in estoque.items():</div><div>        valor_total_estoque += info["quantidade"] * info["preco"]</div><div></div><div>        if info["quantidade"] == 0:</div><div>            status = "🚨 ESGOTADO"</div><div>        elif info["quantidade"] &lt;= 3:</div><div>            status = "⚠ BAIXO"</div><div>        else:</div><div>            status = "✅ OK"</div><div>        print(f"{codigo:&lt;10} | {info['nome']:&lt;20} | {info['quantidade']:&lt;5} | R${info['preco']:&lt;8.2f} | {status}")</div><div>    print("-" * 55)</div><div>    print(f"💰 Valor total investido em estoque: R$ {valor_total_estoque:,.2f}")</div><div>    if produtos_esgotados:</div><div>        print(f"⚠ Alerta de compras (Zerados): {produtos_esgotados}")</div><div>    print("=" * 55 + "\n")</div><div># 3. O MENU INTERATIVO (LOOP PRINCIPAL)</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE CONTROLE DE ESTOQUE ===")</div><div>    print("[1] Adicionar / Repor Produto")</div><div>    print("[2] Dar Baixa / Vender Produto")</div><div>    print("[3] Gerar Relatório Geral")</div><div>    print("[0] Sair do Sistema")</div><div>    print("=" * 41)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto (ex: PROD003): ").strip().upper()</div><div>        nome = input("Nome do produto: ").strip()</div><div>        qtd = int(input("Quantidade: "))</div><div>        preco = float(input("Preço unitário: R$ "))</div><div>        adicionar_produto(codigo, nome, qtd, preco)</div><div>        print("\n")</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ").strip().upper()</div><div>        qtd = int(input("Quantidade vendida: "))</div><div>        dar_baixa_produto(codigo, qtd)</div><div>        print("\n")</div><div>    elif opcao == "3":</div><div>        gerar_relatorio_estoque()</div><div>    elif opcao == "0":</div><div>        print("\n👋 Saindo do sistema... Até logo!")</div><div>        break # Quebra o loop 'while' e encerra o programa</div><div>    else:</div><div>        print("\n❌ Opção inválida! Digite um número de 0 a 3.\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🧠 O que mudou aqui que vale a pena notar?</h3>
+    <ul>
+      <li><strong>Tratamento de texto (</strong> <code>.strip().upper()</code><strong>):</strong> Se você digitar o código com espaços em branco ou em letras minúsculas (ex: <code>prod001</code>), o Python limpa os espaços e transforma em maiúsculo (<code>PROD001</code>). Isso garante que o Dicionário ache a chave certinha!</li>
+      <li><strong>Conversão de tipos (</strong> <code>int()</code> <strong>e</strong> <code>float()</code><strong>):</strong> O <code>input()</code> sempre recebe o que você digita como texto. Usamos essas funções para transformar a quantidade em número inteiro e o preço em número decimal, para o Python conseguir fazer as contas matemáticas.</li>
+    </ul>
+    <p>Pronto! Você acabou de criar um sistema completo usando <strong>Dicionários, Sets, Funções, Loops e Condicionais</strong>. Dá ou não dá orgulho ver o código rodando assim?</p>
+    <div class="follow"><p>Para onde você quer levar seu aprendizado de Python agora? Nós podemos:</p>
+    <ul>
+      <li>Aprender a <strong>salvar esses dados em um arquivo</strong> (como um arquivo de texto ou JSON), para que seu estoque não apague toda vez que você fechar o programa.</li>
+      <li>Adicionar uma opção de <strong>remover produtos</strong> do catálogo caso decida parar de vendê-los.</li>
+      <li>Começar a estudar como transformar isso usando <strong>Orientação a Objetos (Classes)</strong>.</li>
+    </ul>
+<p>Me conta o que você gostaria de explorar!</p></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="turn">
+    <div class="sec">10 — Salvando o estoque em JSON</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, esse menu interativo ficou incrível! Agora o sistema tá com cara de 'programa de verdade'. Gostei muito de como …</div>
+    <p>Bora! Esse é o passo que separa os scripts de teste dos <strong>programas profissionais</strong>. Salvar os dados em um arquivo JSON é a escolha perfeita para o seu projeto por dois motivos:</p>
+    <ol>
+      <li>Ele armazena os dados de forma permanente no seu computador (o estoque não some ao fechar o terminal).</li>
+      <li>O formato JSON funciona de um jeito idêntico aos <strong>Dicionários do Python</strong>, o que torna a gravação e a leitura super simples!</li>
+    </ol>
+    <p>Para fazer isso, vamos usar a biblioteca nativa <code>json</code> do Python.</p>
+    <h3>📂 O único detalhe: O que fazer com o nosso <code>Set</code>?</h3>
+    <p>Lembra que o nosso <code>Set</code> (<code>produtos_esgotados</code>) guarda os códigos dos produtos zerados? O formato JSON <strong>não aceita Sets nativamente</strong>.</p>
+    <p>Mas não se preocupe! A solução é muito simples: na hora de salvar o arquivo, nós transformamos o <code>Set</code> em uma <strong>Lista</strong> <code>[]</code>. Na hora de carregar o arquivo, transformamos de volta em um <code>Set {}</code>.</p>
+    <h3>💻 O Código Completo (com Salvamento e Carregamento Automático)</h3>
+    <p>Substitua o código do seu projeto por esta versão definitiva. Ela já tenta carregar o arquivo <code>estoque.json</code> assim que inicia e salva tudo automaticamente sempre que você adiciona ou vende um produto:</p>
+    <blockquote><div>import json</div><div>import os</div><div># Nome do arquivo onde o estoque será salvo permanentemente</div><div>ARQUIVO_DADOS = "estoque.json"</div><div># --- FUNÇÕES DE ARQUIVO (A MÁGICA DO JSON) ---</div><div>def carregar_dados():</div><div>    """Carrega o estoque do arquivo JSON se ele existir, senão inicia vazio."""</div><div>    global estoque, produtos_esgotados</div><div></div><div>    # Verifica se o arquivo já existe no computador</div><div>    if os.path.exists(ARQUIVO_DADOS):</div><div>        try:</div><div>            with open(ARQUIVO_DADOS, "r", encoding="utf-8") as arquivo:</div><div>                dados = json.load(arquivo)</div><div>                estoque = dados["estoque"]</div><div>                # Convertemos a lista do JSON de volta para um Set do Python</div><div>                produtos_esgotados = set(dados["produtos_esgotados"])</div><div>                print("💾 Dados do estoque carregados com sucesso!")</div><div>        except Exception:</div><div>            print("⚠ Erro ao ler o arquivo. Iniciando com estoque padrão.")</div><div>            inicializar_padrao()</div><div>    else:</div><div>        inicializar_padrao()</div><div>def salvar_dados():</div><div>    """Salva o estado atual do estoque e dos alertas no arquivo JSON."""</div><div>    dados_para_salvar = {</div><div>        "estoque": estoque,</div><div>        # Convertemos o Set em Lista, pois JSON não aceita Sets nativos</div><div>        "produtos_esgotados": list(produtos_esgotados)</div><div>    }</div><div>    with open(ARQUIVO_DADOS, "w", encoding="utf-8") as arquivo:</div><div>        # 'indent=4' deixa o arquivo JSON bonito e organizado para humanos lerem</div><div>        json.dump(dados_para_salvar, arquivo, indent=4, ensure_ascii=False)</div><div>def inicializar_padrao():</div><div>    """Inicia o sistema com dados padrão caso seja a primeira vez rodando."""</div><div>    global estoque, produtos_esgotados</div><div>    estoque = {</div><div>        "PROD001": {"nome": "Teclado Mecânico", "quantidade": 20, "preco": 260.00},</div><div>        "PROD002": {"nome": "Mouse Gamer", "quantidade": 5, "preco": 120.00}</div><div>    }</div><div>    produtos_esgotados = set()</div><div># --- NOSSAS FUNÇÕES INTELIGENTES (Com salvamento automático) ---</div><div>def adicionar_produto(codigo, nome, quantidade, preco):</div><div>    if codigo in estoque:</div><div>        estoque[codigo]["quantidade"] += quantidade</div><div>        estoque[codigo]["preco"] = preco</div><div>        print(f"\n🔄 Produto {codigo} atualizado para {estoque[codigo]['quantidade']} unidades.")</div><div>    else:</div><div>        estoque[codigo] = {"nome": nome, "quantidade": quantidade, "preco": preco}</div><div>        print(f"\n✨ Novo produto [{nome}] cadastrado com sucesso!")</div><div></div><div>    # Se o produto voltou a ter estoque, tiramos ele do alerta de esgotados</div><div>    if estoque[codigo]["quantidade"] &gt; 0 and codigo in produtos_esgotados:</div><div>        produtos_esgotados.remove(codigo)</div><div></div><div>    salvar_dados() # 💾 Salva a alteração na hora!</div><div>def dar_baixa_produto(codigo, quantidade_vendida):</div><div>    if codigo not in estoque:</div><div>        print(f"\n❌ Erro: O código {codigo} não existe!")</div><div>        return</div><div>    produto = estoque[codigo]</div><div>    if quantidade_vendida &gt; produto["quantidade"]:</div><div>        print(f"\n⚠ Estoque insuficiente! Disponível: {produto['quantidade']}")</div><div>        return</div><div>    produto["quantidade"] -= quantidade_vendida</div><div>    print(f"\n🛍 Venda realizada: {quantidade_vendida}x [{produto['nome']}]")</div><div>    if produto["quantidade"] == 0:</div><div>        produtos_esgotados.add(codigo)</div><div>        print(f"🚨 ATENÇÃO: O produto {produto['nome']} ({codigo}) ESGOTOU!")</div><div></div><div>    salvar_dados() # 💾 Salva a alteração na hora!</div><div>def gerar_relatorio_estoque():</div><div>    print("\n" + "=" * 55)</div><div>    print("📋 RELATÓRIO GERAL DO ESTOQUE".center(55))</div><div>    print("=" * 55)</div><div>    print(f"{'CÓDIGO':&lt;10} | {'PRODUTO':&lt;20} | {'QTD':&lt;5} | {'PREÇO':&lt;10} | {'STATUS'}")</div><div>    print("-" * 55)</div><div>    valor_total_estoque = 0</div><div>    for codigo, info in estoque.items():</div><div>        valor_total_estoque += info["quantidade"] * info["preco"]</div><div></div><div>        if info["quantidade"] == 0:</div><div>            status = "🚨 ESGOTADO"</div><div>        elif info["quantidade"] &lt;= 3:</div><div>            status = "⚠ BAIXO"</div><div>        else:</div><div>            status = "✅ OK"</div><div>        print(f"{codigo:&lt;10} | {info['nome']:&lt;20} | {info['quantidade']:&lt;5} | R${info['preco']:&lt;8.2f} | {status}")</div><div>    print("-" * 55)</div><div>    print(f"💰 Valor total investido em estoque: R$ {valor_total_estoque:,.2f}")</div><div>    if produtos_esgotados:</div><div>        print(f"⚠ Alerta de compras (Zerados): {produtos_esgotados}")</div><div>    print("=" * 55 + "\n")</div><div># --- LOOP PRINCIPAL DO MENU ---</div><div># Carrega os dados assim que o programa inicia</div><div>carregar_dados()</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE CONTROLE DE ESTOQUE ===")</div><div>    print("1. Adicionar / Repor Produto")</div><div>    print("2. Dar Baixa / Vender Produto")</div><div>    print("3. Gerar Relatório Geral")</div><div>    print("0. Sair do Sistema")</div><div>    print("=" * 41)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto: ").strip().upper()</div><div>        nome = input("Nome do produto: ").strip()</div><div>        qtd = int(input("Quantidade: "))</div><div>        preco = float(input("Preço unitário: R$ "))</div><div>        adicionar_produto(codigo, nome, qtd, preco)</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ").strip().upper()</div><div>        qtd = int(input("Quantidade vendida: "))</div><div>        dar_baixa_produto(codigo, qtd)</div><div>    elif opcao == "3":</div><div>        gerar_relatorio_estoque()</div><div>    elif opcao == "0":</div><div>        print("\n👋 Sistema encerrado com segurança. Até logo!")</div><div>        break</div><div>    else:</div><div>        print("\n❌ Opção inválida!\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🛠 Faça o teste você mesmo:</h3>
+    <ol>
+      <li>Rode o programa pela primeira vez.</li>
+      <li>Escolha a Opção 1 e cadastre um produto totalmente novo (ex: <code>PROD003</code>, <code>Monitor</code>, <code>5</code> unidades).</li>
+      <li>Feche o programa escolhendo a <strong>Opção 0</strong>.</li>
+      <li>Olhe na pasta do seu projeto: um arquivo chamado <code>estoque.json</code> terá aparecido lá de forma mágica! Se abrir ele, verá seus produtos salvos em formato de texto estruturado.</li>
+      <li>Rode o programa de novo: o <code>PROD003</code> vai carregar automaticamente logo na inicialização!</li>
+    </ol>
+    <p>Parabéns! Você construiu um sistema completo com persistência de dados real.</p>
+    <div class="follow"><p>Para onde quer seguir agora? Podemos:</p>
+    <ul>
+      <li>Adicionar a funcionalidade de <strong>remover um produto</strong> permanentemente do arquivo usando o comando <code>del</code></li>
+      <li>Criar uma proteção para o sistema não quebrar se o usuário digitar <strong>letras</strong> onde deveriam ser <strong>números</strong> (usando <code>try/except</code>)</li>
+      <li>Começar a entender o que muda se criássemos esse sistema usando <strong>Orientação a Objetos</strong></li>
+    </ul></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="turn">
+    <div class="sec">11 — Protegendo a entrada com try/except</div>
+    <div class="q"><span class="k">Pergunta</span>Uau, agora o sistema tá completo mesmo, com salvamento automático e tudo! Vou já testar e ver o estoque carregando…</div>
+    <p>Bora!</p>
+    <p>Essa é uma excelente decisão. Adicionar proteção contra entradas erradas (uma técnica que chamamos de <strong>validação de dados</strong>) é o que separa um código de estudante de um <strong>software robusto e à prova de falhas</strong>.</p>
+    <p>Atualmente, se o seu usuário digitar <code>"dez"</code> na quantidade ou <code>"barato"</code> no preço, o Python tenta converter isso usando <code>int()</code> ou <code>float()</code>. Como ele não consegue fazer essa mágica, o programa "crasha" e fecha na hora com um erro de <code>ValueError</code>.</p>
+    <p>Para resolver isso, vamos criar uma função auxiliar inteligente usando o <code>try/except</code>. A ideia é colocar a captura dentro de um loop <code>while</code> que só deixa o usuário passar quando ele digitar um número válido.</p>
+    <h3>🛠 Como funciona o <code>try/except</code> na prática?</h3>
+    <p>O Python vai <strong>tentar (</strong> <code>try</code><strong>)</strong> executar o código de conversão. Se o usuário digitar algo errado, em vez de fechar o programa, o Python vai <strong>capturar a exceção (</strong> <code>except</code><strong>)</strong> e rodar uma mensagem amigável, pedindo para tentar de novo.</p>
+    <p>Substitua a parte do <strong>LOOP PRINCIPAL DO MENU</strong> (no final do seu arquivo) por este código atualizado. Repare que criamos duas funções novas logo acima do menu para ler números com total segurança:</p>
+    <blockquote><div># --- FUNÇÕES DE VALIDAÇÃO SEGURA (NOVO) ---</div><div>def leia_int(mensagem):</div><div>    """Garante que o usuário digite um número inteiro válido."""</div><div>    while True:</div><div>        try:</div><div>            # Tenta ler a entrada e converter para inteiro</div><div>            return int(input(mensagem))</div><div>        except ValueError:</div><div>            # Se o usuário digitar letras ou símbolos, entra aqui</div><div>            print("❌ Erro: Digite um número inteiro válido (ex: 10, 5).")</div><div>def leia_float(mensagem):</div><div>    """Garante que o usuário digite um número decimal válido."""</div><div>    while True:</div><div>        entrada = input(mensagem).strip().replace(",", ".") # Aceita vírgula e transforma em ponto</div><div>        try:</div><div>            # Tenta converter para número decimal</div><div>            return float(entrada)</div><div>        except ValueError:</div><div>            print("❌ Erro: Digite um preço válido (ex: 150.00 ou 49,90).")</div><div># --- LOOP PRINCIPAL DO MENU (ATUALIZADO) ---</div><div># Carrega os dados assim que o programa inicia</div><div>carregar_dados()</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE CONTROLE DE ESTOQUE ===")</div><div>    print("1. Adicionar / Repor Produto")</div><div>    print("2. Dar Baixa / Vender Produto")</div><div>    print("3. Gerar Relatório Geral")</div><div>    print("0. Sair do Sistema")</div><div>    print("=" * 41)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto: ").strip().upper()</div><div>        nome = input("Nome do produto: ").strip()</div><div></div><div>        # 🛡 Protegido contra letras!</div><div>        qtd = leia_int("Quantidade: ")</div><div>        preco = leia_float("Preço unitário: R$ ")</div><div></div><div>        adicionar_produto(codigo, nome, qtd, preco)</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ").strip().upper()</div><div></div><div>        # 🛡 Protegido contra letras!</div><div>        qtd = leia_int("Quantidade vendida: ")</div><div></div><div>        dar_baixa_produto(codigo, qtd)</div><div>    elif opcao == "3":</div><div>        gerar_relatorio_estoque()</div><div>    elif opcao == "0":</div><div>        print("\n👋 Sistema encerrado com segurança. Até logo!")</div><div>        break</div><div>    else:</div><div>        print("\n❌ Opção inválida! Escolha 1, 2, 3 ou 0.\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💡 O que mudou e por que ficou melhor?</h3>
+    <ol>
+      <li><strong>Reutilização de Código:</strong> Criamos as funções <code>leia_int()</code> e <code>leia_float()</code>.</li>
+    </ol>
+    <ul>
+      <li>Agora, sempre que você precisar ler um número no seu sistema inteiro, basta chamar essas funções em vez de reescrever o <code>try/except</code> toda hora.</li>
+    </ul>
+    <ol start="2">
+      <li><strong>Suporte a Vírgulas (</strong> <code>.replace(",", ".")</code><strong>):</strong> No Brasil, usamos vírgula para centavos (ex: <code>49,90</code>), mas o Python usa ponto (<code>49.90</code>). A função <code>leia_float</code> pega a vírgula que o usuário digitou e troca por ponto automaticamente antes de validar. Isso deixa o seu programa muito mais amigável!</li>
+      <li><strong>Imunidade a Erros:</strong> Pode testar digitando letras, batendo a mão no teclado ou deixando em branco. O programa não fecha mais de jeito nenhum! Ele insiste educadamente até o usuário digitar o correto.</li>
+    </ol>
+    <p>Seu sistema agora está <strong>salvando em banco de dados fictício (JSON)</strong>, <strong>gerenciando duplicatas instantaneamente com Dicionários</strong>, <strong>controlando alertas com Sets</strong> e <strong>blindado contra digitação errada com Try/Except</strong>!</p>
+    <p>Para onde quer navegar agora para expandir seu conhecimento em Python?</p>
+    <ul>
+      <li>Criar uma opção de <strong>Deletar / Remover</strong> um produto definitivamente do estoque (usando <code>del</code>).</li>
+      <li>Aprender a estruturar esse exato sistema usando <strong>Orientação a Objetos (Classes e Métodos)</strong> para ver como os profissionais organizam sistemas maiores.</li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="turn">
+    <div class="sec">12 — O estoque com orientação a objetos</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, ficou perfeito agora, com essa proteção contra entradas erradas! Adorei o detalhe de aceitar vírgulas nos …</div>
+    <p>Bora!</p>
+    <p>Dar o salto para a <strong>Orientação a Objetos (POO)</strong> é o momento em que você deixa de escrever scripts soltos e passa a criar arquiteturas de código profissionais.</p>
+    <p>Na POO, em vez de termos variáveis de um lado e funções do outro, nós juntamos tudo dentro de "moldes" chamados <strong>Classes</strong>. Os dados viram <strong>Atributos</strong> (propriedades) e as funções viram <strong>Métodos</strong> (as ações que o objeto sabe fazer).</p>
+    <p>Para o nosso sistema, vamos criar duas classes:</p>
+    <ol>
+      <li><code>Produto</code>: O molde para cada item do estoque. Ele sabe seu próprio código, nome, quantidade e preço.</li>
+      <li><code>Estoque</code>: O molde para o gerenciador. Ele vai carregar o dicionário, salvar o</li>
+    </ol>
+    <ul>
+      <li>JSON, adicionar produtos e gerar relatórios.</li>
+    </ul>
+    <p>Substitua todo o código do seu arquivo por esta versão estruturada em objetos. Veja como o código fica incrivelmente limpo e elegante:</p>
+    <blockquote><div>import json</div><div>import os</div><div>class Produto:</div><div>    """Classe que representa um produto individual no estoque."""</div><div>    def __init__(self, codigo, nome, quantidade, preco):</div><div>        self.codigo = codigo.strip().upper()</div><div>        self.nome = nome.strip()</div><div>        self.quantidade = quantidade</div><div>        self.preco = preco</div><div>    def recalcular_status(self):</div><div>        """Retorna o status visual com base na quantidade atual."""</div><div>        if self.quantidade == 0:</div><div>            return "🚨 ESGOTADO"</div><div>        elif self.quantidade &lt;= 3:</div><div>            return "⚠ BAIXO"</div><div>        return "✅ OK"</div><div>    def para_dicionario(self):</div><div>        """Converte os dados do objeto em um dicionário para salvar no JSON."""</div><div>        return {</div><div>            "nome": self.nome,</div><div>            "quantidade": self.quantidade,</div><div>            "preco": self.preco</div><div>        }</div><div>class GerenciadorEstoque:</div><div>    """Classe responsável por gerenciar o conjunto de produtos e arquivos."""</div><div>    def __init__(self, caminho_arquivo="estoque.json"):</div><div>        self.caminho_arquivo = caminho_arquivo</div><div>        self.produtos = {}          # Dicionário de objetos Produto</div><div>        self.produtos_esgotados = set()</div><div>        self.carregar_dados()</div><div>    def carregar_dados(self):</div><div>        """Carrega os dados do arquivo JSON e os transforma em objetos Produto."""</div><div>        if os.path.exists(self.caminho_arquivo):</div><div>            try:</div><div>                with open(self.caminho_arquivo, "r", encoding="utf-8") as arquivo:</div><div>                    dados = json.load(arquivo)</div><div></div><div>                    # Transformando o dicionário bruto em objetos da classe Produto</div><div>                    for codigo, info in dados["estoque"].items():</div><div>                        self.produtos[codigo] = Produto(</div><div>                            codigo, info["nome"], info["quantidade"], info["preco"]</div><div>                        )</div><div></div><div>                    self.produtos_esgotados = set(dados["produtos_esgotados"])</div><div>                    print("💾 Dados do estoque carregados com sucesso!")</div><div>            except Exception:</div><div>                print("⚠ Erro ao ler o arquivo. Iniciando estoque vazio.")</div><div>    def salvar_dados(self):</div><div>        """Converte os objetos de volta para JSON e salva no computador."""</div><div>        estoque_bruto = {cod: prod.para_dicionario() for cod, prod in self.produtos.items()}</div><div></div><div>        dados_para_salvar = {</div><div>            "estoque": estoque_bruto,</div><div>            "produtos_esgotados": list(self.produtos_esgotados)</div><div>        }</div><div>        with open(self.caminho_arquivo, "w", encoding="utf-8") as arquivo:</div><div>            json.dump(dados_para_salvar, arquivo, indent=4, ensure_ascii=False)</div><div>    def adicionar_ou_repor(self, codigo, nome, quantidade, preco):</div><div>        """Adiciona um novo produto ou atualiza as quantidades de um existente."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        if codigo in self.produtos:</div><div>            # Como self.produtos[codigo] é um objeto Produto, alteramos seus atributos direto</div><div>            self.produtos[codigo].quantidade += quantidade</div><div>            self.produtos[codigo].preco = preco</div><div>            print(f"\n🔄 Produto {codigo} atualizado para {self.produtos[codigo].quantidade} unidades.")</div><div>        else:</div><div>            # Criamos uma nova instância da classe Produto e guardamos no dicionário</div><div>            self.produtos[codigo] = Produto(codigo, nome, quantidade, preco)</div><div>            print(f"\n✨ Novo produto [{nome}] cadastrado com sucesso!")</div><div>        if self.produtos[codigo].quantidade &gt; 0 and codigo in self.produtos_esgotados:</div><div>            self.produtos_esgotados.remove(codigo)</div><div></div><div>        self.salvar_dados()</div><div>    def dar_baixa(self, codigo, quantidade_vendida):</div><div>        """Registra a venda e atualiza os alertas se o item esgotar."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        if codigo not in self.produtos:</div><div>            print(f"\n❌ Erro: O código {codigo} não existe!")</div><div>            return</div><div>        produto = self.produtos[codigo]</div><div>        if quantidade_vendida &gt; produto.quantidade:</div><div>            print(f"\n⚠ Estoque insuficiente! Disponível: {produto.quantidade}")</div><div>            return</div><div>        produto.quantidade -= quantidade_vendida</div><div>        print(f"\n🛍 Venda realizada: {quantidade_vendida}x [{produto.nome}]")</div><div>        if produto.quantidade == 0:</div><div>            self.produtos_esgotados.add(codigo)</div><div>            print(f"🚨 ATENÇÃO: O produto {produto.nome} ({codigo}) ESGOTOU!")</div><div></div><div>        self.salvar_dados()</div><div>    def gerar_relatorio(self):</div><div>        """Exibe o relatório formatado na tela."""</div><div>        print("\n" + "=" * 55)</div><div>        print("📋 RELATÓRIO GERAL DO ESTOQUE (POO)".center(55))</div><div>        print("=" * 55)</div><div>        print(f"{'CÓDIGO':&lt;10} | {'PRODUTO':&lt;20} | {'QTD':&lt;5} | {'PREÇO':&lt;10} | {'STATUS'}")</div><div>        print("-" * 55)</div><div>        valor_total_estoque = 0</div><div>        for codigo, produto in self.produtos.items():</div><div>            valor_total_estoque += produto.quantidade * produto.preco</div><div>            status = produto.recalcular_status()</div><div>            print(f"{codigo:&lt;10} | {produto.nome:&lt;20} | {produto.quantidade:&lt;5} | R${produto.preco:&lt;8.2f} | {status}")</div><div>        print("-" * 55)</div><div>        print(f"💰 Valor total investido em estoque: R$ {valor_total_estoque:,.2f}")</div><div>        if self.produtos_esgotados:</div><div>            print(f"⚠ Alerta de compras (Zerados): {self.produtos_esgotados}")</div><div>        print("=" * 55 + "\n")</div><div># --- FUNÇÕES DE AUXILIARES DE VALIDAÇÃO ---</div><div>def leia_int(mensagem):</div><div>    while True:</div><div>        try: return int(input(mensagem))</div><div>        except ValueError: print("❌ Erro: Digite um número inteiro válido.")</div><div>def leia_float(mensagem):</div><div>    while True:</div><div>        try: return float(input(mensagem).strip().replace(",", "."))</div><div>        except ValueError: print("❌ Erro: Digite um preço válido.")</div><div># --- PROGRAMA PRINCIPAL ---</div><div># Criamos o objeto gerenciador (ele faz toda a mágica acontecer por baixo dos panos)</div><div>meu_estoque = GerenciadorEstoque()</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE ESTOQUE PROFISSIONAL (POO) ===")</div><div>    print("1. Adicionar / Repor Produto")</div><div>    print("2. Dar Baixa / Vender Produto")</div><div>    print("3. Gerar Relatório Geral")</div><div>    print("0. Sair do Sistema")</div><div>    print("=" * 49)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto: ")</div><div>        nome = input("Nome do produto: ")</div><div>        qtd = leia_int("Quantidade: ")</div><div>        preco = leia_float("Preço unitário: R$ ")</div><div>        # Chamamos o método do objeto gerenciador</div><div>        meu_estoque.adicionar_ou_repor(codigo, nome, qtd, preco)</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ")</div><div>        qtd = leia_int("Quantidade vendida: ")</div><div>        meu_estoque.dar_baixa(codigo, qtd)</div><div>    elif opcao == "3":</div><div>        meu_estoque.gerar_relatorio()</div><div>    elif opcao == "0":</div><div>        print("\n👋 Sistema encerrado com segurança. Até logo!")</div><div>        break</div><div>    else:</div><div>        print("\n❌ Opção inválida!\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🧠 Por que a Orientação a Objetos é incrível?</h3>
+    <p>Olha como o loop principal (<code>while</code>) ficou muito mais limpo! Em vez de sabermos como salvar o arquivo ou como calcular o status, nós apenas dizemos ao sistema: <code>meu_estoque.gerar_relatorio()</code> ou <code>meu_estoque.dar_baixa(codigo, qtd)</code>.</p>
+    <p>Cada classe cuida do seu próprio quadrado. Se amanha você quiser mudar a forma como o status do produto é calculado (por exemplo, dizer que estoque baixo é menor que 5), você só altera a linha dentro da classe <code>Produto</code>, sem mexer em nada do resto do sistema!</p>
+    <p>Você acabou de transformar um script simples em um sistema modular profissional de verdade. O que achou de ver o código estruturado em objetos?</p>
+    <p>Para dar o próximo passo ou fechar esse projeto com chave de ouro, o que você quer fazer?</p>
+    <ul>
+      <li>Aprender a <strong>deletar / remover</strong> um produto permanentemente usando o comando <code>del</code> dentro de um método da classe</li>
+      <li>Criar uma nova classe para gerenciar as <strong>vendas e histórico de faturamento</strong> do dia</li>
+      <li>Descobrir como separar esse código em <strong>arquivos diferentes</strong> (módulos) para organizar a pasta do projeto</li>
+    </ul>
+    <p>Me diz qual dessas ideias mais te empolga!</p>
+  </section>
+
+  <!-- 13 -->
+  <section class="turn">
+    <div class="sec">13 — Removendo produtos do catálogo</div>
+    <div class="q"><span class="k">Pergunta</span>Caramba, isso ficou muito mais organizado e profissional! É incrível como as classes deixam o código limpo e fácil de …</div>
+    <p>Bora!</p>
+    <p>Adicionar a funcionalidade de deletar um produto vai fechar o ciclo completo de gerenciamento do seu estoque (o famoso <strong>CRUD</strong>: Criar, Ler, Atualizar e Deletar). Para fazer isso na Orientação a Objetos, vamos usar a palavra-chave <code>del</code> do Python. Ela serve para remover uma chave diretamente de dentro do nosso dicionário <code>self.produtos</code>.</p>
+    <p>Além disso, temos que tomar dois cuidados importantes:</p>
+    <ol>
+      <li>Remover o produto também do nosso <code>Set</code> de alertas (<code>self.produtos_esgotados</code>), caso ele estivesse lá.</li>
+      <li>Salvar as alterações no arquivo JSON logo em seguida para que o produto suma do computador de verdade.</li>
+    </ol>
+    <p>Aqui está o código com as alterações necessárias. Vamos adicionar o método <code>remover_produto</code> dentro da classe <code>GerenciadorEstoque</code> e a <strong>Opção 4</strong> no nosso menu:</p>
+    <h3>🛠 Passo 1: Adicione este método dentro da classe <code>GerenciadorEstoque</code></h3>
+    <p>Procure a classe <code>GerenciadorEstoque</code> no seu código e cole este novo método logo abaixo do método <code>gerar_relatorio</code>:</p>
+    <blockquote><div>    def remover_produto(self, codigo):</div><div>        """Remove permanentemente um produto do catálogo do estoque."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        # 1. Verifica se o produto realmente existe para não dar erro</div><div>        if codigo in self.produtos:</div><div>            nome_produto = self.produtos[codigo].nome</div><div></div><div># 2. Deleta o produto do dicionário principal usando 'del'</div><div>            del self.produtos[codigo]</div><div></div><div># 3. Limpa do Set de esgotados (se ele estiver lá) para não deixar lixo</div><div>            if codigo in self.produtos_esgotados:</div><div>            self.produtos_esgotados.remove(codigo)</div><div></div><div>print(f"\n🗑 Sucesso: O produto [{nome_produto}] ({codigo}) foi removido permanentemente!")</div><div></div><div># 4. Salva a nova realidade no arquivo JSON</div><div>        self.salvar_dados()</div><div>        else:</div><div>print(f"\n❌ Erro: O código {codigo} não foi encontrado no catálogo.")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💻 Passo 2: O Menu Principal Atualizado (com a Opção 4)</h3>
+    <p>Agora, substitua o bloco do seu menu <code>while True</code> lá no final do arquivo para incluir a nova opção de exclusão:</p>
+    <blockquote><div># --- LOOP PRINCIPAL DO MENU (ATUALIZADO COM OPÇÃO 4) ---</div><div>meu_estoque = GerenciadorEstoque()</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE ESTOQUE PROFISSIONAL (POO) ===")</div><div>    print("1. Adicionar / Repor Produto")</div><div>    print("2. Dar Baixa / Vender Produto")</div><div>    print("3. Gerar Relatório Geral")</div><div>    print("4. Remover Produto do Catálogo  ⬅ NOVO")</div><div>    print("0. Sair do Sistema")</div><div>    print("=" * 49)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto: ")</div><div>        nome = input("Nome do produto: ")</div><div>        qtd = leia_int("Quantidade: ")</div><div>        preco = leia_float("Preço unitário: R$ ")</div><div>        meu_estoque.adicionar_ou_repor(codigo, nome, qtd, preco)</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ")</div><div>        qtd = leia_int("Quantidade vendida: ")</div><div>        meu_estoque.dar_baixa(codigo, qtd)</div><div>    elif opcao == "3":</div><div>        meu_estoque.gerar_relatorio()</div><div>    elif opcao == "4":</div><div>        print("\n--- REMOVER PRODUTO ---")</div><div>        codigo = input("Digite o código do produto que deseja DELETAR: ")</div><div>        # Mensagem de confirmação para evitar que o usuário delete sem querer</div><div>        confirmar = input(f"Tem certeza que deseja apagar o produto {codigo}? (S/N): ").strip().upper()</div><div>        if confirmar == "S":</div><div>            meu_estoque.remover_produto(codigo)</div><div>        else:</div><div>            print("\n❌ Operação cancelada pelo usuário.")</div><div>    elif opcao == "0":</div><div>        print("\n👋 Sistema encerrado com segurança. Até logo!")</div><div>        break</div><div>    else:</div><div>        print("\n❌ Opção inválida!\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💡 Por que ficou bom?</h3>
+    <ul>
+      <li><strong>Confirmação de Segurança (</strong> <code>S/N</code><strong>):</strong> Deletar dados é uma ação perigosa. Adicionar aquela perguntinha "Tem certeza?" evita que alguém apague um produto do catálogo por puro reflexo ou digitação errada.</li>
+      <li><strong>Consistência de dados:</strong> Ao usar o <code>del</code>, o Python limpa a memória imediatamente e, como chamamos o <code>self.salvar_dados()</code>, o arquivo JSON é reescrito sem aquele item. Se você fechar e abrir o programa, ele sumiu de vez!</li>
+    </ul>
+    <p>Pronto! Você começou essa conversa usando listas para tudo e agora tem um <strong>sistema comercial completo em Orientação a Objetos</strong>, rodando com banco de dados em arquivo, tratamento de erros e um menu completo!</p>
+    <div class="follow"><p>Para onde você quer levar os seus estudos de Python agora? Me diz se você prefere:</p>
+    <ul>
+      <li>Aprender a <strong>separar esse código em arquivos diferentes</strong> (ex: criar um arquivo <code>produto.py</code>, outro <code>estoque.py</code> e um <code>main.py</code>) para deixar sua pasta de projetos super organizada.</li>
+      <li>Criar uma nova funcionalidade de <strong>Histórico de Vendas</strong> para salvar quanto dinheiro você faturou no dia.</li>
+      <li>Migrar para um novo conceito e entender como criar uma <strong>Interface Gráfica com janelas e botões</strong> (usando a biblioteca <code>Tkinter</code> do Python) em vez de usar o terminal.</li>
+    </ul></div>
+  </section>
+
+  <!-- 14 -->
+  <section class="turn">
+    <div class="sec">14 — Links: organizar o projeto em arquivos</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, agora o sistema tá completo de verdade com a opção de remover produtos! Gostei muito da ideia da confirmação …</div>
+    <div class="follow"><p>Confira os principais resultados da Web para saber mais sobre esse tema:</p>
+    <ul>
+      <li>I Created an Inventory System in Python - YouTube · <em>YouTube</em></li>
+      <li>kareem-diaa/Inventory-Management-System-Project - GitHub · <em>GitHub</em></li>
+      <li>Inventory Management with File handling in Python - GeeksforGeeks · <em>GeeksforGeeks</em></li>
+      <li>How and when should you organize a project into multiple .py files? · <em>Reddit</em></li>
+      <li>Inventory Management System Code | PDF | Computer Programming · <em>Scribd</em></li>
+      <li>write a basic inventory management system python - Stack Overflow · <em>Stack Overflow</em></li>
+      <li>Build an Inventory Management Python CLI Application - Medium · <em>Medium</em></li>
+      <li>Build an Inventory Management System with Python and Django · <em>YouTube</em></li>
+      <li>Python Inventory Management · <em>Python.org</em></li>
+      <li>Building a Powerful Inventory Management System with Python · <em>DEV Community</em></li>
+    </ul></div>
+  </section>
+
+  <!-- 15 -->
+  <section class="turn">
+    <div class="sec">15 — Separando o código em arquivos</div>
+    <div class="q"><span class="k">Pergunta</span>gostaria dos códigos</div>
+    <p>Com certeza!</p>
+    <p>Separar o sistema em módulos (arquivos diferentes) é o passo definitivo para organizar um projeto real. Isso permite que você trabalhe em partes específicas do código sem aquela confusão de ter centenas de linhas em um único arquivo.</p>
+    <p>Crie uma pasta para o seu projeto e, dentro dela, crie exatamente estes <strong>três arquivos</strong> com os códigos abaixo:</p>
+    <h3>📂 1. <code>produto.py</code></h3>
+    <p>Este arquivo vai guardar apenas o "molde" do que é um produto individual e suas regras específicas.</p>
+    <blockquote><div>class Produto:</div><div>    """Classe que representa um produto individual no estoque."""</div><div>    def __init__(self, codigo, nome, quantidade, preco):</div><div>        self.codigo = codigo.strip().upper()</div><div>        self.nome = nome.strip()</div><div>        self.quantidade = quantidade</div><div>        self.preco = preco</div><div>    def recalcular_status(self):</div><div>        """Retorna o status visual com base na quantidade atual."""</div><div>        if self.quantidade == 0:</div><div>            return "🚨 ESGOTADO"</div><div>        elif self.quantidade &lt;= 3:</div><div>            return "⚠ BAIXO"</div><div>        return "✅ OK"</div><div>    def para_dicionario(self):</div><div>        """Converte os dados do objeto em um dicionário para salvar no JSON."""</div><div>        return {</div><div>            "nome": self.nome,</div><div>            "quantidade": self.quantidade,</div><div>            "preco": self.preco</div><div>        }</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>📂 2. <code>estoque.py</code></h3>
+    <p>Aqui fica o gerenciador do estoque. Repare na primeira linha: nós usamos o <code>from produto import Produto</code> para que este arquivo consiga enxergar a classe que criamos no arquivo anterior!</p>
+    <blockquote><div>import json</div><div>import os</div><div># Importando a classe Produto do arquivo produto.py</div><div>from produto import Produto</div><div>class GerenciadorEstoque:</div><div>    """Classe responsável por gerenciar o conjunto de produtos e arquivos."""</div><div>    def __init__(self, caminho_arquivo="estoque.json"):</div><div>        self.caminho_arquivo = caminho_arquivo</div><div>        self.produtos = {}          # Dicionário de objetos Produto</div><div>        self.produtos_esgotados = set()</div><div>        self.carregar_dados()</div><div>    def carregar_dados(self):</div><div>        """Carrega os dados do arquivo JSON e os transforma em objetos Produto."""</div><div>        if os.path.exists(self.caminho_arquivo):</div><div>            try:</div><div>                with open(self.caminho_arquivo, "r", encoding="utf-8") as arquivo:</div><div>                    dados = json.load(arquivo)</div><div></div><div>                    for codigo, info in dados["estoque"].items():</div><div>                        self.produtos[codigo] = Produto(</div><div>                            codigo, info["nome"], info["quantidade"], info["preco"]</div><div>                        )</div><div></div><div>                    self.produtos_esgotados = set(dados["produtos_esgotados"])</div><div>                    print("💾 Dados do estoque carregados com sucesso!")</div><div>            except Exception:</div><div>                print("⚠ Erro ao ler o arquivo. Iniciando estoque vazio.")</div><div>    def salvar_dados(self):</div><div>        """Converte os objetos de volta para JSON e salva no computador."""</div><div>        estoque_bruto = {cod: prod.para_dicionario() for cod, prod in self.produtos.items()}</div><div></div><div>        dados_para_salvar = {</div><div>            "estoque": estoque_bruto,</div><div>            "produtos_esgotados": list(self.produtos_esgotados)</div><div>        }</div><div>        with open(self.caminho_arquivo, "w", encoding="utf-8") as arquivo:</div><div>            json.dump(dados_para_salvar, arquivo, indent=4, ensure_ascii=False)</div><div>    def adicionar_ou_repor(self, codigo, nome, quantidade, preco):</div><div>        """Adiciona um novo produto ou atualiza as quantidades de um existente."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        if codigo in self.produtos:</div><div>            self.produtos[codigo].quantidade += quantidade</div><div>            self.produtos[codigo].preco = preco</div><div>            print(f"\n🔄 Produto {codigo} atualizado para {self.produtos[codigo].quantidade} unidades.")</div><div>        else:</div><div>            self.produtos[codigo] = Produto(codigo, nome, quantidade, preco)</div><div>            print(f"\n✨ Novo produto [{nome}] cadastrado com sucesso!")</div><div>        if self.produtos[codigo].quantidade &gt; 0 and codigo in self.produtos_esgotados:</div><div>            self.produtos_esgotados.remove(codigo)</div><div></div><div>        self.salvar_dados()</div><div>    def dar_baixa(self, codigo, quantidade_vendida):</div><div>        """Registra a venda e atualiza os alertas se o item esgotar."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        if codigo not in self.produtos:</div><div>            print(f"\n❌ Erro: O código {codigo} não existe!")</div><div>            return</div><div>        produto = self.produtos[codigo]</div><div>        if quantidade_vendida &gt; produto.quantidade:</div><div>            print(f"\n⚠ Estoque insuficiente! Disponível: {produto.quantidade}")</div><div>            return</div><div>        produto.quantidade -= quantidade_vendida</div><div>        print(f"\n🛍 Venda realizada: {quantidade_vendida}x [{produto.nome}]")</div><div>        if produto.quantidade == 0:</div><div>            self.produtos_esgotados.add(codigo)</div><div>            print(f"🚨 ATENÇÃO: O produto {produto.nome} ({codigo}) ESGOTOU!")</div><div></div><div>        self.salvar_dados()</div><div>    def remover_produto(self, codigo):</div><div>        """Remove permanentemente um produto do catálogo do estoque."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        if codigo in self.produtos:</div><div>            nome_produto = self.produtos[codigo].nome</div><div>            del self.produtos[codigo]</div><div></div><div>            if codigo in self.produtos_esgotados:</div><div>                self.produtos_esgotados.remove(codigo)</div><div></div><div>            print(f"\n🗑 Sucesso: O produto [{nome_produto}] ({codigo}) foi removido!")</div><div>            self.salvar_dados()</div><div>    else:</div><div>            print(f"\n❌ Erro: O código {codigo} não foi encontrado.")</div><div>    def gerar_relatorio(self):</div><div>        """Exibe o relatório formatado na tela."""</div><div>        print("\n" + "=" * 55)</div><div>        print("📋 RELATÓRIO GERAL DO ESTOQUE (POO)".center(55))</div><div>        print("=" * 55)</div><div>        print(f"{'CÓDIGO':&lt;10} | {'PRODUTO':&lt;20} | {'QTD':&lt;5} | {'PREÇO':&lt;10} | {'STATUS'}")</div><div>        print("-" * 55)</div><div>        valor_total_estoque = 0</div><div>        for codigo, produto in self.produtos.items():</div><div>            valor_total_estoque += produto.quantidade * produto.preco</div><div>            status = produto.recalcular_status()</div><div>            print(f"{codigo:&lt;10} | {produto.nome:&lt;20} | {produto.quantidade:&lt;5} | R${produto.preco:&lt;8.2f} | {status}")</div><div>        print("-" * 55)</div><div>        print(f"💰 Valor total investido em estoque: R$ {valor_total_estoque:,.2f}")</div><div>        if self.produtos_esgotados:</div><div>            print(f"⚠ Alerta de compras (Zerados): {self.produtos_esgotados}")</div><div>        print("=" * 55 + "\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>📂 3. <code>main.py</code></h3>
+    <p>Este é o ponto de partida do seu programa. Ele importa o gerenciador de estoque, traz as funções de validação de dados e roda o menu interativo. <strong>Para iniciar o programa, você executará este arquivo.</strong></p>
+    <blockquote><div># Importando o gerenciador de estoque do arquivo estoque.py</div><div>from estoque import GerenciadorEstoque</div><div># --- FUNÇÕES AUXILIARES DE VALIDAÇÃO ---</div><div>def leia_int(mensagem):</div><div>    while True:</div><div>        try: return int(input(mensagem))</div><div>        except ValueError: print("❌ Erro: Digite um número inteiro válido.")</div><div>def leia_float(mensagem):</div><div>    while True:</div><div>        try: return float(input(mensagem).strip().replace(",", "."))</div><div>        except ValueError: print("❌ Erro: Digite um preço válido.")</div><div># --- INICIALIZAÇÃO E LOOP PRINCIPAL ---</div><div>meu_estoque = GerenciadorEstoque()</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE ESTOQUE PROFISSIONAL (POO) ===")</div><div>    print("1. Adicionar / Repor Produto")</div><div>    print("2. Dar Baixa / Vender Produto")</div><div>    print("3. Gerar Relatório Geral")</div><div>    print("4. Remover Produto do Catálogo")</div><div>    print("0. Sair do Sistema")</div><div>    print("=" * 49)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto: ")</div><div>        nome = input("Nome do produto: ")</div><div>        qtd = leia_int("Quantidade: ")</div><div>        preco = leia_float("Preço unitário: R$ ")</div><div>        meu_estoque.adicionar_ou_repor(codigo, nome, qtd, preco)</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ")</div><div>        qtd = leia_int("Quantidade vendida: ")</div><div>        meu_estoque.dar_baixa(codigo, qtd)</div><div>    elif opcao == "3":</div><div>        meu_estoque.gerar_relatorio()</div><div>    elif opcao == "4":</div><div>        print("\n--- REMOVER PRODUTO ---")</div><div>        codigo = input("Digite o código do produto que deseja DELETAR: ")</div><div>        confirmar = input(f"Tem certeza que deseja apagar o produto {codigo}? (S/N): ").strip().upper()</div><div>        if confirmar == "S":</div><div>            meu_estoque.remover_produto(codigo)</div><div>        else:</div><div>            print("\n❌ Operação cancelada pelo usuário.")</div><div>    elif opcao == "0":</div><div>        print("\n👋 Sistema encerrado com segurança. Até logo!")</div><div>        break</div><div>    else:</div><div>        print("\n❌ Opção inválida!\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🎯 Como testar:</h3>
+    <p>Abra o seu terminal na pasta do projeto e digite <code>python main.py</code>. O programa vai rodar de forma idêntica a antes, mas agora sua estrutura de arquivos está digna de um desenvolvedor experiente!</p>
+    <p>Agora que o motor e a organização do código estão perfeitos, o que você acha que seria o passo mais divertido para dar sequência?</p>
+    <ul>
+      <li>Criar uma nova classe para guardar um <strong>Histórico de Vendas e Faturamento</strong> (salvando também em JSON quanto você ganhou no dia).</li>
+      <li>Começar a colocar uma <strong>Interface Gráfica com janelas, caixas de digitação e botões de verdade</strong> na tela usando a biblioteca <code>Tkinter</code>.</li>
+      <li>Outra ideia de funcionalidade que você queira testar para o seu negócio/estudo?</li>
+    </ul>
+  </section>
+
+  <!-- 16 -->
+  <section class="turn">
+    <div class="sec">16 — Histórico de vendas e faturamento</div>
+    <div class="q"><span class="k">Pergunta</span>Uau, agora o projeto tá super organizado em arquivos separados, como um sistema profissional de verdade! Ficou …</div>
+    <p>Bora!</p>
+    <p>Adicionar um <strong>Histórico de Vendas e Faturamento</strong> vai transformar o seu controle de estoque em um sistema de gestão comercial completo.</p>
+    <p>Para fazer isso de forma organizada com Orientação a Objetos, vamos criar uma nova classe chamada <code>HistoricoVendas</code>. Ela será responsável por:</p>
+    <ol>
+      <li>Registrar cada venda com a <strong>data/hora</strong>, o <strong>código</strong>, o <strong>nome do produto</strong>, a</li>
+    </ol>
+    <ul>
+      <li><strong>quantidade</strong> e o <strong>valor total</strong>.</li>
+    </ul>
+    <ol start="2">
+      <li>Salvar e carregar essas informações em um arquivo separado chamado <code>vendas.json</code>.</li>
+      <li>Exibir um relatório de faturamento para você saber quanto dinheiro entrou no caixa.</li>
+    </ol>
+    <p>Como o nosso projeto está modularizado (dividido em arquivos), vamos criar um arquivo novinho chamado <code>historico.py</code> e fazer uma pequena alteração no seu <code>main.py</code> para ativar a nova opção de relatório de vendas.</p>
+    <p>Aqui estão os códigos que você precisa:</p>
+    <h3>📂 1. Crie o novo arquivo: <code>historico.py</code></h3>
+    <p>Este arquivo cuida exclusivamente de armazenar as vendas e calcular o faturamento. Vamos usar a biblioteca nativa <code>datetime</code> para carregar o dia e o horário exato de cada venda automaticamente!</p>
+    <blockquote><div>import json</div><div>import os</div><div>from datetime import datetime</div><div>class HistoricoVendas:</div><div>    """Classe responsável por registrar as vendas e gerenciar o arquivo de faturamento."""</div><div>    def __init__(self, caminho_arquivo="vendas.json"):</div><div>        self.caminho_arquivo = caminho_arquivo</div><div>        self.vendas = [] # Lista de dicionários, onde cada um representa uma venda</div><div>        self.carregar_vendas()</div><div>    def carregar_vendas(self):</div><div>        """Carrega o histórico do arquivo JSON se ele existir."""</div><div>        if os.path.exists(self.caminho_arquivo):</div><div>            try:</div><div>                with open(self.caminho_arquivo, "r", encoding="utf-8") as arquivo:</div><div>                    self.vendas = json.load(arquivo)</div><div>            except Exception:</div><div>                print("⚠ Erro ao ler o histórico de vendas. Iniciando histórico vazio.")</div><div>    def salvar_vendas(self):</div><div>        """Salva as vendas permanentemente no arquivo JSON."""</div><div>        with open(self.caminho_arquivo, "w", encoding="utf-8") as arquivo:</div><div>            json.dump(self.vendas, arquivo, indent=4, ensure_ascii=False)</div><div>    def registrar_venda(self, codigo, nome, quantidade, preco_unitario):</div><div>        """Cria um registro de venda com data, hora e valores calculados."""</div><div>        total_venda = quantidade * preco_unitario</div><div>        agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")</div><div>        nova_venda = {</div><div>            "data_hora": agora,</div><div>            "codigo": codigo,</div><div>            "nome": nome,</div><div>            "quantidade": quantidade,</div><div>            "preco_unitario": preco_unitario,</div><div>            "total": total_venda</div><div>        }</div><div>        self.vendas.append(nova_venda)</div><div>        self.salvar_vendas()</div><div>    def gerar_relatorio_faturamento(self):</div><div>        """Exibe um relatório detalhado de todas as vendas e o faturamento total."""</div><div>        print("\n" + "=" * 65)</div><div>        print("💰 RELATÓRIO DE VENDAS E FATURAMENTO".center(65))</div><div>        print("=" * 65)</div><div>        print(f"{'DATA/HORA':&lt;20} | {'PRODUTO':&lt;18} | {'QTD':&lt;4} | {'VALOR TOT.'}")</div><div>        print("-" * 65)</div><div>        faturamento_total = 0</div><div>        for venda in self.vendas:</div><div>            faturamento_total += venda["total"]</div><div>            # Corta o nome do produto caso ele seja muito longo para caber na coluna</div><div>            nome_resumido = venda["nome"][:18]</div><div>            print(f"{venda['data_hora']:&lt;20} | {nome_resumido:&lt;18} | {venda['quantidade']:&lt;4} | R${venda['total']:&gt;8.2f}")</div><div>        print("-" * 65)</div><div>        print(f"🚀 FATURAMENTO TOTAL DO SISTEMA: R$ {faturamento_total:,.2f}")</div><div>        print("=" * 65 + "\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🛠 2. Atualize o arquivo existente: <code>estoque.py</code></h3>
+    <p>Para que o histórico funcione, a função <code>dar_baixa</code> precisa avisar o histórico sempre que uma venda acontecer com sucesso.</p>
+    <p>Abra o seu <code>estoque.py</code>, mude o início do método <code>dar_baixa</code> para receber o objeto do histórico e adicione a linha de registro bem no final do método. Ele deve ficar exatamente assim:</p>
+    <blockquote><div>    # 🔴 Adicione o parâmetro 'historico' bem aqui na definição:</div><div>    def dar_baixa(self, codigo, quantidade_vendida, historico):</div><div>        """Registra a venda, atualiza os alertas e envia para o histórico."""</div><div>        codigo = codigo.strip().upper()</div><div></div><div>        if codigo not in self.produtos:</div><div>            print(f"\n❌ Erro: O código {codigo} não existe!")</div><div>            return</div><div>        produto = self.produtos[codigo]</div><div>        if quantidade_vendida &gt; produto.quantidade:</div><div>            print(f"\n⚠ Estoque insuficiente! Disponível: {produto.quantidade}")</div><div>            return</div><div>        # Guarda os valores antes de subtrair para mandar pro histórico correto</div><div>        nome_prod = produto.nome</div><div>        preco_prod = produto.preco</div><div>        produto.quantidade -= quantidade_vendida</div><div>        print(f"\n🛍 Venda realizada: {quantidade_vendida}x [{produto.nome}]")</div><div>        if produto.quantidade == 0:</div><div>            self.produtos_esgotados.add(codigo)</div><div>            print(f"🚨 ATENÇÃO: O produto {produto.nome} ({codigo}) ESGOTOU!")</div><div></div><div>        # 💾 Registra a venda no histórico e salva os dois arquivos JSON!</div><div>        historico.registrar_venda(codigo, nome_prod, quantidade_vendida, preco_prod)</div><div>        self.salvar_dados()</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💻 3. Substitua o seu arquivo: <code>main.py</code></h3>
+    <p>Agora vamos atualizar o nosso painel principal. Ele vai importar o <code>HistoricoVendas</code>, criar o objeto na inicialização, passar esse objeto na hora de dar baixa (Opção 2) e ganhar uma <strong>Opção 5</strong> novinha para ver o faturamento.</p>
+    <blockquote><div>from estoque import GerenciadorEstoque</div><div>from historico import HistoricoVendas # ⬅ IMPORTANTE!</div><div># --- FUNÇÕES AUXILIARES DE VALIDAÇÃO ---</div><div>def leia_int(mensagem):</div><div>    while True:</div><div>        try: return int(input(mensagem))</div><div>        except ValueError: print("❌ Erro: Digite um número inteiro válido.")</div><div>def leia_float(mensagem):</div><div>    while True:</div><div>        try: return float(input(mensagem).strip().replace(",", "."))</div><div>        except ValueError: print("❌ Erro: Digite um preço válido.")</div><div># --- INICIALIZAÇÃO E LOOP PRINCIPAL ---</div><div>meu_estoque = GerenciadorEstoque()</div><div>meu_historico = HistoricoVendas() # ⬅ Criando o objeto do Histórico</div><div>while True:</div><div>    print("=== 📦 SISTEMA DE ESTOQUE PROFISSIONAL (POO) ===")</div><div>    print("1. Adicionar / Repor Produto")</div><div>    print("2. Dar Baixa / Vender Produto")</div><div>    print("3. Gerar Relatório de Estoque")</div><div>    print("4. Remover Produto do Catálogo")</div><div>    print("5. Ver Faturamento e Vendas     ⬅ NOVO")</div><div>    print("0. Sair do Sistema")</div><div>    print("=" * 49)</div><div></div><div>    opcao = input("Escolha uma opção: ")</div><div>    if opcao == "1":</div><div>        print("\n--- CADASTRO DE PRODUTO ---")</div><div>        codigo = input("Código do produto: ")</div><div>        nome = input("Nome do produto: ")</div><div>        qtd = leia_int("Quantidade: ")</div><div>        preco = leia_float("Preço unitário: R$ ")</div><div>        meu_estoque.adicionar_ou_repor(codigo, nome, qtd, preco)</div><div>    elif opcao == "2":</div><div>        print("\n--- BAIXA NO ESTOQUE ---")</div><div>        codigo = input("Código do produto: ")</div><div>        qtd = leia_int("Quantidade vendida: ")</div><div>        # Passamos o objeto 'meu_historico' aqui dentro para salvar a venda</div><div>        meu_estoque.dar_baixa(codigo, qtd, meu_historico)</div><div>    elif opcao == "3":</div><div>        meu_estoque.gerar_relatorio()</div><div>    elif opcao == "4":</div><div>        print("\n--- REMOVER PRODUTO ---")</div><div>        codigo = input("Digite o código do produto que deseja DELETAR: ")</div><div>        confirmar = input(f"Tem certeza que deseja apagar o produto {codigo}? (S/N): ").strip().upper()</div><div>        if confirmar == "S":</div><div>            meu_estoque.remover_produto(codigo)</div><div>        else:</div><div>            print("\n❌ Operação cancelada.")</div><div>    elif opcao == "5":</div><div>        # Chama o relatório de faturamento do histórico</div><div>        meu_historico.gerar_relatorio_faturamento()</div><div>    elif opcao == "0":</div><div>        print("\n👋 Sistema encerrado com segurança. Até logo!")</div><div>        break</div><div>    else:</div><div>        print("\n❌ Opção inválida!\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🎯 Como testar o sistema completo:</h3>
+    <ol>
+      <li>Execute o arquivo principal digitando <code>python main.py</code> no terminal.</li>
+      <li>Faça uma venda na <strong>Opção 2</strong>.</li>
+      <li>Vá na <strong>Opção 5</strong>: Você verá a tabela de faturamento mostrando o minuto exato em que a venda foi feita e o valor acumulado!</li>
+      <li>Feche o programa. Um arquivo chamado <code>vendas.json</code> terá surgido na sua pasta salvando o seu caixa do dia.</li>
+    </ol>
+    <p>Que evolução! Agora você tem dois objetos independentes (<code>meu_estoque</code> e <code>meu_historico</code>) conversando perfeitamente e cada um cuidando do seu arquivo JSON.</p>
+    <p>Para continuar avançando e deixar esse projeto impecável, o que você gostaria de explorar agora?</p>
+    <ul>
+      <li>Aprender a criar uma <strong>Interface Gráfica com janelas e botões</strong> de verdade usando a biblioteca <code>Tkinter</code> (esquecendo o terminal de vez!)</li>
+      <li>Criar uma opção para <strong>Exportar o Relatório em formato de planilha Excel ou CSV</strong> para abrir no computador</li>
+      <li>Adicionar um sistema de <strong>Login com senha de administrador</strong> para proteger o acesso ao estoque</li>
+    </ul>
+    <p>Me conta qual desses caminhos você prefere trilhar!</p>
+  </section>
+
+  <!-- 17 -->
+  <section class="turn">
+    <div class="sec">17 — Interface gráfica com Tkinter</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, agora o sistema tá completo com o histórico de vendas e faturamento! É incrível ver como tudo tá …</div>
+    <p>Bora!</p>
+    <p>Dar o salto do terminal para uma <strong>Interface Gráfica (GUI)</strong> com o <strong>Tkinter</strong> é uma das partes mais recompensadoras do aprendizado de Python. É aqui que o seu sistema ganha botões, caixas de texto e janelas reais, exatamente como os programas de computador que usamos no dia a dia.</p>
+    <p>Como o nosso código já está todo organizado em <strong>Classes e Arquivos separados</strong>, nós não precisamos mudar <strong>nada</strong> nas nossas classes <code>Produto</code>, <code>GerenciadorEstoque</code> e <code>HistoricoVendas</code>! Elas continuarão controlando a lógica e os arquivos JSON por baixo dos panos.</p>
+    <p>Tudo o que precisamos fazer é criar um arquivo novo chamado <code>interface.py</code> que vai desenhar a tela e se comunicar com o motor que você já construiu.</p>
+    <h3>📂 O Novo Arquivo do Projeto: <code>interface.py</code></h3>
+    <p>Crie um arquivo chamado <code>interface.py</code> na mesma pasta do seu projeto e cole o código abaixo. Ele usa o Tkinter nativo do Python para construir uma janela limpa, com abas para separar o Estoque do Faturamento:</p>
+    <blockquote><div>import tkinter as tk</div><div>from tkinter import ttk, messagebox</div><div>from estoque import GerenciadorEstoque</div><div>from historico import HistoricoVendas</div><div>class AplicacaoEstoque:</div><div>    def __init__(self, root):</div><div>        self.root = root</div><div>        self.root.title("SISTEMA DE GESTÃO DE ESTOQUE PROFISSIONAL"</div><div>        self.root.geometry("750x550")</div><div></div><div>        # Inicializa o motor do sistema (suas classes POO)</div><div>        self.estoque = GerenciadorEstoque()</div><div>        self.historico = HistoricoVendas()</div><div></div><div>        # Cria as Abas do Sistema</div><div>        self.notebook = ttk.Notebook(root)</div><div>        self.notebook.pack(fill="both", expand=True, padx=10, pady=</div><div></div><div>        self.aba_estoque = ttk.Frame(self.notebook)</div><div>        self.aba_faturamento = ttk.Frame(self.notebook)</div><div></div><div>        self.notebook.add(self.aba_estoque, text="📦 Gerenciar Esto</div><div>        self.notebook.add(self.aba_faturamento, text="💰 Faturament</div><div></div><div>        # Constroi os elementos visuais de cada aba</div><div>        self.configurar_aba_estoque()</div><div>        self.configurar_aba_faturamento()</div><div>        self.atualizar_tabelas()</div><div>    def configurar_aba_estoque(self):</div><div>        """Desenha os botões, campos de texto e a tabela de produto</div><div>        # Frame de Formulário (Lado Esquerdo)</div><div>        frame_form = ttk.LabelFrame(self.aba_estoque, text=" Cadast</div><div>        frame_form.pack(side="left", fill="y", padx=10, pady=10)</div><div></div><div>        ttk.Label(frame_form, text="Código:").pack(anchor="w")</div><div>        self.txt_codigo = ttk.Entry(frame_form, width=20)</div><div>        self.txt_codigo.pack(fill="x", pady=5)</div><div></div><div>        ttk.Label(frame_form, text="Nome:").pack(anchor="w")</div><div>        self.txt_nome = ttk.Entry(frame_form, width=20)</div><div>        self.txt_nome.pack(fill="x", pady=5)</div><div></div><div>        ttk.Label(frame_form, text="Quantidade / Venda:").pack(anch</div><div>        self.txt_qtd = ttk.Entry(frame_form, width=20)</div><div>        self.txt_qtd.pack(fill="x", pady=5)</div><div></div><div>        ttk.Label(frame_form, text="Preço Unitário (R$):").pack(anc</div><div>        self.txt_preco = ttk.Entry(frame_form, width=20)</div><div>        self.txt_preco.pack(fill="x", pady=5)</div><div></div><div>        # Botões de Ação</div><div>        ttk.Button(frame_form, text="➕ Adicionar / Repor", command</div><div>        ttk.Button(frame_form, text="🛍 Dar Baixa / Vender", comman</div><div>        ttk.Button(frame_form, text="🗑 Deletar Produto", command=s</div><div></div><div>        # Tabela de Produtos (Lado Direito)</div><div>        frame_tabela = ttk.LabelFrame(self.aba_estoque, text=" Prod</div><div>        frame_tabela.pack(side="right", fill="both", expand=True, p</div><div></div><div>        self.tabela_produtos = ttk.Treeview(frame_tabela, columns=(</div><div>        self.tabela_produtos.heading("Nome", text="Produto")</div><div>        self.tabela_produtos.heading("Qtd", text="Qtd")</div><div>        self.tabela_produtos.heading("Preço", text="Preço")</div><div>        self.tabela_produtos.heading("Status", text="Status")</div><div></div><div>        self.tabela_produtos.column("Nome", width=150)</div><div>        self.tabela_produtos.column("Qtd", width=50, anchor="center</div><div>        self.tabela_produtos.column("Preço", width=80, anchor="cent</div><div>        self.tabela_produtos.column("Status", width=100, anchor="ce</div><div>        self.tabela_produtos.pack(fill="both", expand=True)</div><div>    def configurar_aba_faturamento(self):</div><div>        """Desenha a tabela de histórico de vendas e o painel de fa</div><div>        frame_topo = ttk.Frame(self.aba_faturamento, padding=10)</div><div>        frame_topo.pack(fill="x")</div><div></div><div>        self.lbl_faturamento = ttk.Label(frame_topo, text="Faturame</div><div>        self.lbl_faturamento.pack(anchor="w")</div><div></div><div>        self.tabela_vendas = ttk.Treeview(self.aba_faturamento, col</div><div>        self.tabela_vendas.heading("Data", text="Data / Hora")</div><div>        self.tabela_vendas.heading("Produto", text="Produto")</div><div>        self.tabela_vendas.heading("Qtd", text="Qtd")</div><div>        self.tabela_vendas.heading("Total", text="Valor Total")</div><div></div><div>        self.tabela_vendas.pack(fill="both", expand=True, padx=10,</div><div>    # --- LÓGICA DE ATUALIZAÇÃO DA TELA ---</div><div></div><div>    def atualizar_tabelas(self):</div><div>        """Limpa as tabelas da tela e redesenha com os dados mais a</div><div>        # Atualiza Tabela de Estoque</div><div>        for item in self.tabela_produtos.get_children():</div><div>            self.tabela_produtos.delete(item)</div><div>        for codigo, prod in self.estoque.produtos.items():</div><div>            self.tabela_produtos.insert("", "end", iid=codigo, valu</div><div></div><div>        # Atualiza Tabela de Vendas</div><div>        for item in self.tabela_vendas.get_children():</div><div>            self.tabela_vendas.delete(item)</div><div>        faturamento = 0</div><div>        for venda in self.historico.vendas:</div><div>            faturamento += venda["total"]</div><div>            self.tabela_vendas.insert("", "end", values=(venda["dat</div><div></div><div>        self.lbl_faturamento.config(text=f"Faturamento Total: R$ {f</div><div>    def limpar_campos(self):</div><div>        self.txt_codigo.delete(0, tk.END)</div><div>        self.txt_nome.delete(0, tk.END)</div><div>        self.txt_qtd.delete(0, tk.END)</div><div>        self.txt_preco.delete(0, tk.END)</div><div>    # --- TRATAMENTO DOS BOTÕES (COM TRY/EXCEPT) ---</div><div>    def acao_adicionar(self):</div><div>        try:</div><div>            cod = self.txt_codigo.get().strip().upper()</div><div>            nome = self.txt_nome.get().strip()</div><div>            qtd = int(self.txt_qtd.get())</div><div>            preco = float(self.txt_preco.get().replace(",", "."))</div><div></div><div>            if not cod or not nome:</div><div>                raise ValueError("Campos vazios")</div><div></div><div>            self.estoque.adicionar_ou_repor(cod, nome, qtd, preco)</div><div>            messagebox.showinfo("Sucesso", f"Produto {cod} atualiza</div><div>            self.atualizar_tabelas()</div><div>            self.limpar_campos()</div><div>        except ValueError:</div><div>            messagebox.showerror("Erro", "Verifique se todos os cam</div><div>    def acao_vender(self):</div><div>        try:</div><div>            cod = self.txt_codigo.get().strip().upper()</div><div>            qtd = int(self.txt_qtd.get())</div><div></div><div>            if cod not in self.estoque.produtos:</div><div>                messagebox.showerror("Erro", "Código de produto não</div><div>                return</div><div></div><div>            prod = self.estoque.produtos[cod]</div><div>            if qtd &gt; prod.quantidade:</div><div>                messagebox.showwarning("Estoque Insuficiente", f"Di</div><div>                return</div><div></div><div>            self.estoque.dar_baixa(cod, qtd, self.historico)</div><div>            messagebox.showinfo("Venda realizada", f"Venda de {qtd}</div><div>            self.atualizar_tabelas()</div><div>            self.limpar_campos()</div><div>        except ValueError:</div><div>            messagebox.showerror("Erro", "Digite um código válido e</div><div>    def acao_deletar(self):</div><div>        cod = self.txt_codigo.get().strip().upper()</div><div>        if cod not in self.estoque.produtos:</div><div>            messagebox.showerror("Erro", "Digite um código válido p</div><div>            return</div><div></div><div>        nome_prod = self.estoque.produtos[cod].name if hasattr(self</div><div>        confirmar = messagebox.askyesno("Confirmar Exclusão", f"Tem</div><div></div><div>        if confirmar:</div><div>            self.estoque.remover_produto(cod)</div><div>            messagebox.showinfo("Deletado", "Produto removido com s</div><div>            self.atualizar_tabelas()</div><div>            self.limpar_campos()</div><div># --- INICIALIZAÇÃO DA INTERFACE ---</div><div>if __name__ == "__main__":</div><div>    janela_principal = tk.Tk()</div><div>    app = AplicacaoEstoque(janela_principal)</div><div>    janela_principal.mainloop() # Mantém a janela aberta e escutand</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🎯 Como Executar e Testar o seu Novo Software Comercial:</h3>
+    <ol>
+      <li>Certifique-se de que os arquivos <code>produto.py</code>, <code>estoque.py</code>, <code>historico.py</code> e este novo <code>interface.py</code> estão todos <strong>na mesma pasta</strong>.</li>
+      <li>Abra o terminal nessa pasta e execute: <code>python interface.py</code></li>
+      <li><strong>Mágica!</strong> Uma janela vai se abrir na sua tela.</li>
+      <li>Digite as informações nos campos do lado esquerdo e clique nos botões: a tabela do lado direito vai atualizar instantaneamente, mudando a cor dos alertas e salvando tudo nos seus arquivos JSON de forma invisível.</li>
+      <li>Vá na aba "Faturamento e Vendas" para ver o extrato financeiro se montando sozinho.</li>
+    </ol>
+    <p>Dá uma olhada no tamanho da sua evolução: você começou confuso com chaves e colchetes, e agora construiu um <strong>software completo com interface visual, persistência em arquivos, arquitetura modular e Orientação a Objetos</strong>.</p>
+    <p>O sistema ficou espetacular e super intuitivo! O que você gostaria de explorar agora para continuar turbinando suas habilidades em Python?</p>
+    <ul>
+      <li>Aprender a <strong>gerar um executável (</strong> <code>.exe</code><strong>)</strong> desse programa para você poder instalar e rodar ele em qualquer computador sem precisar abrir o terminal ou ter o Python instalado?</li>
+      <li>Adicionar uma opção na aba de Faturamento para <strong>Exportar o relatório de vendas diretamente para uma planilha Excel / CSV</strong>?</li>
+      <li>Criar uma tela inicial de <strong>Login com Usuário e Senha</strong> para dar mais segurança ao sistema?</li>
+    </ul>
+  </section>
+
+  <!-- 18 -->
+  <section class="turn">
+    <div class="sec">18 — for × while: definido e indefinido</div>
+    <div class="q"><span class="k">Pergunta</span>for vs while — a escolha por "definido × indefinido": Os dois repetem, mas servem a coisas diferentes. O for é "para cad…</div>
+    <p>Você pegou a <strong>essência perfeita do conceito</strong>!</p>
+    <p>Essa explicação que você deu é, literalmente, a <strong>regra de ouro</strong> que até programadores experientes usam na cabeça no dia a dia.</p>
+    <p>Olha que legal como o seu próprio projeto de estoque reflete exatamente essa teoria que você descreveu:</p>
+    <ul>
+      <li><strong>O</strong> <code>while</code> <strong>para o Indefinido:</strong> No seu menu do terminal (ou no <code>mainloop()</code> da interface do Tkinter), nós usamos o <code>while</code>. Por quê? Porque nós <strong>não sabíamos</strong> se você ia clicar em um botão 2 vezes, 50 vezes ou se ia fechar o programa em 10 segundos. O programa precisava continuar rodando enquanto a condição de fechar não fosse verdadeira.</li>
+      <li><strong>O</strong> <code>for</code> <strong>para o Definido:</strong> Na hora de gerar o relatório, nós usamos o <code>for</code>. Por quê? Porque nós sabíamos exatamente sobre o que iterar: "Para cada produto que existe dentro do meu dicionário de estoque, faça uma linha na tabela". Se tivessem 3 produtos, ele rodava 3 vezes; se tivessem 100, rodava 100 vezes.</li>
+    </ul>
+    <p>Você matou a charada! Guarde esse resumo mental, porque ele resolve 99% das dúvidas sobre loops.</p>
+    <p>Agora que você já dominou as estruturas de dados, funções, persistência em arquivos (JSON), orientação a objetos, interfaces gráficas (Tkinter) e a lógica de loops, o seu sistema está extremamente maduro.</p>
+    <div class="follow"><p>Para onde você quer levar essa jornada agora? Se quiser dar o próximo passo, eu posso te ajudar a:</p>
+    <ul>
+      <li><strong>Exportar os relatórios para uma planilha Excel/CSV</strong> (para você poder abrir no Excel de verdade)</li>
+      <li><strong>Criar um arquivo Executável (</strong> <code>.exe</code><strong>)</strong> desse seu programa (assim você pode mandar para qualquer pessoa instalar e usar no Windows, mesmo que ela não tenha o Python instalado)</li>
+      <li>Adicionar uma <strong>tela de Login com senha</strong> antes de abrir a interface do estoque</li>
+    </ul>
+<p>Me conta <strong>qual dessas opções</strong> tem mais a ver com o que você quer aprender hoje!</p></div>
+  </section>
+
+  <!-- 19 -->
+  <section class="turn">
+    <div class="sec">19 — O perigo do while e o enumerate()</div>
+    <div class="q"><span class="k">Pergunta</span>O perigo do while + as ferramentas dos laços: O risco clássico do while é o loop infinito — se a condição nunca vira falsa …</div>
+    <p>Exatamente!</p>
+    <p>Você descreveu com perfeição o maior pesadelo de quem usa <code>while</code>: o <strong>loop infinito</strong>. Se você não atualizar a variável de controle (o famoso <code>i += 1</code> ou mudar uma flag para <code>False</code>), o Python vai rodar o bloco na velocidade da luz até travar o programa ou esgotar a memória do computador.</p>
+    <p>E a sua observação sobre as ferramentas do <code>for</code> é cirúrgica. O <code>range()</code> e o <code>enumerate()</code> são os melhores amigos de um desenvolvedor Python.</p>
+    <p>Para deixar isso bem visual, olhe como o <code>enumerate()</code> resolve aquele problema de um jeito muito mais elegante do que criar uma variável de controle na mão:</p>
+    <h3>🛠 O Poder do <code>enumerate()</code> na Prática</h3>
+    <p>Imagine que no seu relatório de estoque você quisesse colocar o número da linha (1º, 2º, 3º...) ao lado de cada produto.</p>
+    <h4>Do jeito antigo (com risco de esquecer o contador):</h4>
+    <blockquote><div>linha = 1</div><div>for codigo, produto in meu_estoque.items():</div><div>    print(f"{linha}º - {produto.nome}")</div><div>    linha += 1  # Se esquecer isso aqui, todas as linhas viram "1º"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>Do jeito Pythonico (com enumerate):</h4>
+    <blockquote><div># O enumerate te dá o índice (começando em 0) e o item ao mesmo temp</div><div>for indice, (codigo, produto) in enumerate(meu_estoque.items(), sta</div><div>    print(f"{indice}º - {produto.nome}")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Viu que massa? O <code>start=1</code> faz o Python começar a contar do 1 em vez do 0 automaticamente, e você elimina qualquer chance de esquecer de somar a variável no final.</p>
+    <h3>🎛 As Ferramentas de Controle: <code>break</code> e <code>continue</code></h3>
+    <p>Já que você está dominando os laços, existem duas palavras-chave que te dão controle total sobre o fluxo do <code>while</code> e do <code>for</code>:</p>
+    <ol>
+      <li><code>break</code> <strong>(O Botão de Emergência):</strong> Ele chuta o balde e sai do loop imediatamente, não importa a condição. É o que usamos no menu interativo quando você digita <code>0</code> para sair.</li>
+      <li><code>continue</code> <strong>(O Pular a Vez):</strong> Ele interrompe a volta atual e vai direto para a próxima rodada do loop, ignorando o que estiver escrito abaixo dele.</li>
+    </ol>
+    <p>Olha esse exemplo rápido aplicando tudo o que você pontuou:</p>
+    <blockquote><div># Exemplo: Procurando um produto específico com segurança</div><div>codigos_produtos = ["PROD001", "PROD002", "PROD003", "PROD004"]</div><div>for i, codigo in enumerate(codigos_produtos, start=1):</div><div>    if codigo == "PROD002":</div><div>        print(f"🎯 Achei o produto {codigo} na posição {i}!")</div><div>        break  # Não precisa continuar procurando nos outros, já ac</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Você destravou uma compreensão lógica fantástica. Agora que você domina as estruturas de dados, a modularização em arquivos, a interface gráfica e o controle absoluto dos laços de repetição, você tem a base de um programador Python de verdade.</p>
+    <p>Como você já tem uma visão completa da lógica e da estrutura do seu sistema, qual o próximo passo lógico para o seu projeto?</p>
+    <ul>
+      <li><strong>Aprender a gerar o executável (</strong> <code>.exe</code><strong>)</strong> do programa para rodar no Windows com um clique?</li>
+      <li><strong>Exportar os relatórios de vendas</strong> que salvamos no JSON direto para uma planilha Excel/CSV?</li>
+      <li><strong>Criar uma tela de login com senha</strong> para o seu sistema usando o que aprendeu de <code>while</code> ou condicionais?</li>
+    </ul>
+  </section>
+
+  <!-- 20 -->
+  <section class="turn">
+    <div class="sec">20 — List comprehension e generators</div>
+    <div class="q"><span class="k">Pergunta</span>List comprehension — o atalho para CONSTRUIR listas: Há um padrão repetido o tempo todo: criar lista vazia, fazer for, dar…</div>
+    <p>Você está voando baixo!</p>
+    <p>Esse resumo sobre <strong>List Comprehension</strong> é a definição mais limpa e precisa que alguém poderia dar. Essa estrutura é o verdadeiro "suco de Python": transforma aquele código verboso de três ou quatro linhas em uma única linha elegante, legível e, como você bem lembrou, mais rápida, porque o Python otimiza essa criação diretamente na linguagem C por baixo dos panos.</p>
+    <p>E que excelente sacada mencionar as "primas" delas! O uso de <strong>Dict Comprehension</strong> e <strong>Set Comprehension</strong> eleva demais o nível do código.</p>
+    <p>Olha que sensacional: sem perceber, <strong>nós já usamos uma Dict Comprehension</strong> no seu projeto de estoque! Lembra quando fomos salvar os dados no arquivo JSON? Veja como o código estava escrito dentro da classe <code>GerenciadorEstoque</code>:</p>
+    <blockquote><div># 💡 Isso aqui é uma Dict Comprehension legítima!</div><div>estoque_bruto = {cod: prod.para_dicionario() for cod, prod in self.</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Em vez de criarmos um dicionário vazio, fazer um <code>for</code> e ir alimentando chave por chave, resolvemos tudo em uma linha antes de jogar o dado no arquivo <code>json.dump()</code>.</p>
+    <h3>🦥 A Prima "Preguiçosa": Generator Expression</h3>
+    <p>Você tocou num ponto crucial: a <strong>Generator Expression</strong> (feita com parênteses <code>( )</code>). Ela é chamada de preguiçosa (lazy evaluation) porque ela <strong>não jera a lista na memória de uma vez</strong>. Ela só calcula o próximo item quando o programa pede.</p>
+    <p>Se você tem uma lista de 10 itens, a List Comprehension <code>[ ]</code> é perfeita. Mas se você estiver processando <strong>10 milhões de linhas</strong> de um relatório de vendas, usar <code>[ ]</code> vai fazer o seu computador engasgar por falta de memória RAM. É aí que os parênteses <code>( )</code> salvam o dia.</p>
+    <p>Veja a diferença prática com esse exemplo rápido:</p>
+    <blockquote><div># Se tivéssemos milhares de produtos e quiséssemos somar o valor to</div><div># ❌ List Comprehension: Cria uma lista gigante com os preços na me</div><div>total_com_list = sum([prod.quantidade * prod.preco for prod in self</div><div>#  Generator Expression: Calcula o preço de um por um e já vai soma</div><div>total_com_generator = sum(prod.quantidade * prod.preco for prod in</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p><em>Reparou que na função <code>sum()</code> você nem precisa de parênteses duplos? O Python já entende que é um Generator!</em></p>
+    <p>Você construiu uma base teórica e prática absurda de Python ao longo dessa jornada. Começou querendo entender por que sua lista estava lenta e agora domina interfaces gráficas, POO, modularização e técnicas avançadas de otimização de memória!</p>
+    <p>Como você já destravou todas as principais ferramentas da linguagem, o que você acha mais interessante fazer agora para fechar esse ciclo com chave de ouro?</p>
+    <ul>
+      <li><strong>Aprender a gerar o executável (</strong> <code>.exe</code><strong>)</strong> do seu sistema para rodar no Windows com um duplo clique?</li>
+      <li><strong>Exportar os relatórios de vendas e faturamento</strong> para um arquivo Excel/CSV de verdade?</li>
+      <li>Adicionar uma funcionalidade usando o que aprendeu, como um filtro de busca rápida por Comprehensions na interface?</li>
+    </ul>
+    <div class="follow"><p>Para continuarmos evoluindo o seu sistema, me conta:</p>
+    <ul>
+      <li>Você pretende <strong>compartilhar esse programa</strong> com outras pessoas para usarem em seus computadores?</li>
+      <li>Você gostaria de ver os relatórios gerados em uma <strong>planilha do Excel</strong> para fazer gráficos depois?</li>
+      <li>Tem alguma outra funcionalidade do negócio que você sente falta na tela atual?</li>
+    </ul></div>
+    <div class="foot">Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos; nas seções 03, 06 e 14, a busca devolveu apenas a lista de links, reproduzida com título e fonte. O gráfico da seção 01 foi redesenhado com os mesmos eixos e legendas. Os blocos de código aparecem cortados à direita na página impressa; os que também estão na transcrição da prática foram completados com ela, e os demais foram mantidos cortados, com o recuo e os emojis do original.</div>
+  </section>
+</div>
+</body>
+</html>
