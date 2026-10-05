@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usando Zip e Enumerate</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 15</div>
+    <h1>Usando zip<br><em>e enumerate</em></h1>
+    <p class="lead">Duas funções que aparecem em quase todo código Python: <code>enumerate</code> numera os itens enquanto você percorre, e <code>zip</code> percorre várias sequências lado a lado. As duas devolvem iteradores (aula 02) e acabam com o <code>range(len(...))</code>. Nesta aula: <code>enumerate</code> com <code>start</code>, <code>zip</code> com vários iteráveis, o que acontece com tamanhos diferentes (<code>strict</code> e <code>zip_longest</code>), montar dicionários, "desfazer" com <code>zip(*...)</code> e as duas juntas.</p>
+    <div class="chips"><span>enumerate(it, start=1)</span><span>Adeus range(len())</span><span>zip(a, b, c)</span><span>strict=True</span><span>zip_longest</span><span>dict(zip())</span><span>zip(*pares)</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Built-in Functions: enumerate, zip; itertools.zip_longest; Tutorial: Looping Techniques, Unpacking Argument Lists), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>enumerate</span><span class="n">01</span></div>
+  <h2>Índice e item <em>juntos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>enumerate_basico.py</b></div>
+      <pre class="code">tarefas = ["estudar", "treinar", "revisar"]
+
+for i, tarefa in enumerate(tarefas):
+    print(i, tarefa)
+
+for n, tarefa in enumerate(tarefas, start=1):   <span class="c"># começa em 1</span>
+    print(f"{n}. {tarefa}")
+
+print(list(enumerate("ab")))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">0 estudar
+1 treinar
+2 revisar
+1. estudar
+2. treinar
+3. revisar
+[(0, 'a'), (1, 'b')]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Cada volta entrega uma tupla <code>(índice, item)</code>, desempacotada em <code>i, tarefa</code></li>
+        <li><code>start=1</code> muda o primeiro número: perfeito para listas numeradas</li>
+        <li>Funciona com qualquer iterável: lista, string, arquivo, gerador</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Pythônico</span><span class="n">02</span></div>
+  <h2>Adeus, <em>range(len())</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>sem_range_len.py</b></div>
+      <pre class="code">cores = ["azul", "verde", "roxo"]
+
+<span class="c"># Jeito antigo: índice para pegar o item</span>
+for i in range(len(cores)):
+    if cores[i] == "verde":
+        print("verde na posição", i)
+
+<span class="c"># Jeito pythônico: índice e item juntos</span>
+for i, cor in enumerate(cores):
+    if cor == "verde":
+        print("verde na posição", i)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">verde na posição 1
+verde na posição 1</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O resultado é o mesmo; a segunda forma não precisa de <code>cores[i]</code></li>
+        <li>Menos chance de errar o índice e mais fácil de ler</li>
+        <li>Só quer os itens? Nem precisa do <code>enumerate</code>: <code>for cor in cores</code></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Ao ver <code>for i in range(len(x))</code>, pergunte: dá para usar <code>enumerate</code> ou <code>zip</code>?</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>zip</span><span class="n">03</span></div>
+  <h2>Várias listas <em>lado a lado</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>zip_basico.py</b></div>
+      <pre class="code">nomes = ["Ana", "Bia", "Caio"]
+notas = [9.5, 7.0, 8.2]
+turmas = ["A", "B", "A"]
+
+for nome, nota in zip(nomes, notas):
+    print(f"{nome}: {nota}")
+
+print(list(zip(nomes, notas, turmas)))   <span class="c"># três de uma vez</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out" style="white-space:pre-wrap">Ana: 9.5
+Bia: 7.0
+Caio: 8.2
+[('Ana', 9.5, 'A'), ('Bia', 7.0, 'B'), ('Caio', 8.2, 'A')]</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>"Ana"</b>9.5</div>
+        <div class="n"><b>"Bia"</b>7.0</div>
+        <div class="n key"><b>"Caio"</b>8.2</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li><code>zip</code> junta o 1º de cada, depois o 2º de cada, e assim por diante</li>
+        <li>Aceita quantos iteráveis você quiser: cada volta traz uma tupla com um item de cada</li>
+        <li>Como é um iterador, use <code>list()</code> para ver tudo de uma vez</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Tamanhos diferentes</span><span class="n">04</span></div>
+  <h2>Quando uma lista <em>é menor</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tamanhos.py</b></div>
+      <pre class="code">from itertools import zip_longest
+
+nomes = ["Ana", "Bia", "Caio"]
+notas = [9.5, 7.0]                       <span class="c"># faltou uma nota</span>
+
+print(list(zip(nomes, notas)))           <span class="c"># para no menor</span>
+print(list(zip_longest(nomes, notas, fillvalue="-")))
+try:
+    list(zip(nomes, notas, strict=True))  <span class="c"># exige mesmo tamanho</span>
+except ValueError as erro:
+    print("Erro:", erro)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[('Ana', 9.5), ('Bia', 7.0)]
+[('Ana', 9.5), ('Bia', 7.0), ('Caio', '-')]
+Erro: zip() argument 2 is shorter than argument 1</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Forma</th><th>Com tamanhos diferentes</th></tr></thead>
+      <tbody>
+        <tr><td><code>zip(a, b)</code></td><td>para no menor, sem avisar</td></tr>
+        <tr><td><code>zip_longest(a, b, fillvalue=x)</code></td><td>vai até o maior, completando com <code>x</code></td></tr>
+        <tr><td><code>zip(a, b, strict=True)</code></td><td>lança <code>ValueError</code></td></tr>
+      </tbody></table>
+      <div class="callout warn" style="margin:10px">O corte silencioso esconde dados perdidos: o Caio ficou sem nota e ninguém avisou. Quando as listas <strong>deveriam</strong> ter o mesmo tamanho, use <code>strict=True</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Dicionários</span><span class="n">05</span></div>
+  <h2>dict(zip()): <em>chaves e valores</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>com_dict.py</b></div>
+      <pre class="code">campos = ["nome", "idade", "cidade"]
+valores = ["Ana", 30, "Recife"]
+
+pessoa = dict(zip(campos, valores))
+print(pessoa)
+
+precos = {"café": 4.5, "pão": 0.8}
+invertido = dict(zip(precos.values(), precos.keys()))
+print(invertido)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">{'nome': 'Ana', 'idade': 30, 'cidade': 'Recife'}
+{4.5: 'café', 0.8: 'pão'}</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>dict()</code> aceita pares; <code>zip</code> produz pares: dois em uma linha</li>
+        <li>Uso típico: cabeçalho de planilha + uma linha de valores = um registro</li>
+        <li>Trocando a ordem, o dicionário se inverte (valores viram chaves)</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Ao inverter, valores repetidos viram chaves repetidas, e só a última sobrevive.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>zip(*...)</span><span class="n">06</span></div>
+  <h2>Desfazer pares <em>e transpor</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>desfazer.py</b></div>
+      <pre class="code">pares = [("Ana", 9.5), ("Bia", 7.0), ("Caio", 8.2)]
+
+nomes, notas = zip(*pares)        <span class="c"># o * espalha os pares</span>
+print(nomes)
+print(notas)
+
+tabela = [[1, 2, 3],
+          [4, 5, 6]]
+print(list(zip(*tabela)))         <span class="c"># linhas viram colunas</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">('Ana', 'Bia', 'Caio')
+(9.5, 7.0, 8.2)
+[(1, 4), (2, 5), (3, 6)]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>zip(*pares)</code> é o caminho inverso: separa uma lista de pares em duas sequências</li>
+        <li>O <code>*</code> espalha os itens como argumentos (aula 20 do módulo 37)</li>
+        <li>Com uma tabela (lista de linhas), <code>zip(*tabela)</code> devolve as colunas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Ranking <em>da turma</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> com as listas de alunos e das notas de duas provas, calcule a média de cada um e mostre o ranking numerado, da maior para a menor média.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">alunos = ["Ana", "Bia", "Caio", "Davi"]
+p1 = [8.0, 6.5, 9.0, 7.0]
+p2 = [9.0, 7.5, 8.5, 5.0]
+
+medias = [(a + b) / 2 for a, b in zip(p1, p2, strict=True)]
+ranking = sorted(zip(alunos, medias), key=lambda t: t[1],
+                 reverse=True)
+
+for posicao, (nome, media) in enumerate(ranking, start=1):
+    print(f"{posicao}º {nome:&lt;5} {media:.2f}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">1º Caio  8.75
+2º Ana   8.50
+3º Bia   7.00
+4º Davi  6.00</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>zip(p1, p2, strict=True)</code> garante uma nota de cada prova por aluno</li>
+        <li><code>zip(alunos, medias)</code> monta os pares; <code>enumerate(..., start=1)</code>, as posições</li>
+        <li><code>(nome, media)</code> entre parênteses desempacota o par dentro da tupla do <code>enumerate</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. list(enumerate("xy", start=1)) vale:</p>
+        <div class="opts"><div>A) [(0, "x"), (1, "y")]</div><div>B) [(1, "x"), (2, "y")]</div><div>C) ["x", "y"]</div><div>D) [1, 2]</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. list(zip([1, 2, 3], "ab")) vale:</p>
+        <div class="opts"><div>A) [(1, "a"), (2, "b")]</div><div>B) [(1, "a"), (2, "b"), (3, None)]</div><div>C) Erro</div><div>D) [1, 2, 3, "a", "b"]</div></div>
+        <div class="answer"><b>A.</b> Para no menor.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Para dar erro quando os tamanhos forem diferentes:</p>
+        <div class="opts"><div>A) zip_longest</div><div>B) zip(..., strict=True)</div><div>C) enumerate</div><div>D) zip(*...)</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. dict(zip(["a", "b"], [1, 2])) vale:</p>
+        <div class="opts"><div>A) {"a": 1, "b": 2}</div><div>B) {1: "a", 2: "b"}</div><div>C) [("a", 1), ("b", 2)]</div><div>D) Erro</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Numerar e<br><em>andar lado a lado</em></h1>
+    <p class="lead"><code>enumerate</code> entrega índice e item (com <code>start</code> para escolher o primeiro número) e <code>zip</code> percorre várias sequências juntas, parando na menor. Use <code>strict=True</code> quando os tamanhos devem bater, <code>zip_longest</code> quando um pode faltar, <code>dict(zip())</code> para montar registros e <code>zip(*...)</code> para desfazer pares ou transpor tabelas.</p>
+    <div class="chips"><span>enumerate</span><span>zip</span><span>strict=True</span><span>zip_longest</span><span>dict(zip())</span><span>zip(*)</span></div>
+    <div class="next">Próxima aula → 16 · Manipulação de Arquivos I</div>
+    <div class="source">Fontes: docs.python.org/3/library/functions.html (enumerate, zip); docs.python.org/3/library/itertools.html#itertools.zip_longest; docs.python.org/3/tutorial/datastructures.html#looping-techniques; docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
