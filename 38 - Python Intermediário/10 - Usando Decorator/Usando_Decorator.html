@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usando Decorator</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 10</div>
+    <h1>Usando<br><em>decorator</em></h1>
+    <p class="lead">Um <strong>decorador</strong> é uma função que recebe outra função e devolve uma versão "embrulhada", com algo a mais antes ou depois: registrar chamadas, medir tempo, validar argumentos, guardar resultados. O <code>@</code> em cima do <code>def</code> é só um atalho para isso. Nesta aula: funções como objetos, closures, o decorador feito à mão e com <code>@</code>, <code>functools.wraps</code>, decoradores com argumentos e o <code>@cache</code> da biblioteca padrão.</p>
+    <div class="chips"><span>Função é objeto</span><span>Closure</span><span>@decorador</span><span>*args · **kwargs</span><span>functools.wraps</span><span>Com argumentos</span><span>@cache</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Glossário: decorator; Reference: Function definitions; functools: wraps, cache; time.perf_counter) e PEP 318, consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>A base</span><span class="n">01</span></div>
+  <h2>Funções são <em>objetos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>objetos.py</b></div>
+      <pre class="code">def saudar(nome):
+    return f"Olá, {nome}!"
+
+
+falar = saudar                 <span class="c"># a função é um objeto</span>
+print(falar("Ana"))
+
+
+def aplicar(funcao, valor):    <span class="c"># recebida como argumento</span>
+    return funcao(valor)
+
+
+print(aplicar(len, "decorador"))
+
+
+def criar_multiplicador(fator):
+    def multiplicar(n):        <span class="c"># função criada dentro de outra</span>
+        return n * fator       # e lembra de 'fator' (closure)
+    return multiplicar
+
+
+triplo = criar_multiplicador(3)
+print(triplo(7))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">Olá, Ana!
+9
+21</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Uma função pode ir para outra variável, sem parênteses</li>
+        <li>Pode ser passada como argumento (como no <code>map</code> e no <code>filter</code>)</li>
+        <li>Pode ser criada dentro de outra e devolvida</li>
+        <li>A função interna lembra as variáveis de fora (<code>fator</code>): isso é uma <strong>closure</strong></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Essas três ideias juntas são tudo de que um decorador precisa.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>À mão</span><span class="n">02</span></div>
+  <h2>Um decorador <em>sem o @</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>manual.py</b></div>
+      <pre class="code">def com_moldura(funcao):
+    def embrulho():
+        print("=" * 12)
+        funcao()               <span class="c"># chama a função original</span>
+        print("=" * 12)
+    return embrulho
+
+
+def boas_vindas():
+    print(" Bem-vindo!")
+
+
+boas_vindas = com_moldura(boas_vindas)   <span class="c"># decorando à mão</span>
+boas_vindas()</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">============
+ Bem-vindo!
+============</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>recebe</b>a função original</div>
+        <div class="n"><b>cria</b>o embrulho</div>
+        <div class="n key"><b>devolve</b>o embrulho</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li><code>com_moldura</code> não chama nada: só monta e devolve <code>embrulho</code></li>
+        <li><code>boas_vindas = com_moldura(boas_vindas)</code> troca a função pela versão embrulhada</li>
+        <li>Quem chama <code>boas_vindas()</code> ganha as molduras sem saber</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>O @</span><span class="n">03</span></div>
+  <h2>O atalho <em>@</em> e os argumentos</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>arroba.py</b></div>
+      <pre class="code">def registrar(funcao):
+    def embrulho(*args, **kwargs):
+        print(f"-&gt; {funcao.__name__}{args}")
+        resultado = funcao(*args, **kwargs)
+        print(f"&lt;- {resultado}")
+        return resultado
+    return embrulho
+
+
+@registrar          <span class="c"># o mesmo que somar = registrar(somar)</span>
+def somar(a, b):
+    return a + b
+
+
+total = somar(2, 3)
+print("total:", total)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">-&gt; somar(2, 3)
+&lt;- 5
+total: 5</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>@registrar</code> em cima do <code>def</code> faz <code>somar = registrar(somar)</code></li>
+        <li>O embrulho recebe <code>*args, **kwargs</code> para aceitar qualquer assinatura (aula 20 do módulo 37)</li>
+        <li><strong>Devolva o resultado</strong> da função original: sem o <code>return</code>, quem chama recebe <code>None</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>functools.wraps</span><span class="n">04</span></div>
+  <h2>Sem perder <em>o nome e a docstring</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>usando_wraps.py</b></div>
+      <pre class="code">from functools import wraps
+
+def sem_wraps(funcao):
+    def embrulho(*args, **kwargs):
+        return funcao(*args, **kwargs)
+    return embrulho
+
+def com_wraps(funcao):
+    @wraps(funcao)             <span class="c"># copia nome, docstring...</span>
+    def embrulho(*args, **kwargs):
+        return funcao(*args, **kwargs)
+    return embrulho
+
+@sem_wraps
+def area(l):
+    """Área de um quadrado."""
+    return l * l
+
+@com_wraps
+def perimetro(l):
+    """Perímetro de um quadrado."""
+    return 4 * l
+
+print(area.__name__, "|", area.__doc__)
+print(perimetro.__name__, "|", perimetro.__doc__)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">embrulho | None
+perimetro | Perímetro de um quadrado.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Sem <code>wraps</code>, a função decorada passa a se chamar <code>embrulho</code> e perde a docstring</li>
+        <li>Isso confunde mensagens de erro, logs, <code>help()</code> e ferramentas de teste</li>
+        <li><code>@wraps(funcao)</code> no embrulho copia esses dados da original</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Regra prática: todo decorador seu leva <code>@wraps</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Uso real</span><span class="n">05</span></div>
+  <h2>Um <em>cronômetro</em> para qualquer função</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>cronometro.py</b></div>
+      <pre class="code">import time
+from functools import wraps
+
+
+def cronometrar(funcao):
+    @wraps(funcao)
+    def embrulho(*args, **kwargs):
+        inicio = time.perf_counter()
+        resultado = funcao(*args, **kwargs)
+        gasto = time.perf_counter() - inicio
+        print(f"{funcao.__name__} levou {gasto:.1f} s")
+        return resultado
+    return embrulho
+
+
+@cronometrar
+def relatorio():
+    time.sleep(0.3)            <span class="c"># simula um trabalho demorado</span>
+    return "pronto"
+
+
+print(relatorio())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">relatorio levou 0.3 s
+pronto</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O código de medir tempo fica num lugar só</li>
+        <li>Basta pôr <code>@cronometrar</code> em qualquer função para medir</li>
+        <li><code>time.perf_counter()</code> é o relógio certo para medir intervalos</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">O <code>sleep(0.3)</code> só simula uma tarefa lenta; o tempo medido varia um pouco a cada execução.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Com argumentos</span><span class="n">06</span></div>
+  <h2>@repetir(3): <em>um nível a mais</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>com_argumentos.py</b></div>
+      <pre class="code">from functools import wraps
+
+
+def repetir(vezes):            <span class="c"># recebe o argumento...</span>
+    def decorador(funcao):     <span class="c"># ...e devolve o decorador</span>
+        @wraps(funcao)
+        def embrulho(*args, **kwargs):
+            for _ in range(vezes):
+                resultado = funcao(*args, **kwargs)
+            return resultado
+        return embrulho
+    return decorador
+
+
+@repetir(3)
+def avisar(msg):
+    print("aviso:", msg)
+
+
+avisar("backup concluído")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">aviso: backup concluído
+aviso: backup concluído
+aviso: backup concluído</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>repetir(3)</b>recebe o argumento</div>
+        <div class="n"><b>decorador</b>recebe a função</div>
+        <div class="n key"><b>embrulho</b>roda na chamada</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li><code>@repetir(3)</code> primeiro chama <code>repetir(3)</code>, que devolve o decorador de verdade</li>
+        <li>Por isso são três funções, uma dentro da outra</li>
+        <li>O <code>vezes</code> fica guardado pela closure</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Da biblioteca</span><span class="n">07</span></div>
+  <h2>@cache: <em>lembrar resultados</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>usando_cache.py</b></div>
+      <pre class="code">from functools import cache
+
+chamadas = 0
+
+
+@cache                         <span class="c"># guarda o resultado de cada n</span>
+def fib(n):
+    global chamadas
+    chamadas += 1
+    return n if n &lt; 2 else fib(n - 1) + fib(n - 2)
+
+
+print(fib(40), "em", chamadas, "chamadas")
+print(fib(40), "de novo: ainda", chamadas)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">102334155 em 41 chamadas
+102334155 de novo: ainda 41</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>functools.cache</code> guarda o resultado de cada argumento já calculado</li>
+        <li>Fibonacci recursivo (aula 19 do módulo 37) cai de centenas de milhões de chamadas para 41</li>
+        <li>Na segunda vez, nem uma chamada nova: o resultado vem da memória</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Use só em funções que, para os mesmos argumentos, sempre devolvem o mesmo resultado e não têm efeitos colaterais.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Só números <em>positivos</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> crie o decorador <code>@exige_positivos</code>, que recusa com <code>ValueError</code> qualquer chamada com número menor ou igual a zero.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">from functools import wraps
+
+
+def exige_positivos(funcao):
+    @wraps(funcao)
+    def embrulho(*numeros):
+        if any(n &lt;= 0 for n in numeros):
+            raise ValueError(f"{funcao.__name__}: só positivos")
+        return funcao(*numeros)
+    return embrulho
+
+
+@exige_positivos
+def area_retangulo(base, altura):
+    return base * altura
+
+
+print(area_retangulo(3, 4))
+try:
+    area_retangulo(3, -4)
+except ValueError as erro:
+    print("Erro:", erro)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">12
+Erro: area_retangulo: só positivos</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A validação (aula 07) sai de dentro da função e vira reaproveitável</li>
+        <li>Graças ao <code>@wraps</code>, a mensagem mostra o nome certo: <code>area_retangulo</code></li>
+        <li>Desafio: aceite também argumentos nomeados (<code>**kwargs</code>)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. @log em cima de def f(): ... equivale a:</p>
+        <div class="opts"><div>A) f = log</div><div>B) f = log(f)</div><div>C) log = f(log)</div><div>D) f()</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O embrulho esqueceu o return. A função decorada devolve:</p>
+        <div class="opts"><div>A) O resultado normal</div><div>B) None</div><div>C) O embrulho</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Para que serve o @wraps(funcao)?</p>
+        <div class="opts"><div>A) Deixar mais rápido</div><div>B) Manter nome e docstring da original</div><div>C) Aceitar argumentos</div><div>D) Guardar resultados</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Um decorador com argumento, como @repetir(3), tem quantos níveis de função?</p>
+        <div class="opts"><div>A) 1</div><div>B) 2</div><div>C) 3</div><div>D) 4</div></div>
+        <div class="answer"><b>C.</b> repetir, decorador e embrulho.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Algo a mais,<br><em>sem mexer na função</em></h1>
+    <p class="lead">Um decorador recebe uma função, cria um embrulho com <code>*args, **kwargs</code> que chama a original e devolve esse embrulho; o <code>@</code> faz a troca para você. Use <code>@wraps</code> sempre, devolva o resultado, acrescente um nível quando o decorador tiver argumentos e aproveite os prontos, como o <code>@cache</code>.</p>
+    <div class="chips"><span>f = deco(f)</span><span>*args · **kwargs</span><span>@wraps</span><span>@deco(arg)</span><span>@cache</span></div>
+    <div class="next">Próxima aula → 11 · Programação Assíncrona</div>
+    <div class="source">Fontes: docs.python.org/3/glossary.html#term-decorator; docs.python.org/3/reference/compound_stmts.html#function-definitions; docs.python.org/3/library/functools.html (wraps, cache); docs.python.org/3/library/time.html#time.perf_counter; peps.python.org/pep-0318, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
