@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Guia Completo Python</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:10.6px;line-height:1.55}
+.wrap{max-width:730px;margin:0 auto}
+h1{font-family:var(--display);font-weight:600;font-size:34px;line-height:1.1;margin:0 0 12px}
+h1 em,h2 em{color:var(--accent-ink);font-style:italic}
+h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:500}
+h3{font-size:11.6px;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+p{margin:0 0 7px}
+.muted{color:var(--muted)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 4px;border-radius:4px}
+section.sec{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
+section.sec.brk{page-break-before:always;break-before:page;border-top:none;margin-top:0;padding-top:0}
+.intro{color:var(--muted);margin:0 0 9px}
+/* header */
+.header{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.lead{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:3px 9px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:12px}
+/* toc */
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:14px}
+.toc div{font-size:10.4px;color:var(--muted);display:flex;gap:8px}
+.toc b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:18px}
+/* grid/cards */
+.grid{display:grid;gap:9px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;break-inside:avoid}
+.card .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:3px}
+.card p{margin:0;color:var(--muted);font-size:10.2px}
+/* tables */
+.table-wrap{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:6px 0 8px;break-inside:avoid}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:8.6px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 9px;font-weight:500}
+td{border-top:1px solid var(--border);padding:6px 9px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+/* code */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:var(--mono);font-size:9.8px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:6px 0 8px;break-inside:avoid}
+.term .c{color:var(--muted)}
+/* callouts */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:9px;padding:8px 11px;font-size:10.2px;margin:7px 0;break-inside:avoid}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+/* steps */
+.steps{display:grid;gap:6px;margin:6px 0 8px}
+.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 10px;break-inside:avoid}
+.step .b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:10px;display:flex;align-items:center;justify-content:center}
+.step div:last-child{font-size:10.2px}
+.checklist{list-style:none;padding:0;margin:4px 0 8px}
+.checklist li{position:relative;padding-left:17px;margin:4px 0}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+.bullets{list-style:none;padding:0;margin:4px 0 8px}
+.bullets li{position:relative;padding-left:14px;margin:4px 0}
+.bullets li::before{content:"●";position:absolute;left:0;top:.2em;color:var(--accent);font-size:.65em}
+.source{font-family:var(--mono);font-size:8.8px;color:var(--muted);line-height:1.6}
+.foot{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}
+h2,h3,.intro{break-after:avoid;page-break-after:avoid}
+section.sec.keep{break-inside:avoid;page-break-inside:avoid}
+h3+.table-wrap,h3+.steps,h3+p,h3+.term,h3+ul{break-before:avoid}
+</style>
+
+<style>
+.osbar{display:flex;align-items:center;gap:12px;background:var(--surface-2);border:1px solid var(--border-2);border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;margin:0 0 10px}
+.osbar .ic{font-size:24px;width:36px;text-align:center}
+.osbar b{font-family:var(--display);font-size:22px;font-weight:600}
+.osbar span{display:block;color:var(--muted);font-size:10.2px}
+.kbd{font-family:var(--mono);font-size:.9em;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface-2)}
+</style>
+</head>
+<body>
+<style>
+body{font-size:10.4px}
+.capa{min-height:255mm;display:flex;flex-direction:column;justify-content:center}
+.capa h1{font-size:58px;margin:0 0 10px}
+.capa .sub{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:18px}
+.capa .lead{font-size:15px;max-width:520px}
+.capa .meta{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:28px;line-height:1.8}
+.sum h2{margin-bottom:14px}
+.sum .parte{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.sum .item{display:flex;gap:10px;font-size:11.5px;padding:3.5px 0;color:var(--ink)}
+.sum .item b{font-family:var(--mono);color:var(--accent-ink);font-weight:500;width:22px;text-align:right}
+.cap h2{font-size:22px;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.cap h2 .n{font-size:13px}
+.cap h3{font-size:12px;color:var(--accent-ink);margin:12px 0 6px}
+.cap .intro{font-size:11px;color:var(--ink);opacity:.92}
+.cap .term{font-size:9.6px;line-height:1.5;white-space:pre}
+.cap table{font-size:9.8px}
+.cap td:first-child{font-family:var(--mono);font-weight:500;color:var(--accent-ink)}
+.cap .callout.good{font-size:10.4px}
+</style>
+<div class="wrap">
+
+<section class="capa">
+  <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 1 · Guia de Aprendizagem</div>
+  <div class="sub">Guia Completo</div>
+  <h1>Python</h1>
+  <p class="lead">Do zero ao avançado: fundamentos, estruturas, boas práticas e aplicações</p>
+  <div class="chips"><span>27 capítulos</span><span>Fundamentos</span><span>Intermediário</span><span>Avançado</span><span>Aplicações práticas</span></div>
+  <div class="meta">Atualizado em Março 2026 | Python 3.13/3.14<br>Por Rodrigo | Gerado com Claude</div>
+</section>
+
+<section class="sec brk sum">
+  <h2>Sumário</h2>
+  <div class="parte">Parte 1 · Fundamentos</div><div class="item"><b>1</b>O Que é Python e Por Que Aprender</div><div class="item"><b>2</b>Instalação, Ambiente e Ferramentas</div><div class="item"><b>3</b>Variáveis, Tipos de Dados e Operadores</div><div class="item"><b>4</b>Strings: Manipulação e Formatação</div><div class="item"><b>5</b>Estruturas Condicionais (if/elif/else)</div><div class="item"><b>6</b>Estruturas de Repetição (for/while)</div><div class="item"><b>7</b>Funções e Escopo</div><div class="item"><b>8</b>Listas, Tuplas e Conjuntos</div><div class="item"><b>9</b>Dicionários</div><div class="item"><b>10</b>Comprehensions (List, Dict, Set)</div><div class="parte">Parte 2 · Intermediário</div><div class="item"><b>11</b>Manipulação de Arquivos</div><div class="item"><b>12</b>Tratamento de Erros (try/except)</div><div class="item"><b>13</b>Módulos e Pacotes (import, pip)</div><div class="item"><b>14</b>Programação Orientada a Objetos (POO)</div><div class="item"><b>15</b>Decoradores e Geradores</div><div class="item"><b>16</b>Expressões Lambda e Funções de Alta Ordem</div><div class="item"><b>17</b>Type Hints e Tipagem Estática</div><div class="parte">Parte 3 · Avançado</div><div class="item"><b>18</b>Ambientes Virtuais e Gerenciamento de Dependências</div><div class="item"><b>19</b>Programação Assíncrona (async/await)</div><div class="item"><b>20</b>Testes Automatizados (pytest)</div><div class="item"><b>21</b>Novidades do Python 3.13 e 3.14</div><div class="parte">Parte 4 · Aplicações Práticas</div><div class="item"><b>22</b>Ciência de Dados (Pandas, NumPy, Matplotlib)</div><div class="item"><b>23</b>Desenvolvimento Web (FastAPI, Django, Flask)</div><div class="item"><b>24</b>Automação e Web Scraping</div><div class="item"><b>25</b>IA e Machine Learning (scikit-learn, LangChain)</div><div class="item"><b>26</b>APIs REST com FastAPI</div><div class="item"><b>27</b>Boas Práticas e Produtividade</div>
+</section>
+
+<section class="sec brk cap">
+<h2><span class="n">01</span>O Que é Python e Por Que Aprender</h2>
+<p class="intro">Python é uma linguagem de programação de alto nível, interpretada, dinamicamente tipada e com sintaxe limpa e legível. Criada por Guido van Rossum em 1991, Python se tornou a linguagem mais popular do mundo em 2026, sendo usada em ciência de dados, IA, web, automação, DevOps e muito mais.</p>
+<div class="table-wrap"><table><thead><tr><th>Motivo</th><th>Detalhes</th></tr></thead><tbody><tr><td>Simplicidade</td><td>Sintaxe clara, fácil de ler e escrever. Ideal para iniciantes e produtividade</td></tr><tr><td>Versatilidade</td><td>Web, dados, IA, automação, games, IoT, desktop - Python faz tudo</td></tr><tr><td>Ecossistema</td><td>400.000+ pacotes no PyPI. Biblioteca para qualquer necessidade</td></tr><tr><td>Mercado</td><td>Linguagem mais demandada em vagas de tecnologia globalmente</td></tr><tr><td>Comunidade</td><td>Milhões de desenvolvedores, documentação excelente, muito conteúdo</td></tr><tr><td>IA e Dados</td><td>Linguagem padrão para Machine Learning, Data Science e LLMs</td></tr></tbody></table></div>
+<h3>Python no ranking de linguagens (2026):</h3>
+<div class="table-wrap"><table><thead><tr><th>Ranking</th><th>Linguagem</th><th>Uso Principal</th></tr></thead><tbody><tr><td>1º</td><td>Python</td><td>IA, dados, web, automação, scripts</td></tr><tr><td>2º</td><td>JavaScript</td><td>Frontend web, Node.js</td></tr><tr><td>3º</td><td>TypeScript</td><td>Frontend/backend tipado</td></tr><tr><td>4º</td><td>Java</td><td>Enterprise, Android</td></tr><tr><td>5º</td><td>C/C++</td><td>Sistemas, embedded, games</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Python é a melhor primeira linguagem para quem está começando. Também é a mais usada por profissionais que não são programadores (analistas, cientistas, marketeiros).</div>
+</section><section class="sec brk cap">
+<h2><span class="n">02</span>Instalação, Ambiente e Ferramentas</h2>
+<p class="intro">Configurar o ambiente corretamente é o primeiro passo para uma boa experiência com Python.</p>
+<h3>Instalação:</h3>
+<pre class="term"><span class="c"># Windows: Baixe de python.org (marque 'Add to PATH')</span>
+<span class="c"># macOS:</span>
+brew install python
+
+<span class="c"># Linux (Ubuntu/Debian):</span>
+sudo apt update &amp;&amp; sudo apt install python3 python3-pip
+
+<span class="c"># Verificar instalação:</span>
+python --version  <span class="c"># Python 3.14.x</span>
+pip --version     <span class="c"># pip 24.x</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Ferramenta</th><th>Tipo</th><th>Por Que Usar</th></tr></thead><tbody><tr><td>VS Code</td><td>Editor/IDE</td><td>Leve, extensões Python excelentes, debug integrado</td></tr><tr><td>PyCharm</td><td>IDE</td><td>IDE completa, refatoração avançada, debug profissional</td></tr><tr><td>Jupyter Notebook</td><td>Notebook</td><td>Análise de dados, experimentação, visualização</td></tr><tr><td>uv</td><td>Gerenciador de pacotes</td><td>Substituto moderno do pip (10-100x mais rápido)</td></tr><tr><td>Ruff</td><td>Linter + Formatter</td><td>Substitui flake8/black/isort. Extremamente rápido</td></tr><tr><td>pytest</td><td>Testes</td><td>Framework de testes padrão do ecossistema Python</td></tr><tr><td>mypy</td><td>Type checker</td><td>Verificação estática de tipos</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Em 2026, use 'uv' em vez de 'pip' para instalar pacotes. É até 100x mais rápido e gerencia ambientes virtuais automaticamente: uv init, uv add pandas.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">03</span>Variáveis, Tipos de Dados e Operadores</h2>
+<p class="intro">Variáveis em Python são criadas por atribuição simples. Não é necessário declarar o tipo - Python é dinamicamente tipado.</p>
+<pre class="term"><span class="c"># Variáveis e tipos básicos</span>
+nome = 'Rodrigo'  <span class="c"># str (texto)</span>
+idade = 30        <span class="c"># int (inteiro)</span>
+altura = 1.75     <span class="c"># float (decimal)</span>
+ativo = True      <span class="c"># bool (booleano)</span>
+nada = None       <span class="c"># NoneType (nulo)</span>
+
+<span class="c"># Verificar tipo</span>
+print(type(nome))   # &lt;class 'str'&gt;
+print(type(idade))  # &lt;class 'int'&gt;</pre>
+<h3>Tipos de dados:</h3>
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Exemplo</th><th>Mutável</th><th>Descrição</th></tr></thead><tbody><tr><td>int</td><td>42, -7, 0</td><td>Não</td><td>Números inteiros (sem limite de tamanho)</td></tr><tr><td>float</td><td>3.14, -0.5</td><td>Não</td><td>Números decimais (ponto flutuante)</td></tr><tr><td>str</td><td>'Olá', "mundo"</td><td>Não</td><td>Texto (sequência de caracteres)</td></tr><tr><td>bool</td><td>True, False</td><td>Não</td><td>Booleano (verdadeiro/falso)</td></tr><tr><td>list</td><td>[1, 2, 3]</td><td>Sim</td><td>Lista ordenada (pode alterar)</td></tr><tr><td>tuple</td><td>(1, 2, 3)</td><td>Não</td><td>Tupla ordenada (imutável)</td></tr><tr><td>dict</td><td>{'a': 1, 'b': 2}</td><td>Sim</td><td>Dicionário (chave: valor)</td></tr><tr><td>set</td><td>{1, 2, 3}</td><td>Sim</td><td>Conjunto (sem duplicatas, sem ordem)</td></tr><tr><td>NoneType</td><td>None</td><td>N/A</td><td>Ausência de valor</td></tr></tbody></table></div>
+<h3>Operadores:</h3>
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Operadores</th><th>Exemplo</th></tr></thead><tbody><tr><td>Aritméticos</td><td>+ - * / // % **</td><td>10 / 3 = 3.33 · 10 // 3 = 3 · 2**8 = 256</td></tr><tr><td>Comparação</td><td>== != &gt; &lt; &gt;= &lt;=</td><td>5 &gt; 3 -&gt; True</td></tr><tr><td>Lógicos</td><td>and or not</td><td>True and False -&gt; False</td></tr><tr><td>Atribuição</td><td>= += -= *= /=</td><td>x += 5 (mesmo que x = x + 5)</td></tr><tr><td>Identidade</td><td>is is not</td><td>x is None -&gt; True</td></tr><tr><td>Pertinência</td><td>in not in</td><td>'a' in 'abc' -&gt; True</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use // para divisão inteira e % para resto. Use ** para potenciação (2**10 = 1024). Evite 'is' para comparar valores; use '==' (is compara identidade, não valor).</div>
+</section><section class="sec brk cap">
+<h2><span class="n">04</span>Strings: Manipulação e Formatação</h2>
+<p class="intro">Strings são um dos tipos mais usados em Python. Dominar manipulação de strings é essencial para qualquer aplicação.</p>
+<pre class="term"><span class="c"># Criação de strings</span>
+s1 = 'aspas simples'
+s2 = "aspas duplas"
+s3 = '''string
+multilinhas'''
+
+<span class="c"># f-strings (formatação moderna - use sempre!)</span>
+nome = 'Rodrigo'
+idade = 30
+print(f'Olá, {nome}! Você tem {idade} anos.')
+print(f'Daqui 5 anos: {idade + 5}')
+print(f'Preço: R${49.90:.2f}')  <span class="c"># R$49.90</span>
+print(f'{nome:&gt;20}')           <span class="c"># Alinha à direita</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Método</th><th>O Que Faz</th><th>Exemplo</th></tr></thead><tbody><tr><td>.upper() / .lower()</td><td>Maiúsculas / minúsculas</td><td>'Olá'.upper() -&gt; 'OLÁ'</td></tr><tr><td>.strip()</td><td>Remove espaços das pontas</td><td>' oi '.strip() -&gt; 'oi'</td></tr><tr><td>.split(sep)</td><td>Divide em lista</td><td>'a,b,c'.split(',') -&gt; ['a','b','c']</td></tr><tr><td>.join(lista)</td><td>Junta lista em string</td><td>', '.join(['a','b']) -&gt; 'a, b'</td></tr><tr><td>.replace(old, new)</td><td>Substitui texto</td><td>'olá mundo'.replace('mundo','Python')</td></tr><tr><td>.startswith() / .endswith()</td><td>Verifica início/fim</td><td>'arquivo.pdf'.endswith('.pdf') -&gt; True</td></tr><tr><td>.find(sub)</td><td>Posição da substring (-1 se não achar)</td><td>'Python'.find('th') -&gt; 2</td></tr><tr><td>.count(sub)</td><td>Conta ocorrências</td><td>'banana'.count('a') -&gt; 3</td></tr><tr><td>len(s)</td><td>Tamanho da string</td><td>len('Python') -&gt; 6</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Sempre use f-strings (f'...') para formatação. É o método mais rápido e legível. .format() e % são legados.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">05</span>Estruturas Condicionais (if/elif/else)</h2>
+<p class="intro">Condicionais permitem que o programa tome decisões baseadas em condições. Em Python, usamos if, elif (else if) e else.</p>
+<pre class="term"><span class="c"># Básico</span>
+idade = 18
+if idade &gt;= 18:
+    print('Maior de idade')
+elif idade &gt;= 12:
+    print('Adolescente')
+else:
+    print('Criança')
+
+<span class="c"># Operador ternário</span>
+status = 'adulto' if idade &gt;= 18 else 'menor'
+
+<span class="c"># Match/case (Python 3.10+) - switch/case do Python</span>
+comando = 'sair'
+match comando:
+    case 'iniciar':
+        print('Iniciando...')
+    case 'pausar':
+        print('Pausando...')
+    case 'sair':
+        print('Saindo...')
+    case _:
+        print('Comando desconhecido')</pre>
+<h3>Valores falsy em Python:</h3>
+<div class="table-wrap"><table><thead><tr><th>Valor</th><th>Tipo</th><th>Avalia como</th></tr></thead><tbody><tr><td>False</td><td>bool</td><td>Falso</td></tr><tr><td>0, 0.0</td><td>int, float</td><td>Falso</td></tr><tr><td>'', "", b''</td><td>str, bytes</td><td>Falso (string vazia)</td></tr><tr><td>[], (), {}, set()</td><td>coleções</td><td>Falso (coleção vazia)</td></tr><tr><td>None</td><td>NoneType</td><td>Falso</td></tr><tr><td>Qualquer outro valor</td><td>qualquer</td><td>Verdadeiro</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use 'if lista:' em vez de 'if len(lista) &gt; 0:'. Python avalia coleções vazias como False automaticamente.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">06</span>Estruturas de Repetição (for/while)</h2>
+<p class="intro">Loops permitem repetir blocos de código. Python oferece for (iteração) e while (repetição condicional).</p>
+<pre class="term"><span class="c"># for - iterar sobre sequências</span>
+frutas = ['maçã', 'banana', 'uva']
+for fruta in frutas:
+    print(fruta)
+
+<span class="c"># for com range</span>
+for i in range(5):  <span class="c"># 0, 1, 2, 3, 4</span>
+    print(i)
+for i in range(2, 10, 2):  <span class="c"># 2, 4, 6, 8</span>
+    print(i)
+
+<span class="c"># for com enumerate (índice + valor)</span>
+for i, fruta in enumerate(frutas):
+    print(f'{i}: {fruta}')
+
+<span class="c"># while</span>
+contador = 0
+while contador &lt; 5:
+    print(contador)
+    contador += 1
+
+<span class="c"># break e continue</span>
+for n in range(100):
+    if n == 5: break         <span class="c"># para o loop</span>
+    if n % 2 == 0: continue  <span class="c"># pula para o próximo</span>
+    print(n)                 <span class="c"># imprime: 1, 3</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Função</th><th>O Que Faz</th><th>Exemplo</th></tr></thead><tbody><tr><td>range(n)</td><td>Gera 0 até n-1</td><td>range(5) -&gt; 0,1,2,3,4</td></tr><tr><td>range(a, b)</td><td>Gera a até b-1</td><td>range(2,5) -&gt; 2,3,4</td></tr><tr><td>range(a, b, step)</td><td>Gera com passo</td><td>range(0,10,3) -&gt; 0,3,6,9</td></tr><tr><td>enumerate(seq)</td><td>Índice + valor</td><td>enumerate(['a','b']) -&gt; (0,'a'),(1,'b')</td></tr><tr><td>zip(a, b)</td><td>Itera em paralelo</td><td>zip([1,2],['a','b']) -&gt; (1,'a'),(2,'b')</td></tr><tr><td>reversed(seq)</td><td>Ordem inversa</td><td>reversed([1,2,3]) -&gt; 3,2,1</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Prefira 'for item in lista' em vez de 'for i in range(len(lista))'. Se precisar do índice, use enumerate().</div>
+</section><section class="sec brk cap">
+<h2><span class="n">07</span>Funções e Escopo</h2>
+<p class="intro">Funções são blocos reutilizáveis de código. Em Python, funções são objetos de primeira classe - podem ser passadas como argumentos, retornadas por outras funções e atribuídas a variáveis.</p>
+<pre class="term"><span class="c"># Função básica</span>
+def saudacao(nome: str) -&gt; str:
+    '''Retorna saudação personalizada.'''
+    return f'Olá, {nome}!'
+
+<span class="c"># Parâmetros com valor padrão</span>
+def criar_usuario(nome: str, idade: int = 0, ativo: bool = True):
+    return {'nome': nome, 'idade': idade, 'ativo': ativo}
+
+<span class="c"># *args e **kwargs</span>
+def soma(*numeros):  <span class="c"># aceita qualquer qtd de args</span>
+    return sum(numeros)
+soma(1, 2, 3, 4)  <span class="c"># 10</span>
+
+def config(**opcoes):  <span class="c"># aceita qualquer qtd de kwargs</span>
+    for chave, valor in opcoes.items():
+        print(f'{chave} = {valor}')
+config(tema='escuro', idioma='pt-BR')
+
+<span class="c"># Função retornando múltiplos valores</span>
+def dividir(a, b):
+    return a // b, a % b  <span class="c"># retorna tupla</span>
+quociente, resto = dividir(10, 3)  <span class="c"># 3, 1</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Conceito</th><th>Descrição</th><th>Exemplo</th></tr></thead><tbody><tr><td>def</td><td>Define função</td><td>def minha_funcao():</td></tr><tr><td>return</td><td>Retorna valor</td><td>return resultado</td></tr><tr><td>*args</td><td>Argumentos posicionais variáveis</td><td>def f(*args): ...</td></tr><tr><td>**kwargs</td><td>Argumentos nomeados variáveis</td><td>def f(**kwargs): ...</td></tr><tr><td>docstring</td><td>Documentação da função</td><td>'''Descrição da função.'''</td></tr><tr><td>scope local</td><td>Variáveis dentro da função</td><td>Existem só dentro da função</td></tr><tr><td>scope global</td><td>Variáveis no módulo</td><td>Acessíveis em todo o arquivo</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Funções devem fazer UMA coisa e fazer bem. Se a função tem mais de 20 linhas, considere dividir em funções menores.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">08</span>Listas, Tuplas e Conjuntos</h2>
+<p class="intro">Coleções são estruturas que armazenam múltiplos valores. Cada tipo tem suas vantagens.</p>
+<h3>Listas (list) - mutáveis, ordenadas:</h3>
+<pre class="term">frutas = ['maçã', 'banana', 'uva']
+frutas.append('manga')    <span class="c"># Adiciona no final</span>
+frutas.insert(0, 'kiwi')  <span class="c"># Insere na posição</span>
+frutas.remove('banana')   <span class="c"># Remove por valor</span>
+frutas.pop()              <span class="c"># Remove o último</span>
+frutas.sort()             <span class="c"># Ordena</span>
+frutas.reverse()          <span class="c"># Inverte</span>
+
+<span class="c"># Slicing (fatiamento)</span>
+nums = [0, 1, 2, 3, 4, 5]
+nums[1:4]   <span class="c"># [1, 2, 3]</span>
+nums[:3]    <span class="c"># [0, 1, 2]</span>
+nums[-2:]   <span class="c"># [4, 5]</span>
+nums[::2]   <span class="c"># [0, 2, 4] (passo 2)</span>
+nums[::-1]  <span class="c"># [5, 4, 3, 2, 1, 0] (invertido)</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Sintaxe</th><th>Mutável</th><th>Ordenada</th><th>Duplicatas</th><th>Quando Usar</th></tr></thead><tbody><tr><td>list</td><td>[1, 2, 3]</td><td>Sim</td><td>Sim</td><td>Sim</td><td>Coleção geral, mais usada</td></tr><tr><td>tuple</td><td>(1, 2, 3)</td><td>Não</td><td>Sim</td><td>Sim</td><td>Dados imutáveis, retorno de função</td></tr><tr><td>set</td><td>{1, 2, 3}</td><td>Sim</td><td>Não</td><td>Não</td><td>Valores únicos, operações de conjunto</td></tr><tr><td>frozenset</td><td>frozenset({1,2})</td><td>Não</td><td>Não</td><td>Não</td><td>Set imutável (chave de dict)</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use tuplas para dados que não devem mudar (coordenadas, configurações). Use sets quando precisar de unicidade ou operações como união/interseção.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">09</span>Dicionários</h2>
+<p class="intro">Dicionários são a estrutura de dados mais poderosa e versátil do Python. Armazenam pares chave:valor com acesso O(1).</p>
+<pre class="term"><span class="c"># Criação</span>
+usuario = {'nome': 'Rodrigo', 'idade': 30, 'cidade': 'SP'}
+
+<span class="c"># Acesso</span>
+print(usuario['nome'])               # 'Rodrigo'
+print(usuario.get('email', 'N/A'))   # 'N/A' (seguro)
+
+<span class="c"># Modificação</span>
+usuario['email'] = 'rodrigo@email.com'  <span class="c"># Adiciona/atualiza</span>
+del usuario['cidade']                   <span class="c"># Remove chave</span>
+
+<span class="c"># Iteração</span>
+for chave, valor in usuario.items():
+    print(f'{chave}: {valor}')
+
+<span class="c"># Merge (Python 3.9+)</span>
+defaults = {'tema': 'claro', 'idioma': 'en'}
+custom = {'tema': 'escuro'}
+config = defaults | custom  # {'tema': 'escuro', 'idioma': 'en'}</pre>
+<div class="table-wrap"><table><thead><tr><th>Método</th><th>O Que Faz</th><th>Exemplo</th></tr></thead><tbody><tr><td>.get(key, default)</td><td>Acessa com valor padrão</td><td>d.get('x', 0) -&gt; 0 se não existir</td></tr><tr><td>.keys()</td><td>Retorna as chaves</td><td>list(d.keys())</td></tr><tr><td>.values()</td><td>Retorna os valores</td><td>list(d.values())</td></tr><tr><td>.items()</td><td>Retorna pares (chave, valor)</td><td>for k, v in d.items():</td></tr><tr><td>.update(outro)</td><td>Merge com outro dict</td><td>d.update({'a': 1})</td></tr><tr><td>.pop(key)</td><td>Remove e retorna valor</td><td>d.pop('nome')</td></tr><tr><td>.setdefault(key, val)</td><td>Retorna ou cria</td><td>d.setdefault('lista', [])</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use .get() em vez de [] para evitar KeyError. Use | para merge de dicts (Python 3.9+). Use defaultdict do collections para dicts com valor padrão.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">10</span>Comprehensions</h2>
+<p class="intro">Comprehensions são uma forma concisa e 'pythônica' de criar listas, dicionários e conjuntos. São mais rápidas que loops equivalentes.</p>
+<pre class="term"><span class="c"># List comprehension</span>
+quadrados = [x**2 for x in range(10)]
+<span class="c"># [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+
+<span class="c"># Com filtro (if)</span>
+pares = [x for x in range(20) if x % 2 == 0]
+<span class="c"># [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</span>
+
+<span class="c"># Dict comprehension</span>
+nomes = ['Ana', 'Bruno', 'Carlos']
+comprimentos = {nome: len(nome) for nome in nomes}
+<span class="c"># {'Ana': 3, 'Bruno': 5, 'Carlos': 6}</span>
+
+<span class="c"># Set comprehension</span>
+unicos = {x % 5 for x in range(20)}
+<span class="c"># {0, 1, 2, 3, 4}</span>
+
+<span class="c"># Generator expression (lazy, não cria lista na memória)</span>
+soma = sum(x**2 for x in range(1000000))  <span class="c"># eficiente!</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Sintaxe</th><th>Resultado</th></tr></thead><tbody><tr><td>List comp</td><td>[expr for x in seq]</td><td>Lista</td></tr><tr><td>List comp + filtro</td><td>[expr for x in seq if cond]</td><td>Lista filtrada</td></tr><tr><td>Dict comp</td><td>{k: v for k, v in items}</td><td>Dicionário</td></tr><tr><td>Set comp</td><td>{expr for x in seq}</td><td>Conjunto</td></tr><tr><td>Generator</td><td>(expr for x in seq)</td><td>Gerador (lazy)</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use comprehensions para transformações simples (1 linha). Se a lógica ficar complexa (2+ condições, nested), prefira um loop for normal - legibilidade importa.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">11</span>Manipulação de Arquivos</h2>
+<p class="intro">Python oferece formas simples e seguras de ler e escrever arquivos. O gerenciador de contexto 'with' garante que o arquivo será fechado corretamente.</p>
+<pre class="term"><span class="c"># Escrever arquivo</span>
+with open('dados.txt', 'w', encoding='utf-8') as f:
+    f.write('Linha 1\n')
+    f.write('Linha 2\n')
+
+<span class="c"># Ler arquivo inteiro</span>
+with open('dados.txt', 'r', encoding='utf-8') as f:
+    conteudo = f.read()
+
+<span class="c"># Ler linha por linha (eficiente para arquivos grandes)</span>
+with open('dados.txt', 'r') as f:
+    for linha in f:
+        print(linha.strip())
+
+<span class="c"># JSON</span>
+import json
+dados = {'nome': 'Rodrigo', 'skills': ['Python', 'IA']}
+with open('dados.json', 'w') as f:
+    json.dump(dados, f, indent=2, ensure_ascii=False)
+
+<span class="c"># CSV</span>
+import csv
+with open('dados.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(['Nome', 'Idade'])
+    writer.writerow(['Rodrigo', 30])</pre>
+<div class="table-wrap"><table><thead><tr><th>Modo</th><th>Descrição</th></tr></thead><tbody><tr><td>'r'</td><td>Leitura (padrão). Erro se o arquivo não existir</td></tr><tr><td>'w'</td><td>Escrita. Cria arquivo ou SOBRESCREVE o existente</td></tr><tr><td>'a'</td><td>Append. Adiciona ao final sem apagar</td></tr><tr><td>'x'</td><td>Criação exclusiva. Erro se já existir</td></tr><tr><td>'b'</td><td>Modo binário. Usar com 'rb', 'wb'</td></tr><tr><td>'r+'</td><td>Leitura e escrita</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> SEMPRE use 'with open(...)' em vez de f = open(...). O 'with' garante que o arquivo será fechado mesmo se ocorrer um erro. Sempre especifique encoding='utf-8'.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">12</span>Tratamento de Erros (try/except)</h2>
+<p class="intro">Tratamento de exceções permite que o programa lide com erros de forma elegante em vez de simplesmente 'quebrar'.</p>
+<pre class="term"><span class="c"># Básico</span>
+try:
+    resultado = 10 / 0
+except ZeroDivisionError:
+    print('Divisão por zero!')
+
+<span class="c"># Múltiplas exceções + else + finally</span>
+try:
+    numero = int(input('Digite um número: '))
+    resultado = 100 / numero
+except ValueError:
+    print('Isso não é um número!')
+except ZeroDivisionError:
+    print('Não pode dividir por zero!')
+else:
+    print(f'Resultado: {resultado}')  <span class="c"># só executa se NÃO houve erro</span>
+finally:
+    print('Sempre executa')  <span class="c"># limpeza</span>
+
+<span class="c"># Levantar exceção personalizada</span>
+class SaldoInsuficienteError(Exception):
+    pass
+
+def sacar(saldo, valor):
+    if valor &gt; saldo:
+        raise SaldoInsuficienteError(f'Saldo: {saldo}, Saque: {valor}')
+    return saldo - valor</pre>
+<div class="table-wrap"><table><thead><tr><th>Exceção</th><th>Quando Ocorre</th></tr></thead><tbody><tr><td>ValueError</td><td>Tipo correto mas valor inválido: int('abc')</td></tr><tr><td>TypeError</td><td>Operação com tipo errado: 'a' + 1</td></tr><tr><td>KeyError</td><td>Chave não existe no dicionário: d['inexistente']</td></tr><tr><td>IndexError</td><td>Índice fora do range: lista[100]</td></tr><tr><td>FileNotFoundError</td><td>Arquivo não encontrado: open('nao_existe.txt')</td></tr><tr><td>AttributeError</td><td>Atributo/método não existe: None.upper()</td></tr><tr><td>ImportError</td><td>Módulo não encontrado: import inexistente</td></tr><tr><td>ZeroDivisionError</td><td>Divisão por zero: 10 / 0</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Nunca use 'except:' sem especificar o tipo de exceção. Isso captura TUDO (até Ctrl+C) e esconde bugs.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">13</span>Módulos e Pacotes (import, pip)</h2>
+<p class="intro">Módulos são arquivos .py que contêm código reutilizável. Pacotes são coleções de módulos. O PyPI (Python Package Index) tem 400.000+ pacotes disponíveis.</p>
+<pre class="term"><span class="c"># Formas de import</span>
+import os                         <span class="c"># módulo inteiro</span>
+from os import path               <span class="c"># item específico</span>
+from os.path import join, exists  <span class="c"># múltiplos itens</span>
+import numpy as np                <span class="c"># alias (apelido)</span>
+
+<span class="c"># Instalar pacotes</span>
+<span class="c"># pip install requests pandas numpy</span>
+<span class="c"># uv add requests pandas numpy  <span class="c"># moderno, mais rápido</span></span></pre>
+<h3>Módulos da biblioteca padrão essenciais:</h3>
+<div class="table-wrap"><table><thead><tr><th>Módulo</th><th>Função</th><th>Exemplo</th></tr></thead><tbody><tr><td>os / pathlib</td><td>Sistema de arquivos</td><td>Path('dados').mkdir(exist_ok=True)</td></tr><tr><td>json</td><td>Ler/escrever JSON</td><td>json.loads('{"a": 1}')</td></tr><tr><td>datetime</td><td>Datas e horários</td><td>datetime.now(), timedelta(days=7)</td></tr><tr><td>collections</td><td>Estruturas de dados extras</td><td>Counter, defaultdict, namedtuple</td></tr><tr><td>itertools</td><td>Iteradores avançados</td><td>chain, product, combinations</td></tr><tr><td>functools</td><td>Ferramentas para funções</td><td>lru_cache, partial, reduce</td></tr><tr><td>re</td><td>Expressões regulares</td><td>re.findall(r'\d+', texto)</td></tr><tr><td>logging</td><td>Sistema de logs</td><td>logging.info('Processando...')</td></tr><tr><td>typing</td><td>Anotações de tipo</td><td>List[str], Dict[str, int], Optional</td></tr><tr><td>dataclasses</td><td>Classes de dados</td><td>@dataclass para classes simples</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use pathlib em vez de os.path para manipulação de caminhos. É mais moderno e legível: Path('pasta') / 'arquivo.txt'.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">14</span>Programação Orientada a Objetos (POO)</h2>
+<p class="intro">POO organiza código em classes e objetos. Classes são 'moldes' que definem atributos (dados) e métodos (comportamentos). Em Python, tudo é um objeto.</p>
+<pre class="term">from dataclasses import dataclass
+
+<span class="c"># Classe tradicional</span>
+class ContaBancaria:
+    def __init__(self, titular: str, saldo: float = 0):
+        self.titular = titular
+        self.saldo = saldo
+
+    def depositar(self, valor: float):
+        self.saldo += valor
+        return self
+
+    def sacar(self, valor: float):
+        if valor &gt; self.saldo:
+            raise ValueError('Saldo insuficiente')
+        self.saldo -= valor
+        return self
+
+    def __str__(self):
+        return f'{self.titular}: R${self.saldo:.2f}'
+
+<span class="c"># Dataclass (moderno, menos boilerplate)</span>
+@dataclass
+class Produto:
+    nome: str
+    preco: float
+    estoque: int = 0
+
+    @property
+    def disponivel(self) -&gt; bool:
+        return self.estoque &gt; 0</pre>
+<div class="table-wrap"><table><thead><tr><th>Conceito</th><th>Descrição</th><th>Python</th></tr></thead><tbody><tr><td>Classe</td><td>Molde para objetos</td><td>class MinhaClasse:</td></tr><tr><td>Objeto</td><td>Instância de uma classe</td><td>obj = MinhaClasse()</td></tr><tr><td>__init__</td><td>Construtor</td><td>def __init__(self, ...):</td></tr><tr><td>self</td><td>Referência ao objeto</td><td>self.atributo = valor</td></tr><tr><td>Herança</td><td>Classe filha herda da pai</td><td>class Filha(Pai):</td></tr><tr><td>@property</td><td>Atributo computado</td><td>Acessa como atributo, executa como método</td></tr><tr><td>@dataclass</td><td>Classe de dados automática</td><td>Gera __init__, __repr__, __eq__ etc.</td></tr><tr><td>Dunder methods</td><td>Métodos especiais __x__</td><td>__str__, __len__, __eq__, __lt__</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Use @dataclass para classes que são principalmente 'containers de dados'. Para lógica complexa, use classes tradicionais. Prefira composição sobre herança.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">15</span>Decoradores e Geradores</h2>
+<p class="intro">Decoradores modificam o comportamento de funções. Geradores produzem valores sob demanda (lazy evaluation), economizando memória.</p>
+<h3>Decoradores:</h3>
+<pre class="term">import time
+from functools import wraps
+
+<span class="c"># Decorador para medir tempo de execução</span>
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        inicio = time.time()
+        resultado = func(*args, **kwargs)
+        fim = time.time()
+        print(f'{func.__name__}: {fim - inicio:.3f}s')
+        return resultado
+    return wrapper
+
+@timer
+def processar_dados(n):
+    return sum(range(n))
+
+processar_dados(10_000_000)  <span class="c"># processar_dados: 0.234s</span></pre>
+<h3>Geradores:</h3>
+<pre class="term"><span class="c"># Gerador com yield</span>
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a  <span class="c"># retorna e PAUSA</span>
+        a, b = b, a + b
+
+<span class="c"># Uso - gera valores sob demanda</span>
+for num in fibonacci(10):
+    print(num)  <span class="c"># 0, 1, 1, 2, 3, 5, 8, 13, 21, 34</span>
+
+<span class="c"># Gerador para arquivo grande (não carrega tudo na memória)</span>
+def ler_linhas(arquivo):
+    with open(arquivo) as f:
+        for linha in f:
+            yield linha.strip()</pre>
+<div class="callout good"><b>Dica:</b> Use @functools.lru_cache para cache automático de funções puras: resultados são guardados para evitar recalcular.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">16</span>Lambda e Funções de Alta Ordem</h2>
+<p class="intro">Funções lambda são funções anônimas de uma linha. Funções de alta ordem recebem ou retornam outras funções.</p>
+<pre class="term"><span class="c"># Lambda: função anônima</span>
+dobro = lambda x: x * 2
+dobro(5)  <span class="c"># 10</span>
+
+<span class="c"># map() - aplica função a cada item</span>
+nomes = ['ana', 'bruno', 'carlos']
+maiusculas = list(map(str.upper, nomes))
+<span class="c"># ['ANA', 'BRUNO', 'CARLOS']</span>
+
+<span class="c"># filter() - filtra por condição</span>
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+pares = list(filter(lambda x: x % 2 == 0, numeros))
+<span class="c"># [2, 4, 6, 8, 10]</span>
+
+<span class="c"># sorted() com key</span>
+alunos = [('Ana', 9.5), ('Bruno', 7.0), ('Carlos', 8.5)]
+por_nota = sorted(alunos, key=lambda a: a[1], reverse=True)
+<span class="c"># [('Ana', 9.5), ('Carlos', 8.5), ('Bruno', 7.0)]</span>
+
+<span class="c"># reduce() - acumula resultado</span>
+from functools import reduce
+produto = reduce(lambda a, b: a * b, [1, 2, 3, 4, 5])  <span class="c"># 120</span></pre>
+<div class="callout good"><b>Dica:</b> Prefira list comprehension sobre map/filter na maioria dos casos: [x*2 for x in nums] é mais 'pythônico' que list(map(lambda x: x*2, nums)).</div>
+</section><section class="sec brk cap">
+<h2><span class="n">17</span>Type Hints e Tipagem Estática</h2>
+<p class="intro">Type hints (anotações de tipo) tornam o código mais legível e permitem detectar erros antes da execução com ferramentas como mypy e Pyright.</p>
+<pre class="term"><span class="c"># Tipos básicos</span>
+nome: str = 'Rodrigo'
+idade: int = 30
+ativo: bool = True
+
+<span class="c"># Funções tipadas</span>
+def saudar(nome: str, vezes: int = 1) -&gt; str:
+    return f'Olá, {nome}! ' * vezes
+
+<span class="c"># Tipos complexos (Python 3.10+)</span>
+def processar(dados: list[dict[str, int]]) -&gt; dict[str, float]:
+    ...
+
+<span class="c"># Union e Optional</span>
+def buscar(id: int) -&gt; str | None:  <span class="c"># Python 3.10+</span>
+    ...
+
+<span class="c"># TypedDict para dicts estruturados</span>
+from typing import TypedDict
+
+class Usuario(TypedDict):
+    nome: str
+    idade: int
+    email: str | None</pre>
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Sintaxe Moderna (3.10+)</th><th>Exemplo</th></tr></thead><tbody><tr><td>Lista tipada</td><td>list[str]</td><td>nomes: list[str] = ['Ana', 'Bruno']</td></tr><tr><td>Dict tipado</td><td>dict[str, int]</td><td>idades: dict[str, int] = {'Ana': 25}</td></tr><tr><td>Opcional</td><td>str | None</td><td>email: str | None = None</td></tr><tr><td>Union</td><td>int | float</td><td>valor: int | float = 3.14</td></tr><tr><td>Tupla</td><td>tuple[str, int]</td><td>par: tuple[str, int] = ('Ana', 25)</td></tr><tr><td>Callable</td><td>Callable[[int], str]</td><td>Função que recebe int e retorna str</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Type hints NÃO afetam a execução (são ignorados em runtime). Seu valor está na documentação do código e na verificação com mypy/Pyright.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">18</span>Ambientes Virtuais e Dependências</h2>
+<p class="intro">Ambientes virtuais isolam as dependências de cada projeto. Isso evita conflitos entre versões de pacotes.</p>
+<div class="table-wrap"><table><thead><tr><th>Ferramenta</th><th>Comando</th><th>Vantagem</th></tr></thead><tbody><tr><td>venv (padrão)</td><td>python -m venv .venv</td><td>Vem com Python, simples</td></tr><tr><td>uv (moderno)</td><td>uv init / uv add pandas</td><td>10-100x mais rápido, resolver avançado</td></tr><tr><td>poetry</td><td>poetry init / poetry add pandas</td><td>Gerencia projeto completo, lock file</td></tr><tr><td>conda</td><td>conda create -n meuenv</td><td>Ciência de dados, binários complexos</td></tr><tr><td>pipenv</td><td>pipenv install pandas</td><td>Pipfile + lock, virtual env automático</td></tr></tbody></table></div>
+<h3>Workflow com uv (recomendado em 2026):</h3>
+<pre class="term"><span class="c"># Criar projeto</span>
+uv init meu-projeto
+cd meu-projeto
+
+<span class="c"># Adicionar dependências</span>
+uv add fastapi uvicorn
+uv add --dev pytest ruff mypy
+
+<span class="c"># Rodar script</span>
+uv run python main.py
+
+<span class="c"># Rodar pytest</span>
+uv run pytest</pre>
+<h3>Workflow com venv (padrão):</h3>
+<pre class="term"><span class="c"># Criar ambiente virtual</span>
+python -m venv .venv
+
+<span class="c"># Ativar</span>
+<span class="c"># Linux/macOS: source .venv/bin/activate</span>
+<span class="c"># Windows: .venv\Scripts\activate</span>
+
+<span class="c"># Instalar pacotes</span>
+pip install fastapi uvicorn
+
+<span class="c"># Salvar dependências</span>
+pip freeze &gt; requirements.txt
+
+<span class="c"># Instalar de requirements.txt</span>
+pip install -r requirements.txt</pre>
+<div class="callout good"><b>Dica:</b> NUNCA instale pacotes globalmente (sem venv). Cada projeto deve ter seu ambiente isolado. Em 2026, uv é a ferramenta recomendada.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">19</span>Programação Assíncrona (async/await)</h2>
+<p class="intro">Programação assíncrona permite executar múltiplas operações de I/O (rede, disco) concorrentemente sem threads. É essencial para web servers, crawlers e APIs de alta performance.</p>
+<pre class="term">import asyncio
+import httpx  <span class="c"># cliente HTTP async</span>
+
+<span class="c"># Função assíncrona</span>
+async def buscar_dados(url: str) -&gt; dict:
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        return response.json()
+
+<span class="c"># Executar múltiplas chamadas em paralelo</span>
+async def main():
+    urls = [
+        'https://api.example.com/users',
+        'https://api.example.com/products',
+        'https://api.example.com/orders',
+    ]
+    <span class="c"># asyncio.gather executa todas ao mesmo tempo</span>
+    resultados = await asyncio.gather(
+        *[buscar_dados(url) for url in urls]
+    )
+    return resultados
+
+<span class="c"># Rodar</span>
+asyncio.run(main())</pre>
+<div class="table-wrap"><table><thead><tr><th>Conceito</th><th>Descrição</th></tr></thead><tbody><tr><td>async def</td><td>Define uma função assíncrona (coroutine)</td></tr><tr><td>await</td><td>Espera o resultado de uma coroutine</td></tr><tr><td>asyncio.run()</td><td>Ponto de entrada para código async</td></tr><tr><td>asyncio.gather()</td><td>Executa múltiplas coroutines em paralelo</td></tr><tr><td>asyncio.create_task()</td><td>Agenda coroutine para execução concorrente</td></tr><tr><td>async with</td><td>Gerenciador de contexto assíncrono</td></tr><tr><td>async for</td><td>Iteração assíncrona</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Async não é 'mais rápido' que sync para tudo. É ótimo para I/O (rede, disco). Para CPU (cálculos), use multiprocessing ou threading.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">20</span>Testes Automatizados (pytest)</h2>
+<p class="intro">Testes automatizados garantem que o código funciona corretamente e continua funcionando após mudanças. pytest é o framework padrão do ecossistema Python.</p>
+<pre class="term"><span class="c"># calculadora.py</span>
+def somar(a: float, b: float) -&gt; float:
+    return a + b
+
+def dividir(a: float, b: float) -&gt; float:
+    if b == 0:
+        raise ValueError('Divisão por zero')
+    return a / b
+
+<span class="c"># test_calculadora.py</span>
+import pytest
+from calculadora import somar, dividir
+
+def test_somar():
+    assert somar(2, 3) == 5
+    assert somar(-1, 1) == 0
+    assert somar(0, 0) == 0
+
+def test_dividir():
+    assert dividir(10, 2) == 5.0
+
+def test_dividir_por_zero():
+    with pytest.raises(ValueError):
+        dividir(10, 0)
+
+<span class="c"># Rodar: pytest -v</span></pre>
+<div class="table-wrap"><table><thead><tr><th>Recurso pytest</th><th>Descrição</th><th>Comando</th></tr></thead><tbody><tr><td>Rodar todos</td><td>Executa todos os testes</td><td>pytest</td></tr><tr><td>Verbose</td><td>Detalhes de cada teste</td><td>pytest -v</td></tr><tr><td>Específico</td><td>Um arquivo ou função</td><td>pytest test_calc.py::test_somar</td></tr><tr><td>Coverage</td><td>Cobertura de código</td><td>pytest --cov=src</td></tr><tr><td>Fixtures</td><td>Setup/teardown reutilizável</td><td>@pytest.fixture</td></tr><tr><td>Parametrize</td><td>Múltiplos inputs</td><td>@pytest.mark.parametrize</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> Escreva testes ANTES ou JUNTO com o código, não depois. Objetivo mínimo: 80% de cobertura nos caminhos críticos.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">21</span>Novidades do Python 3.13 e 3.14</h2>
+<p class="intro">Python 3.13 (outubro 2024) e 3.14 (outubro 2025) trouxeram mudanças significativas que melhoram performance, usabilidade e capacidades da linguagem.</p>
+<h3>Python 3.13:</h3>
+<div class="table-wrap"><table><thead><tr><th>Novidade</th><th>Descrição</th><th>Impacto</th></tr></thead><tbody><tr><td>REPL melhorado</td><td>Terminal interativo baseado no PyPy com edição multilinhas e cores</td><td>Melhor experiência de aprendizado e debug</td></tr><tr><td>Tracebacks coloridos</td><td>Erros com cores e indicação precisa do problema</td><td>Debug mais rápido e intuitivo</td></tr><tr><td>Free-threaded (experimental)</td><td>Modo sem GIL para paralelismo real</td><td>Performance em workloads CPU-bound</td></tr><tr><td>JIT experimental</td><td>Compilador JIT para otimização de runtime</td><td>Performance para código numérico</td></tr><tr><td>Deprecações</td><td>Removidos módulos legados (cgi, mailbox)</td><td>Código mais limpo</td></tr></tbody></table></div>
+<h3>Python 3.14:</h3>
+<div class="table-wrap"><table><thead><tr><th>Novidade</th><th>Descrição</th><th>Impacto</th></tr></thead><tbody><tr><td>Template Strings (t-strings)</td><td>Novo tipo de string literal para templates seguros</td><td>Previne SQL injection, XSS</td></tr><tr><td>Deferred Annotations (PEP 649)</td><td>Anotações de tipo avaliadas sob demanda</td><td>Menos erros com forward references</td></tr><tr><td>Subinterpreters stdlib</td><td>Suporte nativo a subinterpreters</td><td>Paralelismo real sem GIL</td></tr><tr><td>compression.zstd</td><td>Compressão Zstandard na stdlib</td><td>Compressão rápida sem instalar pacotes</td></tr><tr><td>Free-threaded melhorado</td><td>GIL opcional mais estável, PEP 703 completo</td><td>Multi-threading performante</td></tr><tr><td>REPL com syntax highlight</td><td>Cores e highlighting no terminal interativo</td><td>Experiência de desenvolvimento melhor</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica:</b> A maior mudança de longo prazo é o free-threaded mode (sem GIL). Isso muda fundamentalmente como Python lida com concorrência e pode dobrar a performance de apps multi-threaded.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">22</span>Ciência de Dados</h2>
+<p class="intro">Python é a linguagem padrão para ciência de dados. O ecossistema inclui ferramentas para manipulação, análise, visualização e machine learning.</p>
+<div class="table-wrap"><table><thead><tr><th>Biblioteca</th><th>Função</th><th>Uso Principal</th></tr></thead><tbody><tr><td>NumPy</td><td>Arrays numéricos, álgebra linear</td><td>Base de cálculo numérico</td></tr><tr><td>Pandas</td><td>DataFrames, manipulação de dados tabulares</td><td>Limpeza, transformação, análise</td></tr><tr><td>Matplotlib</td><td>Gráficos e visualizações</td><td>Gráficos 2D, publicação científica</td></tr><tr><td>Seaborn</td><td>Visualização estatística</td><td>Gráficos bonitos com menos código</td></tr><tr><td>Plotly</td><td>Gráficos interativos</td><td>Dashboards, apresentações</td></tr><tr><td>scikit-learn</td><td>Machine Learning</td><td>Classificação, regressão, clustering</td></tr><tr><td>Polars</td><td>DataFrames ultra-rápidos</td><td>Alternativa moderna ao Pandas</td></tr></tbody></table></div>
+<h3>Exemplo rápido com Pandas:</h3>
+<pre class="term">import pandas as pd
+
+<span class="c"># Ler CSV</span>
+df = pd.read_csv('vendas.csv')
+
+<span class="c"># Explorar</span>
+df.head()      <span class="c"># primeiras 5 linhas</span>
+df.describe()  <span class="c"># estatísticas básicas</span>
+df.info()      <span class="c"># tipos e nulos</span>
+
+<span class="c"># Filtrar e agregar</span>
+vendas_sp = df[df['estado'] == 'SP']
+por_mes = df.groupby('mes')['valor'].sum()
+
+<span class="c"># Criar coluna calculada</span>
+df['lucro'] = df['receita'] - df['custo']</pre>
+<div class="callout good"><b>Dica:</b> Em 2026, considere Polars como alternativa ao Pandas para datasets grandes. É 10-50x mais rápido e usa menos memória.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">23</span>Desenvolvimento Web</h2>
+<p class="intro">Python possui frameworks web para todos os casos: desde APIs simples até aplicações enterprise completas.</p>
+<div class="table-wrap"><table><thead><tr><th>Framework</th><th>Tipo</th><th>Quando Usar</th></tr></thead><tbody><tr><td>FastAPI</td><td>API moderna (async)</td><td>APIs REST/GraphQL, microsserviços, IA. Mais popular em 2026</td></tr><tr><td>Django</td><td>Full-stack (batteries-included)</td><td>Apps completas com admin, auth, ORM. Enterprise</td></tr><tr><td>Flask</td><td>Micro-framework</td><td>APIs simples, prototipagem rápida</td></tr><tr><td>Litestar</td><td>API async (alternativa ao FastAPI)</td><td>APIs de alta performance</td></tr><tr><td>Streamlit</td><td>Apps de dados</td><td>Dashboards, protótipos de ML, demos</td></tr></tbody></table></div>
+<h3>FastAPI - Hello World:</h3>
+<pre class="term">from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    nome: str
+    preco: float
+    em_estoque: bool = True
+
+@app.get('/')
+def root():
+    return {'msg': 'API funcionando!'}
+
+@app.post('/items/')
+def criar_item(item: Item):
+    return {'item': item, 'status': 'criado'}
+
+<span class="c"># Rodar: uvicorn main:app --reload</span>
+<span class="c"># Docs automática: http://localhost:8000/docs</span></pre>
+<div class="callout good"><b>Dica:</b> FastAPI gera documentação OpenAPI automaticamente. Acesse /docs para Swagger UI e /redoc para ReDoc. Use Pydantic para validação de dados.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">24</span>Automação e Web Scraping</h2>
+<p class="intro">Python é a linguagem mais usada para automação de tarefas e extração de dados da web.</p>
+<div class="table-wrap"><table><thead><tr><th>Biblioteca</th><th>Função</th><th>Quando Usar</th></tr></thead><tbody><tr><td>requests</td><td>Chamadas HTTP</td><td>APIs, downloads, requisições simples</td></tr><tr><td>httpx</td><td>HTTP async + sync</td><td>Alternativa moderna ao requests</td></tr><tr><td>BeautifulSoup</td><td>Parsing de HTML</td><td>Extrair dados de páginas web</td></tr><tr><td>Selenium</td><td>Automação de navegador</td><td>Sites com JavaScript, login, interação</td></tr><tr><td>Playwright</td><td>Automação moderna de browser</td><td>Alternativa ao Selenium, mais rápido</td></tr><tr><td>Scrapy</td><td>Framework de crawling</td><td>Scraping em larga escala</td></tr><tr><td>schedule</td><td>Agendamento de tarefas</td><td>Executar scripts periodicamente</td></tr><tr><td>openpyxl</td><td>Manipular Excel</td><td>Automatizar planilhas</td></tr></tbody></table></div>
+<h3>Exemplo - Web Scraping com requests + BeautifulSoup:</h3>
+<pre class="term">import requests
+from bs4 import BeautifulSoup
+
+<span class="c"># Buscar página</span>
+url = 'https://example.com/produtos'
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+<span class="c"># Extrair dados</span>
+produtos = []
+for card in soup.select('.product-card'):
+    nome = card.select_one('.name').text.strip()
+    preco = card.select_one('.price').text.strip()
+    produtos.append({'nome': nome, 'preco': preco})
+
+print(f'Encontrados {len(produtos)} produtos')</pre>
+<div class="callout good"><b>Dica:</b> Sempre verifique os termos de uso do site antes de fazer scraping. Use delays entre requisições e respeite o robots.txt.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">25</span>IA e Machine Learning</h2>
+<p class="intro">Python é a linguagem dominante em inteligência artificial. Desde ML clássico até LLMs, o ecossistema Python cobre tudo.</p>
+<div class="table-wrap"><table><thead><tr><th>Área</th><th>Bibliotecas</th><th>Exemplos de Uso</th></tr></thead><tbody><tr><td>ML Clássico</td><td>scikit-learn, XGBoost, LightGBM</td><td>Classificação, regressão, clustering</td></tr><tr><td>Deep Learning</td><td>PyTorch, TensorFlow, JAX</td><td>Redes neurais, visão computacional</td></tr><tr><td>NLP / LLMs</td><td>LangChain, Hugging Face, spaCy</td><td>Chatbots, RAG, análise de texto</td></tr><tr><td>Visão Computacional</td><td>OpenCV, Pillow, ultralytics</td><td>Detecção de objetos, OCR</td></tr><tr><td>Dados Tabulares</td><td>Pandas, Polars, DuckDB</td><td>ETL, análise, feature engineering</td></tr><tr><td>MLOps</td><td>MLflow, Weights &amp; Biases, DVC</td><td>Tracking, versionamento, deploy</td></tr></tbody></table></div>
+<h3>Exemplo - ML com scikit-learn:</h3>
+<pre class="term">from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import pandas as pd
+
+<span class="c"># Carregar dados</span>
+df = pd.read_csv('clientes.csv')
+X = df.drop('churn', axis=1)  <span class="c"># features</span>
+y = df['churn']               <span class="c"># target</span>
+
+<span class="c"># Dividir treino/teste</span>
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+<span class="c"># Treinar modelo</span>
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+
+<span class="c"># Avaliar</span>
+pred = model.predict(X_test)
+print(f'Acurácia: {accuracy_score(y_test, pred):.2%}')</pre>
+<div class="callout good"><b>Dica:</b> Comece com scikit-learn para ML clássico. Só vá para PyTorch/TensorFlow quando precisar de deep learning. Para LLMs, use LangChain.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">26</span>APIs REST com FastAPI</h2>
+<p class="intro">FastAPI é o framework mais popular para APIs em Python em 2026. Combina alta performance (async), validação automática (Pydantic) e documentação autogerada.</p>
+<h3>CRUD completo:</h3>
+<pre class="term">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI(title='Minha API', version='1.0')
+
+class TaskCreate(BaseModel):
+    titulo: str
+    descricao: str | None = None
+
+class Task(TaskCreate):
+    id: int
+    feita: bool = False
+
+tasks: dict[int, Task] = {}
+next_id = 1
+
+@app.get('/tasks', response_model=list[Task])
+def listar(): return list(tasks.values())
+
+@app.post('/tasks', response_model=Task, status_code=201)
+def criar(data: TaskCreate):
+    global next_id
+    task = Task(id=next_id, **data.model_dump())
+    tasks[next_id] = task
+    next_id += 1
+    return task
+
+@app.put('/tasks/{id}')
+def atualizar(id: int, data: TaskCreate):
+    if id not in tasks: raise HTTPException(404)
+    tasks[id] = Task(id=id, **data.model_dump())
+    return tasks[id]
+
+@app.delete('/tasks/{id}', status_code=204)
+def deletar(id: int):
+    if id not in tasks: raise HTTPException(404)
+    del tasks[id]</pre>
+<div class="callout good"><b>Dica:</b> Use SQLAlchemy + Alembic para banco de dados real, e adicione autenticação com OAuth2/JWT para produção.</div>
+</section><section class="sec brk cap">
+<h2><span class="n">27</span>Boas Práticas e Produtividade</h2>
+<p class="intro">Dominar boas práticas é o que separa um iniciante de um profissional. Estas dicas valem para qualquer projeto Python.</p>
+<div class="table-wrap"><table><thead><tr><th>Prática</th><th>Detalhes</th></tr></thead><tbody><tr><td>Use type hints</td><td>Documente tipos em funções. Ajuda você, seu editor e outros devs</td></tr><tr><td>Use f-strings</td><td>f'{variavel}' é o método mais rápido e legível de formatação</td></tr><tr><td>Use pathlib</td><td>Path('pasta') / 'arquivo' em vez de os.path.join()</td></tr><tr><td>Use dataclasses</td><td>@dataclass para classes simples. Menos boilerplate</td></tr><tr><td>Use comprehensions</td><td>Mais conciso e rápido que for + append</td></tr><tr><td>Use with (context manager)</td><td>Garante limpeza de recursos (arquivos, conexões)</td></tr><tr><td>Use uv</td><td>Gerenciador moderno, rápido, substitui pip+venv+pip-tools</td></tr><tr><td>Use Ruff</td><td>Linter + formatter em um só. Substitui flake8+black+isort</td></tr><tr><td>Escreva testes</td><td>pytest para testes. Mínimo 80% de cobertura em código crítico</td></tr><tr><td>Use logging</td><td>logging.info() em vez de print() para produção</td></tr></tbody></table></div>
+<h3>Estrutura de projeto recomendada:</h3>
+<pre class="term">meu-projeto/
+    pyproject.toml   <span class="c"># Config do projeto (uv/poetry)</span>
+    README.md
+    src/
+        meu_projeto/
+            __init__.py
+            main.py      <span class="c"># Ponto de entrada</span>
+            models.py    <span class="c"># Modelos de dados</span>
+            services.py  <span class="c"># Lógica de negócio</span>
+            utils.py     <span class="c"># Funções utilitárias</span>
+    tests/
+        test_main.py
+        test_services.py
+    .env             <span class="c"># Variáveis de ambiente (não commite!)</span>
+    .gitignore</pre>
+<h3>O Zen of Python (import this):</h3>
+<div class="table-wrap"><table><thead><tr><th>Princípio</th><th>Significado Prático</th></tr></thead><tbody><tr><td>Beautiful is better than ugly</td><td>Escreva código limpo e bem formatado</td></tr><tr><td>Explicit is better than implicit</td><td>Seja claro nas intenções do código</td></tr><tr><td>Simple is better than complex</td><td>Não complique o que pode ser simples</td></tr><tr><td>Readability counts</td><td>Código é lido mais vezes do que escrito</td></tr><tr><td>Errors should never pass silently</td><td>Trate exceções, não as ignore</td></tr><tr><td>There should be one obvious way</td><td>Siga os padrões da comunidade</td></tr></tbody></table></div>
+<div class="callout good"><b>Dica final:</b> A melhor forma de aprender Python é praticando. Escolha um projeto pessoal, construa, erre, aprenda. Participe da comunidade Python Brasil!</div>
+</section>
+
+<section class="sec brk cap">
+  <h2>Conclusão</h2>
+  <p class="intro">Este guia cobriu Python desde os fundamentos (variáveis, loops, funções) até aplicações avançadas (ciência de dados, web, IA, automação). Python é mais do que uma linguagem - é um ecossistema completo que permite construir praticamente qualquer coisa. Com as boas práticas e ferramentas apresentadas aqui, você está preparado para criar projetos profissionais e produtivos.</p>
+  <div class="foot source">Guia gerado em Março 2026 por Claude para Rodrigo. Versão no tema escuro da Formação Claude Code 2026: conteúdo original mantido, com acentuação e recuo do código restaurados; os exemplos que usam só a biblioteca padrão foram executados com sucesso.</div>
+</section>
+
+</div>
+</body>
+</html>
