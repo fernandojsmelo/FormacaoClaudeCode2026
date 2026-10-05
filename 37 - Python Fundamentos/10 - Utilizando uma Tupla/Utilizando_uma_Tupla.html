@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando uma Tupla</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 10</div>
+    <h1>Utilizando<br><em>uma tupla</em></h1>
+    <p class="lead">A <strong>tupla</strong> é a irmã imutável da lista: guarda valores em ordem, mas não deixa alterar depois de criada. Nesta aula: como criar (e a pegadinha da tupla de um item só), o erro ao tentar alterar, desempacotamento, troca de valores, funções que devolvem vários valores, tuplas como chave de dicionário e quando escolher tupla ou lista.</p>
+    <div class="chips"><span>( )</span><span>A vírgula cria a tupla</span><span>Imutável</span><span>Desempacotar</span><span>a, b = b, a</span><span>.count() · .index()</span><span>Tupla × lista</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Tuples and Sequences; Built-in Types: Sequence Types), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Criando</span><span class="n">01</span></div>
+  <h2>A vírgula <em>é que cria a tupla</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>criar.py</b></div>
+      <pre class="code">ponto = (3, 4)
+cores = ("vermelho", "verde", "azul")
+sem_parenteses = 10, 20        <span class="c"># a vírgula é que cria a tupla</span>
+um_item = ("só",)  <span class="c"># um item: precisa da vírgula</span>
+nao_e_tupla = ("só")  <span class="c"># sem vírgula: é só uma str</span>
+print(type(sem_parenteses), type(um_item), type(nao_e_tupla))
+print(cores[0], cores[-1], cores[1:])
+print(len(cores), "verde" in cores)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">&lt;class 'tuple'&gt; &lt;class 'tuple'&gt; &lt;class 'str'&gt;
+vermelho azul ('verde', 'azul')
+3 True</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Parênteses, itens separados por vírgula</li>
+        <li>Na verdade, quem cria a tupla é a <strong>vírgula</strong>: <code>10, 20</code> já é tupla</li>
+        <li>Tupla de um item: <code>("só",)</code>, com a vírgula no fim</li>
+        <li>Índices, fatias, <code>len()</code> e <code>in</code> funcionam como em listas e strings</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px"><code>("só")</code> sem vírgula é só uma string entre parênteses: a saída mostra <code>&lt;class 'str'&gt;</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Imutável</span><span class="n">02</span></div>
+  <h2>Depois de criada, <em>não muda</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>imutavel.py</b></div>
+      <pre class="code">cores = ("vermelho", "verde", "azul")
+cores[0] = "amarelo"</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "imutavel.py", line 2, in &lt;module&gt;
+    cores[0] = "amarelo"
+    ~~~~~^^^
+TypeError: 'tuple' object does not support item assignment</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Mesmo erro das strings (aula 07): <strong>TypeError</strong>, não aceita atribuição</li>
+        <li>Tupla não tem <code>append</code>, <code>remove</code> nem <code>sort</code></li>
+        <li>Para "mudar", crie outra: <code>cores = ("amarelo",) + cores[1:]</code></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">A imutabilidade é uma <strong>garantia</strong>: quem recebe uma tupla sabe que ninguém vai alterá-la no caminho. Coordenadas, datas, configurações fixas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Desempacotar</span><span class="n">03</span></div>
+  <h2>Um valor <em>para cada variável</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>desempacotar.py</b></div>
+      <pre class="code">ponto = (3, 4)
+x, y = ponto                  <span class="c"># desempacotamento</span>
+print(x, y)
+nome, idade, cidade = ("Ana", 29, "Recife")
+print(f"{nome} ({idade}) mora em {cidade}")
+primeiro, *resto = (1, 2, 3, 4)
+print(primeiro, resto)        <span class="c"># resto vira lista</span>
+a, b = 1, 2
+a, b = b, a                   <span class="c"># troca usando tupla</span>
+print(a, b)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">3 4
+Ana (29) mora em Recife
+1 [2, 3, 4]
+2 1</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>x, y = ponto</code>: cada variável recebe um item, na ordem</li>
+        <li>A quantidade precisa bater; senão, <strong>ValueError</strong></li>
+        <li><code>*resto</code> recolhe "o que sobrou" numa <strong>lista</strong></li>
+        <li><code>a, b = b, a</code>: o lado direito vira uma tupla e é desempacotado (a troca da aula 06)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Funções</span><span class="n">04</span></div>
+  <h2>Devolvendo <em>vários valores</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>retorno.py</b></div>
+      <pre class="code">def min_max(numeros):
+    return min(numeros), max(numeros)   <span class="c"># devolve uma tupla</span>
+
+menor, maior = min_max([7, 2, 9, 4])
+print(menor, maior)
+resultado = min_max([7, 2, 9, 4])
+print(resultado, type(resultado))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">2 9
+(2, 9) &lt;class 'tuple'&gt;</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>return min(...), max(...)</code> devolve <strong>uma tupla</strong></li>
+        <li>Quem chama pode desempacotar direto: <code>menor, maior = ...</code></li>
+        <li>Funções (<code>def</code>) são o assunto da <strong>aula 17</strong>; aqui é uma prévia</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">É o mesmo padrão do <code>divmod()</code> da aula 06 e do <code>dividir()</code> do capítulo 7 do guia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Métodos</span><span class="n">05</span></div>
+  <h2>Poucos métodos, <em>muitas funções</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>metodos.py</b></div>
+      <pre class="code">notas = (7, 9, 7, 10, 7)
+print(notas.count(7))     <span class="c"># 3</span>
+print(notas.index(10))    <span class="c"># 3</span>
+print(sorted(notas))      <span class="c"># sorted devolve LISTA</span>
+print(tuple(sorted(notas)))
+print(list(notas))        <span class="c"># vira lista para alterar</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">3
+3
+[7, 7, 7, 9, 10]
+(7, 7, 7, 9, 10)
+[7, 9, 7, 10, 7]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Só dois métodos: <code>.count()</code> e <code>.index()</code></li>
+        <li><code>sorted()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>len()</code> funcionam</li>
+        <li><code>sorted()</code> devolve uma <strong>lista</strong>; <code>tuple()</code> converte de volta</li>
+        <li><code>list(tupla)</code> e <code>tuple(lista)</code> convertem entre as duas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Usos</span><span class="n">06</span></div>
+  <h2>Chave de dicionário <em>e memória</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>chave_dict.py</b></div>
+      <pre class="code"><span class="c"># Tuplas podem ser chave de dicionário; listas não</span>
+capitais = {(-8.05, -34.88): "Recife",
+            (-23.55, -46.63): "São Paulo"}
+print(capitais[(-8.05, -34.88)])</pre>
+      <pre class="out" style="margin-top:6px">Recife</pre>
+      <div class="callout" style="margin-top:10px">Chaves de dicionário (aula 12) e itens de conjunto (aula 11) precisam ser imutáveis. Tupla serve; lista dá <strong>TypeError</strong>.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>tupla_vs_lista.py</b></div>
+      <pre class="code">import sys
+lista = [1, 2, 3, 4, 5]
+tupla = (1, 2, 3, 4, 5)
+print(sys.getsizeof(lista), "bytes (lista)")
+print(sys.getsizeof(tupla), "bytes (tupla)")</pre>
+      <pre class="out" style="margin-top:6px">104 bytes (lista)
+88 bytes (tupla)</pre>
+      <div class="callout" style="margin-top:10px">Com os mesmos 5 itens, a tupla ocupou menos memória neste Python 3.14. Os números exatos variam entre versões e sistemas; a diferença é pequena, e a escolha deve vir do <strong>significado</strong>, não da economia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Escolha</span><span class="n">07</span></div>
+  <h2>Tupla <em>ou lista?</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Lista</th><th>Tupla</th></tr></thead>
+    <tbody>
+      <tr><td>Sintaxe</td><td>[1, 2, 3]</td><td>(1, 2, 3)</td></tr>
+      <tr><td>Alterar depois</td><td>Sim</td><td>Não</td></tr>
+      <tr><td>Métodos</td><td>Muitos: append, sort, pop…</td><td>Só count e index</td></tr>
+      <tr><td>Chave de dicionário</td><td>Não</td><td>Sim</td></tr>
+      <tr><td>Uso típico</td><td>Coleção que cresce: itens do carrinho, notas, tarefas</td><td>Registro fixo: ponto (x, y), data (dia, mês, ano), retorno de função</td></tr>
+    </tbody></table></div>
+  <div class="callout good" style="margin-top:12px">Regra de bolso do guia (cap. 8): use tuplas para dados que <strong>não devem mudar</strong> (coordenadas, configurações) e listas para coleções que mudam.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Distância <em>entre dois pontos</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> com os pontos <code>a = (1, 2)</code> e <code>b = (4, 6)</code>, desempacote as coordenadas e calcule a distância: raiz de (x2 − x1)² + (y2 − y1)².</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: distância entre dois pontos (tuplas)</span>
+a = (1, 2)
+b = (4, 6)
+x1, y1 = a
+x2, y2 = b
+distancia = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+print(f"Distância entre {a} e {b}: {distancia}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">Distância entre (1, 2) e (4, 6): 5.0</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>** 0.5</code> é a raiz quadrada (aula 06)</li>
+        <li>3, 4 e 5: o triângulo retângulo clássico</li>
+        <li>Desafio: peça as coordenadas com <code>input()</code> e monte as tuplas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Fechando a parte 1</span><span class="n">09</span></div>
+  <h2>Da primeira linha <em>às coleções</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Aula</th><th>Assunto</th><th>Ideia central</th></tr></thead>
+    <tbody>
+      <tr><td>02</td><td>Primeiro programa</td><td>print(), rodar no terminal, ler erros pela última linha</td></tr>
+      <tr><td>03</td><td>Tipos de dados</td><td>Todo valor tem um tipo; conversões e ValueError</td></tr>
+      <tr><td>04</td><td>input()</td><td>Sempre devolve texto: converta</td></tr>
+      <tr><td>05</td><td>Concatenação</td><td>f-strings e formatos como :.2f</td></tr>
+      <tr><td>06</td><td>Operadores</td><td>// e %, precedência, and/or/not</td></tr>
+      <tr><td>07 e 08</td><td>Strings</td><td>Índices, fatias, imutáveis; métodos devolvem texto novo</td></tr>
+      <tr><td>09</td><td>Listas</td><td>Mutáveis; = não copia</td></tr>
+      <tr><td>10</td><td>Tuplas</td><td>Imutáveis; desempacotamento</td></tr>
+    </tbody></table></div>
+  <div class="callout" style="margin-top:12px">Próximos passos do módulo: <strong>set</strong> e <strong>dicionário</strong> (aulas 11 e 12), depois <code>if</code>, <code>for</code>, <code>while</code> e funções.</div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Qual destes é uma tupla de um item?</p>
+        <div class="opts"><div>A) (5)</div><div>B) (5,)</div><div>C) [5]</div><div>D) {5}</div></div>
+        <div class="answer"><b>B.</b> A vírgula cria a tupla.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. t = (1, 2); t[0] = 9 resulta em:</p>
+        <div class="opts"><div>A) (9, 2)</div><div>B) TypeError</div><div>C) IndexError</div><div>D) (1, 2, 9)</div></div>
+        <div class="answer"><b>B.</b> Tuplas são imutáveis.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Depois de a, b = 1, 2 e a, b = b, a:</p>
+        <div class="opts"><div>A) a=1, b=2</div><div>B) a=2, b=1</div><div>C) Erro</div><div>D) a=2, b=2</div></div>
+        <div class="answer"><b>B.</b> Troca por desempacotamento.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Quando preferir tupla a lista?</p>
+        <div class="opts"><div>A) Lista que cresce</div><div>B) Registro fixo, como coordenadas</div><div>C) Para ordenar</div><div>D) Nunca</div></div>
+        <div class="answer"><b>B.</b> E para chaves de dicionário.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Valores juntos<br><em>e fixos</em></h1>
+    <p class="lead">A tupla é uma sequência <strong>imutável</strong>: criada pela vírgula, sem <code>append</code> nem <code>sort</code>, com só <code>.count()</code> e <code>.index()</code>. Brilha no <strong>desempacotamento</strong>, na troca <code>a, b = b, a</code>, no retorno de vários valores e como chave de dicionário.</p>
+    <div class="chips"><span>("só",)</span><span>Imutável</span><span>x, y = ponto</span><span>*resto</span><span>Chave de dict</span></div>
+    <div class="next">Próxima aula → 11 · Utilizando um Set</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences; docs.python.org/3/library/stdtypes.html#tuples, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
