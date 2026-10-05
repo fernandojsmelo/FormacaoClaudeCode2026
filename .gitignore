@@ -3,3 +3,5 @@
 skills-lock.json
 __MACOSX/
 .ipynb_checkpoints/
+__pycache__/
+*.pyc
