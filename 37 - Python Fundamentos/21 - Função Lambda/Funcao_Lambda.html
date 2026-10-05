@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Função Lambda</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 21</div>
+    <h1>Função<br><em>lambda</em></h1>
+    <p class="lead">A <strong>lambda</strong> é uma função pequena, sem nome, escrita numa expressão só. Ela aparece principalmente <strong>como argumento</strong> de outras funções: dizer ao <code>sorted()</code> por qual critério ordenar, ao <code>max()</code> o que comparar, ao <code>filter()</code> o que manter. Nesta aula: a sintaxe, <code>key=</code>, <code>map</code>, <code>filter</code> e <code>reduce</code>, os limites da lambda e quando um <code>def</code> é melhor.</p>
+    <div class="chips"><span>lambda x: expressão</span><span>sorted(key=)</span><span>max · min</span><span>map · filter</span><span>reduce</span><span>Limites</span><span>PEP 8</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Lambda Expressions; Sorting HOW TO; Built-in Functions: map, filter; functools.reduce) e PEP 8, consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Sintaxe</span><span class="n">01</span></div>
+  <h2>Uma função <em>em uma expressão</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>basico.py</b></div>
+      <pre class="code">def dobro(x):
+    return x * 2
+
+dobro_l = lambda x: x * 2      <span class="c"># mesma coisa, em uma expressão</span>
+print(dobro(5), dobro_l(5))
+soma = lambda a, b: a + b
+print(soma(2, 3))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">10 10
+5</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>lambda</b>palavra-chave</div>
+        <div class="n"><b>x:</b>parâmetros</div>
+        <div class="n key"><b>x * 2</b>o valor devolvido</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Não tem <code>return</code>: o resultado da expressão é devolvido</li>
+        <li>Aceita vários parâmetros: <code>lambda a, b: a + b</code></li>
+        <li>Este exemplo dá nome à lambda só para comparar; na prática não se faz isso (seção 06)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>key=</span><span class="n">02</span></div>
+  <h2>Ordenando <em>por um critério</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>sorted_key.py</b></div>
+      <pre class="code">alunos = [("Ana", 9.5), ("Bruno", 7.0), ("Carla", 8.5)]
+por_nota = sorted(alunos, key=lambda a: a[1], reverse=True)
+print(por_nota)
+palavras = ["Python", "é", "muito", "legal"]
+print(sorted(palavras, key=lambda p: len(p)))
+print(max(alunos, key=lambda a: a[1]))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[('Ana', 9.5), ('Carla', 8.5), ('Bruno', 7.0)]
+['é', 'muito', 'legal', 'Python']
+('Ana', 9.5)</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>key=</code> recebe uma função que diz <strong>o que comparar</strong> em cada item</li>
+        <li><code>lambda a: a[1]</code>: compare pela nota (posição 1 da tupla)</li>
+        <li><code>lambda p: len(p)</code>: compare pelo tamanho da palavra</li>
+        <li>Funciona igual em <code>max()</code>, <code>min()</code> e <code>.sort()</code></li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Esse é o uso nº 1 da lambda. Você já viu <code>key=str.lower</code> na aula 09: lá a função já existia com nome.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Dicionários</span><span class="n">03</span></div>
+  <h2>Ordenando <em>um dicionário</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>dict_ordenar.py</b></div>
+      <pre class="code">estoque = {"maçã": 12, "banana": 30, "uva": 5}
+mais = sorted(estoque.items(), key=lambda p: p[1], reverse=True)
+print(mais)
+print(sorted(estoque, key=lambda f: estoque[f]))   <span class="c"># só os nomes</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[('banana', 30), ('maçã', 12), ('uva', 5)]
+['uva', 'maçã', 'banana']</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>.items()</code> dá pares (chave, valor); <code>p[1]</code> é o valor</li>
+        <li>Resultado: lista de tuplas do maior estoque ao menor</li>
+        <li>Ordenando só as chaves, a lambda consulta o dicionário: <code>estoque[f]</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>map e filter</span><span class="n">04</span></div>
+  <h2>Transformar <em>e filtrar</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>map_filter.py</b></div>
+      <pre class="code">numeros = [1, 2, 3, 4, 5, 6]
+print(list(map(lambda n: n * 10, numeros)))
+print(list(filter(lambda n: n % 2 == 0, numeros)))
+<span class="c"># Com list comprehension (aula 16): costuma ser mais claro</span>
+print([n * 10 for n in numeros])
+print([n for n in numeros if n % 2 == 0])</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[10, 20, 30, 40, 50, 60]
+[2, 4, 6]
+[10, 20, 30, 40, 50, 60]
+[2, 4, 6]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>map(função, coleção)</code>: aplica a função a cada item</li>
+        <li><code>filter(função, coleção)</code>: mantém os itens em que a função dá verdadeiro</li>
+        <li>Os dois devolvem um iterador: <code>list()</code> mostra o resultado</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Recomendação do guia (cap. 16): na maioria dos casos, prefira <strong>list comprehension</strong> (aula 16), que é mais "pythônica". As duas últimas linhas dão o mesmo resultado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>reduce</span><span class="n">05</span></div>
+  <h2>Acumulando <em>com reduce</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>reduce_ex.py</b></div>
+      <pre class="code">from functools import reduce
+precos = [10, 20, 30]
+print(reduce(lambda total, p: total + p, precos))   <span class="c"># 60</span>
+print(sum(precos))     <span class="c"># mais simples</span></pre>
+      <pre class="out" style="margin-top:6px">60
+60</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>reduce</code> aplica a função de dois em dois, acumulando: ((10 + 20) + 30)</li>
+        <li>Fica no módulo <code>functools</code></li>
+        <li>Para somar, <code>sum()</code> é mais simples; para multiplicar, <code>math.prod()</code></li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Vale conhecer para ler código de outras pessoas. No seu, prefira as funções prontas ou um <code>for</code> com acumulador (aula 14).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Limites</span><span class="n">06</span></div>
+  <h2>Quando usar <em>def</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>limites.py</b></div>
+      <pre class="code"><span class="c"># lambda é uma única EXPRESSÃO: nada de blocos ou várias linhas</span>
+faixa = lambda n: "alto" if n &gt; 10 else "baixo"  <span class="c"># ternário pode</span>
+print(faixa(15), faixa(3))
+
+<span class="c"># PEP 8: não dê nome a uma lambda; para isso existe def</span>
+def faixa_def(n):
+    return "alto" if n &gt; 10 else "baixo"
+print(faixa_def(15))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">alto baixo
+alto</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Uma lambda é <strong>uma expressão</strong>: sem várias linhas, sem <code>for</code>, sem bloco <code>if</code> (o ternário pode)</li>
+        <li>Não tem docstring e aparece como <code>&lt;lambda&gt;</code> nas mensagens de erro</li>
+        <li>A PEP 8 recomenda <strong>não</strong> dar nome a uma lambda (<code>f = lambda ...</code>): para isso existe <code>def</code></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Regra simples: lambda para uma função <strong>pequena e descartável</strong>, passada como argumento. Precisou de nome, explicação ou mais de uma linha: <code>def</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Ordenando <em>produtos</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> numa lista de produtos (dicionários), mostre os nomes do mais barato ao mais caro, só os que têm estoque e o produto com mais estoque.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: ordenar produtos de várias formas</span>
+produtos = [{"nome": "Café", "preco": 18.9, "estoque": 4},
+            {"nome": "Arroz", "preco": 6.5, "estoque": 20},
+            {"nome": "Azeite", "preco": 32.0, "estoque": 0}]
+baratos = sorted(produtos, key=lambda p: p["preco"])
+print([p["nome"] for p in baratos])
+disponiveis = list(filter(lambda p: p["estoque"] &gt; 0, produtos))
+print([p["nome"] for p in disponiveis])
+print(max(produtos, key=lambda p: p["estoque"])["nome"])</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">['Arroz', 'Café', 'Azeite']
+['Café', 'Arroz']
+Arroz</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>key=lambda p: p["preco"]</code>: ordena pelo campo do dicionário</li>
+        <li>Junta lambda, dicionários (aula 12) e list comprehension (aula 16)</li>
+        <li>Desafio: ordene por estoque e, no empate, por nome (dica: a lambda pode devolver uma tupla)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Fechando a parte 2</span><span class="n">08</span></div>
+  <h2>Das coleções <em>às funções</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Aula</th><th>Assunto</th><th>Ideia central</th></tr></thead>
+    <tbody>
+      <tr><td>11 e 12</td><td>Set e dicionário</td><td>Valores únicos; pares chave: valor com .get()</td></tr>
+      <tr><td>13</td><td>Condições</td><td>if/elif/else, recuo, a ordem importa</td></tr>
+      <tr><td>14 e 15</td><td>for e while</td><td>Percorrer coleções; repetir até uma condição mudar</td></tr>
+      <tr><td>16</td><td>List comprehension</td><td>Transformar e filtrar numa linha, se continuar legível</td></tr>
+      <tr><td>17 e 18</td><td>Funções e argumentos</td><td>return, escopo, nomeados, padrão None</td></tr>
+      <tr><td>19</td><td>Recursão</td><td>Caso base + problema menor</td></tr>
+      <tr><td>20</td><td>*args e **kwargs</td><td>Recolher e espalhar argumentos</td></tr>
+      <tr><td>21</td><td>Lambda</td><td>Funções pequenas como argumento: key=</td></tr>
+    </tbody></table></div>
+  <div class="callout" style="margin-top:12px">Com isso, você tem a base da linguagem. Os próximos passos estão nos capítulos 11 a 20 do <strong>Guia Completo Python</strong> (aula 01): arquivos, erros, módulos, classes e testes.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. (lambda x, y: x * y)(3, 4) vale:</p>
+        <div class="opts"><div>A) 7</div><div>B) 12</div><div>C) 34</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para ordenar tuplas (nome, nota) pela nota:</p>
+        <div class="opts"><div>A) sorted(lista)</div><div>B) sorted(lista, key=lambda t: t[1])</div><div>C) lista.sort(t[1])</div><div>D) sorted(lista[1])</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O que uma lambda NÃO pode ter?</p>
+        <div class="opts"><div>A) Parâmetros</div><div>B) Um ternário</div><div>C) Várias linhas e um bloco for</div><div>D) Um valor de retorno</div></div>
+        <div class="answer"><b>C.</b> É uma única expressão.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. list(filter(lambda n: n &gt; 2, [1, 2, 3, 4])) vale:</p>
+        <div class="opts"><div>A) [1, 2]</div><div>B) [3, 4]</div><div>C) [True, True]</div><div>D) 2</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Funções pequenas,<br><em>na hora certa</em></h1>
+    <p class="lead"><code>lambda parâmetros: expressão</code> cria uma função sem nome, numa linha. Seu lugar é como argumento: <code>key=</code> em <code>sorted</code>, <code>max</code> e <code>min</code>, e às vezes em <code>map</code> e <code>filter</code> (quase sempre trocáveis por list comprehension). Precisou de nome ou de mais de uma linha, use <code>def</code>.</p>
+    <div class="chips"><span>lambda x: ...</span><span>key=</span><span>map · filter</span><span>reduce</span><span>Nome? use def</span></div>
+    <div class="next">Fim da aula 21 · Python Fundamentos</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/controlflow.html#lambda-expressions; docs.python.org/3/howto/sorting.html; docs.python.org/3/library/functions.html (map, filter, sorted, max); docs.python.org/3/library/functools.html#functools.reduce; peps.python.org/pep-0008, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
