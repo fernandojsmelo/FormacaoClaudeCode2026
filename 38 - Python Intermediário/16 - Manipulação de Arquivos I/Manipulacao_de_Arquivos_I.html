@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Manipulação de Arquivos I</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 16</div>
+    <h1>Manipulação<br><em>de arquivos I</em></h1>
+    <p class="lead">Guardar dados num arquivo é o que faz um programa lembrar das coisas depois de fechado. Nesta primeira aula da série, os arquivos de <strong>texto</strong>: abrir com <code>open()</code> dentro de um <code>with</code>, os modos <code>"r"</code>, <code>"w"</code>, <code>"a"</code> e <code>"x"</code>, ler tudo, linha a linha ou numa lista, escrever com <code>write</code> e <code>print(file=)</code>, a importância do <code>encoding="utf-8"</code> e os erros mais comuns.</p>
+    <div class="chips"><span>open() + with</span><span>"r" · "w" · "a" · "x"</span><span>read · readline · readlines</span><span>for linha in arq</span><span>write · print(file=)</span><span>encoding="utf-8"</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Reading and Writing Files; Built-in Functions: open; io; Built-in Exceptions: FileNotFoundError, FileExistsError), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Escrever</span><span class="n">01</span></div>
+  <h2>Criando um arquivo <em>com with</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>escrever.py</b></div>
+      <pre class="code">with open("lista.txt", "w", encoding="utf-8") as arq:
+    arq.write("café\n")          <span class="c"># write não põe o \n sozinho</span>
+    arq.write("pão\n")
+    arq.writelines(["leite\n", "maçã\n"])
+
+print("arquivo gravado")
+print(arq.closed)                    <span class="c"># o with já fechou</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">arquivo gravado
+True</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>open(nome, "w")</code> cria o arquivo ou <strong>apaga</strong> o conteúdo de um que já existe</li>
+        <li><code>write</code> grava exatamente o texto dado: a quebra de linha é com você (<code>\n</code>)</li>
+        <li>O <code>with</code> fecha o arquivo no fim do bloco, mesmo se der erro no meio</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Sempre <code>encoding="utf-8"</code>: sem ele, o Python usa o padrão do sistema, e acentos podem sair trocados em outro computador.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Ler</span><span class="n">02</span></div>
+  <h2>read, readline <em>e readlines</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>ler.py</b></div>
+      <pre class="code">with open("lista.txt", encoding="utf-8") as arq:  # "r": padrão
+    tudo = arq.read()
+print(repr(tudo))
+
+with open("lista.txt", encoding="utf-8") as arq:
+    print(arq.readline().strip())    <span class="c"># uma linha</span>
+    print(arq.readlines())           <span class="c"># o resto, numa lista</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">'café\npão\nleite\nmaçã\n'
+café
+['pão\n', 'leite\n', 'maçã\n']</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Método</th><th>Devolve</th></tr></thead>
+      <tbody>
+        <tr><td><code>read()</code></td><td>o arquivo inteiro numa string</td></tr>
+        <tr><td><code>readline()</code></td><td>a próxima linha (com o <code>\n</code>)</td></tr>
+        <tr><td><code>readlines()</code></td><td>as linhas restantes numa lista</td></tr>
+      </tbody></table>
+      <div class="callout" style="margin:10px">O arquivo guarda a posição de leitura: depois do <code>readline()</code>, o <code>readlines()</code> começa da segunda linha.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Linha a linha</span><span class="n">03</span></div>
+  <h2>O arquivo é <em>um iterador</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>percorrer.py</b></div>
+      <pre class="code">with open("lista.txt", encoding="utf-8") as arq:
+    for numero, linha in enumerate(arq, start=1):
+        print(numero, linha.rstrip("\n"))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">1 café
+2 pão
+3 leite
+4 maçã</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>for linha in arq</code> lê uma linha por vez: funciona com arquivos de qualquer tamanho (aula 05)</li>
+        <li>Cada linha vem com o <code>\n</code> do fim: <code>rstrip("\n")</code> ou <code>strip()</code> tira</li>
+        <li><code>enumerate(arq, start=1)</code> numera as linhas (aula 15)</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">É o jeito preferido de ler texto: simples e econômico em memória.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Acrescentar</span><span class="n">04</span></div>
+  <h2>Modo "a": <em>sem apagar o que existe</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>acrescentar.py</b></div>
+      <pre class="code">with open("diario.txt", "w", encoding="utf-8") as arq:
+    arq.write("segunda: estudei iteradores\n")
+
+with open("diario.txt", "a", encoding="utf-8") as arq:  # "a"
+    arq.write("terça: estudei geradores\n")
+    print("quarta: estudei regex", file=arq)   <span class="c"># print grava</span>
+
+with open("diario.txt", encoding="utf-8") as arq:
+    print(arq.read(), end="")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">segunda: estudei iteradores
+terça: estudei geradores
+quarta: estudei regex</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>"a"</code> (append) escreve no fim e mantém o conteúdo anterior</li>
+        <li>Ideal para logs e diários: cada execução acrescenta linhas</li>
+        <li><code>print(..., file=arq)</code> grava no arquivo e já põe o <code>\n</code></li>
+      </ul>
+      <div class="callout" style="margin-top:10px">O exemplo começa com <code>"w"</code> só para sair igual a cada execução.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Modos</span><span class="n">05</span></div>
+  <h2>Qual modo <em>usar?</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>modos.py</b></div>
+      <pre class="code">import os
+
+if os.path.exists("unico.txt"):
+    os.remove("unico.txt")        <span class="c"># para o exemplo recomeçar</span>
+
+with open("unico.txt", "x", encoding="utf-8") as arq:  <span class="c"># cria</span>
+    arq.write("primeira vez\n")
+print("criado")
+
+try:
+    open("unico.txt", "x", encoding="utf-8")   <span class="c"># já existe</span>
+except FileExistsError as erro:
+    print("Erro:", erro)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">criado
+Erro: [Errno 17] File exists: 'unico.txt'</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Modo</th><th>Faz</th><th>Se o arquivo já existe</th></tr></thead>
+      <tbody>
+        <tr><td><code>"r"</code></td><td>lê (padrão)</td><td>lê; se não existe, erro</td></tr>
+        <tr><td><code>"w"</code></td><td>escreve</td><td><strong>apaga</strong> e recomeça</td></tr>
+        <tr><td><code>"a"</code></td><td>acrescenta</td><td>escreve no fim</td></tr>
+        <tr><td><code>"x"</code></td><td>cria</td><td>dá <code>FileExistsError</code></td></tr>
+        <tr><td><code>+ "b"</code></td><td>binário (aula 19)</td><td>bytes em vez de texto</td></tr>
+      </tbody></table>
+      <div class="callout warn" style="margin:10px"><code>"w"</code> apaga sem perguntar. Para não sobrescrever um arquivo importante por engano, use <code>"x"</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">06</span></div>
+  <h2>Arquivo que não existe <em>e bytes de verdade</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>erros.py</b></div>
+      <pre class="code">try:
+    with open("nao_existe.txt", encoding="utf-8") as arq:
+        print(arq.read())
+except FileNotFoundError:
+    print("Arquivo não encontrado: confira o nome e a pasta")
+
+with open("lista.txt", "rb") as arq:       <span class="c"># os bytes de verdade</span>
+    print(arq.read(8))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Arquivo não encontrado: confira o nome e a pasta
+b'caf\xc3\xa9\np\xc3'</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Ler um arquivo que não existe lança <code>FileNotFoundError</code>: trate e mostre uma mensagem útil</li>
+        <li>O caminho é relativo à pasta de onde o programa roda, não à pasta do <code>.py</code></li>
+        <li>Em UTF-8, "é" e "ã" ocupam dois bytes cada (<code>\xc3\xa9</code>): é o que o <code>encoding</code> traduz</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Palavras <em>mais frequentes</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> grave um texto num arquivo, leia de volta linha a linha e mostre as três palavras mais frequentes e o total de palavras.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">from collections import Counter
+import re
+
+with open("texto.txt", "w", encoding="utf-8") as arq:
+    arq.write("O sol nasce. O sol se põe.\n")
+    arq.write("A lua nasce depois do sol.\n")
+
+palavras = Counter()
+with open("texto.txt", encoding="utf-8") as arq:
+    for linha in arq:
+        palavras.update(re.findall(r"\w+", linha.lower()))
+
+print(palavras.most_common(3))
+print(sum(palavras.values()), "palavras no total")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">[('sol', 3), ('o', 2), ('nasce', 2)]
+13 palavras no total</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>re.findall(r"\w+", ...)</code> separa as palavras sem pontuação (aula 06)</li>
+        <li><code>Counter.update</code> soma as contagens de cada linha</li>
+        <li>Desafio: ignore palavras curtas como "o", "a", "se"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Abrir com "w" um arquivo que já tem conteúdo:</p>
+        <div class="opts"><div>A) Acrescenta no fim</div><div>B) Apaga e recomeça</div><div>C) Dá erro</div><div>D) Só lê</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para não esquecer de fechar o arquivo:</p>
+        <div class="opts"><div>A) Use with</div><div>B) Use "a"</div><div>C) Use readlines()</div><div>D) Não precisa fechar</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Para ler um arquivo enorme sem lotar a memória:</p>
+        <div class="opts"><div>A) arq.read()</div><div>B) arq.readlines()</div><div>C) for linha in arq</div><div>D) print(arq)</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual modo dá erro se o arquivo já existir?</p>
+        <div class="opts"><div>A) "r"</div><div>B) "w"</div><div>C) "a"</div><div>D) "x"</div></div>
+        <div class="answer"><b>D.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Texto que fica<br><em>depois do programa</em></h1>
+    <p class="lead">Abra arquivos com <code>with open(nome, modo, encoding="utf-8")</code>. <code>"w"</code> recria, <code>"a"</code> acrescenta, <code>"x"</code> só cria e <code>"r"</code> lê. Leia linha a linha com <code>for</code>, tire o <code>\n</code> com <code>strip</code>, escreva com <code>write</code> ou <code>print(file=)</code> e trate o <code>FileNotFoundError</code>.</p>
+    <div class="chips"><span>with open()</span><span>r · w · a · x</span><span>for linha in arq</span><span>write · print(file=)</span><span>utf-8</span></div>
+    <div class="next">Próxima aula → 17 · Manipulação de Arquivos II</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files; docs.python.org/3/library/functions.html#open; docs.python.org/3/library/io.html; docs.python.org/3/library/exceptions.html (FileNotFoundError, FileExistsError); docs.python.org/3/library/collections.html#collections.Counter, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+segunda: estudei iteradores
+terça: estudei geradores
+quarta: estudei regex
