@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Programação Assíncrona</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 11</div>
+    <h1>Programação<br><em>assíncrona</em></h1>
+    <p class="lead">Boa parte do tempo de um programa é <strong>espera</strong>: pela rede, por um banco de dados, por um arquivo. Com <code>async</code> e <code>await</code>, o Python aproveita essas esperas para adiantar outras tarefas, num único fluxo de execução. Nesta aula: corrotinas, <code>asyncio.run</code>, rodar tarefas ao mesmo tempo com <code>gather</code> e <code>TaskGroup</code>, o erro de usar <code>time.sleep</code>, limites de tempo e o <code>async for</code>.</p>
+    <div class="chips"><span>async def · await</span><span>asyncio.run</span><span>gather</span><span>time.sleep × asyncio.sleep</span><span>TaskGroup</span><span>timeout</span><span>async for</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (asyncio: Coroutines and Tasks, Runners, Task Groups, Timeouts; Reference: async for, asynchronous generators), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais, com tempos arredondados</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Corrotinas</span><span class="n">01</span></div>
+  <h2>async def <em>e await</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>primeira.py</b></div>
+      <pre class="code">import asyncio
+
+
+async def saudar(nome):          <span class="c"># função assíncrona (corrotina)</span>
+    await asyncio.sleep(0.1)     <span class="c"># espera sem travar o programa</span>
+    return f"Olá, {nome}!"
+
+
+c = saudar("Ana")
+print(type(c).__name__)          <span class="c"># chamar só cria a corrotina</span>
+print(asyncio.run(c))            <span class="c"># o asyncio.run executa</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">coroutine
+Olá, Ana!</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>async def</code> cria uma <strong>corrotina</strong>: chamar não roda o corpo, só cria o objeto (como um gerador)</li>
+        <li><code>await</code> espera o resultado de outra corrotina e, enquanto isso, libera o programa</li>
+        <li><code>asyncio.run()</code> liga o <strong>loop de eventos</strong> e roda a corrotina principal</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px"><code>await</code> só pode ser usado dentro de uma função <code>async def</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Uma depois da outra</span><span class="n">02</span></div>
+  <h2>await em sequência: <em>sem ganho</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>sequencial.py</b></div>
+      <pre class="code">import asyncio
+import time
+
+
+async def baixar(arquivo, segundos):
+    print(f"  início {arquivo}")
+    await asyncio.sleep(segundos)        <span class="c"># simula a rede</span>
+    print(f"  fim {arquivo}")
+    return arquivo
+
+
+async def main():
+    inicio = time.perf_counter()
+    await baixar("a.pdf", 1)             <span class="c"># um depois do outro</span>
+    await baixar("b.pdf", 1)
+    print(f"total: {time.perf_counter() - inicio:.1f} s")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">  início a.pdf
+  fim a.pdf
+  início b.pdf
+  fim b.pdf
+total: 2.0 s</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Cada <code>await</code> espera o anterior terminar: 1 s + 1 s = 2 s</li>
+        <li><code>asyncio.sleep</code> simula uma espera de rede, sem baixar nada de verdade</li>
+        <li>Escrever <code>async</code> não deixa nada mais rápido: o ganho vem de <strong>rodar junto</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Ao mesmo tempo</span><span class="n">03</span></div>
+  <h2>gather: <em>três esperas em uma</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>concorrente.py</b></div>
+      <pre class="code">import asyncio
+import time
+from sequencial import baixar
+
+
+async def main():
+    inicio = time.perf_counter()
+    resultados = await asyncio.gather(   <span class="c"># ao mesmo tempo</span>
+        baixar("a.pdf", 1),
+        baixar("b.pdf", 1),
+        baixar("c.pdf", 1),
+    )
+    print(resultados)
+    print(f"total: {time.perf_counter() - inicio:.1f} s")
+
+
+asyncio.run(main())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">  início a.pdf
+  início b.pdf
+  início c.pdf
+  fim a.pdf
+  fim b.pdf
+  fim c.pdf
+['a.pdf', 'b.pdf', 'c.pdf']
+total: 1.0 s</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>a.pdf</b>espera 1 s</div>
+        <div class="n"><b>b.pdf</b>espera 1 s</div>
+        <div class="n key"><b>c.pdf</b>espera 1 s</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>As três começam juntas e esperam juntas: total de 1 s, não 3 s</li>
+        <li><code>gather</code> devolve os resultados <strong>na ordem em que foram passados</strong></li>
+        <li>É <strong>concorrência</strong>: uma linha de execução alternando entre as tarefas nas esperas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>O erro clássico</span><span class="n">04</span></div>
+  <h2>time.sleep <em>trava tudo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>bloqueio.py</b></div>
+      <pre class="code">import asyncio
+import time
+
+
+async def errado():
+    time.sleep(0.5)              <span class="c"># trava o loop inteiro</span>
+
+
+async def certo():
+    await asyncio.sleep(0.5)     <span class="c"># libera o loop enquanto espera</span>
+
+
+async def medir(funcao):
+    inicio = time.perf_counter()
+    await asyncio.gather(funcao(), funcao(), funcao())
+    gasto = time.perf_counter() - inicio
+    print(f"{funcao.__name__}: {gasto:.1f} s")
+
+
+asyncio.run(medir(errado))
+asyncio.run(medir(certo))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">errado: 1.5 s
+certo: 0.5 s</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>time.sleep</code> não tem <code>await</code>: segura o loop e as tarefas esperam em fila</li>
+        <li><code>asyncio.sleep</code> devolve o controle ao loop durante a espera</li>
+        <li>O mesmo vale para bibliotecas comuns de rede e banco: no código assíncrono, use as versões assíncronas</li>
+      </ul>
+      <div class="callout danger" style="margin-top:10px">Uma única chamada bloqueante deixa o programa assíncrono tão lento quanto o sequencial.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Tarefas</span><span class="n">05</span></div>
+  <h2>TaskGroup: <em>tarefas em grupo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tarefas.py</b></div>
+      <pre class="code">import asyncio
+
+
+async def contar(nome, n):
+    for i in range(1, n + 1):
+        await asyncio.sleep(0.1)
+        print(f"{nome} {i}")
+    return f"{nome} terminou"
+
+
+async def main():
+    async with asyncio.TaskGroup() as grupo:      <span class="c"># Python 3.11+</span>
+        t1 = grupo.create_task(contar("A", 2))
+        t2 = grupo.create_task(contar("B", 3))
+    print(t1.result(), "|", t2.result())
+
+
+asyncio.run(main())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">A 1
+B 1
+A 2
+B 2
+B 3
+A terminou | B terminou</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>create_task</code> agenda a corrotina para rodar em paralelo às outras</li>
+        <li>O bloco <code>async with</code> só termina quando <strong>todas</strong> as tarefas acabam</li>
+        <li>Se uma falhar, o grupo cancela as outras e mostra o erro</li>
+        <li>As linhas se intercalam: A e B avançam juntas</li>
+      </ul>
+      <div class="callout" style="margin-top:10px"><code>TaskGroup</code> existe desde o Python 3.11 e é a forma recomendada de agrupar tarefas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Limite de tempo</span><span class="n">06</span></div>
+  <h2>Desistir <em>de quem demora</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tempo_limite.py</b></div>
+      <pre class="code">import asyncio
+
+
+async def consulta_lenta():
+    await asyncio.sleep(2)
+    return "dados"
+
+
+async def main():
+    try:
+        async with asyncio.timeout(0.5):    <span class="c"># desiste em 0,5 s</span>
+            print(await consulta_lenta())
+    except TimeoutError:
+        print("A consulta demorou demais: cancelada")
+
+
+asyncio.run(main())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">A consulta demorou demais: cancelada</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>asyncio.timeout(0.5)</code> cancela o que estiver dentro do bloco depois de 0,5 s</li>
+        <li>O cancelamento vira um <code>TimeoutError</code>, que você trata como qualquer exceção</li>
+        <li>Essencial para chamadas de rede: um servidor travado não trava o seu programa</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>async for</span><span class="n">07</span></div>
+  <h2>Dados que <em>chegam aos poucos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>async_for.py</b></div>
+      <pre class="code">import asyncio
+
+
+async def mensagens():               <span class="c"># gerador assíncrono</span>
+    for texto in ["oi", "tudo bem?", "tchau"]:
+        await asyncio.sleep(0.1)     <span class="c"># chegam aos poucos</span>
+        yield texto
+
+
+async def main():
+    async for msg in mensagens():
+        print("recebido:", msg)
+
+
+asyncio.run(main())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">recebido: oi
+recebido: tudo bem?
+recebido: tchau</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Um <code>async def</code> com <code>yield</code> é um <strong>gerador assíncrono</strong> (aulas 03 e 04)</li>
+        <li><code>async for</code> espera cada item com <code>await</code>, sem travar o loop</li>
+        <li>Uso típico: mensagens de chat, linhas de um stream, eventos de um websocket</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quando usar</span><span class="n">08</span></div>
+  <h2>async ajuda <em>em esperas, não em contas</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tipo de trabalho</th><th>Exemplos</th><th>Ferramenta</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Espera de E/S</strong></td><td>APIs, downloads, banco de dados, sockets</td><td><code>asyncio</code></td></tr>
+        <tr><td><strong>E/S com bibliotecas comuns</strong></td><td>código bloqueante que não dá para trocar</td><td>threads (<code>asyncio.to_thread</code>)</td></tr>
+        <tr><td><strong>Cálculo pesado</strong></td><td>processar imagens, simulações, criptografia</td><td>processos (<code>multiprocessing</code>)</td></tr>
+      </tbody></table></div>
+    <div>
+      <ul class="checklist">
+        <li>O <code>asyncio</code> roda numa linha de execução só: ganha tempo <strong>esperando várias coisas juntas</strong></li>
+        <li>Uma conta demorada ocupa essa linha e ninguém mais anda</li>
+        <li>Para scripts simples, sem muitas esperas, o código síncrono continua sendo o mais fácil de ler</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Pergunta rápida: "meu programa fica parado esperando algo de fora?" Se sim, <code>asyncio</code> pode ajudar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">09</span></div>
+  <h2>Menor preço <em>entre três lojas</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> consulte o preço em três lojas (com demoras diferentes) ao mesmo tempo e mostre o menor. O tempo total deve ser o da loja mais lenta, não a soma.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">import asyncio
+import time
+
+LOJAS = {"Loja A": (0.6, 199.9), "Loja B": (0.3, 189.0),
+         "Loja C": (0.9, 205.5)}
+
+
+async def consultar(loja):
+    demora, preco = LOJAS[loja]
+    await asyncio.sleep(demora)          <span class="c"># simula a API da loja</span>
+    return loja, preco
+
+
+async def main():
+    inicio = time.perf_counter()
+    respostas = await asyncio.gather(*map(consultar, LOJAS))
+    loja, preco = min(respostas, key=lambda r: r[1])
+    print(f"menor preço: {loja} (R$ {preco:.2f})")
+    print(f"tempo: {time.perf_counter() - inicio:.1f} s")
+
+
+asyncio.run(main())</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">menor preço: Loja B (R$ 189.00)
+tempo: 0.9 s</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>map(consultar, LOJAS)</code> cria uma corrotina por loja; o <code>*</code> passa todas para o <code>gather</code></li>
+        <li>0,9 s é a demora da Loja C, a mais lenta (a soma seria 1,8 s)</li>
+        <li>Desafio: use <code>asyncio.timeout(0.5)</code> e ignore as lojas que demorarem mais</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Lojas, demoras e preços são de exemplo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O que acontece ao chamar uma função async def sem await?</p>
+        <div class="opts"><div>A) Roda normalmente</div><div>B) Só cria uma corrotina</div><div>C) Dá erro de sintaxe</div><div>D) Roda em outra thread</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Três tarefas de 1 s com asyncio.gather levam cerca de:</p>
+        <div class="opts"><div>A) 3 s</div><div>B) 1 s</div><div>C) 0 s</div><div>D) 0,3 s</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Dentro de uma corrotina, para esperar 1 s sem travar as outras:</p>
+        <div class="opts"><div>A) time.sleep(1)</div><div>B) await asyncio.sleep(1)</div><div>C) asyncio.sleep(1) sem await</div><div>D) input()</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para qual trabalho o asyncio mais ajuda?</p>
+        <div class="opts"><div>A) Muitas chamadas a APIs</div><div>B) Calcular primos enormes</div><div>C) Ordenar uma lista pequena</div><div>D) Somar dois números</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Esperar várias coisas<br><em>ao mesmo tempo</em></h1>
+    <p class="lead"><code>async def</code> cria corrotinas, <code>await</code> espera sem travar e <code>asyncio.run</code> liga o loop. O ganho vem de rodar junto: <code>gather</code> ou <code>TaskGroup</code>. Nada de <code>time.sleep</code> nem chamadas bloqueantes dentro delas; ponha limites com <code>asyncio.timeout</code> e consuma fluxos com <code>async for</code>. É para esperas de E/S, não para cálculo pesado.</p>
+    <div class="chips"><span>async · await</span><span>asyncio.run</span><span>gather · TaskGroup</span><span>timeout</span><span>async for</span></div>
+    <div class="next">Próxima aula → 12 · Usando Metaclasses</div>
+    <div class="source">Fontes: docs.python.org/3/library/asyncio-task.html (Coroutines, Tasks, gather, TaskGroup, timeout, to_thread); docs.python.org/3/library/asyncio-runner.html; docs.python.org/3/reference/compound_stmts.html#async-for; docs.python.org/3/reference/expressions.html#asynchronous-generator-functions, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
