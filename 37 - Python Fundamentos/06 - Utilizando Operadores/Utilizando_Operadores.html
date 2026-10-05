@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando Operadores</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 6</div>
+    <h1>Utilizando<br><em>operadores</em></h1>
+    <p class="lead">Operadores são os símbolos que fazem contas, comparações e combinações de condições. Nesta aula: os aritméticos (com a divisão inteira e o resto, que aparecem em muito problema), a ordem de precedência, comparações, <code>and</code>, <code>or</code>, <code>not</code>, atribuição composta, <code>in</code> e <code>is</code>.</p>
+    <div class="chips"><span>+ - * / // % **</span><span>Precedência</span><span>== != &lt; &gt;</span><span>and · or · not</span><span>+= -=</span><span>in · is</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Expressions: operator precedence; Built-in Types: numeric operations, comparisons, boolean operations), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Aritméticos</span><span class="n">01</span></div>
+  <h2>As sete <em>operações</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>aritmeticos.py</b></div>
+      <pre class="code">a, b = 17, 5
+print(a + b)    <span class="c"># soma</span>
+print(a - b)    <span class="c"># subtração</span>
+print(a * b)    <span class="c"># multiplicação</span>
+print(a / b)    <span class="c"># divisão (sempre float)</span>
+print(a // b)   <span class="c"># divisão inteira</span>
+print(a % b)    <span class="c"># resto da divisão</span>
+print(a ** 2)   <span class="c"># potência</span>
+print(divmod(a, b))  <span class="c"># (divisão inteira, resto) de uma vez</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">22
+12
+85
+3.4
+3
+2
+289
+(3, 2)</pre>
+      <div class="table-wrap" style="margin-top:10px"><table>
+        <thead><tr><th>Operador</th><th>17 e 5</th></tr></thead>
+        <tbody>
+          <tr><td>/</td><td>3.4 (divisão "normal")</td></tr>
+          <tr><td>//</td><td>3 (quantas vezes o 5 cabe)</td></tr>
+          <tr><td>%</td><td>2 (o que sobra)</td></tr>
+          <tr><td>**</td><td>potência</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>// e %</span><span class="n">02</span></div>
+  <h2>Divisão inteira e resto: <em>para que servem</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Problema</th><th>Conta</th></tr></thead>
+      <tbody>
+        <tr><td>O número é par?</td><td><code>n % 2 == 0</code></td></tr>
+        <tr><td>Último dígito</td><td><code>n % 10</code></td></tr>
+        <tr><td>Minutos em horas e minutos</td><td><code>m // 60</code> e <code>m % 60</code></td></tr>
+        <tr><td>Quantas caixas de 12 ovos</td><td><code>ovos // 12</code>, sobram <code>ovos % 12</code></td></tr>
+        <tr><td>É múltiplo de 3?</td><td><code>n % 3 == 0</code></td></tr>
+      </tbody></table></div>
+    <div>
+      <div class="lbl"><b>par_impar.py</b> · digitou 2027</div>
+      <pre class="code">numero = int(input("Número: "))
+print("É par?", numero % 2 == 0)
+print("Último dígito:", numero % 10)</pre>
+      <pre class="out" style="margin-top:6px">Número: 2027
+É par? False
+Último dígito: 7</pre>
+      <div class="callout" style="margin-top:10px"><code>divmod(a, b)</code> devolve os dois de uma vez: <code>(a // b, a % b)</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Precedência</span><span class="n">03</span></div>
+  <h2>Quem vem <em>primeiro</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>precedencia.py</b></div>
+      <pre class="code">print(2 + 3 * 4)      <span class="c"># 14: multiplicação antes da soma</span>
+print((2 + 3) * 4)    <span class="c"># 20: parênteses primeiro</span>
+print(-2 ** 2)        <span class="c"># -4: a potência vem antes do sinal</span>
+print((-2) ** 2)      <span class="c"># 4</span>
+print(10 - 4 - 3)     <span class="c"># 3: da esquerda para a direita</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">14
+20
+-4
+4
+3</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Ordem</th><th>Operadores</th></tr></thead>
+        <tbody>
+          <tr><td>1º</td><td>( ) parênteses</td></tr>
+          <tr><td>2º</td><td>** potência</td></tr>
+          <tr><td>3º</td><td>sinal: -x, +x</td></tr>
+          <tr><td>4º</td><td>* / // %</td></tr>
+          <tr><td>5º</td><td>+ -</td></tr>
+          <tr><td>6º</td><td>comparações: == != &lt; &gt; in is</td></tr>
+          <tr><td>7º</td><td>not · depois and · por último or</td></tr>
+        </tbody></table></div>
+      <div class="callout good" style="margin-top:10px">Na dúvida, <strong>use parênteses</strong>: deixam a intenção clara para quem lê.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Comparação</span><span class="n">04</span></div>
+  <h2>Comparações dão <em>True ou False</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>comparacao.py</b></div>
+      <pre class="code">idade = 17
+print(idade &gt;= 18)        <span class="c"># False</span>
+print(idade == 17)        <span class="c"># True: == compara; = atribui</span>
+print(idade != 20)        <span class="c"># True</span>
+print(10 &lt; idade &lt; 20)    <span class="c"># True: comparação encadeada</span>
+print("a" &lt; "b")          <span class="c"># True: ordem dos caracteres</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">False
+True
+True
+True
+True</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Operador</th><th>Pergunta</th></tr></thead>
+        <tbody>
+          <tr><td>==</td><td>É igual?</td></tr>
+          <tr><td>!=</td><td>É diferente?</td></tr>
+          <tr><td>&gt; &lt;</td><td>Maior? Menor?</td></tr>
+          <tr><td>&gt;= &lt;=</td><td>Maior ou igual? Menor ou igual?</td></tr>
+        </tbody></table></div>
+      <div class="callout warn" style="margin-top:10px"><code>=</code> guarda, <code>==</code> compara. Trocar um pelo outro é o erro mais comum nesse assunto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Lógicos</span><span class="n">05</span></div>
+  <h2>and, or <em>e not</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>logicos.py</b></div>
+      <pre class="code">idade = 20
+tem_ingresso = False
+print(idade &gt;= 18 and tem_ingresso)   <span class="c"># False: precisa dos dois</span>
+print(idade &gt;= 18 or tem_ingresso)    <span class="c"># True: basta um</span>
+print(not tem_ingresso)               <span class="c"># True: inverte</span></pre>
+      <pre class="out" style="margin-top:6px">False
+True
+True</pre>
+      <div class="callout" style="margin-top:10px">Esses resultados são a base das <strong>condições</strong> com <code>if</code> (aula 13): "se for maior de idade <em>e</em> tiver ingresso, entra".</div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>A</th><th>B</th><th>A and B</th><th>A or B</th></tr></thead>
+      <tbody>
+        <tr><td>True</td><td>True</td><td>True</td><td>True</td></tr>
+        <tr><td>True</td><td>False</td><td>False</td><td>True</td></tr>
+        <tr><td>False</td><td>True</td><td>False</td><td>True</td></tr>
+        <tr><td>False</td><td>False</td><td>False</td><td>False</td></tr>
+      </tbody></table>
+      <div class="callout" style="margin:10px"><strong>Curto-circuito:</strong> no <code>and</code>, se o primeiro já é <code>False</code>, o segundo nem é avaliado; no <code>or</code>, se o primeiro é <code>True</code>, também não.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Atribuição</span><span class="n">06</span></div>
+  <h2>Atribuição <em>composta</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>atribuicao.py</b></div>
+      <pre class="code">saldo = 100
+saldo += 50    <span class="c"># saldo = saldo + 50</span>
+saldo -= 30    <span class="c"># saldo = saldo - 30</span>
+saldo *= 2     <span class="c"># saldo = saldo * 2</span>
+print(saldo)
+x = y = 0      <span class="c"># mesmo valor para duas variáveis</span>
+a, b = 1, 2    <span class="c"># dois valores de uma vez</span>
+a, b = b, a    <span class="c"># troca os valores</span>
+print(x, y, a, b)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">240
+0 0 2 1</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>x += 5</code> é o mesmo que <code>x = x + 5</code>; vale para <code>-= *= /= //= %= **=</code></li>
+        <li>100 + 50 − 30 = 120, vezes 2 = <strong>240</strong></li>
+        <li><code>a, b = b, a</code> troca dois valores sem variável auxiliar (as tuplas da aula 10 explicam por quê)</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Python <strong>não</strong> tem <code>x++</code> nem <code>x--</code>. Use <code>x += 1</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>in e is</span><span class="n">07</span></div>
+  <h2>Pertinência <em>e identidade</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>pertinencia.py</b></div>
+      <pre class="code">print("py" in "Python")        <span class="c"># False: diferencia maiúsculas</span>
+print("Py" in "Python")        <span class="c"># True</span>
+print(3 in [1, 2, 3])          <span class="c"># True</span>
+print("x" not in "Python")     <span class="c"># True</span>
+valor = None
+print(valor is None)           # "is": só para None</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">False
+True
+True
+True
+True</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>in</code> pergunta "está dentro?": em textos, listas, tuplas</li>
+        <li><code>not in</code> é o contrário</li>
+        <li><code>is</code> pergunta "é <strong>o mesmo objeto</strong>?", não "tem o mesmo valor?"</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Regra prática do guia (cap. 3): para comparar valores, <code>==</code>; <code>is</code> só com <code>None</code> (<code>x is None</code>).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Segundos em <em>h, min e s</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> peça um total de segundos e mostre em horas, minutos e segundos, usando só <code>//</code> e <code>%</code>.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: segundos em horas, minutos e segundos</span>
+total = int(input("Segundos: "))
+horas = total // 3600
+minutos = total % 3600 // 60
+segundos = total % 60
+print(f"{horas}h {minutos}min {segundos}s")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída (digitou 7384)</div>
+      <pre class="out">Segundos: 7384
+2h 3min 4s</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>7384 // 3600 = 2 horas</li>
+        <li>7384 % 3600 = 184 s → 184 // 60 = 3 minutos</li>
+        <li>7384 % 60 = 4 segundos</li>
+        <li>Desafio: aceite também dias</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Quanto vale 17 % 5?</p>
+        <div class="opts"><div>A) 3</div><div>B) 3.4</div><div>C) 2</div><div>D) 85</div></div>
+        <div class="answer"><b>C.</b> % é o resto.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Quanto vale 2 + 3 * 4?</p>
+        <div class="opts"><div>A) 20</div><div>B) 14</div><div>C) 24</div><div>D) 9</div></div>
+        <div class="answer"><b>B.</b> Multiplicação antes da soma.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. True and False or True dá:</p>
+        <div class="opts"><div>A) True</div><div>B) False</div><div>C) Erro</div><div>D) None</div></div>
+        <div class="answer"><b>A.</b> and primeiro: False or True.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Como somar 1 a x em Python?</p>
+        <div class="opts"><div>A) x++</div><div>B) x += 1</div><div>C) x =+ 1</div><div>D) ++x</div></div>
+        <div class="answer"><b>B.</b> Não existe ++ em Python.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Contas, comparações<br><em>e decisões</em></h1>
+    <p class="lead">Aritméticos (<code>//</code> e <code>%</code> resolvem muitos problemas), precedência (na dúvida, parênteses), comparações que dão <code>True</code>/<code>False</code>, <code>and</code>/<code>or</code>/<code>not</code> com curto-circuito, <code>+=</code> no lugar de <code>++</code>, <code>in</code> para "está dentro" e <code>is</code> só para <code>None</code>.</p>
+    <div class="chips"><span>// e %</span><span>Parênteses</span><span>== não é =</span><span>and · or · not</span><span>+=</span><span>is None</span></div>
+    <div class="next">Próxima aula → 07 · Utilização de Strings</div>
+    <div class="source">Fontes: docs.python.org/3/reference/expressions.html (operator precedence, comparisons, boolean operations); docs.python.org/3/library/stdtypes.html (numeric types), consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
