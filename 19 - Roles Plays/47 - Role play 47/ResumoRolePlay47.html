@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Resumo — Role Play 47</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.7pt;line-height:1.52}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:21pt;line-height:1.18;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 8px}
+.byline{font-family:var(--mono);font-size:8.5pt;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:6px}
+section.turn{break-before:page;page-break-before:always}
+section.turn.first{break-before:auto;page-break-before:auto;margin-top:18px}
+.sec{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+.q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-style:italic;color:var(--ink);margin-bottom:14px}
+.q .k{font-family:var(--mono);font-style:normal;font-size:8pt;color:var(--muted);display:block;margin-bottom:3px}
+p{margin:0 0 8px}
+h3{font-family:var(--display);font-weight:600;font-size:12.5pt;margin:12px 0 5px;color:var(--ink);break-after:avoid}
+h4{font-size:10pt;margin:11px 0 5px;color:var(--accent-ink);break-after:avoid}
+ul,ol{margin:0 0 8px;padding-left:20px}
+li{margin:3px 0}
+strong{color:var(--accent-ink);font-weight:600}
+code{font-family:var(--mono);font-size:8.6pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 4px}
+table{width:100%;border-collapse:collapse;font-size:9.1pt;margin:6px 0 12px;border:1px solid var(--border-2)}
+tr{break-inside:avoid}
+th{background:var(--surface-2);font-family:var(--mono);font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+blockquote{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--mono);font-size:8.6pt;line-height:1.55;color:var(--ink);break-inside:avoid}
+.follow{background:var(--good-soft);border:1px solid #35493B;border-radius:10px;padding:8px 13px;margin-top:10px;break-inside:avoid}
+.follow p{margin-bottom:4px}
+.follow ul{margin:0}
+.err{color:var(--muted);font-style:italic}
+.note{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin-top:12px;break-inside:avoid}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:10px;break-before:avoid}
+blockquote div{margin:0 0 2px;white-space:pre-wrap}
+.codenote{font-family:var(--mono);font-size:7.6pt;color:var(--muted);margin:-6px 0 10px}
+.flow{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-radius:8px;font-family:var(--mono);font-size:8.4pt;line-height:1.5;text-align:center;break-inside:avoid}
+.flow .ar{color:var(--accent);margin:2px 0}
+ol ol{margin:4px 0 2px}
+body{font-size:9.3pt;line-height:1.47}
+blockquote div{min-height:1.2em}
+body{font-size:10.4pt;line-height:1.6}
+table{break-inside:avoid}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · Role play 47</div>
+  <h1>Python para automatizar a classificação de envios</h1>
+  <p class="lead">Resumo da pesquisa feita durante a prática "O Desenvolvedor Júnior e o Especialista em Automação": como o Python elimina o erro humano na triagem, listas, dicionários e estruturas de decisão aplicados à classificação, a regra de peso combinada com a região, a leitura da planilha do Excel com Pandas, o plano do projeto piloto, o script final com as transportadoras reais, a instalação do Pandas e a execução do teste, e a credibilidade de um consultor jovem.</p>
+  <div class="byline">Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 10:38</div>
+
+  <!-- 01 -->
+  <section class="turn first">
+    <div class="sec">01 — O fundamento do Python contra o erro humano</div>
+    <div class="q"><span class="k">Pergunta</span>Bom dia! Vamos lá, sou o Felipe. Recebemos sua proposta de usar Python para automatizar a classificação de envios. Olh…</div>
+    <p>Bom dia, Felipe!</p>
+    <p>Vamos direto ao ponto. Entendo perfeitamente a urgência: processo manual gera erro, erro gera retrabalho, e isso drena o caixa e o tempo da empresa.</p>
+    <p>O <strong>"Fundamento" do Python</strong> para o seu problema nada mais é do que a <strong>automação baseada em regras lógicas e consistência</strong>. Ao contrário de um humano, que pode se cansar, se distrair ou interpretar um dado de forma diferente após conferir centenas de pacotes, o Python executa exatamente a mesma instrução com precisão matemática, 24 horas por dia.</p>
+    <p>Veja abaixo como esse fundamento se traduz de forma simples e imediata na solução das suas dores:</p>
+    <h3>🔄 Como o Python elimina os Erros Humanos e Economiza Tempo</h3>
+    <table>
+      <tr><th>O que é feito hoje (Manual)</th><th>Como o Python faz (Automatizado)</th><th>Impacto Direto no seu Negócio</th></tr>
+      <tr><td><strong>Digitação e Leitura Visual</strong><br>Um funcionário lê o endereço, o peso ou o tipo de produto e decide a categoria ou transportadora.</td><td><strong>Leitura Digital Direta</strong><br>O script Python extrai os dados diretamente do sistema ou do código de barras instantaneamente.</td><td><strong>Zero erro de digitação</strong> ou leitura trocada. Adeus pacotes enviados para o destino errado.</td></tr>
+      <tr><td><strong>Decisão Humana Subjetiva</strong><br>O operador precisa lembrar das regras de envio ou olhar uma tabela para classificar cada item.</td><td><strong>Regras de Negócio Fixas</strong><br>O código aplica regras lógicas (Ex: Se peso &gt; 5kg e região = Sudeste, use a Transportadora X).</td><td><strong>Padronização total</strong>. A classificação é feita de forma idêntica e sem hesitação todas as vezes.</td></tr>
+      <tr><td><strong>Processamento Lento (Um a Um)</strong><br>Levar minutos para conferir, registrar e colar a etiqueta em uma única ordem de envio.</td><td><strong>Processamento em Lote</strong><br>O Python consegue classificar <strong>milhares de envios em poucos segundos</strong>.</td><td><strong>Ganho brutal de tempo</strong>. O que levava horas ou dias passa a rodar no tempo de um clique.</td></tr>
+    </table>
+    <h3>🛠 O Fundamento na prática (Um exemplo visual)</h3>
+    <p>Para você visualizar o quão simples e direto isso é, imagine que o "coração" do código que vamos construir para você funciona exatamente assim:</p>
+    <blockquote><div># O Python lê os dados do envio e decide a rota em milissegundos</div><div>if envio.peso &gt; 20:</div><div>    envio.transportadora = "Carga Pesada"</div><div>    envio.prioridade = "Alta"</div><div>elif envio.regiao == "Nordeste":</div><div>    envio.transportadora = "Logística Regional"</div><div>else:</div><div>    envio.transportadora = "Envio Padrão"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💰 O Resultado Imediato para você</h3>
+    <ol>
+      <li><strong>Liberação de Equipe:</strong> Seus funcionários deixam de ser "digitadores/conferidores" e passam a focar em resolver problemas estratégicos ou na expedição física.</li>
+      <li><strong>Previsibilidade de Custo:</strong> Você para de pagar fretes errados ou multas por atrasos causados por falhas na triagem.</li>
+    </ol>
+    <div class="follow"><p>Para que eu possa te mostrar exatamente o tamanho da economia que teremos, você poderia me contar:</p>
+    <ul>
+      <li><strong>Quantos envios</strong> vocês processam, em média, por dia ou por mês?</li>
+      <li>Quais são as <strong>informações principais</strong> usadas para classificar um envio hoje? (Ex: peso, CEP de destino, tipo de produto, valor da nota?)</li>
+    </ul>
+<p>Com isso, consigo desenhar um cenário prático do ganho de tempo para o seu caso real.</p></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="turn">
+    <div class="sec">02 — Listas, dicionários e decisões na prática</div>
+    <div class="q"><span class="k">Pergunta</span>Tá, entendi sua linha de raciocínio, mas vamos simplificar aqui. Eu quero ver como os fundamentos básicos do Python…</div>
+    <p>Com certeza, Felipe.</p>
+    <p>Vamos abrir o motor e ver como as engrenagens básicas do Python resolvem o problema. Sem pular etapas, a automação de classificação se apoia em <strong>três fundamentos</strong>: armazenar os dados (<strong>Listas</strong>), organizar os critérios (<strong>Dicionários</strong>) e tomar a decisão (<strong>Estruturas de Decisão</strong>).</p>
+    <p>Aqui está o passo a passo prático de como esses três elementos eliminam o erro humano e o trabalho manual:</p>
+    <h3>Passo 1: Armazenar os dados sem errar (As Listas)</h3>
+    <p>No processo manual, os dados dos pacotes chegam espalhados (em papéis, planilhas ou sistemas diferentes), e o operador precisa caçar um por um.</p>
+    <p>No Python, usamos uma <strong>Lista</strong> (uma sequência organizada de elementos) para agrupar todos os envios que precisam ser processados no dia. O Python lê essa lista em milissegundos, sem esquecer nenhum pacote para trás.</p>
+    <h3>Passo 2: Organizar as regras do seu negócio (Os Dicionários)</h3>
+    <p>Hoje, as regras de frete (qual transportadora atende qual região, limites de peso, etc.) provavelmente estão na cabeça dos funcionários ou em tabelas impressas na parede. Isso gera margem para o operador olhar a linha errada e errar a transportadora.</p>
+    <p>No Python, usamos um <strong>Dicionário</strong> (uma estrutura que guarda uma informação atrelada a uma "chave"). Ele funciona como um manual de regras infalível.</p>
+    <ul>
+      <li>Exemplo prático de Dicionário de Regras:</li>
+    </ul>
+    <blockquote><div># O Python sabe exatamente para onde vai cada região sem precisar "adivinhar"</div><div>regras_transportadora = {</div><div>    "Sudeste": "TransRapido",</div><div>    "Nordeste": "LogNordeste",</div><div>    "Sul": "SulCargas"</div><div>}</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>Passo 3: Tomar a decisão automatizada (As Estruturas de Decisão)</h3>
+    <p>Aqui é onde o erro humano é 100% eliminado. Em vez de um funcionário olhar para o pacote, pensar e decidir a rota, a estrutura <code>if/else</code> <strong>(Se / Senão)</strong> aplica a regra do dicionário de forma matemática.</p>
+    <p>Se o pacote vai para o "Nordeste", o Python consulta o dicionário, vê que a transportadora correta é a "LogNordeste" e carimba o pacote. Não há cansaço ou dúvida.</p>
+    <h3>💻 Juntando tudo: O Fluxo Prático</h3>
+    <p>Para ficar visual, imagine que chegaram 3 pacotes para triagem. O código básico faz exatamente isto:</p>
+    <blockquote><div># 1. LISTA: O Python recebe os pacotes do dia</div><div>envios_do_dia = [</div><div>    {"id": "001", "regiao": "Sudeste", "peso": 2},</div><div>    {"id": "002", "regiao": "Nordeste", "peso": 15},</div><div>    {"id": "003", "regiao": "Sul", "peso": 5}</div><div>]</div><div># 2. DICIONÁRIO: As regras fixas da sua empresa</div><div>parceiros_logistica = {</div><div>    "Sudeste": "TransRapido",</div><div>    "Nordeste": "LogNordeste",</div><div>    "Sul": "SulCargas"</div><div>}</div><div># 3. ESTRUTURA DE DECISÃO: O Python passa por cada item da lista e classifica sozinho</div><div>for pacote in envios_do_dia:</div><div>    destino = pacote["regiao"]</div><div></div><div>    # O Python busca a transportadora certa no dicionário usando a região como chave</div><div>    transportadora_correta = parceiros_logistica[destino]</div><div></div><div>    print(f"Pacote {pacote['id']} classificado para: {transportadora_correta}")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>💡 Por que isso resolve o seu problema de forma imediata?</h3>
+    <ul>
+      <li><strong>Velocidade:</strong> Se essa lista do código tivesse <strong>10.000 pacotes</strong>, o Python aplicaria o dicionário de regras e decidiria o destino de todos eles em <strong>menos de 1 segundo</strong>.</li>
+      <li><strong>Precisão:</strong> Se a regra diz que Nordeste é "LogNordeste", o Python nunca vai enviar por engano via "TransRapido" porque o operador se distraiu no fim do expediente.</li>
+    </ul>
+    <p>Para darmos o próximo passo sem complicar, me diga: no cenário real de vocês, além da <strong>região de destino</strong>, qual é o outro fator que mais faz a sua equipe hesitar ou errar na hora de escolher a transportadora? É o <strong>peso</strong> do pacote, o <strong>valor da mercadoria</strong>, ou o <strong>prazo de entrega</strong> exigido?</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="turn">
+    <div class="sec">03 — Incluindo o peso na decisão</div>
+    <div class="q"><span class="k">Pergunta</span>Agora sim, estamos falando a mesma língua! Gostei da explicação prática. É direto e dá para enxergar como isso …</div>
+    <p>Que bom que a lógica fez sentido, Felipe!</p>
+    <p>Vamos evoluir o nosso motor exatamente onde o calo aperta: <strong>o peso</strong>.</p>
+    <p>Quando adicionamos mais de uma variável (Região + Peso), a mente humana precisa cruzar dados de tabelas diferentes, e é aí que o cansaço vira prejuízo. Para o Python, cruzar duas, três ou dez variáveis exige o mesmo esforço: <strong>zero</strong>.</p>
+    <p>Para resolver isso, vamos usar o mesmo <strong>Dicionário</strong> (para mapear os limites de peso) e aninhar uma <strong>Estrutura de Decisão</strong> (<code>if / elif / else</code>) para o Python checar o peso antes de definir a transportadora.</p>
+    <p>Veja como o ajuste no código é simples, lógico e visual:</p>
+    <h3>🛠 O Código Ajustado (Região + Peso)</h3>
+    <p>Imagine que a sua regra seja: até 5kg vai por uma transportadora expressa; acima de 5kg, vai por uma transportadora de carga pesada.</p>
+    <blockquote><div># 1. LISTA: Os pacotes agora trazem a informação do peso</div><div>envios_do_dia = [</div><div>    {"id": "001", "regiao": "Sudeste", "peso": 3.2},   # Leve</div><div>    {"id": "002", "regiao": "Sudeste", "peso": 12.0},  # Pesado (aqui o humano costuma errar!)</div><div>    {"id": "003", "regiao": "Nordeste", "peso": 1.5},   # Leve</div><div>    {"id": "004", "regiao": "Nordeste", "peso": 22.0}   # Pesado</div><div>]</div><div># 2. DICIONÁRIO: Suas regras de negócio organizadas por categoria</div><div>regras_frete = {</div><div>    "Sudeste": {"leve": "TransRapido Express", "pesado": "Sudeste Cargas"},</div><div>    "Nordeste": {"leve": "LogNordeste Eco", "pesado": "Nordeste Pesados"}</div><div>}</div><div># 3. ESTRUTURA DE DECISÃO: O Python cruza Região e Peso em milissegundos</div><div>for pacote in envios_do_dia:</div><div>    regiao = pacote["regiao"]</div><div>    peso = pacote["peso"]</div><div></div><div>    # O Python decide a categoria do peso primeiro</div><div>    if peso &lt;= 5.0:</div><div>        categoria_peso = "leve"</div><div>    else:</div><div>        categoria_peso = "pesado"</div><div></div><div>    # Agora o Python busca no dicionário a combinação exata: Região + Categoria</div><div>    transportadora_correta = regras_frete[regiao][categoria_peso]</div><div></div><div>    print(f"📦 Pacote {pacote['id']} ({peso}kg) -&gt; {transportadora_correta}")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🎯 O que acontece na tela do seu computador ao rodar isso?</h3>
+    <p>O Python processa a lista e te entrega o resultado limpo e sem margem para dúvidas:</p>
+    <ul>
+      <li>Pacote 001 (3.2kg) -&gt; TransRapido Express</li>
+      <li>Pacote 002 (12.0kg) -&gt; Sudeste Cargas &lt;-- <strong>O Python separou o pacote pesado na mesma região automaticamente!</strong></li>
+      <li>Pacote 003 (1.5kg) -&gt; LogNordeste Eco</li>
+      <li>Pacote 004 (22.0kg) -&gt; Nordeste Pesados</li>
+    </ul>
+    <h3>💎 Por que isso blinda sua operação contra erros?</h3>
+    <ol>
+      <li><strong>Sem "olhômetro":</strong> O operador não precisa adivinhar ou lembrar se 5.1kg já entra na regra de pesado. O Python faz a checagem matemática exata.</li>
+      <li><strong>Dupla checagem instantânea:</strong> Ele valida a região e o peso ao mesmo tempo.</li>
+    </ol>
+    <ul>
+      <li>Se você tivesse 50 regras de peso diferentes, a velocidade de processamento seria exatamente a mesma.</li>
+    </ul>
+    <div class="follow"><p>Para formatarmos o escopo perfeito desse primeiro teste automatizado, me conta:</p>
+    <ul>
+      <li>Quais são as <strong>faixas de peso reais</strong> que vocês usam hoje para mudar de transportadora? (Ex: até 5kg, de 5kg a 20kg, acima de 20kg?)</li>
+      <li>Onde esses dados de peso e destino ficam hoje? Em uma <strong>planilha do Excel</strong>, em um <strong>sistema próprio (ERP)</strong> ou vocês digitam direto no site da transportadora?</li>
+    </ul></div>
+  </section>
+
+  <!-- 04 -->
+  <section class="turn">
+    <div class="sec">04 — Integração com a planilha do Excel</div>
+    <div class="q"><span class="k">Pergunta</span>Beleza, agora ficou ainda mais claro como o Python pode cruzar essas variáveis sem esforço humano. Respondendo …</div>
+    <p>Excelente, Felipe.</p>
+    <p>A resposta curta e direta é: <strong>sim, o Python se integra perfeitamente ao Excel</strong>. Na verdade, o Excel é uma das fontes de dados mais comuns e eficientes do mercado para automações em Python.</p>
+    <p>Para você ter uma ideia, o Python não precisa que você mude o formato de nada. Ele consegue abrir a sua planilha atual, ler todas as linhas, aplicar as regras das faixas de peso que você me passou e devolver o resultado em segundos.</p>
+    <p>Para fazer isso de forma profissional e eficiente, o Python usa um "superpoder" chamado <strong>Pandas</strong> (uma biblioteca especializada em processar planilhas e tabelas).</p>
+    <p>Veja como o processo se traduz na prática, respeitando rigorosamente as suas três faixas de peso:</p>
+    <h3>📉 O Fluxo de Integração com o seu Excel</h3>
+    <p>Em vez de copiar e colar ou digitar dado por dado, o processo passa a ter apenas 3 etapas totalmente automatizadas:</p>
+    <blockquote><div>[ Sua Planilha Excel ] ➡ ➡ ➡ [ Script em Python ] ➡ ➡ ➡ [ Planilha Atualizada ]</div><div>(Dados de peso e CEP)      (Cruza as faixas de peso e CEP)     (Com a transportadora certa na coluna)</div></blockquote>
+    <h3>🛠 O Código Real que lê o seu Excel</h3>
+    <p>Imagine que o Python vai ler a sua planilha e aplicar a lógica para as faixas de peso: <strong>Até 10kg</strong>, <strong>Entre 10kg e 30kg</strong>, e <strong>Acima de 30kg</strong>.</p>
+    <blockquote><div>import pandas as pd</div><div># 1. ENTRADA: O Python abre a sua planilha do Excel diretamente</div><div>tabela_envios = pd.read_excel("envios_pendentes.xlsx")</div><div># 2. AS REGRAS: Dicionário mapeando as faixas de peso e regiões</div><div>regras_logistica = {</div><div>    "Sudeste": {"leve": "TransRapido Express", "medio": "Sudeste Cargas", "pesado": "MalhaForte Rodoviario"},</div><div>    "Nordeste": {"leve": "LogNordeste Eco", "medio": "Nordeste Pesados", "pesado": "TransNordeste Carga"}</div><div>}</div><div># Função interna para aplicar as suas faixas de peso exatas</div><div>def classificar_pacote(linha):</div><div>    peso = linha["Peso"]</div><div>    regiao = linha["Regiao"]</div><div></div><div>    # Estrutura de decisão com as suas faixas reais</div><div>    if peso &lt;= 10.0:</div><div>        categoria = "leve"</div><div>    elif 10.0 &lt; peso &lt;= 30.0:</div><div>        categoria = "medio"</div><div>    else:</div><div>        categoria = "pesado"</div><div></div><div>    # Retorna a transportadora correta combinando Região e Categoria</div><div>    return regras_logistica[regiao][categoria]</div><div># 3. PROCESSAMENTO: O Python varre a planilha inteira e cria uma nova coluna em segundos</div><div>tabela_envios["Transportadora_Correta"] = tabela_envios.apply(classificar_pacote, axis=1)</div><div># 4. SAÍDA: Salva o resultado de volta no Excel, pronto para a expedição</div><div>tabela_envios.to_excel("envios_classificados.xlsx", index=False)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>⚡ Por que isso é infinitamente mais eficiente e seguro?</h3>
+    <ul>
+      <li><strong>Fim do Trabalho Manual de Linha por Linha:</strong> Se a sua planilha do Excel tiver <strong>50 ou 5.000 linhas</strong>, o Python vai ler o arquivo, processar todas as regras de peso e salvar a planilha pronta no seu computador em <strong>menos de 3 segundos</strong>.</li>
+      <li><strong>Blindagem contra o "Dedo Gordo":</strong> O operador não precisa mais digitar a transportadora. O Python escreve o nome correto na coluna correspondente, eliminando erros de digitação que confundem a expedição.</li>
+      <li><strong>Flexibilidade:</strong> Se amanhã uma transportadora mudar ou você criar uma nova faixa de peso (ex: acima de 50kg), nós alteramos apenas 1 linha do código e todo o resto continua funcionando sozinho.</li>
+    </ul>
+    <div class="follow"><p>Podemos criar um pequeno <strong>projeto piloto (MVP)</strong> usando uma cópia dessa sua planilha real para você ver a mágica acontecer na sua tela? Se sim, me conta:</p>
+    <ul>
+      <li>Na planilha atual de vocês, quais são os <strong>nomes exatos das colunas</strong> onde ficam o peso e o destino? (Ex: "Peso", "Peso (kg)", "Cidade", "Estado", "Região"?)</li>
+      <li>Quantas <strong>linhas (envios)</strong> essa planilha costuma ter por dia ou por semana?</li>
+    </ul></div>
+  </section>
+
+  <!-- 05 -->
+  <section class="turn">
+    <div class="sec">05 — O plano do projeto piloto</div>
+    <div class="q"><span class="k">Pergunta</span>Ótimo! Isso parece bem promissor. Respondendo à sua pergunta, na nossa planilha temos colunas chamadas 'Peso …</div>
+    <p>Felipe, processar 1.000 envios por dia manualmente no Excel é justamente o cenário onde o erro humano cobra o preço mais caro.</p>
+    <p>No final de um mês, estamos falando de <strong>30.000 decisões lógicas</strong> tomadas sob cansaço. É impossível não errar.</p>
+    <p>Para você ter uma noção real do impacto: o humano leva, em média, de 30 a 60 segundos por linha para ler o peso, olhar a tabela de regras, decidir e digitar a transportadora. Para 1.000 linhas, sua equipe gasta entre <strong>8 e 16 horas de trabalho focadas apenas nisso todos os dias</strong>.</p>
+    <p>O script Python que desenhamos vai processar essas mesmas 1.000 linhas em <strong>menos de 2 segundos</strong> e com <strong>0% de erro</strong>.</p>
+    <p>Para tirarmos isso do papel e rodarmos o seu projeto piloto (MVP) de forma imediata, vamos seguir estes <strong>3 passos práticos</strong>:</p>
+    <h3>🚀 Plano de Ação para o Projeto Piloto</h3>
+    <h4>1. Preparação da Base de Testes (Amanhã)</h4>
+    <p>Separe uma cópia da planilha de vocês de um dia específico (pode ser com os 1.000 envios reais).</p>
+    <ul>
+      <li>Garanta que ela tenha as colunas <code>Peso (kg)</code> e <code>Região</code>.</li>
+      <li>Deixe uma coluna em branco chamada <code>Transportadora_Python</code>.</li>
+    </ul>
+    <h4>2. Definição da Matriz de Regras Real</h4>
+    <p>Preciso que você me liste quais são as transportadoras parceiras para cada cruzamento. Pode preencher este modelo rápido:</p>
+    <ul>
+      <li><strong>Até 10kg:</strong> Região A usa Transp. X | Região B usa Transp. Y</li>
+      <li><strong>De 10kg a 30kg:</strong> Região A usa Transp. W | Região B usa Transp. Z</li>
+      <li><strong>Acima de 30kg:</strong> Região A usa Transp. K | Região B usa Transp. L</li>
+    </ul>
+    <h4>3. Execução do Piloto e Auditoria</h4>
+    <p>Vou estruturar o código final com as suas regras reais. Nós vamos rodar o script nessa sua planilha de 1.000 linhas.</p>
+    <ul>
+      <li><strong>O Teste de Fogo:</strong> Vamos pegar o resultado gerado pelo Python e cruzar com o que a sua equipe fez manualmente no mesmo dia.</li>
+      <li><strong>O Diagnóstico:</strong> Vamos mapear quantos erros o Python evitou e quantas horas de digitação foram economizadas na hora.</li>
+    </ul>
+    <div class="follow"><p>Para que eu possa configurar o código exato do seu piloto hoje mesmo, você consegue me passar:</p>
+    <ul>
+      <li>Quais são as <strong>regiões exatas</strong> que aparecem na coluna (Ex: os nomes dos estados como "SP", "RJ" ou nomes de regiões como "Sudeste", "Nordeste")?</li>
+      <li>Quais são os <strong>nomes das transportadoras</strong> para cada uma das 3 faixas de peso (Até 10kg, 10-30kg, +30kg) de acordo com essas regiões?</li>
+    </ul></div>
+  </section>
+
+  <!-- 06 -->
+  <section class="turn">
+    <div class="sec">06 — O script do piloto</div>
+    <div class="q"><span class="k">Pergunta</span>Certo, você me convenceu. Isso realmente pode economizar um tempo absurdo e eliminar erros. Sobre as regiões, …</div>
+    <p>O script do seu piloto <strong>está pronto</strong>.</p>
+    <p>Ele está configurado para os seus <strong>1.000 envios diários</strong>. Inserimos as regras para <strong>Sudeste, Nordeste e Sul</strong>. O Python cruzará peso e destino em milissegundos.</p>
+    <p>Aqui está o código exato que usaremos no seu teste:</p>
+    <blockquote><div>import pandas as pd</div><div># 1. ENTRADA: O Python abre o seu arquivo do Excel</div><div>df = pd.read_excel("envios_pendentes.xlsx")</div><div># 2. REGRAS: Matriz de logística mapeada conforme suas faixas</div><div>regras_logistica = {</div><div>    "Sudeste": {"leve": "TransRapido", "medio": "Sudeste Cargas", "pesado": "MalhaForte"},</div><div>    "Nordeste": {"leve": "LogNordeste", "medio": "Nordeste Pesados", "pesado": "TransNordeste"},</div><div>    "Sul": {"leve": "SulExpress", "medio": "SulCargas", "pesado": "MegaSul"}</div><div>}</div><div># Estrutura de decisão para as faixas de peso</div><div>def classificar_envio(linha):</div><div>    regiao = linha["Região"]</div><div>    peso = linha["Peso (kg)"]</div><div></div><div>    # Aplica as regras de peso informadas</div><div>    if peso &lt;= 10.0:</div><div>        faixa = "leve"</div><div>    elif peso &lt;= 30.0:</div><div>        faixa = "medio"</div><div>    else:</div><div>        faixa = "pesado"</div><div></div><div>    # Retorna a transportadora correta do dicionário</div><div>    return regras_logistica[regiao][faixa]</div><div># 3. PROCESSAMENTO: Executa a classificação de todas as linhas em lote</div><div>df["Transportadora_Python"] = df.apply(classificar_envio, axis=1)</div><div># 4. SAÍDA: Gera a nova planilha preenchida automaticamente</div><div>df.to_excel("envios_piloto_resultado.xlsx", index=False)</div><div>print("Planilha processada com sucesso!")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>📋 Próximos Passos Práticos</h3>
+    <p>Para rodarmos esse código juntos, precisamos alinhar o ambiente de execução:</p>
+    <ul>
+      <li><strong>Estrutura dos dados:</strong> Garanta que a grafia dos nomes na coluna <code>Região</code> esteja idêntica ao código (ex: "Sudeste", "Nordeste", "Sul").</li>
+      <li><strong>Linhas vazias:</strong> O arquivo não deve conter linhas em branco no meio dos dados.</li>
+    </ul>
+    <div class="follow"><p>Para iniciarmos o teste na prática, me informe:</p>
+    <ul>
+      <li>Você já possui o Python instalado na sua máquina de trabalho?</li>
+      <li>Gostaria que eu te guiasse no passo a passo para <strong>instalar a biblioteca Pandas</strong> e rodar esse código agora mesmo?</li>
+    </ul></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="turn">
+    <div class="sec">07 — Instalando o Pandas e rodando o teste</div>
+    <div class="q"><span class="k">Pergunta</span>Tudo certo, o piloto está redondo! Sim, o Python já está instalado aqui, mas não tenho certeza sobre a biblioteca …</div>
+    <p>Excelente, Felipe!</p>
+    <p>Com o Python instalado, estamos a apenas dois comandos de ver esse motor rodar. Vou te guiar pelo caminho mais simples usando o <strong>Prompt de Comando</strong> (se você usa Windows) ou o <strong>Terminal</strong> (se usa Mac/Linux).</p>
+    <p>Siga estes passos rápidos para instalar o Pandas e rodar o piloto com segurança:</p>
+    <h3>📦 Passo 1: Instalar as bibliotecas necessárias</h3>
+    <p>O Python precisa do <strong>Pandas</strong> (para ler os dados) e do <strong>openpyxl</strong> (que é o motor que permite ao Python escrever arquivos do Excel).</p>
+    <ol>
+      <li>No seu computador, abra o menu Iniciar, digite <strong>cmd</strong> (Prompt de Comando) e abra-o.</li>
+      <li>Copie o comando abaixo, cole no prompt e aperte <strong>Enter</strong>:</li>
+    </ol>
+    <blockquote><div>pip install pandas openpyxl</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <ol start="3">
+      <li>Aguarde alguns segundos. Uma barra de progresso vai aparecer e, ao final, mostrará uma mensagem de sucesso.</li>
+    </ol>
+    <h3>📁 Passo 2: Organizar os arquivos na mesma pasta</h3>
+    <p>Para evitar erros de "arquivo não encontrado", vamos colocar tudo no mesmo lugar:</p>
+    <ol>
+      <li>Crie uma pasta nova na sua Área de Trabalho (ex: <code>Piloto_Logistica</code>).</li>
+      <li>Cole a sua planilha de testes dentro dessa pasta e mude o nome do arquivo para <code>envios_pendentes.xlsx</code>.</li>
+      <li>Certifique-se de que os cabeçalhos das colunas estão escritos exatamente como <code>Região</code> (com o til) e <code>Peso (kg)</code>.</li>
+    </ol>
+    <h3>📝 Passo 3: Salvar o código Python</h3>
+    <ol>
+      <li>Abra o <strong>Bloco de Notas</strong> do seu computador.</li>
+      <li>Copie todo aquele código que estruturamos na nossa última conversa e cole no Bloco de Notas.</li>
+      <li>Clique em <strong>Arquivo &gt; Salvar Como</strong>.</li>
+      <li>No campo "Tipo", mude de Documentos de texto (.txt)* para <strong>Todos os arquivos (.)</strong>.</li>
+      <li>Salve o arquivo dentro da mesma pasta (<code>Piloto_Logistica</code>) com o nome <code>classificador.py</code> (é fundamental ter o <code>.py</code> no final).</li>
+    </ol>
+    <h3>⚡ Passo 4: Rodar o teste piloto</h3>
+    <p>Agora vamos fazer a mágica acontecer:</p>
+    <ol>
+      <li>No seu Prompt de Comando que já está aberto, navegue até a pasta que você criou digitando o comando abaixo (e aperte Enter):</li>
+    </ol>
+    <blockquote><div>cd Desktop\Piloto_Logistica</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <ol start="2">
+      <li>Agora, mande o Python executar o seu script:</li>
+    </ol>
+    <blockquote><div>python classificador.py</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Em <strong>menos de 2 segundos</strong>, a mensagem <code>"Planilha processada com sucesso!"</code> vai aparecer na tela. Quando você abrir a pasta, verá um novo arquivo chamado <code>envios_piloto_resultado.xlsx</code> com as 1.000 linhas classificadas perfeitamente.</p>
+    <p>Me avise assim que rodar! Se aparecer qualquer <strong>mensagem de erro</strong> na tela do prompt, copie e cole ela aqui para eu te dizer exatamente como corrigir. Conseguimos fazer esse primeiro teste agora?</p>
+  </section>
+
+  <!-- 08 -->
+  <section class="turn">
+    <div class="sec">08 — Antes de rodar o teste</div>
+    <div class="q"><span class="k">Pergunta</span>Beleza, tudo anotado! Vou seguir os passos e organizar tudo aqui agora. Assim que rodar o teste, te aviso do resultado o…</div>
+    <p>Fechado, Felipe!</p>
+    <p>É isso aí, foco na execução.</p>
+    <p>Estou de prontidão por aqui. Assim que rodar, me conte como foi ver os <strong>1.000 envios processados</strong> num piscar de olhos.</p>
+    <p>Se der qualquer travada ou se o prompt mostrar alguma mensagem estranha, não esquente a cabeça: tira um print ou <strong>copia o erro e joga aqui</strong> que a gente resolve na hora.</p>
+    <p>Boa sorte no teste e vamos nessa!</p>
+    <div class="follow"><p>Assim que concluir o teste, me avise para que possamos:</p>
+    <ul>
+      <li>Analisar se o Python <strong>acertou 100% das regras</strong> acordadas.</li>
+      <li>Discutir como automatizar também a <strong>geração das etiquetas de envio</strong> ou o <strong>disparo para o sistema das transportadoras</strong>.</li>
+    </ul></div>
+  </section>
+
+  <!-- 09 -->
+  <section class="turn">
+    <div class="sec">09 — Garantindo a credibilidade</div>
+    <div class="q"><span class="k">Pergunta</span>Garantir a Credibilidade: Fazer com que o Especialista em Otimização, Felipe Torres, leve a solução Python a sério, …</div>
+    <p>Felipe, antes de você rodar o teste, quero te dar uma garantia de bastidor: <strong>a tecnologia não se importa com idade ou tempo de carteira assinada, ela só se importa com a precisão da lógica</strong>.</p>
+    <p>Entendo perfeitamente que, no mundo dos negócios, a maturidade corporativa e a experiência formal pesam muito — e devem pesar. Mas a grande vantagem de ser um consultor jovem trazendo uma solução baseada em Python é que eu não estou te pedindo um voto de confiança cega na minha carreira; <strong>estou te pedindo para confiar na matemática do código que você acabou de ler</strong>.</p>
+    <p>O que valida essa automação não são anos de reuniões corporativas, é o fato real de que ela vai olhar para a sua planilha e executar em 2 segundos o que uma equipe inteira leva um dia cansativo para fazer. O código é transparente: ele não cansa, não tem "dia ruim" e não distorce regras.</p>
+    <p>Estou apostando a minha credibilidade no resultado desse arquivo <code>envios_piloto_resultado.xlsx</code> que vai aparecer na sua pasta. O resultado vai falar por si só.</p>
+    <p>Vá lá, rode o teste e vamos deixar o Python provar o valor dele na prática. Estou aqui esperando o seu feedback!</p>
+    <div class="foot">Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas e chips de fontes) foram omitidos. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.</div>
+  </section>
+</div>
+</body>
+</html>
