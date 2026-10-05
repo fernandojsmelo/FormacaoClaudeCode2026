@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Trabalhando com Condições</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 13</div>
+    <h1>Trabalhando<br><em>com condições</em></h1>
+    <p class="lead">Até aqui, todo programa fazia sempre a mesma coisa. Com <code>if</code>, ele <strong>decide</strong>: executa um trecho só quando uma condição é verdadeira. Nesta aula: <code>if</code>, <code>else</code>, <code>elif</code>, condições combinadas, valores "verdadeiros" e "falsos", o operador ternário, o <code>match</code> e a importância do recuo.</p>
+    <div class="chips"><span>if · else · elif</span><span>Recuo = bloco</span><span>and · or · in</span><span>Truthy e falsy</span><span>x if c else y</span><span>match/case</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: if Statements, match Statements; Truth Value Testing; Conditional expressions), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>if</span><span class="n">01</span></div>
+  <h2>Executar <em>só se...</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>if_simples.py</b></div>
+      <pre class="code">idade = int(input("Idade: "))
+if idade &gt;= 18:
+    print("Pode tirar a carteira de motorista.")
+    print("(Esta linha também está dentro do if.)")
+print("Fim do programa.")   <span class="c"># fora do if: sempre roda</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída (digitou 20)</div>
+      <pre class="out">Idade: 20
+Pode tirar a carteira de motorista.
+(Esta linha também está dentro do if.)
+Fim do programa.</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>if condição:</code> com <strong>dois-pontos</strong> no fim</li>
+        <li>O bloco do if são as linhas com <strong>recuo</strong> (4 espaços)</li>
+        <li>A condição é qualquer coisa que dê <code>True</code>/<code>False</code> (aula 06)</li>
+        <li>A linha sem recuo volta ao fluxo normal: roda sempre</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Com 15, o programa mostraria só "Fim do programa.": o bloco inteiro é pulado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>else e elif</span><span class="n">02</span></div>
+  <h2>Senão, <em>senão se</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>if_else.py</b> · digitou 15</div>
+      <pre class="code">idade = int(input("Idade: "))
+if idade &gt;= 18:
+    print("Maior de idade")
+else:
+    print("Menor de idade")</pre>
+      <pre class="out" style="margin-top:6px">Idade: 15
+Menor de idade</pre>
+      <div class="callout" style="margin-top:8px"><code>else</code> pega todos os outros casos. Nunca tem condição.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>elif.py</b> · digitou 7.5</div>
+      <pre class="code">nota = float(input("Nota: "))
+if nota &gt;= 9:
+    conceito = "A"
+elif nota &gt;= 7:
+    conceito = "B"
+elif nota &gt;= 5:
+    conceito = "C"
+else:
+    conceito = "D"
+print("Conceito:", conceito)</pre>
+      <pre class="out" style="margin-top:6px">Nota: 7.5
+Conceito: B</pre>
+      <div class="callout warn" style="margin-top:8px">O Python testa <strong>de cima para baixo</strong> e para no primeiro verdadeiro. Por isso a ordem importa: com <code>nota &gt;= 5</code> primeiro, uma nota 9,5 viraria "C".</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Combinando</span><span class="n">03</span></div>
+  <h2>Condições <em>combinadas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>combinadas.py</b></div>
+      <pre class="code">idade = 20
+tem_ingresso = True
+if idade &gt;= 18 and tem_ingresso:
+    print("Pode entrar")
+dia = "sábado"
+if dia == "sábado" or dia == "domingo":
+    print("Fim de semana")
+if dia in ("sábado", "domingo"):   <span class="c"># o mesmo, mais curto</span>
+    print("Fim de semana (com in)")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Pode entrar
+Fim de semana
+Fim de semana (com in)</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>and</code>: as duas precisam ser verdadeiras; <code>or</code>: basta uma (aula 06)</li>
+        <li><code>in</code> com uma tupla substitui vários <code>or</code></li>
+        <li><code>18 &lt;= idade &lt; 60</code>: comparação encadeada, como na matemática</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Armadilha: <code>if dia == "sábado" or "domingo":</code> é <strong>sempre</strong> verdadeiro, porque o texto "domingo" sozinho conta como True. Compare cada um, ou use <code>in</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Truthy</span><span class="n">04</span></div>
+  <h2>O que conta como <em>verdadeiro</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>truthy.py</b> · só teclou Enter</div>
+      <pre class="code">nome = input("Nome (pode deixar vazio): ").strip()
+if nome:                      <span class="c"># texto vazio é False</span>
+    print(f"Olá, {nome}!")
+else:
+    print("Olá, visitante!")</pre>
+      <pre class="out" style="margin-top:6px">Nome (pode deixar vazio): 
+Olá, visitante!</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Valor</th><th>Na condição vale</th></tr></thead>
+      <tbody>
+        <tr><td>False, None</td><td>Falso</td></tr>
+        <tr><td>0, 0.0</td><td>Falso</td></tr>
+        <tr><td>"", [], (), {}, set()</td><td>Falso (vazio)</td></tr>
+        <tr><td>Qualquer outra coisa</td><td>Verdadeiro</td></tr>
+      </tbody></table>
+      <div class="callout good" style="margin:10px">Dica do guia (cap. 5): escreva <code>if lista:</code> em vez de <code>if len(lista) &gt; 0:</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Atalhos</span><span class="n">05</span></div>
+  <h2>Ternário <em>e match</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>ternario.py</b></div>
+      <pre class="code">idade = 16
+status = "adulto" if idade &gt;= 18 else "menor"
+print(status)</pre>
+      <pre class="out" style="margin-top:6px">menor</pre>
+      <div class="callout" style="margin-top:8px"><code>valor_se_sim if condição else valor_se_não</code>: um if numa linha, que devolve um valor. Bom para escolhas simples.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>match.py</b> · digitou "parar"</div>
+      <pre class="code">comando = input("Comando: ").strip().lower()
+match comando:
+    case "iniciar":
+        print("Iniciando...")
+    case "pausar" | "parar":
+        print("Pausando...")
+    case _:
+        print("Comando desconhecido")</pre>
+      <pre class="out" style="margin-top:6px">Comando: parar
+Pausando...</pre>
+      <div class="callout" style="margin-top:8px"><code>match</code> (Python 3.10+) compara um valor com vários casos. <code>|</code> junta opções; <code>case _:</code> é o "qualquer outro".</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">06</span></div>
+  <h2>Recuo <em>esquecido</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>erro_recuo.py</b></div>
+      <pre class="code">idade = 20
+if idade &gt;= 18:
+print("Maior de idade")</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">  File "erro_recuo.py", line 3
+    print("Maior de idade")
+    ^^^^^
+IndentationError: expected an indented block after 'if' statement on line 2</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Depois de <code>if ...:</code>, o Python <strong>espera</strong> um bloco com recuo</li>
+        <li>A mensagem diz exatamente isso: "expected an indented block after 'if' statement on line 2"</li>
+        <li>Padrão: <strong>4 espaços</strong>. O Cursor coloca sozinho ao teclar Enter depois dos dois-pontos</li>
+        <li>Não misture Tab e espaços no mesmo arquivo</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Esquecer os <strong>dois-pontos</strong> dá outro erro: <code>SyntaxError: expected ':'</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Classificando <em>o IMC</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> peça um IMC (aceitando vírgula) e mostre a faixa: abaixo de 18,5 "abaixo do peso"; até 25 "peso normal"; até 30 "sobrepeso"; acima "obesidade".</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: classificação do IMC</span>
+imc = float(input("IMC: ").replace(",", "."))
+if imc &lt; 18.5:
+    faixa = "abaixo do peso"
+elif imc &lt; 25:
+    faixa = "peso normal"
+elif imc &lt; 30:
+    faixa = "sobrepeso"
+else:
+    faixa = "obesidade"
+print(f"IMC {imc:.1f}: {faixa}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída (digitou 27,3)</div>
+      <pre class="out">IMC: 27,3
+IMC 27.3: sobrepeso</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Cada <code>elif</code> só precisa do limite de cima: os de baixo já foram descartados</li>
+        <li>Teste os limites: 18.5, 25 e 30 caem na faixa certa?</li>
+        <li>Desafio: junte com a calculadora de IMC da aula 04</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O que marca as linhas que pertencem ao if?</p>
+        <div class="opts"><div>A) Chaves { }</div><div>B) O recuo</div><div>C) Ponto e vírgula</div><div>D) A palavra end</div></div>
+        <div class="answer"><b>B.</b> 4 espaços por nível.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Com nota 9.5 e o elif nota &gt;= 5 vindo primeiro:</p>
+        <div class="opts"><div>A) A</div><div>B) C</div><div>C) Erro</div><div>D) Nada</div></div>
+        <div class="answer"><b>B.</b> Para no primeiro verdadeiro.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Qual destes é falso numa condição?</p>
+        <div class="opts"><div>A) "0"</div><div>B) [0]</div><div>C) ""</div><div>D) -1</div></div>
+        <div class="answer"><b>C.</b> Texto vazio.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. "par" if 4 % 2 == 0 else "ímpar" vale:</p>
+        <div class="opts"><div>A) "par"</div><div>B) "ímpar"</div><div>C) True</div><div>D) Erro</div></div>
+        <div class="answer"><b>A.</b> Operador ternário.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">O programa<br><em>agora decide</em></h1>
+    <p class="lead"><code>if</code>, <code>elif</code> e <code>else</code> escolhem o que executar; o bloco é marcado pelo <strong>recuo</strong>. A ordem dos <code>elif</code> importa, valores vazios contam como falso, o ternário resolve escolhas simples e o <code>match</code> compara um valor com vários casos.</p>
+    <div class="chips"><span>if · elif · else</span><span>4 espaços</span><span>Ordem importa</span><span>if lista:</span><span>match/case</span></div>
+    <div class="next">Próxima aula → 14 · Utilizando For</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/controlflow.html (if, match); docs.python.org/3/library/stdtypes.html#truth-value-testing; docs.python.org/3/reference/expressions.html#conditional-expressions, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
