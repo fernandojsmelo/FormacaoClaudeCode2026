@@ -1,0 +1,8 @@
+2026-10-05 09:00:01 INFO  login ok usuario=ana
+2026-10-05 09:00:07 ERROR 500 falha no banco
+2026-10-05 09:01:12 INFO  login ok usuario=bia
+2026-10-05 09:02:30 ERROR 404 pagina /promo
+2026-10-05 09:03:44 WARN  disco em 85%
+2026-10-05 09:04:02 ERROR 500 falha no banco
+2026-10-05 09:05:19 ERROR 404 pagina /antiga
+2026-10-05 09:06:55 INFO  logout usuario=ana

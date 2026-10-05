@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Aplicações Práticas</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 5</div>
+    <h1>Aplicações<br><em>práticas</em></h1>
+    <p class="lead">Iteradores e geradores brilham quando os dados são grandes, chegam aos poucos ou passam por várias etapas. Nesta aula, seis situações do dia a dia: ler um arquivo linha a linha, contar erros num log com um pipeline, somar um CSV sem carregá-lo inteiro, enviar dados em lotes, comparar valores vizinhos e buscar uma API página por página só enquanto for preciso.</p>
+    <div class="chips"><span>Arquivo linha a linha</span><span>Pipeline de log</span><span>CSV preguiçoso</span><span>batched</span><span>pairwise</span><span>Paginação</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Reading and Writing Files; csv.DictReader; collections.Counter e defaultdict; itertools.batched e pairwise; Assignment expressions), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Arquivos</span><span class="n">01</span></div>
+  <h2>Ler um arquivo <em>linha a linha</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>ler_arquivo.py</b></div>
+      <pre class="code">def linhas(caminho):
+    with open(caminho, encoding="utf-8") as arq:
+        for linha in arq:        <span class="c"># o arquivo já é um iterador</span>
+            yield linha.rstrip("\n")
+
+
+if __name__ == "__main__":
+    for n, linha in enumerate(linhas("servidor.log"), 1):
+        if n &gt; 3:
+            break
+        print(n, linha)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">1 2026-10-05 09:00:01 INFO  login ok usuario=ana
+2 2026-10-05 09:00:07 ERROR 500 falha no banco
+3 2026-10-05 09:01:12 INFO  login ok usuario=bia</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Um arquivo aberto já é um iterador: o <code>for</code> lê uma linha por vez</li>
+        <li>Com um gerador, a leitura fica reaproveitável e o <code>with</code> fecha o arquivo no fim</li>
+        <li>Um log de 10 GB ocupa na memória só a linha atual</li>
+        <li>O <code>break</code> para a leitura sem ler o resto do arquivo</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">O <code>if __name__ == "__main__"</code> deixa importar a função <code>linhas</code> em outro exemplo sem rodar esta demonstração.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Log</span><span class="n">02</span></div>
+  <h2>Contando erros <em>num pipeline</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>erros_log.py</b></div>
+      <pre class="code">from collections import Counter
+from ler_arquivo import linhas
+
+
+def so_erros(itens):
+    return (l for l in itens if " ERROR " in l)
+
+
+def codigos(itens):
+    for linha in itens:
+        yield linha.split()[3]       <span class="c"># data hora NIVEL CODIGO</span>
+
+
+contagem = Counter(codigos(so_erros(linhas("servidor.log"))))
+print(contagem)
+print(contagem.most_common(1))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Counter({'500': 2, '404': 2})
+[('500', 2)]</pre>
+    </div>
+    <div>
+      <div class="lbl"><b>servidor.log</b></div>
+      <pre class="code" style="font-size:9.4px">2026-10-05 09:00:01 INFO  login ok usuario=ana
+2026-10-05 09:00:07 ERROR 500 falha no banco
+2026-10-05 09:01:12 INFO  login ok usuario=bia
+2026-10-05 09:02:30 ERROR 404 pagina /promo
+2026-10-05 09:03:44 WARN  disco em 85%
+2026-10-05 09:04:02 ERROR 500 falha no banco
+2026-10-05 09:05:19 ERROR 404 pagina /antiga
+2026-10-05 09:06:55 INFO  logout usuario=ana</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Ler → filtrar <code>ERROR</code> → extrair o código: três etapas encadeadas</li>
+        <li><code>Counter</code> consome o gerador e conta cada código</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>CSV</span><span class="n">03</span></div>
+  <h2>Somando um CSV <em>sem carregá-lo inteiro</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>csv_preguicoso.py</b></div>
+      <pre class="code">import csv
+from collections import defaultdict
+
+
+def vendas(caminho):
+    with open(caminho, encoding="utf-8", newline="") as arq:
+        for registro in csv.DictReader(arq):
+            registro["valor"] = float(registro["valor"])
+            yield registro
+
+
+total = defaultdict(float)
+for v in vendas("vendas.csv"):
+    total[v["categoria"]] += v["valor"]
+print(dict(total))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">{'livros': 94.4, 'jogos': 288.9, 'cursos': 297.0}</pre>
+    </div>
+    <div>
+      <div class="lbl"><b>vendas.csv</b></div>
+      <pre class="code">data,categoria,valor
+2026-10-01,livros,59.90
+2026-10-01,jogos,199.00
+2026-10-02,livros,34.50
+2026-10-02,cursos,297.00
+2026-10-03,jogos,89.90</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>csv.DictReader</code> também é um iterador: um dicionário por linha</li>
+        <li>O gerador converte o valor para número antes de entregar</li>
+        <li><code>defaultdict(float)</code> começa cada categoria em <code>0.0</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Lotes</span><span class="n">04</span></div>
+  <h2>Enviando <em>em lotes</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>lotes.py</b></div>
+      <pre class="code">from itertools import batched
+
+pedidos = [f"P{n}" for n in range(1, 8)]
+
+for lote in batched(pedidos, 3):      <span class="c"># Python 3.12+</span>
+    print("enviando", lote)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">enviando ('P1', 'P2', 'P3')
+enviando ('P4', 'P5', 'P6')
+enviando ('P7',)</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>batched(iterável, n)</code> entrega tuplas de até <code>n</code> itens</li>
+        <li>O último lote pode ser menor</li>
+        <li>Uso típico: gravar no banco ou chamar uma API de 100 em 100 registros</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px"><code>batched</code> existe a partir do Python 3.12. Em versões antigas, use <code>islice</code> num laço.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Vizinhos</span><span class="n">05</span></div>
+  <h2>Comparando <em>com o anterior</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>variacao.py</b></div>
+      <pre class="code">from itertools import pairwise
+
+cotacoes = [5.10, 5.18, 5.05, 5.05, 5.22]
+
+for antes, depois in pairwise(cotacoes):
+    dif = depois - antes
+    seta = "↑" if dif &gt; 0 else "↓" if dif &lt; 0 else "="
+    print(f"{antes:.2f} -&gt; {depois:.2f} {seta}")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">5.10 -&gt; 5.18 ↑
+5.18 -&gt; 5.05 ↓
+5.05 -&gt; 5.05 =
+5.05 -&gt; 5.22 ↑</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>pairwise</code> entrega os pares vizinhos: (1º, 2º), (2º, 3º)...</li>
+        <li>Sem índices nem <code>range(len(...))</code></li>
+        <li>Serve para variações de preço, intervalos entre datas, diferenças entre leituras de sensor</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">As cotações são valores de exemplo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Paginação</span><span class="n">06</span></div>
+  <h2>Buscar páginas <em>só quando precisa</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>paginas.py</b></div>
+      <pre class="code">BANCO = [f"cliente{n}" for n in range(1, 8)]
+
+
+def buscar_pagina(numero, tamanho=3):
+    """Simula uma API que devolve uma página por vez."""
+    print(f"  (pedindo página {numero})")
+    inicio = (numero - 1) * tamanho
+    return BANCO[inicio:inicio + tamanho]
+
+
+def todos_os_clientes():
+    numero = 1
+    while pagina := buscar_pagina(numero):
+        yield from pagina
+        numero += 1
+
+
+for cliente in todos_os_clientes():
+    print(cliente)
+    if cliente == "cliente4":
+        break                       <span class="c"># nem pede a página 3</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">  (pedindo página 1)
+cliente1
+cliente2
+cliente3
+  (pedindo página 2)
+cliente4</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Quem usa <code>todos_os_clientes()</code> não sabe que existem páginas</li>
+        <li><code>while pagina := ...</code> busca e testa numa linha: para quando vier uma página vazia</li>
+        <li>Como o <code>for</code> parou no <code>cliente4</code>, a página 3 nunca foi pedida</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Em APIs reais, isso economiza requisições, tempo e cota de uso.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Média das <em>notas válidas</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> um arquivo tem uma nota por linha, mas também linhas vazias e textos. Escreva um gerador que entregue só as notas válidas e calcule a média.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">import io
+
+arquivo = io.StringIO("8.5\n\n7\nausente\n10\n6.5\n")
+
+
+def notas_validas(linhas):
+    for linha in linhas:
+        try:
+            yield float(linha)
+        except ValueError:
+            continue                 <span class="c"># ignora vazias e texto</span>
+
+
+notas = list(notas_validas(arquivo))
+print(notas)
+print(f"média: {sum(notas) / len(notas):.2f}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">[8.5, 7.0, 10.0, 6.5]
+média: 8.00</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>io.StringIO</code> simula o arquivo; com <code>open()</code> funciona igual</li>
+        <li><code>float()</code> lança <code>ValueError</code> para vazio e texto: o gerador pula a linha</li>
+        <li>Desafio: aceite também nota com vírgula, como <code>7,5</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Por que ler um arquivo grande com for linha in arq?</p>
+        <div class="opts"><div>A) É mais bonito</div><div>B) Só a linha atual fica na memória</div><div>C) Lê de trás para frente</div><div>D) Ordena as linhas</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. list(batched("abcde", 2)) vale:</p>
+        <div class="opts"><div>A) ["ab", "cd", "e"]</div><div>B) [("a","b"), ("c","d"), ("e",)]</div><div>C) [("a","b"), ("c","d")]</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. pairwise([1, 2, 3]) entrega:</p>
+        <div class="opts"><div>A) (1, 2) e (2, 3)</div><div>B) (1, 2) e (3,)</div><div>C) (1, 3)</div><div>D) [1, 2, 3]</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. No exemplo da paginação, por que a página 3 não foi pedida?</p>
+        <div class="opts"><div>A) Ela estava vazia</div><div>B) O for parou antes, e o gerador não avançou</div><div>C) A API falhou</div><div>D) O limite era 2</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Dados grandes,<br><em>memória pequena</em></h1>
+    <p class="lead">Arquivos, <code>csv.DictReader</code> e respostas paginadas são fontes naturais de iteradores. Encadeando geradores, você lê, filtra e transforma um item por vez; <code>Counter</code> e <code>defaultdict</code> agregam o resultado; <code>batched</code> agrupa em lotes e <code>pairwise</code> compara vizinhos. E nada é calculado além do que o consumidor pede.</p>
+    <div class="chips"><span>for linha in arq</span><span>Pipeline</span><span>DictReader</span><span>batched · pairwise</span><span>Paginação</span></div>
+    <div class="next">Próxima aula → 06 · Usando Regex</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files; docs.python.org/3/library/csv.html#csv.DictReader; docs.python.org/3/library/collections.html (Counter, defaultdict); docs.python.org/3/library/itertools.html (batched, pairwise); docs.python.org/3/reference/expressions.html#assignment-expressions; docs.python.org/3/library/io.html#io.StringIO, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
