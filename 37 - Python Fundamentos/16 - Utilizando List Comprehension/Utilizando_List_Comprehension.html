@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando List Comprehension</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 16</div>
+    <h1>Utilizando<br><em>list comprehension</em></h1>
+    <p class="lead">A <strong>list comprehension</strong> cria uma lista nova a partir de outra coleção em <strong>uma linha</strong>: transformar cada item, filtrar os que interessam, ou as duas coisas. É um dos recursos mais "pythônicos" da linguagem. Nesta aula: a estrutura, filtros, o if/else dentro, transformações, as versões para dicionário, set e gerador, e quando é melhor voltar para o <code>for</code> comum.</p>
+    <div class="chips"><span>[expr for x in seq]</span><span>... if condição</span><span>a if c else b</span><span>{k: v for ...}</span><span>{x for ...}</span><span>(x for ...)</span><span>Legibilidade</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: List Comprehensions, Dictionaries, Sets; Generator expressions), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>O for + append <em>em uma linha</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>comparar.py</b></div>
+      <pre class="code"><span class="c"># Com for + append</span>
+quadrados = []
+for n in range(1, 6):
+    quadrados.append(n ** 2)
+print(quadrados)
+
+<span class="c"># Com list comprehension: a mesma coisa em uma linha</span>
+quadrados = [n ** 2 for n in range(1, 6)]
+print(quadrados)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[1, 4, 9, 16, 25]
+[1, 4, 9, 16, 25]</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>[ n ** 2</b>o que vai na lista</div>
+        <div class="n"><b>for n in</b>a variável</div>
+        <div class="n key"><b>range(1, 6) ]</b>de onde vêm os itens</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Lê-se: "<strong>n ao quadrado, para cada n</strong> de 1 a 5"</li>
+        <li>Sempre cria uma <strong>lista nova</strong>; a original não muda</li>
+        <li>Mais curta e, em geral, mais rápida que o for com append</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Filtro</span><span class="n">02</span></div>
+  <h2>Só os itens <em>que interessam</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>filtro.py</b></div>
+      <pre class="code">notas = [8.5, 4.0, 9.5, 6.0, 7.0, 3.5]
+aprovadas = [n for n in notas if n &gt;= 7]
+print(aprovadas)
+nomes = ["ana", "", "bia", "  ", "caio"]
+validos = [n.title() for n in nomes if n.strip()]
+print(validos)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[8.5, 9.5, 7.0]
+['Ana', 'Bia', 'Caio']</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O <code>if</code> no <strong>final</strong> filtra: só entram os itens em que a condição é verdadeira</li>
+        <li>Dá para filtrar e transformar ao mesmo tempo (<code>n.title()</code> dos nomes válidos)</li>
+        <li><code>n.strip()</code> como condição: texto vazio é falso (aula 13)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>if e else</span><span class="n">03</span></div>
+  <h2>Escolhendo o valor <em>de cada item</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>if_else.py</b></div>
+      <pre class="code">notas = [8.5, 4.0, 9.5, 6.0]
+status = ["aprovado" if n &gt;= 7 else "reprovado" for n in notas]
+print(status)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['aprovado', 'reprovado', 'aprovado', 'reprovado']</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Posição do if</th><th>Efeito</th></tr></thead>
+      <tbody>
+        <tr><td>[x for x in seq <b>if c</b>]</td><td>Filtro: alguns itens ficam de fora</td></tr>
+        <tr><td>[<b>a if c else b</b> for x in seq]</td><td>Ternário (aula 13): todos entram, com valor escolhido</td></tr>
+      </tbody></table>
+      <div class="callout warn" style="margin:10px">No começo, com <code>else</code>; no fim, sem <code>else</code>. Trocar as posições dá <code>SyntaxError</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Transformar</span><span class="n">04</span></div>
+  <h2>Convertendo <em>dados</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>transformar.py</b></div>
+      <pre class="code">precos = ["10,50", "3,99", "120,00"]
+numeros = [float(p.replace(",", ".")) for p in precos]
+print(numeros, sum(numeros))
+palavras = "o rato roeu a roupa".split()
+print([len(p) for p in palavras])</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[10.5, 3.99, 120.0] 134.49
+[1, 4, 4, 1, 5]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Uso muito comum: converter tipos de uma lista inteira</li>
+        <li>Preços com vírgula viram <code>float</code> (aula 04) e já podem ser somados</li>
+        <li>Qualquer expressão serve: métodos, contas, funções como <code>len()</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Variações</span><span class="n">05</span></div>
+  <h2>Para dicionário, set <em>e gerador</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>dict_set.py</b></div>
+      <pre class="code">nomes = ["Ana", "Bruno", "Carla"]
+tamanhos = {nome: len(nome) for nome in nomes}   <span class="c"># dict</span>
+print(tamanhos)
+iniciais = {nome[0] for nome in ["ana", "alice", "bia"]}  <span class="c"># set</span>
+print(sorted(iniciais))
+total = sum(n ** 2 for n in range(1, 4))   <span class="c"># gerador: sem []</span>
+print(total)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">{'Ana': 3, 'Bruno': 5, 'Carla': 5}
+['a', 'b']
+14</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Sintaxe</th><th>Cria</th></tr></thead>
+      <tbody>
+        <tr><td>[expr for x in seq]</td><td>Lista</td></tr>
+        <tr><td>{k: v for x in seq}</td><td>Dicionário (aula 12)</td></tr>
+        <tr><td>{expr for x in seq}</td><td>Set, sem repetidos (aula 11)</td></tr>
+        <tr><td>(expr for x in seq)</td><td>Gerador: calcula um item por vez</td></tr>
+      </tbody></table>
+      <div class="callout" style="margin:10px">Dentro de <code>sum()</code>, <code>max()</code> etc., o gerador dispensa os colchetes e não monta a lista inteira na memória.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Legibilidade</span><span class="n">06</span></div>
+  <h2>Quando <em>não</em> usar</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>legibilidade.py</b></div>
+      <pre class="code">dados = [3, -1, 8, 0, -5, 12]
+<span class="c"># Difícil de ler: duas condições e uma conta numa linha só</span>
+r = [x * 2 if x &gt; 0 else 0 for x in dados if x != 0 and x &gt; -3]
+print(r)
+<span class="c"># Mais claro com for comum</span>
+resultado = []
+for x in dados:
+    if x != 0 and x &gt; -3:
+        resultado.append(x * 2 if x &gt; 0 else 0)
+print(resultado)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[6, 0, 16, 24]
+[6, 0, 16, 24]</pre>
+    </div>
+    <div>
+      <div class="callout good" style="margin-top:0">Recomendação do guia (cap. 10): comprehension para transformações <strong>simples</strong>, de uma linha. Com duas ou mais condições, ou lógica difícil de ler, prefira o <code>for</code> comum: <strong>legibilidade importa</strong>.</div>
+      <ul class="checklist" style="margin-top:10px">
+        <li>As duas versões dão o mesmo resultado; a segunda se lê em voz alta</li>
+        <li>Não use comprehension só pelos efeitos (por exemplo, para dar <code>print</code>): para isso, <code>for</code></li>
+      </ul>
+      <div class="promptbox" style="margin-top:10px">Explique esta list comprehension em
+português, passo a passo, e diga se ela ficaria
+mais legível como um for comum.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Limpando <em>uma lista de e-mails</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> de uma lista bagunçada, fique só com os textos que têm <code>@</code>, sem espaços e em minúsculas. Depois, monte o set dos domínios.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: limpar uma lista de e-mails</span>
+brutos = [" Ana@Ex.com", "bia@ex.com ", "", "CAIO@EX.COM", "x"]
+emails = [e.strip().lower() for e in brutos if "@" in e]
+print(emails)
+dominios = {e.split("@")[1] for e in emails}
+print(dominios)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">['ana@ex.com', 'bia@ex.com', 'caio@ex.com']
+{'ex.com'}</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Filtro (<code>if "@" in e</code>) + transformação (<code>.strip().lower()</code>)</li>
+        <li>Set comprehension para domínios únicos</li>
+        <li>Desafio: conte quantos e-mails há por domínio (aula 12)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. [x * 2 for x in [1, 2, 3]] vale:</p>
+        <div class="opts"><div>A) [1, 2, 3, 1, 2, 3]</div><div>B) [2, 4, 6]</div><div>C) 12</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. [x for x in range(6) if x % 2] vale:</p>
+        <div class="opts"><div>A) [0, 2, 4]</div><div>B) [1, 3, 5]</div><div>C) [0, 1, 2, 3, 4, 5]</div><div>D) []</div></div>
+        <div class="answer"><b>B.</b> Resto 1 é verdadeiro.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. {n: n * n for n in range(3)} cria:</p>
+        <div class="opts"><div>A) Uma lista</div><div>B) Um set</div><div>C) Um dicionário</div><div>D) Uma tupla</div></div>
+        <div class="answer"><b>C.</b> {0: 0, 1: 1, 2: 4}.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Quando preferir o for comum?</p>
+        <div class="opts"><div>A) Nunca</div><div>B) Quando a lógica fica difícil de ler</div><div>C) Sempre</div><div>D) Só com números</div></div>
+        <div class="answer"><b>B.</b> Legibilidade importa.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Listas novas<br><em>em uma linha</em></h1>
+    <p class="lead"><code>[expressão for item in coleção if condição]</code> transforma e filtra numa linha só. O ternário no começo escolhe o valor de cada item; chaves criam dicionário ou set; parênteses criam um gerador. E quando a linha fica difícil de ler, o <code>for</code> comum é a melhor escolha.</p>
+    <div class="chips"><span>[expr for x in seq]</span><span>if no fim filtra</span><span>a if c else b</span><span>{k: v ...} · {x ...}</span><span>Legibilidade</span></div>
+    <div class="next">Próxima aula → 17 · Utilizando Funções</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/datastructures.html (List Comprehensions, Sets, Dictionaries); docs.python.org/3/reference/expressions.html#generator-expressions, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
