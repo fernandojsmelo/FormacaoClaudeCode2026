@@ -73,3 +73,29 @@ Resumo (`parse_google.py`): `q|` (pergunta), `h|`/`h4|`, `p|`, `li|`, `n|` (item
 - **Diagramas em texto do resumo** perdem o recuo no `parse_google.py`. No XML, as linhas em `left=156` começam na margem do bloco e as em `left=166` têm um espaço a mais; case as linhas em sequência (não por dicionário, porque `│` e `▼` se repetem).
 - **Seções só com links** ("Confira os principais resultados da Web..."): reproduza como `li| Título · <em>Fonte</em>`, montando o título pelos trechos da linha 33 px abaixo do nome da fonte no XML (ou no topo da página seguinte) e descartando as abas (Tudo, Imagens, Vídeos...) que caem na mesma altura.
 - **Texto sobreposto** no original atrapalha o `seqdiff.py`; para a comparação final, extraia as palavras pelo XML de cada PDF.
+
+## Ferramentas auxiliares (Role plays 44 a 47)
+
+Rode na pasta de trabalho com `PYTHONPATH=scripts/roleplay` (os módulos se importam entre si). Em `exemplos/` ficam os scripts de correção e os `metaNN.json` usados nos Role plays 41 a 47, como referência de uso.
+
+| Script | Para quê |
+|---|---|
+| `xmlq.py` | `load(x.xml)` devolve `(página, top, left, fonte, texto)` de cada pedaço do XML do `pdftohtml -xml -i`; `python3 xmlq.py x.xml "trecho"` mostra o contexto. |
+| `emoji_rp.py` | Acha os emojis quebrados nos títulos da transcrição (react-pdf), escolhe o emoji pelo resumo e aplica em `h|`/`p|`/`li|`. Os que aparecem como "padrão" ou "??" precisam de decisão manual. |
+| `emo_res.py` | Lista os emojis do XML do resumo (fonte NotoColorEmoji) com o contexto. É a fonte de verdade para os emojis que o parser perde dentro do código. |
+| `fences.py` | `fences()` transforma trechos ```` ``` ```` digitados na conversa em blocos de código com o recuo do XML; `recuo()` devolve o recuo do XML às linhas `c|`; `nulos()` conserta turnos partidos por `\x00`. |
+| `rpfix.py` | Classe `Fix` para o markup do resumo: `rep`, `block`, `pct` ("100 %"), `headings` (títulos que perderam palavras em fonte de código), `code_xml` (código não presente na transcrição: recuo e emojis pelo XML), `code_from` (código completo pela transcrição), `numbered`, `t_to_h`, `save`. |
+| `links_google.py` | Remonta as listas "Confira os principais resultados da Web" como `li| Título · <em>Fonte</em>`. |
+| `cmp_xml.py` | Diff de palavras entre o original e o novo, pelo XML. |
+| `sheet.py` | Folha de contato do PDF para a checagem visual. |
+| `build_pdf.sh` / `render_resumo_pdf.sh` | Gera o PDF pelo Chrome e mostra o número de páginas; o segundo também renderiza o resumo com o CSS dado. |
+
+Lições destes role plays:
+
+- O `codigo_xml.py` agora casa os blocos **pelo conteúdo** (casar por ordem deslocava os blocos quando o markup não reconhecia algum, por exemplo com o rótulo "python" grudado no fim da frase).
+- Emojis do plano básico (BMP) perdem o byte alto: `¡` = ⚡ ou ➡, `”` = ⚔, `(` = ✨, `L` = ❌; os de byte baixo invisível somem ou viram espaço (⚠, ✅, ⬅). Decodifique pelo contexto do resumo e nunca invente: se não houver fonte, remova o glifo e registre.
+- Troque 📈 por 🚀 (renderiza quebrado neste ambiente).
+- Linhas de rodapé/cabeçalho de página podem vazar para dentro de um bloco de código da transcrição; remova-as.
+- No resumo, o código que não está na transcrição fica cortado à direita (como no original), mas com o recuo e os emojis do XML; registre isso no `foot`.
+- Gráficos do original podem ser redesenhados em SVG com os mesmos eixos e legendas (ver `exemplos/fix_res44.py`).
+- O `render_resumo.py` mantém a numeração de listas interrompidas por código (`<ol start>`), e o `render_rp.py` aceita `**negrito**` e `⏎` (quebra de linha) nas células de tabela.

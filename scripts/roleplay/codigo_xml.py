@@ -5,12 +5,12 @@ Uso: python3 scripts/roleplay/codigo_xml.py RolePlayNN.pdf rpNN.txt rpNN.codigo.
 O parse_rp.py perde o recuo e às vezes transforma linhas de código em p|/h| (comentários
 // viram título, linhas que começam com { somem). O XML do pdftohtml guarda o recuo:
 este script acha no XML cada bloco "<linguagem> ... Use o código com cuidado." e troca,
-na mesma ordem, os blocos do markup:
+os blocos do markup, casando cada um pelo conteúdo (o mais parecido):
   - "p| <linguagem>" ... "p| Use o código com cuidado."  (código que virou parágrafo)
   - "code:" ... "endcode:"                                 (código já detectado)
 O rótulo da linguagem é descartado, como nas outras reconstruções.
 """
-import html, os, re, subprocess, sys, tempfile
+import difflib, html, os, re, subprocess, sys, tempfile
 
 LINGUAGENS = {"javascript", "typescript", "json", "python", "bash", "shell", "text", "sql",
               "html", "css", "yaml", "plaintext", "tsx", "jsx", "markdown", "sh"}
@@ -34,7 +34,7 @@ while i < len(linhas_xml):
     i += 1
 
 markup = open(entrada, encoding="utf-8").read().split("\n")
-out, k, i = [], 0, 0
+out, k, i, usados = [], 0, 0, set()
 while i < len(markup):
     l = markup[i]
     eh_rotulo = l.startswith("p| ") and l[3:].strip().lower() in LINGUAGENS
@@ -43,10 +43,18 @@ while i < len(markup):
         j = i + 1
         while j < len(markup) and not (markup[j] == f"p| {NOTA}" if fim else markup[j] in ("endcode:", "endnote:")):
             j += 1
-        if k >= len(blocos):
+        # casa pelo conteúdo: o bloco do XML (ainda não usado) mais parecido com o do markup
+        atual = " ".join(re.sub(r"^(c\||p\|)\s?", "", x) for x in markup[i + 1:j])
+        livres = [n for n in range(len(blocos)) if n not in usados]
+        if not livres:
             sys.exit(f"Mais blocos no markup do que no XML (linha {i + 1})")
+        nota = lambda n: difflib.SequenceMatcher(None, re.sub(r"\s+", " ", atual), re.sub(r"\s+", " ", " ".join(blocos[n]))).ratio()
+        melhor = max(livres, key=nota)
+        if nota(melhor) < 0.5:
+            print(f"  aviso: bloco da linha {i + 1} parece não ter par no XML (semelhança {nota(melhor):.2f})")
+        usados.add(melhor)
         out.append("code:")
-        out += ["c| " + c for c in blocos[k]]
+        out += ["c| " + c for c in blocos[melhor]]
         out.append("endcode:" if eh_rotulo else markup[j])
         k += 1
         i = j + 1

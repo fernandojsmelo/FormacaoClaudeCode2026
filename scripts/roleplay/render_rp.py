@@ -12,6 +12,10 @@ def inline(x):
     if m and not m.group(1).startswith(("Ex", "Em resumo")) and "(Tipo" not in m.group(1) and "(ex" not in m.group(1) and "<strong>" not in m.group(1):
         return f"<strong>{m.group(1)}:</strong> {m.group(2)}"
     return x
+def cell(x):
+    """célula de tabela: **negrito** e ⏎ para quebra de linha"""
+    x = re.sub(r"\*\*(.+?)\*\*", "\u0001\\1\u0002", x)
+    return E(x).replace("\u0001", "<strong>").replace("\u0002", "</strong>").replace(" ⏎ ", "<br>")
 title = meta = ""
 turns = []; cur = None
 for ln in open(src).read().splitlines():
@@ -42,7 +46,7 @@ for t in turns:
             rows = []
             while i < len(items) and items[i][0] in ("th", "tr"):
                 kk, vv = items[i]; tag = "th" if kk == "th" else "td"
-                rows.append("<tr>" + "".join(f"<{tag}>{E(c.strip())}</{tag}>" for c in vv.split(" | ")) + "</tr>"); i += 1
+                rows.append("<tr>" + "".join(f"<{tag}>{cell(c.strip())}</{tag}>" for c in vv.split(" | ")) + "</tr>"); i += 1
             out.append("    <table>" + "\n    ".join(rows) + "</table>"); continue
         if k == "code":
             i += 1; buf = []

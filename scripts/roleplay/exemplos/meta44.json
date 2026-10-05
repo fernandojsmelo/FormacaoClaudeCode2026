@@ -1,0 +1,30 @@
+{
+ "rp": "44",
+ "h1": "Estruturas de dados em Python: de “lista pra tudo” a um sistema de estoque",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e o Iniciante que “Usa Lista pra Tudo”\": lista, tupla, set e dicionário, por que a busca em lista é lenta, o erro \"unhashable\", e um controle de estoque construído passo a passo (cadastro, baixa, relatório, menu, JSON, try/except, orientação a objetos, módulos, histórico de vendas e interface com Tkinter), além de laços e list comprehension.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 09:49",
+ "secs": [
+  "Lista, tupla, set e dicionário",
+  "Lista em set ou como chave: unhashable",
+  "Links: estruturas de dados no estoque",
+  "Exemplos para o estoque",
+  "A função adicionar_produto()",
+  "Links: dar baixa no estoque",
+  "A função dar_baixa_produto()",
+  "O relatório do estoque",
+  "O menu interativo",
+  "Salvando o estoque em JSON",
+  "Protegendo a entrada com try/except",
+  "O estoque com orientação a objetos",
+  "Removendo produtos do catálogo",
+  "Links: organizar o projeto em arquivos",
+  "Separando o código em arquivos",
+  "Histórico de vendas e faturamento",
+  "Interface gráfica com Tkinter",
+  "for × while: definido e indefinido",
+  "O perigo do while e o enumerate()",
+  "List comprehension e generators"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos; nas seções 03, 06 e 14, a busca devolveu apenas a lista de links, reproduzida com título e fonte. O gráfico da seção 01 foi redesenhado com os mesmos eixos e legendas. Os blocos de código aparecem cortados à direita na página impressa; os que também estão na transcrição da prática foram completados com ela, e os demais foram mantidos cortados, com o recuo e os emojis do original.",
+ "body_css": "body{font-size:11.2pt;line-height:1.72}\ntable{break-inside:avoid}"
+}

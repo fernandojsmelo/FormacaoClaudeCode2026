@@ -28,7 +28,7 @@ for n, t in enumerate(turns):
             while i < len(items) and items[i][0] == "li": buf.append(f"      <li>{items[i][1]}</li>"); i += 1
             body.append("    <ul>\n" + "\n".join(buf) + "\n    </ul>"); continue
         if k == "n":
-            buf = []
+            buf = []; m0 = re.match(r'^(\d+)\.', v); start = int(m0.group(1)) if m0 else 1
             while i < len(items) and items[i][0] in ("n", "sub", "subli"):
                 if items[i][0] == "n": buf.append(f"      <li>{num(items[i][1])}</li>"); i += 1
                 else:
@@ -36,7 +36,7 @@ for n, t in enumerate(turns):
                     while i < len(items) and items[i][0] == kind: sub.append(f"<li>{num(items[i][1]) if kind == 'sub' else items[i][1]}</li>"); i += 1
                     tag = "ol" if kind == "sub" else "ul"
                     buf[-1] = buf[-1][:-5] + f"<{tag}>" + "".join(sub) + f"</{tag}></li>"
-            body.append("    <ol>\n" + "\n".join(buf) + "\n    </ol>"); continue
+            body.append(f"    <ol{f' start=\"{start}\"' if start != 1 else ''}>\n" + "\n".join(buf) + "\n    </ol>"); continue
         if k in ("th", "tr"):
             rows = []
             while i < len(items) and items[i][0] in ("th", "tr"):

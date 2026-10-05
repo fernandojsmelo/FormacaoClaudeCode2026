@@ -1,0 +1,28 @@
+{
+ "rp": "46",
+ "h1": "Funções em Python: *args, **kwargs, lambda, recursão e além",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e a Aluna Travada no “Resto” das Funções\": *args e **kwargs, lambda dentro do sorted(), recursividade e o caso base, o efeito colateral dos valores padrão mutáveis, um RPG de texto que junta tudo, decoradores (inclusive em rotas web e logins), bancos de dados com SQLite e ORM, e tratamento de erros com try/except.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 10:29",
+ "secs": [
+  "Links: funções, *args e **kwargs",
+  "*args, **kwargs, lambda e recursão",
+  "Um quiz de *args e **kwargs",
+  "Praticando *args e **kwargs",
+  "O desafio do restaurante",
+  "**kwargs no pedido e lambda no sorted()",
+  "Ordenando por nome e recursividade",
+  "Fatorial e valores padrão mutáveis",
+  "O projeto do RPG de texto",
+  "O RPG rodando",
+  "Decoradores",
+  "O RPG com decoradores",
+  "Resumo: funções e argumentos",
+  "Decoradores em páginas web e logins",
+  "Bancos de dados no Python",
+  "try/except no banco de dados",
+  "Resumo: funções lambda",
+  "Resumo: funções recursivas"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos; na seção 01, a busca devolveu apenas a lista de links, reproduzida com título e fonte. Os blocos de código aparecem cortados à direita na página impressa; os que também estão na transcrição da prática foram completados com ela, e os demais (seções 12 a 16) foram mantidos cortados, com o recuo e os emojis do original.",
+ "body_css": "body{font-size:11.2pt;line-height:1.72}\ntable{break-inside:avoid}"
+}

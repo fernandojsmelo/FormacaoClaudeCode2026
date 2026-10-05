@@ -1,0 +1,26 @@
+{
+ "rp": "43",
+ "h1": "Strings em Python: da imutabilidade a uma automação de planilhas",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e o Analista do + Frankenstein\": por que nome.upper() \"não funciona\" (imutabilidade), f-strings no lugar de concatenações, o guia rápido de métodos de string, a padronização de nomes com partículas em minúsculo, a limpeza de CPFs e datas com Pandas, os zeros à esquerda com zfill, a busca do arquivo mais recente com glob e pathlib, o agendamento no Windows e no cron e o arquivo de log.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 09:20",
+ "secs": [
+  "Imutabilidade, f-strings e os métodos essenciais",
+  "Padronizando nomes de clientes",
+  "Aplicando a função na planilha com Pandas",
+  "Limpando CPFs e padronizando datas",
+  "Zeros à esquerda no CPF",
+  "Links: arquivo que muda de nome (1)",
+  "Links: arquivo que muda de nome (2)",
+  "Links: arquivo que muda de nome (3)",
+  "Imutabilidade e o arquivo mais recente",
+  "Buscando na pasta Downloads",
+  "Agendando o script toda sexta-feira",
+  "Fechando o ciclo da automação",
+  "A caixa de ferramentas de métodos",
+  "Despedida",
+  "f-strings e encoding",
+  "Encerramento"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos. Nas seções 06 a 08, a busca devolveu apenas a lista de links, reproduzida com título e fonte. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:11pt;line-height:1.68}\ntable{break-inside:avoid}"
+}

@@ -1,0 +1,22 @@
+{
+ "rp": "45",
+ "h1": "Laços em Python: for, while e list comprehension",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e a Aluna que “Usa for pra Tudo”\": quando usar for ou while, como garantir que o while termina, quando a list comprehension substitui o for e quando não, a medição de velocidade com timeit, um validador de senha com while e limite de tentativas, range() e enumerate(), e as \"primas\" da list comprehension (dict, set e generator).",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 10:10",
+ "secs": [
+  "for, while e list comprehension",
+  "Como garantir que o while termina",
+  "Quando o for não dá conta",
+  "Um validador de senha com while",
+  "Testando no editor",
+  "for × while: definido e indefinido",
+  "O perigo do while e as ferramentas do for",
+  "Exemplos dos laços",
+  "Testando o while da energia",
+  "Links: list comprehension",
+  "As primas da list comprehension",
+  "Foco no básico"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; nas seções 08 e 11, a página impressa mostra só o fim da pergunta. Os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos; na seção 10, a busca devolveu apenas a lista de links, reproduzida com título e fonte. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:11pt;line-height:1.68}\ntable{break-inside:avoid}"
+}
