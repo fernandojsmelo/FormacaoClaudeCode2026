@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Role Play 43 — Transcrição</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:13mm 14mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.4pt;line-height:1.45}
+.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px}
+h1{font-family:var(--display);font-weight:600;font-size:16pt;line-height:1.2;margin:0 0 4px}
+.meta{font-family:var(--mono);font-size:7.5pt;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:9px}
+.turn{margin:0 0 7px;break-inside:auto}
+.who{font-family:var(--mono);font-size:7.4pt;color:var(--muted);margin-bottom:2px}
+.who b{color:var(--accent-ink);font-weight:600}
+.who{break-after:avoid;page-break-after:avoid}
+.msg h4{break-after:avoid;page-break-after:avoid}
+.msg p,.msg li,.turn.user .msg{orphans:3;widows:3}
+.turn.user .msg{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-style:italic}
+.turn.ai .who{text-align:right}
+.turn.ai .msg{background:var(--accent-soft);border:1px solid var(--border-2);border-radius:8px;padding:7px 10px;margin-left:28px}
+.msg p{margin:0 0 4px}
+.msg p:last-child,.msg ul:last-child,.msg ol:last-child{margin-bottom:0}
+.msg h4{font-size:8.9pt;margin:6px 0 3px;color:var(--ink)}
+.msg ul,.msg ol{margin:0 0 4px;padding-left:16px}
+.msg li{margin:1px 0}
+.msg strong{color:var(--accent-ink);font-weight:600}
+.msg code{font-family:var(--mono);font-size:7.8pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 3px}
+.msg blockquote{margin:3px 0 5px;padding:5px 9px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:6px;font-family:var(--mono);font-size:7.5pt;line-height:1.45;color:var(--ink)}
+.msg .err{color:var(--muted);font-style:italic}
+.end{text-align:center;font-family:var(--mono);font-size:8pt;color:var(--muted);margin:10px 0 6px}
+.foot{font-family:var(--mono);font-size:7.5pt;color:var(--muted);border-top:1px solid var(--border);padding-top:8px;margin-top:14px}
+.msg table{width:100%;border-collapse:collapse;margin:4px 0 6px;font-size:8pt;break-inside:auto}
+.msg th{background:var(--surface-2);font-family:var(--mono);font-size:7pt;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);text-align:left;padding:4px 6px;border:1px solid var(--border-2)}
+.msg td{padding:4px 6px;border:1px solid var(--border-2);vertical-align:top;background:#1C1612}
+.msg tr{break-inside:avoid}
+.msg .codenote{font-family:var(--mono);font-size:6.8pt;color:var(--muted);margin:-2px 0 5px}
+.msg .flow{margin:3px 0 6px;padding:6px 9px;background:#100D0A;border:1px solid var(--border-2);border-radius:6px;font-family:var(--mono);font-size:7.5pt;line-height:1.5;text-align:center}
+.msg .flow .ar{color:var(--accent);margin:1px 0}
+.msg blockquote div{margin:0 0 2px}
+body{line-height:1.4}
+.msg p{margin:0 0 3px}
+.msg blockquote div{white-space:pre-wrap}
+blockquote div{min-height:1.2em}
+body{font-size:9.8pt;line-height:1.47}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · IA com Claude e Cowork</div>
+  <h1>O Especialista em Python e o Analista do + Frankenstein</h1>
+  <div class="meta">Transcrição da prática 1 · 5 de out. de 2026 9:08</div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 00:00</div><div class="msg">
+    <p>"Opa! Eu mexo bastante com texto em Python — nomes, campos de planilha, mensagens — e vivo lutando com strings. Meu código de juntar texto é um Frankenstein de + com aspas e espaços, e nunca fica bom.</p>
+    <p>Pior: teve uma hora que eu fiz nome.upper() esperando deixar a variável maiúscula, e ela simplesmente NÃO mudou — fiquei sem entender. E sei que existe um monte de método (split, strip, replace...), mas eu nunca sei qual usar nem quando.</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">01:40 <b>Você</b></div><div class="msg">
+    <p>Seja muito bem-vindo ao clube!</p>
+    <p>Lidar com strings em Python é uma das tarefas mais comuns, mas esses pequenos detalhes realmente costumam confundir bastante no começo.</p>
+    <p>O grande mistério do seu nome.upper() que "não funcionou" é que as strings em Python são imutáveis. Isso significa que você nunca consegue alterar uma string existente; os métodos sempre criam uma string nova.</p>
+    <p>Para resolver o Frankenstein de concatenações, entender a imutabilidade e dominar os principais métodos, veja o guia prático abaixo:</p>
+    <h4>1. O Mistério do upper() Desvendado (Imutabilidade)</h4>
+    <p>Como as strings não mudam no mesmo lugar da memória, quando você faz nome.upper(), o Python gera um novo texto na memória e o "joga no ar". Se você não capturar esse resultado em uma variável, ele some.</p>
+    <ul><li>❌ O jeito que não funciona:</li></ul>
+    <blockquote><div>nome = "carlos"</div><div>nome.upper()  # O Python cria "CARLOS", mas ninguém guarda</div><div>print(nome)  # Continua mostrando "carlos"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <ul><li><strong>O jeito certo:</strong> Você precisa sobrescrever a variável ou criar uma nova.</li></ul>
+    <blockquote><div>nome = "carlos"</div><div>nome = nome.upper()  # Agora sim, você guardou o resultado</div><div>print(nome)  # Mostra "CARLOS"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>2. Chega de Frankenstein: Use f-strings 🪄</h4>
+    <p>Para juntar textos, variáveis e espaços sem virar um mar de + " " +, use as f-strings (format strings). Elas deixam o código limpo, legível e profissional. Você só precisa colocar um f antes das aspas e colocar as variáveis dentro de chaves {}.</p>
+    <ul><li>❌ Antes (Frankenstein):</li></ul>
+    <blockquote><div>mensagem = "Olá, " + nome + "! Seu saldo no plano " + plano + " é de R$ " + str(saldo) + "."</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <ul><li>Depois (f-string):</li></ul>
+    <blockquote><div>mensagem = f"Olá, {nome}! Seu saldo no plano {plano} é de R$ {saldo}."</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p><strong>3. Guia Rápido:</strong> Qual método usar e quando?</p>
+    <p>Aqui está o mapa da mina para você nunca mais hesitar na hora de tratar os dados da sua planilha ou sistema:</p>
+    <table><tr><th>O que você quer fazer?</th><th>Método ideal</th><th>Exemplo prático</th></tr>
+    <tr><td>Limpar espaços inúteis nas pontas (comum em planilhas)</td><td>.strip()</td><td>"  joao@email.com  ".strip() ↳ "joao@email.com"</td></tr>
+    <tr><td>Dividir um texto em uma lista de pedaços</td><td>.split()</td><td>"Ana,Maria,Pedro".split(",") ↳ ['Ana', 'Maria', 'Pedro']</td></tr>
+    <tr><td>Juntar uma lista de textos usando um separador</td><td>.join()</td><td>"-".join(['2026', '10', '05']) ↳ "2026-10-05"</td></tr>
+    <tr><td>Trocar uma palavra/caractere por outro</td><td>.replace()</td><td>"R$ 1.500,00".replace(".", "") ↳ "R$ 1500,00"</td></tr>
+    <tr><td>Saber se o texto começa ou termina com algo</td><td>.startswith() .endswith()</td><td>"relatorio_final.pdf".endswith(".pdf") ↳ True</td></tr></table>
+    <h4>Combinando tudo na prática 🚀</h4>
+    <p>Imagine que você recebeu um nome bagunçado de uma planilha: "   MArIa sILVA   " e precisa padronizar para salvar no banco de dados. Você pode encadear os métodos:</p>
+    <blockquote><div>nome_sujo = "   MArIa sILVA   "</div><div># .strip() tira os espaços e .title() deixa as primeiras letras maiúsculas</div><div>nome_limpo = nome_sujo.strip().title()</div><div>print(nome_limpo)  # Resultado: "Maria Silva"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Para deixarmos seu código ainda mais redondo, me conta:</p>
+    <ul><li>Qual é o próximo script ou automação de texto que você está tentando montar agora?</li>
+    <li>Tem algum padrão de texto muito específico (tipo extrair CNPJ, limpar datas ou formatar moedas) que está te dando dor de cabeça?</li></ul>
+    <p>Assim posso te passar os exemplos exatos para o seu problema atual!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 01:52</div><div class="msg">
+    <p>Rapaz, gostei do "guia prático" que você montou aí! Tá bem direto ao ponto e cheio de exemplos úteis. Confesso que já tô mais claro no lance da imutabilidade e sobre usar f-strings em vez de ficar no caos do +. Sobre o que você perguntou no final, o próximo desafio de texto aqui é padronizar nomes de clientes de uma planilha — coisa tipo " joana DA silva " virar "Joana da Silva". O que você acha? Alguma abordagem top pra isso?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">02:42 <b>Você</b></div><div class="msg">
+    <p>Fico muito feliz que o guia tenha ajudado a clarear as coisas!</p>
+    <p>Esse problema de padronizar nomes de clientes é um clássico absoluto de quem trabalha com planilhas, e o Python ajuda muito a resolver isso.</p>
+    <p>Se você usar apenas o .title(), o Python vai transformar " joana DA silva " em "Joana Da Silva". Fica quase bom, mas aquele "Da" com "D" maiúsculo entrega que foi um robô que fez. No Brasil, o padrão elegante para nomes próprios é manter as partículas de ligação (da, de, do, das, dos, e) em letra minúscula.</p>
+    <p>A abordagem mais eficiente e elegante para resolver isso de vez combina o que você já aprendeu (.strip(), .split() e .join()) com uma regrinha para ignorar essas exceções.</p>
+    <p>Veja o código ideal para essa tarefa:</p>
+    <blockquote><div>def padronizar_nome(nome_sujo):</div><div>    # 1. Limpa os espaços extras nas pontas e põe tudo em minúsculo</div><div>    nome_base = nome_sujo.strip().lower()</div><div></div><div>    # 2. Divide o nome em uma lista de palavras</div><div>    palavras = nome_base.split()</div><div></div><div>    # Lista de exceções que devem continuar em minúsculo</div><div>    excecoes = ["de", "da", "do", "das", "dos", "e"]</div><div></div><div>    nome_formatado = []</div><div>    for palavra in palavras:</div><div>        if palavra in excecoes:</div><div>            nome_formatado.append(palavra)  # Mantém minúscula (ex: "da")</div><div>        else:</div><div>            nome_formatado.append(palavra.capitalize())  # Primeira letra maiúscula (ex: "Joana")</div><div></div><div>    # 3. Junta tudo de volta com um espaço entre as palavras</div><div>    return " ".join(nome_formatado)</div><div># --- Testando a abordagem ---</div><div>nome_planilha = "    joana   DA    silva   "</div><div>nome_perfeito = padronizar_nome(nome_planilha)</div><div>print(f"Antes: '{nome_planilha}'")</div><div>print(f"Depois: '{nome_perfeito}'")</div><div># Resultado: "Joana da Silva"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Por que essa abordagem é excelente?</p>
+    <p><strong>1. Adeus múltiplos espaços:</strong> Se o usuário digitou três espaços entre "joana" e "DA", o .split() sem nenhum argumento dentro dos parênteses remove automaticamente todos os espaços extras do meio, não importa quantos sejam.</p>
+    <p><strong>2. Gramática correta:</strong> O if palavra in excecoes garante o "da Silva" ou "Pedro de Souza" perfeito.</p>
+    <p><strong>3. Fácil de expandir:</strong> Se amanhã aparecer um cliente com "del" ou "von" no nome, basta colocar essas palavras dentro da lista de excecoes.</p>
+    <p>Como você está lidando com uma planilha, me conta:</p>
+    <ul><li>Você já está usando a biblioteca Pandas para ler esse arquivo ou está abrindo com o módulo padrão de CSV do Python?</li>
+    <li>Quer ajuda para aplicar essa função diretamente na coluna inteira da sua planilha para salvar um novo arquivo limpo?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 02:49</div><div class="msg">
+    <p>Caramba, que abordagem completa! Essa ideia de ajustar as partículas como "da", "de" e afins é genial pra deixar os nomes com cara de profissional. Sobre a planilha, tô usando Pandas sim! Inclusive, seria ótimo saber como aplicar essa função direto na coluna de nomes e já exportar um arquivo novo, porque ficar ajustando manualmente seria o caos. Como posso fazer isso no Pandas?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">03:35 <b>Você</b></div><div class="msg">
+    <p>Usar o Pandas é a melhor escolha para isso!</p>
+    <p>Com ele, você não precisa criar um laço de repetição (for) para varrer a planilha. O Pandas possui o método .apply(), que aplica a sua função em todas as linhas da coluna de uma vez só, de forma extremamente rápida.</p>
+    <p>Aqui está o script pronto para você ler a planilha, tratar os nomes e exportar um arquivo novo e limpo:</p>
+    <blockquote><div>import pandas as pd</div><div># 1. Copie a função que criamos (com o ajuste de minúsculas)</div><div>def padronizar_nome(nome_sujo):</div><div>    # Trata valores nulos ou que não são texto (evita erros na planilha)</div><div>    if pd.isna(nome_sujo) or not isinstance(nome_sujo, str):</div><div>        return nome_sujo</div><div></div><div>    nome_base = nome_sujo.strip().lower()</div><div>    palavras = nome_base.split()</div><div>    excecoes = ["de", "da", "do", "das", "dos", "e"]</div><div></div><div>    nome_formatado = []</div><div>    for palavra in palavras:</div><div>        if palavra in excecoes:</div><div>            nome_formatado.append(palavra)</div><div>        else:</div><div>            nome_formatado.append(palavra.capitalize())</div><div></div><div>    return " ".join(nome_formatado)</div><div># 2. Carregue a sua planilha (mude para .read_excel() se for arquivo do Excel)</div><div>df = pd.read_csv("clientes.csv")</div><div># 3. Aplique a mágica na coluna de nomes</div><div># (Substitua 'Nome' pelo nome exato da sua coluna)</div><div>df['Nome'] = df['Nome'].apply(padronizar_nome)</div><div># 4. Exporte para um novo arquivo limpo (sem salvar o índice do Pandas)</div><div>df.to_csv("clientes_padronizados.csv", index=False, encoding="utf-8")</div><div>print("Planilha padronizada e salva com sucesso! 🎉")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>O que mudou aqui para funcionar no mundo real?</p>
+    <ul><li>Proteção contra erros (pd.isna): Se a sua planilha tiver alguma linha com o nome em branco (célula vazia), o Python daria erro ao tentar usar .strip(). Adicionei uma checagem no início da função para ignorar essas linhas e seguir em frente sem travar o script.</li>
+    <li>O poder do .apply(): Essa linha df['Nome'].apply(padronizar_nome) faz o Pandas rodar a função linha por linha nos bastidores em alta performance.</li></ul>
+    <p>Para deixar seu script 100% pronto para rodar, me conta:</p>
+    <ul><li>O seu arquivo original está no formato CSV ou é do Excel (.xlsx)?</li>
+    <li>Existe mais alguma coluna nessa planilha que precisa de um trato, como CPFs com pontos e traços bagunçados, datas em formatos diferentes ou e-mails com letras maiúsculas?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 03:40</div><div class="msg">
+    <p>Sensacional! Esse passo a passo deixa tudo super prático e organizado. Meu arquivo é um CSV mesmo, então já vou testar esse script pra transformar os nomes. Agora, sobre as outras colunas, tem uma de CPF cheia de pontos e traços que eu queria limpar, deixando só os números. Também tem uma de datas com formatos variados que seria bom padronizar. Alguma dica pra essas situações?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">04:25 <b>Você</b></div><div class="msg">
+    <p>Isso é muito comum!</p>
+    <p>Dados vindos de formulários ou sistemas antigos sempre chegam nesse "caos formatado". No Pandas, resolver isso é super rápido porque ele tem ferramentas nativas excelentes para tratar números e datas.</p>
+    <p>Veja como estender o seu script para limpar o CPF (deixando só números) e padronizar as datas para o formato brasileiro (DD/MM/AAAA):</p>
+    <h4>1. Limpando o CPF (Apenas números)</h4>
+    <p>Para limpar o CPF, não precisamos criar uma função inteira. O Pandas tem o método .str.replace(). Podemos usar uma Expressão Regular (Regex) básica [^\d] que significa: "ache tudo o que NÃO for um número e jogue fora".</p>
+    <blockquote><div># Remove pontos, traços, espaços e barras, mantendo só os números</div><div>df['CPF'] = df['CPF'].astype(str).str.replace(r'[^\d]', '', regex=True)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Nota: Adicionamos o .astype(str) antes para garantir que o Pandas trate a coluna como texto, evitando erros caso algum CPF tenha vindo como número puro.</p>
+    <h4>2. Padronizando as Datas</h4>
+    <p>Se a coluna de datas tem formatos misturados (como 2026-10-05, 05/10/26 ou 05-10-2026), a melhor saída é usar o pd.to_datetime(). Ele é inteligente o suficiente para identificar e converter quase todos os formatos para um padrão interno do Pandas. Depois, nós formatamos de volta para o estilo brasileiro.</p>
+    <blockquote><div># 1. Converte a coluna para o formato de data real (o 'errors="coerce" transforma textos inválidos em "Vazio")</div><div>df['Data_Cadastro'] = pd.to_datetime(df['Data_Cadastro'], errors='coerce')</div><div># 2. Formata a data para o padrão brasileiro: Dia/Mês/Ano com 4 dígitos</div><div>df['Data_Cadastro'] = df['Data_Cadastro'].dt.strftime('%d/%m/%Y')</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>O Script Completo e Turbinado</h4>
+    <p>Juntando tudo (Nomes, CPFs e Datas), o seu código final vai ficar assim:</p>
+    <blockquote><div>import pandas as pd</div><div>def padronizar_nome(nome_sujo):</div><div>    if pd.isna(nome_sujo) or not isinstance(nome_sujo, str):</div><div>        return nome_sujo</div><div>    nome_base = nome_sujo.strip().lower()</div><div>    palavras = nome_base.split()</div><div>    excecoes = ["de", "da", "do", "das", "dos", "e"]</div><div>    nome_formatado = []</div><div>    for palavra in palavras:</div><div>        if palavra in excecoes:</div><div>            nome_formatado.append(palavra)</div><div>        else:</div><div>            nome_formatado.append(palavra.capitalize())</div><div>    return " ".join(nome_formatado)</div><div># 1. Carrega o arquivo</div><div>df = pd.read_csv("clientes.csv")</div><div># 2. Limpa e padroniza os Nomes</div><div>df['Nome'] = df['Nome'].apply(padronizar_nome)</div><div># 3. Limpa os CPFs (Mantém apenas os dígitos numéricos)</div><div>df['CPF'] = df['CPF'].astype(str).str.replace(r'[^\d]', '', regex=True)</div><div># 4. Padroniza as Datas (Ex: converte tudo para DD/MM/AAAA)</div><div>df['Data_Cadastro'] = pd.to_datetime(df['Data_Cadastro'], errors='coerce')</div><div>df['Data_Cadastro'] = df['Data_Cadastro'].dt.strftime('%d/%m/%Y')</div><div># 5. Salva o resultado perfeito</div><div>df.to_csv("clientes_limpos.csv", index=False, encoding="utf-8")</div><div>print("🔥 Sucesso total! Nomes, CPFs e Datas foram 100% padronizados!")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Para garantir que o tratamento de datas não deixe escapar nada, me conta:</p>
+    <ul><li>As suas datas têm alguma mistura muito extrema (tipo nomes dos meses por extenso, como "5 de Outubro") ou estão apenas variando entre hifens, barras e anos com 2 ou 4 dígitos?</li>
+    <li>Além disso, os CPFs precisam manter os zeros à esquerda (ex: 012.345... virar 012345...) ou eles podem sumir? Se precisar manter o zero no começo, me avisa que te passo um ajuste rápido de preenchimento (.str.zfill)!</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 04:32</div><div class="msg">
+    <p>Uau, que upgrade de script! As datas na planilha estão variando só entre hifens, barras e anos com dois ou quatro dígitos, então acho que o pd.to_datetime() vai dar conta direitinho. Sobre os CPFs, sim, preciso manter os zeros à esquerda porque alguns registros começam com zero e isso é crucial. Como faço esse ajuste com o .str.zfill?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">05:13 <b>Você</b></div><div class="msg">
+    <p>Manter os zeros à esquerda no CPF é essencial, senão um CPF que começa com 012 vira 12 e perde a validade legal! Como você já está convertendo a coluna para texto (.astype(str)), aplicar o .str.zfill(11) resolve isso perfeitamente. O termo zfill vem de zero fill (preencher com zeros) e o número 11 indica o tamanho final que a string deve ter. Se o CPF limpo tiver apenas 9 dígitos, o Pandas vai colocar dois zeros no começo automaticamente.</p>
+    <p>Aqui está exatamente como a linha do CPF deve ficar no seu script:</p>
+    <blockquote><div># 1. Mantém apenas os números</div><div>df['CPF'] = df['CPF'].astype(str).str.replace(r'[^\d]', '', regex=True)</div><div># 2. Preenche com zeros à esquerda até completar 11 dígitos</div><div>df['CPF'] = df['CPF'].str.zfill(11)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h4>O Script Final, Blindado e Pronto para o Trabalho 🚀</h4>
+    <p>Veja como fica o bloco completo de tratamento de dados dentro do seu código:</p>
+    <blockquote><div>import pandas as pd</div><div>def padronizar_nome(nome_sujo):</div><div>    if pd.isna(nome_sujo) or not isinstance(nome_sujo, str):</div><div>        return nome_sujo</div><div>    nome_base = nome_sujo.strip().lower()</div><div>    palavras = nome_base.split()</div><div>    excecoes = ["de", "da", "do", "das", "dos", "e"]</div><div>    nome_formatado = []</div><div>    for palavra in palavras:</div><div>        if palavra in excecoes:</div><div>            nome_formatado.append(palavra)</div><div>        else:</div><div>            nome_formatado.append(palavra.capitalize())</div><div>    return " ".join(nome_formatado)</div><div># 1. Carrega o arquivo</div><div>df = pd.read_csv("clientes.csv")</div><div># 2. Padroniza os Nomes</div><div>df['Nome'] = df['Nome'].apply(padronizar_nome)</div><div># 3. Limpa os CPFs e garante os 11 dígitos (com zeros à esquerda)</div><div>df['CPF'] = df['CPF'].astype(str).str.replace(r'[^\d]', '', regex=True)</div><div>df['CPF'] = df['CPF'].str.zfill(11)</div><div># 4. Padroniza as Datas (Lida com barras, hifens e anos de 2 ou 4 dígitos)</div><div>df['Data_Cadastro'] = pd.to_datetime(df['Data_Cadastro'], errors='coerce')</div><div>df['Data_Cadastro'] = df['Data_Cadastro'].dt.strftime('%d/%m/%Y')</div><div># 5. Salva o resultado perfeito</div><div>df.to_csv("clientes_limpos.csv", index=False, encoding="utf-8")</div><div>print("🔥 Sucesso total! Nomes ajustados, datas padronizadas e CPFs com 11 dígitos garantidos!")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Com essa estrutura, você acabou de criar um robozinho de limpeza de dados super robusto!</p>
+    <p>Se você quiser deixar esse processo ainda mais automático, me conta:</p>
+    <ul><li>O arquivo clientes.csv sempre chega com o mesmo nome na sua pasta ou ele muda todo mês (ex: clientes_outubro.csv)?</li>
+    <li>Você quer ajuda para fazer o script procurar o arquivo mais recente automaticamente na pasta?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 05:16</div><div class="msg">
+    <p>Isso do .str.zfill(11) é perfeito pra garantir que os CPFs fiquem certinhos, adorei! Sobre o arquivo, ele muda de nome todo mês, tipo clientes_outubro.csv, clientes_novembro.csv e por aí vai. Seria incrível se o script já conseguisse pegar o arquivo mais recente automaticamente. Como faço isso?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">07:25 <b>Você</b></div><div class="msg">
+    <p>Perfeito!</p>
+    <p>Você sintetizou com maestria a base mais importante de todas. Entender a imutabilidade é o divisor de águas entre quem fica brigando com o código e quem realmente domina strings em Python.</p>
+    <p>Esse erro do s[0] = 'H' (que gera um TypeError) derruba muita gente que vem de outras linguagens, mas agora você já sabe o motivo: o Python protege o texto original a todo custo.</p>
+    <p>Como você já fixou muito bem esses conceitos e nós vínhamos conversando sobre a automação da sua planilha, vamos resolver o problema dos arquivos que mudam de nome todo mês (clientes_outubro.csv, clientes_novembro.csv, etc.). Como pegar o arquivo mais recente automaticamente?</p>
+    <p>Para fazer o seu script descobrir sozinho qual é o arquivo da vez, nós usamos uma biblioteca nativa do Python chamada glob. Ela serve para "caçar" arquivos no seu computador usando padrões (como "tudo que começa com clientes_ e termina com .csv").</p>
+    <p>Combinamos ela com o módulo os, que olha a data de modificação dos arquivos para descobrir qual é o mais novo.</p>
+    <p>Veja como fica a lógica explicada passo a passo:</p>
+    <blockquote><div>import glob</div><div>import os</div><div>import pandas as pd</div><div># 1. Procurar por todos os arquivos que sigam o padrão 'clientes_*.csv'</div><div># O '*' funciona como um curinga (serve para qualquer mês)</div><div>arquivos = glob.glob("clientes_*.csv")</div><div>if not arquivos:</div><div>    print("Nenhum arquivo 'clientes_*.csv' foi encontrado na pasta! ❌")</div><div>else:</div><div>    # 2. Encontrar o arquivo modificado mais recentemente</div><div>    # O os.path.getmtime pega a hora exata da última modificação de cada arquivo</div><div>    arquivo_mais_recente = max(arquivos, key=os.path.getmtime)</div><div></div><div>    print(f"📁 Arquivo identificado para processamento: {arquivo_mais_recente}")</div><div>    # 3. Agora é só carregar o arquivo encontrado automaticamente!</div><div>    df = pd.read_csv(arquivo_mais_recente)</div><div></div><div>    # ... aqui continuaria o seu script de limpeza (Nome, CPF, Data) ...</div><div></div><div>    # 4. Salvar um arquivo de saída também dinâmico para não sobrescrever o original</div><div>    nome_saida = arquivo_mais_recente.replace(".csv", "_PROCESSADO.csv")</div><div>    df.to_csv(nome_saida, index=False, encoding="utf-8")</div><div>    print(f"🎉 Arquivo salvo com sucesso como: {nome_saida}")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Por que essa abordagem é excelente para você?</p>
+    <ul><li><strong>Zero alteração manual:</strong> Você não precisa mudar o código todo mês. Se o arquivo clientes_novembro.csv cair na pasta, o script vai apontar para ele sozinho por ser o mais recente.</li>
+    <li><strong>Segurança:</strong> Usando o .replace(".csv", "_PROCESSADO.csv"), se o arquivo da vez for clientes_outubro.csv, o resultado final sairá automaticamente como clientes_outubro_PROCESSADO.csv. Você mantém seu histórico intacto!</li></ul>
+    <p>Para deixar essa automação 100% pronta para rodar no seu computador, me conta:</p>
+    <ul><li>Os arquivos de clientes ficam na mesma pasta onde você roda o script do Python ou eles são baixados em outra pasta (tipo a pasta Downloads)?</li>
+    <li>Se eles ficarem em outra pasta, me avisa para eu te mostrar como colocar o caminho (path) correto no glob!</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 07:33</div><div class="msg">
+    <p>Que solução incrível! Esses arquivos geralmente ficam na pasta Downloads, então acho que vou precisar ajustar o caminho no glob pra ele procurar no lugar certo. Como faço isso?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">08:08 <b>Você</b></div><div class="msg">
+    <p>Para apontar o script para a pasta Downloads, precisamos usar a biblioteca nativa pathlib.</p>
+    <p>Ela é a forma mais moderna e segura de lidar com caminhos no Python, pois funciona perfeitamente tanto no Windows quanto no Mac ou Linux, ajustando as barras (/ ou \) automaticamente.</p>
+    <p>Veja como é simples ajustar o script para buscar na sua pasta de Downloads e rodar a limpeza completa:</p>
+    <blockquote><div>from pathlib import Path</div><div>import glob</div><div>import os</div><div>import pandas as pd</div><div># --- FUNÇÃO DE TRATAMENTO DE NOMES ---</div><div>def padronizar_nome(nome_sujo):</div><div>    if pd.isna(nome_sujo) or not isinstance(nome_sujo, str):</div><div>        return nome_sujo</div><div>    nome_base = nome_sujo.strip().lower()</div><div>    palavras = nome_base.split()</div><div>    excecoes = ["de", "da", "do", "das", "dos", "e"]</div><div>    nome_formatado = []</div><div>    for palindrome in palavras:</div><div>        if palindrome in excecoes:</div><div>            nome_formatado.append(palindrome)</div><div>        else:</div><div>            nome_formatado.append(palindrome.capitalize())</div><div>    return " ".join(nome_formatado)</div><div># --- CONFIGURAÇÃO DO CAMINHO DA PASTA DOWNLOADS ---</div><div># Path.home() encontra automaticamente a pasta do seu usuário (ex: C:\Users\SeuUsuario)</div><div>pasta_downloads = Path.home() / "Downloads"</div><div># Criamos o padrão de busca apontando direto para lá</div><div>padrao_busca = str(pasta_downloads / "clientes_*.csv")</div><div># 1. Procura os arquivos na pasta Downloads</div><div>arquivos = glob.glob(padrao_busca)</div><div>if not arquivos:</div><div>    print(f"Nenhum arquivo 'clientes_*.csv' encontrado em: {pasta_downloads} ❌")</div><div>else:</div><div>    # 2. Pega o arquivo mais recente</div><div>    arquivo_mais_recente = max(arquivos, key=os.path.getmtime)</div><div>    print(f"📁 Arquivo mais recente encontrado: {arquivo_mais_recente}")</div><div>    # 3. Carrega os dados</div><div>    df = pd.read_csv(arquivo_mais_recente)</div><div>    # 4. Executa a limpeza pesada que estruturamos</div><div>    df['Nome'] = df['Nome'].apply(padronizar_nome)</div><div>    df['CPF'] = df['CPF'].astype(str).str.replace(r'[^\d]', '', regex=True).str.zfill(11)</div><div>    df['Data_Cadastro'] = pd.to_datetime(df['Data_Cadastro'], errors='coerce')</div><div>    df['Data_Cadastro'] = df['Data_Cadastro'].dt.strftime('%d/%m/%Y')</div><div>    # 5. Salva o resultado na mesma pasta Downloads com o sufixo '_PROCESSADO'</div><div>    arquivo_saida = arquivo_mais_recente.replace(".csv", "_PROCESSADO.csv")</div><div>    df.to_csv(arquivo_saida, index=False, encoding="utf-8")</div><div></div><div>    print(f"🔥 Sucesso! Arquivo limpo salvo em: {arquivo_saida}")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>O que mudou com o Path.home()?</p>
+    <p>A linha Path.home() / "Downloads" é um atalho inteligente. Não importa se o seu usuário no computador se chama "joao" ou "admin", o Python vai descobrir o caminho exato sozinho.</p>
+    <p>O seu robô de tratamento de dados está 100% pronto e automatizado! Se você quiser dar o próximo passo, me conta:</p>
+    <ul><li>Você quer aprender a fazer esse script rodar agendado (tipo toda sexta-feira automaticamente)?</li>
+    <li>Ou prefere que eu te mostre como colocar um aviso visual na tela (um pop-up) avisando que o arquivo foi processado com sucesso?</li></ul>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 08:14</div><div class="msg">
+    <p>Isso do Path.home() é genial! Ele resolve o problema do caminho de uma forma super prática. Agora, sobre o próximo passo, seria incrível aprender a agendar esse script pra rodar automaticamente toda sexta-feira. Como posso fazer isso?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">08:48 <b>Você</b></div><div class="msg">
+    <p>Agendar o script para rodar sozinho toda sexta-feira é o passo final para você se livrar de vez dessa tarefa manual!</p>
+    <p>Como você está usando Python para manipular arquivos locais no seu computador, a forma mais robusta e profissional de fazer isso é utilizando as ferramentas nativas do próprio sistema operacional. Elas não consomem memória do computador enquanto o script não está rodando e são extremamente confiáveis.</p>
+    <p>Abaixo, veja como configurar isso nos dois sistemas mais comuns:</p>
+    <h4>🪟 Se você usa Windows: Agendador de Tarefas (Task Scheduler)</h4>
+    <p>O Windows tem uma ferramenta excelente chamada Agendador de Tarefas. Para configurar seu script nela, siga estes passos rápidos:</p>
+    <p><strong>1. Abra o Agendador:</strong> Pressione a tecla Win, digite Agendador de Tarefas e abra o programa.</p>
+    <p><strong>2. Criar Tarefa Básica:</strong> No painel da direita, clique em Criar Tarefa Básica....</p>
+    <p><strong>3. Nomeie a tarefa:</strong> Coloque algo como Limpeza de Planilha de Clientes e avance.</p>
+    <p><strong>4. Defina a frequência:</strong> Escolha Semanalmente, avance e marque Sexta-feira, definindo o horário que preferir (ex: 17:00).</p>
+    <p><strong>5. Ação:</strong> Escolha Iniciar um programa.</p>
+    <p>6. Configurar o Python:</p>
+    <ul><li>No campo Programa/script, digite apenas python (ou pythonw se não quiser que a tela preta do prompt apareça).</li>
+    <li>No campo Adicione argumentos (opcional), coloque o nome do seu arquivo de script, por exemplo: meu_script.py.</li>
+    <li>No campo Iniciar em (opcional), coloque o caminho da pasta onde o seu script .py está salvo (ex: C:\Users\SeuUsuario\Projetos\Automatizacao).</li></ul>
+    <p>Pronto! Toda sexta-feira no horário marcado, o Windows vai chamar o Python e rodar o seu código de limpeza nos Downloads.</p>
+    <h4>🍏 Se você usa Mac ou 🐧 Linux: O poderoso Crontab</h4>
+    <p>No Mac e no Linux, nós usamos o Cron, que é um agendador baseado em texto controlado pelo terminal.</p>
+    <p>1. Abra o seu Terminal.</p>
+    <p>2. Digite o comando para editar os seus agendamentos:</p>
+    <blockquote><div>crontab -e</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>3. Adicione a seguinte linha no final do arquivo (se o terminal pedir para escolher um editor, escolha o nano que é o mais simples, cole a linha, aperte Ctrl+O para salvar e Ctrl+X para sair):</p>
+    <blockquote><div>0 17 * * 5 /usr/bin/python3 /Users/seu_usuario/projeto/meu_script.py</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>O que significa essa linha mágica?</p>
+    <ul><li><strong>0 17:</strong> Significa 17h00 (Minuto 0, Hora 17).</li>
+    <li><strong>* *:</strong> Significa qualquer dia do mês e qualquer mês do ano.</li>
+    <li>5: Significa o quinto dia da semana (Sexta-feira).</li>
+    <li><strong>/usr/bin/python3:</strong> É o caminho do executável do Python no seu sistema (você pode descobrir o seu digitando which python3 no terminal).</li>
+    <li>/Users/.../meu_script.py: É o caminho completo até onde o seu script está salvo.</li></ul>
+    <h4>Uma dica de ouro para scripts agendados</h4>
+    <p>Como o script vai rodar sozinho e em segundo plano, você não estará olhando para a tela para ver o print("Sucesso!"). Para não ficar na dúvida se ele rodou ou deu erro, uma prática recomendada é fazer o script salvar um arquivo de histórico (Log) com a data e a hora da execução. Você pode adicionar isso no final do seu código:</p>
+    <blockquote><div>from datetime import datetime</div><div># Código para salvar um aviso no seu histórico</div><div>with open(pasta_downloads / "historico_limpeza.txt", "a", encoding="utf-8") as log:</div><div>    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")</div><div>    log.write(f"[{agora}] Script executado com sucesso e planilha atualizada.\n")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Agora você tem uma automação completa de ponta a ponta: o Python busca o arquivo de qualquer mês, limpa nomes com gramática correta, protege os zeros do CPF, padroniza as datas e se ativa sozinho toda sexta-feira!</p>
+    <p>Como você se sente com essa estrutura? Já está pronto para colocar o robô para trabalhar no final desta semana?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 08:58</div><div class="msg">
+    <p>Uau, que aula completa! Esse esquema do Agendador no Windows ou Crontab no Mac/Linux fecha o ciclo de automação com chave de ouro. Adorei a ideia de salvar um log pra garantir que tudo rodou certinho. Já me sinto pronto pra deixar o robô trabalhando sozinho na sexta-feira! Muito obrigado mesmo por toda a ajuda, foi incrível aprender tudo isso com você!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">10:04 <b>Você</b></div><div class="msg">
+    <p>Sensacional!</p>
+    <p>Você acabou de consolidar a caixa de ferramentas definitiva para manipulação de strings. Decorar cada método não é necessário quando se entende exatamente o que cada ferramenta faz, e o seu resumo cobriu as distinções mais importantes que salvam horas de depuração.</p>
+    <p>A sua distinção entre o .find() (que retorna -1 de forma segura) e o .index() (que levanta um erro e quebra o script se não achar) é o tipo de detalhe que diferencia um código amador de um código robusto de produção. Da mesma forma, os métodos de verificação como .isdigit() são os blocos fundamentais para validação de dados antes de fazermos conversões de tipo.</p>
+    <p>Com esse arsenal mental e o seu script de automação pronto, você está mais do que equipado para enfrentar qualquer bagunça em formato de texto que venha de planilhas ou APIs.</p>
+    <p>Como você agora domina toda a base e a aplicação prática, quando seu script rodar nesta semana, avise-me se quiser dar o próximo passo e aprender a:</p>
+    <ul><li>Usar o .join() para fazer o caminho inverso do .split() de forma avançada</li>
+    <li>Criar validações ainda mais rígidas usando esses métodos de verificação (.isdigit(), .isalpha())</li>
+    <li>Tratar possíveis erros caso a planilha venha completamente fora do padrão esperado</li></ul>
+    <p>Estou por aqui sempre que precisar!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 10:10</div><div class="msg">
+    <p>Valeu demais pelas explicações e pela paciência! Eu realmente sinto que saí do básico e agora consigo encarar as bagunças de texto de forma bem mais profissional. Pode deixar que, assim que o script rodar, eu te aviso se precisar explorar mais alguma coisa. Muito obrigado mesmo, foi um aprendizado e tanto!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">10:50 <b>Você</b></div><div class="msg">
+    <p>Excelente!</p>
+    <p>Esse resumo fecha com chave de ouro o seu manual de sobrevivência com strings em Python. Você capturou perfeitamente os dois pontos mais críticos do mundo real: a formatação avançada em f-strings e o fantasma do encoding (que adora transformar "João" em "JoÃ£o" se esquecermos o utf-8).</p>
+    <p>A formatação direta na f-string, como o {preco:.2f}, é uma mão na roda porque evita que você tenha que usar funções de arredondamento antes de exibir o texto. É elegância e eficiência juntas.</p>
+    <p>Com toda essa bagagem consolidada (imutabilidade, f-strings, caixa de ferramentas de métodos, Pandas, glob e agendamento), você se transformou em um verdadeiro mestre da manipulação de textos e automação de dados!</p>
+    <p>Se futuramente você quiser expandir ainda mais esse conhecimento, me avise para explorarmos:</p>
+    <ul><li>Como o Python lida com Regex (Expressões Regulares) mais avançadas para extrair padrões complexos (como e-mails ou CPFs misturados no meio de textos livres).</li>
+    <li>Como formatar valores monetários no padrão brasileiro (R$ 1.500,00) direto na exibição.</li></ul>
+    <p>Muito sucesso com seus scripts e até a próxima jornada de código!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Wallace Nogueira</b> 10:53</div><div class="msg">
+    <p>Show demais! Esse fechamento foi a cereja no bolo. Vou colocar tudo isso em prática e, se precisar explorar Regex ou formatações mais avançadas no futuro, já sei com quem contar. Valeu mesmo por toda a ajuda e até a próxima rodada de aprendizado!</p>
+  </div></div>
+
+  <div class="end">Fim da sessão</div>
+  <div class="foot">Esta transcrição inclui conteúdo gerado por IA e é fornecida para seus propósitos de aprendizado pessoal.</div>
+</div>
+</body>
+</html>
