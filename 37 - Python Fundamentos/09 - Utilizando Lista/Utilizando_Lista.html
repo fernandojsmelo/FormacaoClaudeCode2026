@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando Lista</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 9</div>
+    <h1>Utilizando<br><em>listas</em></h1>
+    <p class="lead">A <strong>lista</strong> é a coleção mais usada do Python: guarda vários valores, em ordem, e pode ser alterada. Nesta aula: criar, acessar por índice e fatia, adicionar e remover itens, ordenar, buscar, a armadilha de "copiar" com <code>=</code>, listas dentro de listas e uma lista de compras montada com <code>input()</code>.</p>
+    <div class="chips"><span>[ ]</span><span>Índices e fatias</span><span>append · insert · extend</span><span>remove · pop · del</span><span>sort · sorted</span><span>.copy()</span><span>Listas aninhadas</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Lists, More on Lists; Built-in Types: Sequence Types; Sorting HOW TO), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Criando</span><span class="n">01</span></div>
+  <h2>Vários valores <em>num nome só</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>criar.py</b></div>
+      <pre class="code">frutas = ["maçã", "banana", "uva"]
+numeros = [10, 20, 30, 40]
+misturada = ["Ana", 29, 1.68, True]   <span class="c"># pode misturar tipos</span>
+vazia = []
+print(frutas)
+print(len(numeros), len(vazia))
+print(frutas[0], frutas[-1])
+print(numeros[1:3])</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['maçã', 'banana', 'uva']
+4 0
+maçã uva
+[20, 30]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Colchetes, itens separados por vírgula</li>
+        <li>Pode misturar tipos, mas o normal é uma lista de coisas do mesmo tipo</li>
+        <li>Índices e fatias funcionam <strong>igual às strings</strong> (aula 07): começa em 0, -1 é o último</li>
+        <li><code>len()</code> conta os itens</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">A grande diferença para a string: a lista é <strong>mutável</strong>. Dá para trocar, incluir e tirar itens na própria lista.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Alterando</span><span class="n">02</span></div>
+  <h2>Adicionando <em>e removendo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>alterar.py</b></div>
+      <pre class="code">frutas = ["maçã", "banana", "uva"]
+frutas[1] = "manga"          <span class="c"># listas são mutáveis</span>
+frutas.append("kiwi")        <span class="c"># adiciona no fim</span>
+frutas.insert(0, "pera")     <span class="c"># adiciona na posição 0</span>
+frutas.extend(["limão", "caju"])  <span class="c"># adiciona vários</span>
+print(frutas)
+frutas.remove("uva")         <span class="c"># remove pelo valor</span>
+ultima = frutas.pop()        <span class="c"># remove e devolve o último</span>
+print(ultima, frutas)
+del frutas[0]                <span class="c"># remove pela posição</span>
+print(frutas)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['pera', 'maçã', 'manga', 'uva', 'kiwi', 'limão', 'caju']
+caju ['pera', 'maçã', 'manga', 'kiwi', 'limão']
+['maçã', 'manga', 'kiwi', 'limão']</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Operação</th><th>Faz</th></tr></thead>
+      <tbody>
+        <tr><td>lista[i] = x</td><td>Troca o item da posição i</td></tr>
+        <tr><td>.append(x)</td><td>Adiciona um item no fim</td></tr>
+        <tr><td>.insert(i, x)</td><td>Adiciona na posição i</td></tr>
+        <tr><td>.extend(outra)</td><td>Adiciona todos os itens de outra lista</td></tr>
+        <tr><td>.remove(x)</td><td>Tira a 1ª ocorrência do valor x</td></tr>
+        <tr><td>.pop()</td><td>Tira e <strong>devolve</strong> o último (ou o da posição i)</td></tr>
+        <tr><td>del lista[i]</td><td>Tira pela posição</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Ordenando</span><span class="n">03</span></div>
+  <h2>sort() <em>ou sorted()?</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>ordenar.py</b></div>
+      <pre class="code">notas = [7.5, 9.0, 6.0, 8.5]
+print(sorted(notas))              <span class="c"># lista nova, ordenada</span>
+print(notas)                      <span class="c"># a original não mudou</span>
+notas.sort(reverse=True)          <span class="c"># ordena a própria lista</span>
+print(notas)
+print(max(notas), min(notas), sum(notas) / len(notas))
+nomes = ["bia", "Ana", "carlos", "Bruno"]
+print(sorted(nomes))                   <span class="c"># maiúsculas vêm antes</span>
+print(sorted(nomes, key=str.lower))    <span class="c"># alfabética de verdade</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[6.0, 7.5, 8.5, 9.0]
+[7.5, 9.0, 6.0, 8.5]
+[9.0, 8.5, 7.5, 6.0]
+9.0 6.0 7.75
+['Ana', 'Bruno', 'bia', 'carlos']
+['Ana', 'bia', 'Bruno', 'carlos']</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>sorted(lista)</th><th>lista.sort()</th></tr></thead>
+        <tbody>
+          <tr><td>Original</td><td>Fica igual</td><td>É alterada</td></tr>
+          <tr><td>Devolve</td><td>Uma lista nova</td><td>None</td></tr>
+        </tbody></table></div>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>reverse=True</code>: do maior para o menor</li>
+        <li>Maiúsculas vêm antes das minúsculas; <code>key=str.lower</code> corrige</li>
+        <li><code>max</code>, <code>min</code> e <code>sum</code> funcionam direto na lista</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px"><code>notas = notas.sort()</code> apaga a lista: <code>.sort()</code> devolve <code>None</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Buscando</span><span class="n">04</span></div>
+  <h2>Procurando <em>na lista</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>buscar.py</b></div>
+      <pre class="code">cores = ["azul", "verde", "azul", "rosa"]
+print("verde" in cores)      <span class="c"># True</span>
+print(cores.index("azul"))   <span class="c"># 0: primeira posição</span>
+print(cores.count("azul"))   <span class="c"># 2</span>
+for i, cor in enumerate(cores):
+    print(i, cor)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">True
+0
+2
+0 azul
+1 verde
+2 azul
+3 rosa</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>in</code>: o item está na lista?</li>
+        <li><code>.index(x)</code>: em que posição (a primeira)? Dá erro se não existir</li>
+        <li><code>.count(x)</code>: quantas vezes aparece</li>
+        <li><code>enumerate()</code> dá posição e valor juntos; o <code>for</code> é o assunto da aula 14</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Armadilha</span><span class="n">05</span></div>
+  <h2>= não copia <em>a lista</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>copia.py</b></div>
+      <pre class="code">original = [1, 2, 3]
+mesmo = original  <span class="c"># NÃO copia: mesma lista, dois nomes</span>
+copia = original.copy()  <span class="c"># cópia de verdade (ou original[:])</span>
+mesmo.append(4)
+print(original)   <span class="c"># [1, 2, 3, 4]: mudou junto!</span>
+print(copia)      <span class="c"># [1, 2, 3]</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[1, 2, 3, 4]
+[1, 2, 3]</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(2,1fr)">
+        <div class="n"><b>mesmo = original</b>Dois nomes, <strong>uma</strong> lista na memória</div>
+        <div class="n key"><b>original.copy()</b>Uma lista <strong>nova</strong>, com os mesmos itens</div>
+      </div>
+      <div class="callout danger" style="margin-top:12px">Esse é um dos bugs mais comuns de iniciante: alterar a "cópia" e ver a original mudar. Com strings isso não acontece porque elas não podem ser alteradas.</div>
+      <div class="callout" style="margin-top:10px">Para listas com listas dentro, <code>.copy()</code> copia só o primeiro nível. A cópia completa é <code>copy.deepcopy()</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Aninhadas</span><span class="n">06</span></div>
+  <h2>Listas <em>dentro de listas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>aninhadas.py</b></div>
+      <pre class="code">alunos = [["Ana", 9.0], ["Bruno", 7.5], ["Carla", 8.0]]
+print(alunos[1])        # ['Bruno', 7.5]
+print(alunos[1][0])     <span class="c"># Bruno</span>
+for nome, nota in alunos:
+    print(f"{nome}: {nota}")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['Bruno', 7.5]
+Bruno
+Ana: 9.0
+Bruno: 7.5
+Carla: 8.0</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Cada item pode ser outra lista: uma tabela com linhas</li>
+        <li>Dois índices: <code>alunos[1][0]</code> = linha 1, coluna 0</li>
+        <li><code>for nome, nota in alunos</code> separa cada par (as tuplas da aula 10 explicam o desempacotamento)</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Para dados com nome de campo ("nome", "nota"), o dicionário (aula 12) costuma ser mais claro que posições.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">07</span></div>
+  <h2>Posição <em>que não existe</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>erro_indice.py</b></div>
+      <pre class="code">frutas = ["maçã", "banana", "uva"]
+print(frutas[3])</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "erro_indice.py", line 2, in &lt;module&gt;
+    print(frutas[3])
+          ~~~~~~^^^
+IndexError: list index out of range</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>3 itens: posições 0, 1 e 2</li>
+        <li>Mesmo erro "de um a mais" das strings (aula 07)</li>
+        <li>Para acrescentar no fim, use <code>.append()</code>, não <code>lista[3] = ...</code></li>
+        <li><code>.remove()</code> de um valor que não está na lista dá <strong>ValueError</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Na prática</span><span class="n">08</span></div>
+  <h2>Uma lista <em>de compras</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>compras.py</b></div>
+      <pre class="code">compras = []
+compras.append(input("1º item: ").strip())
+compras.append(input("2º item: ").strip())
+compras.append(input("3º item: ").strip())
+compras.sort()
+print(f"{len(compras)} itens:", ", ".join(compras))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (digitou pão, arroz e leite)</div>
+      <pre class="out">1º item: pão
+2º item: arroz
+3º item: leite
+3 itens: arroz, leite, pão</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Começa vazia e cresce com <code>.append()</code></li>
+        <li><code>.sort()</code> põe em ordem alfabética</li>
+        <li><code>", ".join()</code> monta a frase final (aula 05)</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Com o <code>while</code> (aula 15), a lista aceitará quantos itens o usuário quiser, até ele teclar Enter sem digitar nada.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">09</span></div>
+  <h2>Estatísticas <em>de uma turma</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> com a lista de notas, mostre as notas ordenadas, a média com 2 casas, a maior e a menor, a amplitude e, depois de incluir a nota 8.0 de um aluno novo, quantas notas há.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: estatísticas de uma turma</span>
+notas = [8.5, 6.0, 9.5, 7.0, 5.5, 10.0]
+media = sum(notas) / len(notas)
+print("Notas ordenadas:", sorted(notas))
+print(f"Média: {media:.2f}")
+print("Maior e menor:", max(notas), min(notas))
+print("Amplitude:", max(notas) - min(notas))
+notas.append(8.0)
+print("Com a nota do aluno novo:", len(notas), "notas")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">Notas ordenadas: [5.5, 6.0, 7.0, 8.5, 9.5, 10.0]
+Média: 7.75
+Maior e menor: 10.0 5.5
+Amplitude: 4.5
+Com a nota do aluno novo: 7 notas</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Média = <code>sum</code> dividido por <code>len</code></li>
+        <li><code>sorted()</code> mostra ordenado sem mexer na original</li>
+        <li>Desafio: mostre a mediana (o valor do meio da lista ordenada)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Qual adiciona um item no fim da lista?</p>
+        <div class="opts"><div>A) .add()</div><div>B) .append()</div><div>C) .insert()</div><div>D) .push()</div></div>
+        <div class="answer"><b>B.</b> .insert() é para uma posição.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O que notas.sort() devolve?</p>
+        <div class="opts"><div>A) A lista ordenada</div><div>B) None</div><div>C) Uma cópia</div><div>D) True</div></div>
+        <div class="answer"><b>B.</b> Ele ordena a própria lista.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. b = a; b.append(9). O que acontece com a?</p>
+        <div class="opts"><div>A) Nada</div><div>B) Também ganha o 9</div><div>C) Erro</div><div>D) Fica vazia</div></div>
+        <div class="answer"><b>B.</b> Use a.copy() para copiar.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Em [[1, 2], [3, 4]], como pegar o 3?</p>
+        <div class="opts"><div>A) lista[3]</div><div>B) lista[1][0]</div><div>C) lista[0][1]</div><div>D) lista[2]</div></div>
+        <div class="answer"><b>B.</b> Linha 1, coluna 0.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Uma coleção<br><em>que muda</em></h1>
+    <p class="lead">Listas guardam vários valores em ordem, com os mesmos índices e fatias das strings, mas são <strong>mutáveis</strong>: <code>append</code>, <code>insert</code>, <code>remove</code>, <code>pop</code>, <code>sort</code>. <code>sorted()</code> devolve uma nova; <code>=</code> não copia (use <code>.copy()</code>).</p>
+    <div class="chips"><span>Mutável</span><span>append · pop</span><span>sort × sorted</span><span>.copy()</span><span>lista[i][j]</span></div>
+    <div class="next">Próxima aula → 10 · Utilizando uma Tupla</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/introduction.html#lists; docs.python.org/3/tutorial/datastructures.html; docs.python.org/3/howto/sorting.html; docs.python.org/3/library/copy.html, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
