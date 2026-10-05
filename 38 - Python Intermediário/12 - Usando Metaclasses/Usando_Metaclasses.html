@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usando Metaclasses</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 12</div>
+    <h1>Usando<br><em>metaclasses</em></h1>
+    <p class="lead">No Python, classes também são objetos, e alguém as cria: a <strong>metaclasse</strong>. A padrão é <code>type</code>. Escrevendo a sua, você executa código no momento em que uma classe é <strong>definida</strong>: registrar, validar, acrescentar atributos ou controlar a criação de instâncias. Nesta aula: classes como objetos, <code>type()</code> criando classes, metaclasses com <code>__new__</code> e <code>__call__</code>, e o <code>__init_subclass__</code>, que resolve a maioria dos casos sem metaclasse.</p>
+    <div class="chips"><span>Classe é objeto</span><span>type(nome, bases, dict)</span><span>metaclass=</span><span>__new__ · __call__</span><span>Registro · validação</span><span>__init_subclass__</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Data model: Metaclasses, Customizing class creation, __init_subclass__; Built-in Functions: type), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Classe é objeto</span><span class="n">01</span></div>
+  <h2>Quem cria <em>a classe?</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tudo_objeto.py</b></div>
+      <pre class="code">class Produto:
+    pass
+
+
+p = Produto()
+print(type(p))          <span class="c"># o objeto foi criado pela classe</span>
+print(type(Produto))    <span class="c"># a classe foi criada por... type</span>
+print(type(int), type(str))
+print(type(type))       <span class="c"># type é a metaclasse padrão</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">&lt;class '__main__.Produto'&gt;
+&lt;class 'type'&gt;
+&lt;class 'type'&gt; &lt;class 'type'&gt;
+&lt;class 'type'&gt;</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>type</b>metaclasse</div>
+        <div class="n"><b>Produto</b>classe</div>
+        <div class="n key"><b>p</b>objeto</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Objetos são criados por classes; classes são criadas por uma <strong>metaclasse</strong></li>
+        <li>A metaclasse de quase tudo é <code>type</code>, inclusive de <code>int</code> e <code>str</code></li>
+        <li><code>type</code> é metaclasse de si mesma</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>type()</span><span class="n">02</span></div>
+  <h2>Criando uma classe <em>sem o class</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>com_type.py</b></div>
+      <pre class="code">def descrever(self):
+    return f"Ponto({self.x}, {self.y})"
+
+
+<span class="c"># type(nome, bases, atributos) cria uma classe na hora</span>
+Ponto = type("Ponto", (), {"x": 0, "y": 0,
+                           "descrever": descrever})
+
+p = Ponto()
+p.x = 3
+print(p.descrever())
+print(Ponto.__name__, type(Ponto))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Ponto(3, 0)
+Ponto &lt;class 'type'&gt;</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Com três argumentos, <code>type(nome, bases, atributos)</code> monta uma classe</li>
+        <li>É exatamente o que o Python faz quando lê um bloco <code>class</code></li>
+        <li><code>bases</code> é a tupla das classes-mãe; o dicionário vira atributos e métodos</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Na prática, você escreve <code>class</code>. Ver o <code>type()</code> por dentro explica o que a metaclasse recebe.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Primeira metaclasse</span><span class="n">03</span></div>
+  <h2>Código que roda <em>na definição</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>primeira_meta.py</b></div>
+      <pre class="code">class Rastreada(type):
+    def __new__(mcs, nome, bases, atributos):
+        print(f"criando a classe {nome}...")
+        atributos["origem"] = "Rastreada"     <span class="c"># injeta atributo</span>
+        return super().__new__(mcs, nome, bases, atributos)
+
+
+class Pedido(metaclass=Rastreada):            <span class="c"># roda aqui!</span>
+    pass
+
+
+print("depois do class")
+print(Pedido.origem)
+print(type(Pedido).__name__)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">criando a classe Pedido...
+depois do class
+Rastreada
+Rastreada</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Uma metaclasse é uma classe que herda de <code>type</code></li>
+        <li><code>__new__</code> recebe o nome, as bases e o dicionário de atributos <strong>antes</strong> de a classe existir</li>
+        <li>"criando a classe" aparece no bloco <code>class</code>, sem nenhum objeto criado</li>
+        <li><code>metaclass=Rastreada</code> escolhe a metaclasse</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Registro</span><span class="n">04</span></div>
+  <h2>Plugins que <em>se registram sozinhos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>registro.py</b></div>
+      <pre class="code">class RegistraPlugins(type):
+    plugins = {}
+
+    def __new__(mcs, nome, bases, atributos):
+        classe = super().__new__(mcs, nome, bases, atributos)
+        if bases:                      <span class="c"># não registra a base</span>
+            mcs.plugins[nome.lower()] = classe
+        return classe
+
+
+class Plugin(metaclass=RegistraPlugins):
+    pass
+
+
+class Pdf(Plugin):
+    pass
+
+
+class Csv(Plugin):
+    pass
+
+
+print(list(RegistraPlugins.plugins))
+leitor = RegistraPlugins.plugins["csv"]()     <span class="c"># cria pelo nome</span>
+print(type(leitor).__name__)</pre>    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">['pdf', 'csv']
+Csv</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Toda subclasse de <code>Plugin</code> entra no dicionário assim que é definida</li>
+        <li>Ninguém precisa lembrar de registrar a classe nova</li>
+        <li>Depois, cria-se o objeto pelo nome: útil para leitores de formatos, comandos, rotas</li>
+        <li><code>if bases</code> deixa de fora a classe base, que não tem mãe</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Validação</span><span class="n">05</span></div>
+  <h2>Recusar classes <em>incompletas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>validacao.py</b></div>
+      <pre class="code">class ExigeExecutar(type):
+    def __new__(mcs, nome, bases, atributos):
+        if bases and "executar" not in atributos:
+            raise TypeError(f"{nome} precisa de executar()")
+        return super().__new__(mcs, nome, bases, atributos)
+
+
+class Tarefa(metaclass=ExigeExecutar):
+    pass
+
+
+class Backup(Tarefa):
+    def executar(self):
+        return "backup feito"
+
+
+print(Backup().executar())
+
+
+class Relatorio(Tarefa):       <span class="c"># esqueceu o executar()</span>
+    pass</pre>    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out" style="border-color:#5A3431;color:#f3c6c0">backup feito
+Traceback (most recent call last):
+  File "validacao.py", line 20, in &lt;module&gt;
+    class Relatorio(Tarefa):       # esqueceu o executar()
+        pass
+  File "validacao.py", line 4, in __new__
+    raise TypeError(f"{nome} precisa de executar()")
+TypeError: Relatorio precisa de executar()</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A metaclasse confere o dicionário de atributos e lança <code>TypeError</code> se faltar <code>executar</code></li>
+        <li>O erro aparece ao <strong>definir</strong> <code>Relatorio</code>, antes de qualquer uso</li>
+        <li>Erros de estrutura descobertos cedo, quando o módulo é importado</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Para exigir métodos, o módulo <code>abc</code> (classes abstratas) é a solução padrão; aqui é para ver como funciona por dentro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>__call__</span><span class="n">06</span></div>
+  <h2>Controlando a criação: <em>singleton</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>singleton.py</b></div>
+      <pre class="code">class Unica(type):
+    _instancias = {}
+
+    def __call__(cls, *args, **kwargs):     <span class="c"># roda em Config()</span>
+        if cls not in cls._instancias:
+            nova = super().__call__(*args, **kwargs)
+            cls._instancias[cls] = nova
+        return cls._instancias[cls]
+
+
+class Config(metaclass=Unica):
+    def __init__(self):
+        print("carregando configurações...")
+
+
+a = Config()
+b = Config()
+print(a is b)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">carregando configurações...
+True</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>Config()</code> chama o <code>__call__</code> da metaclasse, que normalmente cria o objeto</li>
+        <li>Aqui ele guarda a primeira instância e devolve sempre a mesma</li>
+        <li>"carregando" aparece uma vez só, e <code>a is b</code> é <code>True</code></li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Use com moderação: um objeto único e global dificulta testes. Muitas vezes, um módulo com variáveis resolve.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Alternativa</span><span class="n">07</span></div>
+  <h2>__init_subclass__: <em>sem metaclasse</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>init_subclass.py</b></div>
+      <pre class="code">class Plugin:
+    plugins = {}
+
+    def __init_subclass__(cls, **kwargs):   <span class="c"># sem metaclasse</span>
+        super().__init_subclass__(**kwargs)
+        Plugin.plugins[cls.__name__.lower()] = cls
+
+
+class Pdf(Plugin):
+    pass
+
+
+class Csv(Plugin):
+    pass
+
+
+print(list(Plugin.plugins))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['pdf', 'csv']</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O mesmo registro da seção 04, com um método comum na classe base</li>
+        <li><code>__init_subclass__</code> roda toda vez que uma subclasse é criada</li>
+        <li>Sem metaclasse, sem conflito com outras metaclasses</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Regra prática: tente primeiro <code>__init_subclass__</code>, decoradores de classe ou <code>abc</code>. Metaclasse é para quando nada disso basta.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Toda subclasse <em>com versão</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> faça a classe <code>Modulo</code> recusar qualquer subclasse sem o atributo <code>versao</code> no formato <code>"X.Y.Z"</code>.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">class Modulo:
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        versao = str(getattr(cls, "versao", ""))
+        if versao.count(".") != 2:
+            raise TypeError(f"{cls.__name__}: versao 'X.Y.Z'")
+
+
+class Pagamentos(Modulo):
+    versao = "2.1.0"
+
+
+print("Pagamentos ok:", Pagamentos.versao)
+try:
+    class Estoque(Modulo):
+        versao = "2"
+except TypeError as erro:
+    print("Erro:", erro)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">Pagamentos ok: 2.1.0
+Erro: Estoque: versao 'X.Y.Z'</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A checagem roda ao definir a classe <code>Estoque</code>, por isso o <code>try</code> envolve o <code>class</code></li>
+        <li>Desafio: valide o formato com o regex <code>r"\d+\.\d+\.\d+"</code> (aula 06)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. type(int) devolve:</p>
+        <div class="opts"><div>A) int</div><div>B) &lt;class 'type'&gt;</div><div>C) object</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O __new__ de uma metaclasse roda quando:</p>
+        <div class="opts"><div>A) Um objeto é criado</div><div>B) A classe é definida</div><div>C) Um método é chamado</div><div>D) O programa termina</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Para registrar subclasses automaticamente, o mais simples é:</p>
+        <div class="opts"><div>A) __init_subclass__</div><div>B) Uma metaclasse</div><div>C) Um decorador de função</div><div>D) Uma variável global</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. No singleton, qual método da metaclasse intercepta Config()?</p>
+        <div class="opts"><div>A) __new__</div><div>B) __init__</div><div>C) __call__</div><div>D) __repr__</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">A classe<br><em>das classes</em></h1>
+    <p class="lead">Classes são objetos criados por uma metaclasse, normalmente <code>type</code>. Uma metaclasse sua (herdando de <code>type</code>) roda código na definição da classe com <code>__new__</code> (registrar, validar, injetar atributos) e na criação de objetos com <code>__call__</code>. Antes de recorrer a ela, veja se <code>__init_subclass__</code>, um decorador de classe ou <code>abc</code> resolvem.</p>
+    <div class="chips"><span>type</span><span>metaclass=</span><span>__new__</span><span>__call__</span><span>__init_subclass__</span></div>
+    <div class="next">Próxima aula → 13 · Programação Funcional</div>
+    <div class="source">Fontes: docs.python.org/3/reference/datamodel.html#metaclasses; docs.python.org/3/reference/datamodel.html#customizing-class-creation (__init_subclass__); docs.python.org/3/library/functions.html#type; docs.python.org/3/library/abc.html, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
