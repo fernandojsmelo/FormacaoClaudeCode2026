@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Criando um Iterador</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 1</div>
+    <h1>Criando um<br><em>iterador</em></h1>
+    <p class="lead">Todo <code>for</code> do Python conversa com um <strong>iterador</strong>: um objeto que entrega um item por vez e avisa quando acabou. Nesta aula: a diferença entre <strong>iterável</strong> e <strong>iterador</strong>, as funções <code>iter()</code> e <code>next()</code>, o que o <code>for</code> faz por baixo dos panos e como escrever o seu próprio iterador com <code>__iter__</code> e <code>__next__</code>.</p>
+    <div class="chips"><span>Iterável × iterador</span><span>iter() · next()</span><span>StopIteration</span><span>O for por dentro</span><span>__iter__ · __next__</span><span>Iterador se esgota</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Iterators; Glossário: iterable, iterator; Built-in Types: Iterator Types), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O protocolo</span><span class="n">01</span></div>
+  <h2>Um item <em>por vez</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>protocolo.py</b></div>
+      <pre class="code">notas = [7, 9, 10]
+it = iter(notas)          <span class="c"># pede um iterador à lista</span>
+print(type(it).__name__)
+print(next(it))           <span class="c"># entrega um item por vez</span>
+print(next(it))
+print(next(it))
+try:
+    next(it)              <span class="c"># acabou: não há próximo</span>
+except StopIteration:
+    print("StopIteration: fim dos itens")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">list_iterator
+7
+9
+10
+StopIteration: fim dos itens</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>iter(x)</b>pede o iterador</div>
+        <div class="n"><b>next(it)</b>próximo item</div>
+        <div class="n key"><b>StopIteration</b>acabou</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li><code>iter()</code> transforma um iterável num <strong>iterador</strong></li>
+        <li>Cada <code>next()</code> avança uma posição e não volta atrás</li>
+        <li>No fim, o iterador lança <code>StopIteration</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Iterável × iterador</span><span class="n">02</span></div>
+  <h2>Lista é iterável, <em>não iterador</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>nao_iterador.py</b></div>
+      <pre class="code">notas = [7, 9, 10]
+print(next(notas))  <span class="c"># lista é iterável, não iterador</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out" style="border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "nao_iterador.py", line 2, in &lt;module&gt;
+    print(next(notas))  # lista é iterável, não iterador
+          ~~~~^^^^^^^
+TypeError: 'list' object is not an iterator</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>Iterável</th><th>Iterador</th></tr></thead>
+      <tbody>
+        <tr><td>O que tem</td><td><code>__iter__</code></td><td><code>__iter__</code> e <code>__next__</code></td></tr>
+        <tr><td>Exemplos</td><td>list, str, dict, range</td><td>o que <code>iter()</code> devolve</td></tr>
+        <tr><td>Aceita <code>next()</code>?</td><td>Não</td><td>Sim</td></tr>
+        <tr><td>Percorre de novo?</td><td>Sim, quantas vezes quiser</td><td>Não: se esgota</td></tr>
+      </tbody></table>
+      <div class="callout" style="margin:10px">Todo iterador também é iterável: o <code>__iter__</code> dele devolve ele mesmo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>O for por dentro</span><span class="n">03</span></div>
+  <h2>O que o <em>for</em> faz por você</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>for_por_dentro.py</b></div>
+      <pre class="code">frutas = ["maçã", "uva", "kiwi"]
+
+<span class="c"># O que o for faz por baixo dos panos:</span>
+it = iter(frutas)
+while True:
+    try:
+        fruta = next(it)
+    except StopIteration:
+        break
+    print(fruta)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">maçã
+uva
+kiwi</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O <code>for fruta in frutas</code> chama <code>iter(frutas)</code> uma vez</li>
+        <li>A cada volta, chama <code>next()</code> e guarda o valor em <code>fruta</code></li>
+        <li>Quando vem <code>StopIteration</code>, o laço termina sem erro</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Você não precisa escrever esse <code>while</code>: o <code>for</code> já faz. Ver por dentro explica por que qualquer objeto com o protocolo funciona num <code>for</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Seu iterador</span><span class="n">04</span></div>
+  <h2>Uma classe com <em>__iter__ e __next__</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>contagem.py</b></div>
+      <pre class="code">class Contagem:
+    """Iterador: conta de n até 1."""
+
+    def __init__(self, n):
+        self.atual = n
+
+    def __iter__(self):
+        return self          <span class="c"># o iterador devolve a si mesmo</span>
+
+    def __next__(self):
+        if self.atual &lt; 1:
+            raise StopIteration
+        valor = self.atual
+        self.atual -= 1
+        return valor
+
+
+if __name__ == "__main__":
+    for x in Contagem(3):
+        print(x)
+    print(list(Contagem(5)))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">3
+2
+1
+[5, 4, 3, 2, 1]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>__iter__</code> devolve <code>self</code>: o objeto é o próprio iterador</li>
+        <li><code>__next__</code> calcula o próximo valor e guarda o estado em <code>self.atual</code></li>
+        <li>Para encerrar, <code>raise StopIteration</code></li>
+        <li>Funciona com <code>for</code>, <code>list()</code>, <code>sum()</code>, <code>in</code>...</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Cuidado</span><span class="n">05</span></div>
+  <h2>O iterador <em>se esgota</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>esgota.py</b></div>
+      <pre class="code">from contagem import Contagem
+
+c = Contagem(3)
+print(list(c))   <span class="c"># primeira volta: consome tudo</span>
+print(list(c))   <span class="c"># segunda volta: o iterador já acabou</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[3, 2, 1]
+[]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O estado (<code>self.atual</code>) fica guardado no objeto</li>
+        <li>Depois da primeira volta, ele já está no fim: a segunda volta não tem itens</li>
+        <li>Para recomeçar, crie um iterador novo: <code>Contagem(3)</code> de novo</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">É um erro comum: guardar um iterador numa variável e tentar percorrê-lo duas vezes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Iterável reutilizável</span><span class="n">06</span></div>
+  <h2>Um iterador <em>novo a cada for</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>playlist.py</b></div>
+      <pre class="code">class Playlist:
+    """Iterável: cada for ganha um iterador novo."""
+
+    def __init__(self, *musicas):
+        self.musicas = list(musicas)
+
+    def __iter__(self):
+        return iter(self.musicas)
+
+
+p = Playlist("Intro", "Refrão", "Final")
+print(list(p))
+print(list(p))   <span class="c"># funciona de novo</span>
+print("Refrão" in p)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['Intro', 'Refrão', 'Final']
+['Intro', 'Refrão', 'Final']
+True</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A <code>Playlist</code> é <strong>iterável</strong>: tem só <code>__iter__</code></li>
+        <li>Cada chamada de <code>__iter__</code> entrega um iterador novo (o da lista interna)</li>
+        <li>Por isso dá para percorrer de novo, e o <code>in</code> funciona</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Regra prática: quem guarda os dados é iterável; quem guarda a posição é o iterador.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>O seu <em>próprio range</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> crie a classe <code>Passos(inicio, fim, passo=1)</code>, um iterador que entrega os inteiros de <code>inicio</code> até antes de <code>fim</code>, pulando de <code>passo</code> em <code>passo</code>.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">class Passos:
+    """Como range(inicio, fim, passo), só com inteiros."""
+
+    def __init__(self, inicio, fim, passo=1):
+        self.atual = inicio
+        self.fim = fim
+        self.passo = passo
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.atual &gt;= self.fim:
+            raise StopIteration
+        valor = self.atual
+        self.atual += self.passo
+        return valor
+
+
+print(list(Passos(0, 10, 3)))
+print(list(Passos(5, 8)))
+print(list(Passos(4, 2)))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">[0, 3, 6, 9]
+[5, 6, 7]
+[]</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Quando <code>inicio &gt;= fim</code>, a lista sai vazia, como no <code>range</code></li>
+        <li>Desafio: aceite passo negativo (contagem para trás)</li>
+        <li>Desafio 2: transforme em iterável reutilizável, como a <code>Playlist</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O que next(iter([5, 6])) devolve?</p>
+        <div class="opts"><div>A) [5, 6]</div><div>B) 5</div><div>C) 6</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Como o iterador avisa que acabou?</p>
+        <div class="opts"><div>A) Devolve None</div><div>B) Devolve False</div><div>C) Lança StopIteration</div><div>D) Recomeça do início</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Num iterador, o __iter__ costuma devolver:</p>
+        <div class="opts"><div>A) self</div><div>B) Uma lista</div><div>C) None</div><div>D) O próximo item</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. it = iter([1, 2]); list(it); list(it) — a segunda lista é:</p>
+        <div class="opts"><div>A) [1, 2]</div><div>B) [2]</div><div>C) []</div><div>D) Erro</div></div>
+        <div class="answer"><b>C.</b> O iterador já se esgotou.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Um item por vez,<br><em>até o fim</em></h1>
+    <p class="lead">Iteráveis guardam os dados; iteradores guardam a posição. <code>iter()</code> pede o iterador, <code>next()</code> avança e <code>StopIteration</code> encerra, e é isso que o <code>for</code> faz por você. Para criar o seu, escreva <code>__iter__</code> (devolvendo <code>self</code>) e <code>__next__</code>, e lembre que ele se esgota.</p>
+    <div class="chips"><span>iter() · next()</span><span>StopIteration</span><span>__iter__ · __next__</span><span>Iterável reutilizável</span></div>
+    <div class="next">Próxima aula → 02 · Iteradores Default</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/classes.html#iterators; docs.python.org/3/glossary.html (iterable, iterator); docs.python.org/3/library/stdtypes.html#iterator-types; docs.python.org/3/library/functions.html (iter, next), consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
