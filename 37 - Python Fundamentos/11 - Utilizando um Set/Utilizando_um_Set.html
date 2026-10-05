@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando um Set</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 11</div>
+    <h1>Utilizando<br><em>um set</em></h1>
+    <p class="lead">O <strong>set</strong> (conjunto) guarda valores <strong>sem repetição</strong> e <strong>sem ordem</strong>. É a ferramenta certa para tirar duplicados, conferir se algo está numa coleção grande e comparar grupos: quem está nos dois, quem está só num, quem está em algum. Nesta aula: criar, alterar, as operações de conjunto e os dois erros que mais aparecem.</p>
+    <div class="chips"><span>{ } e set()</span><span>Sem repetidos</span><span>Sem ordem</span><span>add · discard · remove</span><span>| &amp; - ^</span><span>Subconjunto</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Tutorial: Sets; Built-in Types: Set Types), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Criando</span><span class="n">01</span></div>
+  <h2>Valores únicos, <em>sem ordem</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>criar.py</b></div>
+      <pre class="code">cores = {"azul", "verde", "azul", "rosa"}  <span class="c"># sem repetidos</span>
+print(cores)                               <span class="c"># a ordem pode variar</span>
+print(len(cores))
+print("verde" in cores)
+
+vazio = set()       <span class="c"># {} sozinho cria um DICIONÁRIO vazio</span>
+print(type(vazio), type({}))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">{'verde', 'azul', 'rosa'}
+3
+True
+&lt;class 'set'&gt; &lt;class 'dict'&gt;</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Chaves <code>{ }</code> com valores soltos (sem <code>chave: valor</code>)</li>
+        <li>O "azul" repetido entrou <strong>uma vez só</strong></li>
+        <li>A ordem da saída <strong>não</strong> é a ordem em que você escreveu, e pode mudar de uma execução para outra</li>
+        <li><code>in</code> num set é <strong>muito rápido</strong>, mesmo com milhões de itens</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px"><code>{}</code> vazio cria um <strong>dicionário</strong> (aula 12). Set vazio é <code>set()</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Uso clássico</span><span class="n">02</span></div>
+  <h2>Tirando <em>os repetidos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>sem_repetidos.py</b></div>
+      <pre class="code">visitas = ["ana", "bia", "ana", "caio", "bia", "ana"]
+unicos = set(visitas)
+print(len(visitas), "visitas,", len(unicos), "pessoas")
+print(sorted(unicos))   <span class="c"># sorted devolve uma lista em ordem</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">6 visitas, 3 pessoas
+['ana', 'bia', 'caio']</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>set(lista)</code> elimina os repetidos de uma vez</li>
+        <li><code>len()</code> do set = quantos valores <strong>diferentes</strong></li>
+        <li><code>sorted(conjunto)</code> devolve uma <strong>lista</strong> em ordem, para mostrar</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Se a ordem original importa, <code>list(dict.fromkeys(lista))</code> tira repetidos mantendo a ordem de chegada (dicionários guardam a ordem).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Alterando</span><span class="n">03</span></div>
+  <h2>Adicionando <em>e removendo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>alterar.py</b></div>
+      <pre class="code">tags = {"python"}
+tags.add("cursor")             <span class="c"># adiciona um</span>
+tags.update(["ia", "mcp"])     <span class="c"># adiciona vários</span>
+tags.add("python")             <span class="c"># já existe: nada muda</span>
+print(sorted(tags))
+tags.discard("java")           <span class="c"># remove se existir (sem erro)</span>
+tags.remove("mcp")             <span class="c"># remove (dá erro se não existir)</span>
+print(sorted(tags))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['cursor', 'ia', 'mcp', 'python']
+['cursor', 'ia', 'python']</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Método</th><th>Faz</th></tr></thead>
+      <tbody>
+        <tr><td>.add(x)</td><td>Adiciona um valor (se já existe, nada muda)</td></tr>
+        <tr><td>.update(itens)</td><td>Adiciona vários</td></tr>
+        <tr><td>.discard(x)</td><td>Remove, sem erro se não existir</td></tr>
+        <tr><td>.remove(x)</td><td>Remove; <strong>KeyError</strong> se não existir</td></tr>
+        <tr><td>.pop()</td><td>Remove e devolve um valor qualquer</td></tr>
+        <tr><td>.clear()</td><td>Esvazia</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Operações</span><span class="n">04</span></div>
+  <h2>Comparando <em>grupos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>operacoes.py</b></div>
+      <pre class="code">python = {"ana", "bia", "caio", "davi"}
+dados = {"bia", "davi", "eva"}
+print(sorted(python | dados))   <span class="c"># união: estão em algum dos dois</span>
+print(sorted(python &amp; dados))   <span class="c"># interseção: estão nos dois</span>
+print(sorted(python - dados))   <span class="c"># diferença: só em python</span>
+print(sorted(python ^ dados))   <span class="c"># só em um dos dois</span>
+print({"bia"} &lt;= dados)         <span class="c"># é subconjunto?</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['ana', 'bia', 'caio', 'davi', 'eva']
+['bia', 'davi']
+['ana', 'caio']
+['ana', 'caio', 'eva']
+True</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Operador</th><th>Método</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td>a | b</td><td>a.union(b)</td><td>União: em algum dos dois</td></tr>
+        <tr><td>a &amp; b</td><td>a.intersection(b)</td><td>Interseção: nos dois</td></tr>
+        <tr><td>a - b</td><td>a.difference(b)</td><td>Só em a</td></tr>
+        <tr><td>a ^ b</td><td>a.symmetric_difference(b)</td><td>Em um só</td></tr>
+        <tr><td>a &lt;= b</td><td>a.issubset(b)</td><td>Tudo de a está em b?</td></tr>
+      </tbody></table>
+      <div class="callout" style="margin:10px">Exemplos reais: alunos de duas turmas, produtos de duas lojas, permissões de dois perfis, tags de dois posts.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">05</span></div>
+  <h2>Os dois <em>erros mais comuns</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>erro_indice.py</b> · set não tem posição</div>
+      <pre class="code">cores = {"azul", "verde"}
+print(cores[0])</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "erro_indice.py", line 2, in &lt;module&gt;
+    print(cores[0])
+          ~~~~~^^^
+TypeError: 'set' object is not subscriptable</pre>
+      <div class="callout" style="margin-top:8px">Sem ordem, não há "primeiro". Para acessar por posição, converta: <code>sorted(cores)[0]</code>.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>erro_lista.py</b> · lista dentro do set</div>
+      <pre class="code">grupos = {["ana", "bia"]}</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "erro_lista.py", line 1, in &lt;module&gt;
+    grupos = {["ana", "bia"]}
+             ^^^^^^^^^^^^^^^^
+TypeError: cannot use 'list' as a set element (unhashable type: 'list')</pre>
+      <div class="callout" style="margin-top:8px">Itens de set precisam ser imutáveis ("hashable"). Lista não pode; <strong>tupla</strong> pode (aula 10): <code>{("ana", "bia")}</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Escolha</span><span class="n">06</span></div>
+  <h2>Set, lista <em>ou tupla?</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>list</th><th>tuple</th><th>set</th></tr></thead>
+    <tbody>
+      <tr><td>Sintaxe</td><td>[1, 2]</td><td>(1, 2)</td><td>{1, 2}</td></tr>
+      <tr><td>Ordem</td><td>Sim</td><td>Sim</td><td>Não</td></tr>
+      <tr><td>Repetidos</td><td>Sim</td><td>Sim</td><td>Não</td></tr>
+      <tr><td>Alterar</td><td>Sim</td><td>Não</td><td>Sim (frozenset: não)</td></tr>
+      <tr><td>Índice [0]</td><td>Sim</td><td>Sim</td><td>Não</td></tr>
+      <tr><td>Busca com in</td><td>Lenta em listas grandes</td><td>Lenta em tuplas grandes</td><td>Muito rápida</td></tr>
+    </tbody></table></div>
+  <div class="callout good" style="margin-top:12px">Pergunte: "a ordem importa? pode repetir?" Se as duas respostas são <strong>não</strong>, é set.</div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Quem fez <em>as duas provas?</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> com as listas de presença das duas provas (com nomes repetidos), mostre quem fez as duas, quem fez só a primeira e o total de alunos diferentes.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: quem fez as duas provas?</span>
+prova1 = ["ana", "bia", "caio", "ana", "davi"]
+prova2 = ["bia", "davi", "eva", "bia"]
+p1, p2 = set(prova1), set(prova2)
+print("Fizeram as duas:", sorted(p1 &amp; p2))
+print("Só a primeira:", sorted(p1 - p2))
+print("Total de alunos:", len(p1 | p2))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">Fizeram as duas: ['bia', 'davi']
+Só a primeira: ['ana', 'caio']
+Total de alunos: 5</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Converter para set já tira os repetidos</li>
+        <li><code>&amp;</code>, <code>-</code> e <code>|</code> respondem as três perguntas</li>
+        <li>Desafio: quem faltou a alguma das provas?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Quanto vale len({1, 2, 2, 3, 3, 3})?</p>
+        <div class="opts"><div>A) 6</div><div>B) 3</div><div>C) 1</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b> Sem repetidos.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Como criar um set vazio?</p>
+        <div class="opts"><div>A) {}</div><div>B) set()</div><div>C) []</div><div>D) ()</div></div>
+        <div class="answer"><b>B.</b> {} é dicionário.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. {1, 2, 3} &amp; {2, 3, 4} dá:</p>
+        <div class="opts"><div>A) {1, 2, 3, 4}</div><div>B) {2, 3}</div><div>C) {1, 4}</div><div>D) {1}</div></div>
+        <div class="answer"><b>B.</b> Interseção.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual remove sem erro se o item não existir?</p>
+        <div class="opts"><div>A) .remove()</div><div>B) .discard()</div><div>C) .pop()</div><div>D) del</div></div>
+        <div class="answer"><b>B.</b> .remove() dá KeyError.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Cada valor<br><em>uma vez só</em></h1>
+    <p class="lead">O set guarda valores <strong>únicos</strong> e <strong>sem ordem</strong>: tira repetidos, busca com <code>in</code> muito rápido e compara grupos com <code>|</code>, <code>&amp;</code>, <code>-</code> e <code>^</code>. Set vazio é <code>set()</code>; não há índice; e os itens precisam ser imutáveis.</p>
+    <div class="chips"><span>set(lista)</span><span>add · discard</span><span>| &amp; - ^</span><span>set() vazio</span><span>Sem índice</span></div>
+    <div class="next">Próxima aula → 12 · Utilizando um Dicionário</div>
+    <div class="source">Fontes: docs.python.org/3/tutorial/datastructures.html#sets; docs.python.org/3/library/stdtypes.html#set-types-set-frozenset, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4 (saídas com PYTHONHASHSEED=0, para a ordem dos sets ficar estável).</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
