@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando o Input</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 4</div>
+    <h1>Utilizando<br><em>o input</em></h1>
+    <p class="lead">Até aqui, os programas só falavam. Com <code>input()</code>, eles <strong>perguntam</strong> e usam a resposta. Nesta aula: como o <code>input()</code> funciona, por que ele sempre devolve texto, como converter para número, como limpar o que foi digitado, o que fazer com a vírgula decimal do português e o erro mais comum de quem começa.</p>
+    <div class="chips"><span>input()</span><span>Sempre str</span><span>int(input())</span><span>float(input())</span><span>.strip()</span><span>Vírgula decimal</span><span>ValueError</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Built-in Functions: input, int, float; str methods), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code>; as respostas digitadas vêm dos arquivos <code>.in</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>Perguntando <em>ao usuário</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>saudacao.py</b></div>
+      <pre class="code">nome = input("Qual é o seu nome? ")
+print("Olá,", nome)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (o usuário digitou "Ana")</div>
+      <pre class="out">Qual é o seu nome? Ana
+Olá, Ana</pre>
+    </div>
+    <div>
+      <div class="steps">
+        <div class="step"><span class="b">1</span><div><code>input()</code> mostra a <strong>pergunta</strong> (o texto entre parênteses)</div></div>
+        <div class="step"><span class="b">2</span><div>O programa <strong>para e espera</strong> o usuário digitar e teclar Enter</div></div>
+        <div class="step"><span class="b">3</span><div>O que foi digitado vira o <strong>valor</strong> do <code>input()</code>, guardado na variável</div></div>
+      </div>
+      <div class="callout" style="margin-top:10px">Deixe um <strong>espaço</strong> no fim da pergunta (<code>"nome? "</code>). Sem ele, o que a pessoa digita fica grudado no texto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Atenção</span><span class="n">02</span></div>
+  <h2>input() <em>sempre devolve texto</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>input_e_texto.py</b></div>
+      <pre class="code">idade = input("Sua idade: ")
+print(type(idade))       <span class="c"># input() SEMPRE devolve str</span>
+print(idade + idade)     <span class="c"># junta textos, não soma!</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída (digitou 29)</div>
+      <pre class="out">Sua idade: 29
+&lt;class 'str'&gt;
+2929</pre>
+    </div>
+    <div>
+      <div class="callout warn" style="margin-top:0">Mesmo que o usuário digite <code>29</code>, o valor é o <strong>texto</strong> <code>"29"</code>. E <code>"29" + "29"</code> junta os textos: <code>"2929"</code>.</div>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Para fazer contas, <strong>converta</strong>: <code>int()</code> ou <code>float()</code></li>
+        <li>Para usar como texto (nome, cidade), não precisa converter</li>
+        <li>Na dúvida, <code>print(type(valor))</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Conversão</span><span class="n">03</span></div>
+  <h2>Convertendo <em>na hora</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>converter.py</b></div>
+      <pre class="code">idade = int(input("Sua idade: "))
+altura = float(input("Sua altura em metros: "))
+print("Daqui a 10 anos você terá", idade + 10, "anos.")
+print("Altura em centímetros:", altura * 100)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (digitou 29 e 1.68)</div>
+      <pre class="out">Sua idade: 29
+Sua altura em metros: 1.68
+Daqui a 10 anos você terá 39 anos.
+Altura em centímetros: 168.0</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>int(input(...))</code>: pergunta e converte numa linha só</li>
+        <li>O Python executa de <strong>dentro para fora</strong>: primeiro o <code>input()</code>, depois o <code>int()</code></li>
+        <li>Use <code>int</code> para idades, quantidades; <code>float</code> para medidas e preços</li>
+      </ul>
+      <div class="callout" style="margin-top:10px"><code>1.68 * 100</code> deu <code>168.0</code>: o resultado de uma conta com <code>float</code> é <code>float</code> (aula 03).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">04</span></div>
+  <h2>Quando o usuário <em>digita outra coisa</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>erro_valor.py</b> · digitou "vinte e nove"</div>
+      <pre class="code">idade = int(input("Sua idade: "))</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Sua idade: vinte e nove
+Traceback (most recent call last):
+  File "erro_valor.py", line 1, in &lt;module&gt;
+    idade = int(input("Sua idade: "))
+ValueError: invalid literal for int() with base 10: 'vinte e nove'</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>É o mesmo <strong>ValueError</strong> da aula 03, agora causado pelo usuário</li>
+        <li>O programa para no meio: nada depois daquela linha roda</li>
+        <li>Usuários erram, digitam espaço, vírgula, letra: programe pensando nisso</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Para não quebrar, o caminho é <code>try/except</code> (capítulo 12 do guia), junto com repetição até a resposta ser válida (aula 15, <code>while</code>).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Limpeza</span><span class="n">05</span></div>
+  <h2>Espaços <em>e vírgula decimal</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>strip_ex.py</b> · digitou "   Recife   "</div>
+      <pre class="code">cidade = input("Cidade: ").strip()  <span class="c"># tira espaços das pontas</span>
+print(f"[{cidade}]")</pre>
+      <pre class="out" style="margin-top:6px">Cidade:    Recife   
+[Recife]</pre>
+      <div class="callout" style="margin-top:8px">Os colchetes no <code>print</code> mostram que os espaços sumiram.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>virgula.py</b> · digitou "12,50"</div>
+      <pre class="code">preco = input("Preço (use vírgula se quiser): ")
+preco = float(preco.replace(",", "."))  <span class="c"># aceita 12,50 e 12.50</span>
+print("Com 10% de desconto:", round(preco * 0.9, 2))</pre>
+      <pre class="out" style="margin-top:6px">Preço (use vírgula se quiser): 12,50
+Com 10% de desconto: 11.25</pre>
+      <div class="callout warn" style="margin-top:8px">O Python usa <strong>ponto</strong> como separador decimal. <code>float("12,50")</code> dá ValueError; trocar a vírgula por ponto antes resolve.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Boas práticas</span><span class="n">06</span></div>
+  <h2>Perguntas <em>bem feitas</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <ul class="checklist">
+      <li>Pergunta clara, com a <strong>unidade</strong>: "Peso (kg): "</li>
+      <li>Espaço no fim da pergunta</li>
+      <li><code>.strip()</code> em todo texto digitado</li>
+      <li>Converta logo na entrada e guarde já como número</li>
+      <li>Aceite vírgula em números decimais, se o público é brasileiro</li>
+      <li>Mostre o resultado com contexto: "Seu IMC é 22.9", não só "22.9"</li>
+    </ul>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Quero</th><th>Escrevo</th></tr></thead>
+      <tbody>
+        <tr><td>Texto</td><td><code>input("Nome: ").strip()</code></td></tr>
+        <tr><td>Inteiro</td><td><code>int(input("Idade: "))</code></td></tr>
+        <tr><td>Decimal com ponto</td><td><code>float(input("Altura: "))</code></td></tr>
+        <tr><td>Decimal com vírgula</td><td><code>float(input("Preço: ").replace(",", "."))</code></td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>No Cursor</span><span class="n">07</span></div>
+  <h2>Rodando programas <em>que perguntam</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <ul class="checklist">
+        <li>Rode no <strong>terminal</strong> (<code>python3 arquivo.py</code>): é lá que você digita as respostas</li>
+        <li>O cursor do terminal pisca esperando: digite e tecle Enter</li>
+        <li>Para interromper um programa travado: <span class="kbd">Ctrl</span> + <span class="kbd">C</span></li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Se pedir ao <strong>agente</strong> para rodar um programa com <code>input()</code>, ele não tem como digitar as respostas no meio. Peça para ele rodar passando a entrada: <code>printf "Ana\n29\n" | python3 converter.py</code>.</div>
+    </div>
+    <div>
+      <div class="promptbox">Rode @converter.py com a idade 29 e a altura
+1.68 passadas pela entrada padrão e me mostre a
+saída. Depois teste com "1,68" e explique o erro
+sem corrigir o código.</div>
+      <div class="callout good" style="margin-top:10px">É assim que as saídas desta aula foram geradas: cada exemplo tem um arquivo <code>.in</code> com as respostas digitadas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Calculadora <em>de IMC</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> pergunte nome, peso e altura (aceitando vírgula) e mostre o IMC com uma casa decimal. Fórmula: peso dividido pela altura ao quadrado.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: calculadora de IMC</span>
+nome = input("Nome: ").strip()
+peso = float(input("Peso (kg): ").replace(",", "."))
+altura = float(input("Altura (m): ").replace(",", "."))
+imc = peso / altura ** 2
+print(f"{nome}, seu IMC é {imc:.1f}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída (digitou Bruno, 72,5 e 1,78)</div>
+      <pre class="out">Nome: Bruno
+Peso (kg): 72,5
+Altura (m): 1,78
+Bruno, seu IMC é 22.9</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>altura ** 2</code>: potência (aula 06)</li>
+        <li><code>{imc:.1f}</code>: uma casa decimal (aula 05)</li>
+        <li>Desafio: mostre também o peso ideal mínimo, com IMC 18,5</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Qual é o tipo do valor devolvido por input()?</p>
+        <div class="opts"><div>A) int</div><div>B) Depende do que foi digitado</div><div>C) str, sempre</div><div>D) float</div></div>
+        <div class="answer"><b>C.</b> Converta para fazer contas.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. A pessoa digitou 5 em x = input(). Quanto vale x + x?</p>
+        <div class="opts"><div>A) 10</div><div>B) "55"</div><div>C) Erro</div><div>D) 25</div></div>
+        <div class="answer"><b>B.</b> Junta os textos.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Como aceitar "12,50" como número?</p>
+        <div class="opts"><div>A) int("12,50")</div><div>B) float("12,50".replace(",", "."))</div><div>C) float("12,50")</div><div>D) Não dá</div></div>
+        <div class="answer"><b>B.</b> O Python usa ponto decimal.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para que serve .strip() no input?</p>
+        <div class="opts"><div>A) Converter para número</div><div>B) Tirar espaços das pontas</div><div>C) Deixar maiúsculo</div><div>D) Apagar o texto</div></div>
+        <div class="answer"><b>B.</b> Espaços digitados sem querer.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">O programa<br><em>agora escuta</em></h1>
+    <p class="lead"><code>input()</code> mostra a pergunta, espera e devolve o que foi digitado, <strong>sempre como texto</strong>. Converta com <code>int()</code> ou <code>float()</code>, limpe com <code>.strip()</code>, troque a vírgula por ponto e lembre que valor inválido gera <strong>ValueError</strong>.</p>
+    <div class="chips"><span>input()</span><span>Sempre str</span><span>int · float</span><span>.strip()</span><span>.replace(",", ".")</span></div>
+    <div class="next">Próxima aula → 05 · Concatenando Valores</div>
+    <div class="source">Fontes: docs.python.org/3/library/functions.html (input, int, float); docs.python.org/3/library/stdtypes.html (str.strip, str.replace), consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4 com as respostas dos arquivos <code>.in</code>.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
