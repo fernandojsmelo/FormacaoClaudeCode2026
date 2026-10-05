@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Utilizando While</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 15</div>
+    <h1>Utilizando<br><em>while</em></h1>
+    <p class="lead">O <code>while</code> repete <strong>enquanto</strong> uma condição for verdadeira, sem saber de antemão quantas voltas vai dar. É o laço certo para pedir de novo até a resposta ser válida, para menus e para "até o usuário teclar Enter". Nesta aula: contador, validação de entrada, sentinela, <code>while True</code> com <code>break</code>, o <code>else</code> do laço e o laço infinito.</p>
+    <div class="chips"><span>while condição</span><span>Contador</span><span>Validar entrada</span><span>Sentinela</span><span>while True + break</span><span>while ... else</span><span>Ctrl + C</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Reference: The while statement; Tutorial: break and continue, else Clauses on Loops), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code>, com as respostas dos arquivos <code>.in</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>while</span><span class="n">01</span></div>
+  <h2>Enquanto <em>for verdade</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>contador.py</b></div>
+      <pre class="code">contador = 1
+while contador &lt;= 5:
+    print("Volta", contador)
+    contador += 1        <span class="c"># sem isso, o loop nunca termina</span>
+print("Fim, contador =", contador)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">Volta 1
+Volta 2
+Volta 3
+Volta 4
+Volta 5
+Fim, contador = 6</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Antes de cada volta, o Python <strong>testa a condição</strong></li>
+        <li>Verdadeira: roda o bloco e testa de novo. Falsa: segue depois do laço</li>
+        <li>Algo dentro do bloco precisa <strong>mudar</strong> a condição, senão nunca termina</li>
+        <li>O contador termina em 6: foi o valor que fez a condição ficar falsa</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Para "repita 5 vezes", o <code>for i in range(5)</code> (aula 14) é mais simples. O <code>while</code> brilha quando não se sabe quantas vezes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Validar</span><span class="n">02</span></div>
+  <h2>Perguntar <em>até acertar</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>validar.py</b></div>
+      <pre class="code">idade = input("Idade: ")
+while not idade.isdigit():
+    print("Digite só números.")
+    idade = input("Idade: ")
+print("Idade válida:", int(idade))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (digitou "vinte", "2O" e 29)</div>
+      <pre class="out">Idade: vinte
+Digite só números.
+Idade: 2O
+Digite só números.
+Idade: 29
+Idade válida: 29</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Resolve o <strong>ValueError</strong> da aula 04: só converte quando já sabe que é número</li>
+        <li><code>.isdigit()</code> (aula 08) é a condição</li>
+        <li>"2O" tem a letra O no lugar do zero: o laço pegou</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Para aceitar decimais e negativos, a forma completa usa <code>try/except</code> dentro do <code>while</code> (capítulo 12 do guia).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Sentinela</span><span class="n">03</span></div>
+  <h2>Até teclar <em>Enter</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>sentinela.py</b></div>
+      <pre class="code">compras = []
+item = input("Item (ENTER para terminar): ").strip()
+while item:                       <span class="c"># texto vazio é False</span>
+    compras.append(item)
+    item = input("Item (ENTER para terminar): ").strip()
+print(f"{len(compras)} itens:", ", ".join(compras))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (pão, arroz, leite e Enter)</div>
+      <pre class="out">Item (ENTER para terminar): pão
+Item (ENTER para terminar): arroz
+Item (ENTER para terminar): leite
+Item (ENTER para terminar): 
+3 itens: pão, arroz, leite</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><strong>Sentinela</strong>: um valor especial que avisa "acabou" (aqui, o texto vazio)</li>
+        <li><code>while item:</code> usa o "texto vazio é falso" da aula 13</li>
+        <li>Pergunta antes do laço e de novo no fim de cada volta</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">É a lista de compras da aula 09, agora aceitando quantos itens o usuário quiser.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>while True</span><span class="n">04</span></div>
+  <h2>Laço "infinito" <em>com saída</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>while_true.py</b></div>
+      <pre class="code">while True:
+    senha = input("Senha: ")
+    if senha == "python123":
+        print("Acesso liberado")
+        break
+    print("Senha errada, tente de novo")</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (abc, 123, python123)</div>
+      <pre class="out">Senha: abc
+Senha errada, tente de novo
+Senha: 123
+Senha errada, tente de novo
+Senha: python123
+Acesso liberado</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>while True</code> nunca para sozinho: a saída é o <code>break</code></li>
+        <li>Evita repetir o <code>input()</code> antes e dentro do laço</li>
+        <li>Padrão comum em menus (exercício da seção 07)</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Laço infinito sem querer? <span class="kbd">Ctrl</span> + <span class="kbd">C</span> no terminal interrompe o programa (<code>KeyboardInterrupt</code>).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>else</span><span class="n">05</span></div>
+  <h2>O else <em>do laço</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tentativas.py</b></div>
+      <pre class="code">SEGREDO = 7
+tentativas = 0
+while tentativas &lt; 3:
+    palpite = int(input("Palpite (1 a 10): "))
+    tentativas += 1
+    if palpite == SEGREDO:
+        print(f"Acertou em {tentativas} tentativa(s)!")
+        break
+    print("Maior" if palpite &lt; SEGREDO else "Menor")
+else:
+    print("Acabaram as tentativas. Era", SEGREDO)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída (palpites 5, 9 e 6)</div>
+      <pre class="out">Palpite (1 a 10): 5
+Maior
+Palpite (1 a 10): 9
+Menor
+Palpite (1 a 10): 6
+Maior
+Acabaram as tentativas. Era 7</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O <code>else</code> do <code>while</code> roda quando o laço termina <strong>sem</strong> <code>break</code></li>
+        <li>Aqui: acabaram as 3 tentativas sem acertar</li>
+        <li>Se acertar, o <code>break</code> pula o <code>else</code></li>
+        <li>O <code>for</code> também tem <code>else</code>, com a mesma regra</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Pouco conhecido e às vezes confuso: use com um comentário. Uma variável <code>acertou = False</code> faz o mesmo de forma explícita.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Simulação</span><span class="n">06</span></div>
+  <h2>Até atingir <em>um objetivo</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>juros.py</b></div>
+      <pre class="code">saldo = 1000.0
+meses = 0
+while saldo &lt; 2000:
+    saldo *= 1.01        <span class="c"># 1% ao mês</span>
+    meses += 1
+print(f"{meses} meses para dobrar: R$ {saldo:.2f}")</pre>
+      <pre class="out" style="margin-top:6px">70 meses para dobrar: R$ 2006.76</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Não se sabe quantos meses serão: perfeito para <code>while</code></li>
+        <li>A condição é o objetivo (<code>saldo &lt; 2000</code>) ao contrário: repete enquanto não chegou</li>
+        <li>A 1% ao mês, o dinheiro dobra em <strong>70 meses</strong></li>
+      </ul>
+      <div class="table-wrap" style="margin-top:10px"><table>
+        <thead><tr><th>Use for quando</th><th>Use while quando</th></tr></thead>
+        <tbody>
+          <tr><td>Percorre uma coleção</td><td>Depende do usuário</td></tr>
+          <tr><td>Sabe quantas voltas</td><td>Repete até uma condição mudar</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Um <em>menu</em> que repete</h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> um menu com depositar, ver saldo e sair, que repete até a pessoa escolher 0 e avisa quando a opção não existe.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: menu que repete até sair</span>
+saldo = 0
+while True:
+    opcao = input("[1] Depositar [2] Ver saldo [0] Sair: ")
+    if opcao == "1":
+        saldo += float(input("Valor: "))
+    elif opcao == "2":
+        print(f"Saldo: R$ {saldo:.2f}")
+    elif opcao == "0":
+        print("Até logo!")
+        break
+    else:
+        print("Opção inválida")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída (deposita 150 e 49.9, vê o saldo, tenta 7, sai)</div>
+      <pre class="out" style="font-size:9.6px">[1] Depositar [2] Ver saldo [0] Sair: 1
+Valor: 150
+[1] Depositar [2] Ver saldo [0] Sair: 1
+Valor: 49.9
+[1] Depositar [2] Ver saldo [0] Sair: 2
+Saldo: R$ 199.90
+[1] Depositar [2] Ver saldo [0] Sair: 7
+Opção inválida
+[1] Depositar [2] Ver saldo [0] Sair: 0
+Até logo!</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>while True</code> + <code>break</code> na opção 0</li>
+        <li><code>if</code>/<code>elif</code>/<code>else</code> (aula 13) escolhem a ação</li>
+        <li>Desafio: inclua sacar, sem deixar o saldo ficar negativo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Quando o while para?</p>
+        <div class="opts"><div>A) Depois de 10 voltas</div><div>B) Quando a condição fica falsa (ou num break)</div><div>C) Nunca</div><div>D) No fim do arquivo</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Programa preso num laço infinito. O que fazer?</p>
+        <div class="opts"><div>A) Ctrl + C no terminal</div><div>B) Ctrl + S</div><div>C) Esperar</div><div>D) Ctrl + Z no editor</div></div>
+        <div class="answer"><b>A.</b> Interrompe com KeyboardInterrupt.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Quando roda o else de um while?</p>
+        <div class="opts"><div>A) Sempre</div><div>B) Quando termina sem break</div><div>C) Quando há break</div><div>D) Nunca</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. "Peça a idade até vir um número" pede:</p>
+        <div class="opts"><div>A) for com range</div><div>B) while</div><div>C) if</div><div>D) match</div></div>
+        <div class="answer"><b>B.</b> Não se sabe quantas tentativas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Repetir até<br><em>dar certo</em></h1>
+    <p class="lead">O <code>while</code> repete enquanto a condição é verdadeira e precisa de algo que a mude. Serve para validar entradas, ler até uma sentinela, menus com <code>while True</code> e <code>break</code>, e simulações até um objetivo. O <code>else</code> do laço roda quando não houve <code>break</code>.</p>
+    <div class="chips"><span>while condição</span><span>Mude a condição</span><span>Sentinela</span><span>while True + break</span><span>Ctrl + C</span></div>
+    <div class="next">Próxima aula → 16 · Utilizando List Comprehension</div>
+    <div class="source">Fontes: docs.python.org/3/reference/compound_stmts.html#the-while-statement; docs.python.org/3/tutorial/controlflow.html (break, continue, else clauses on loops), consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
