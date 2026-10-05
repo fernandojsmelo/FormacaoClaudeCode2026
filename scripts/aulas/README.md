@@ -42,6 +42,8 @@ python3 scripts/aulas/build_aula.py corpo.final.html "<aula>/Nome.html" --title 
 
 Nas aulas de projeto, o código de referência fica testado na pasta `projeto/` da aula, e os slides citam trechos dele com `{{CODE:…}}`. Rode os testes antes de renderizar.
 
+Se uma seção transbordar por causa de código longo, `python3 scripts/aulas/saida_direita.py corpo.html eNN/arquivo.py ...` move a saída dessas seções para a coluna da direita.
+
 `{{OUT:arquivo.py}}` roda o script e coloca no slide a **saída real**, inclusive mensagens de erro (com caminho curto, como no terminal). Se existir `arquivo.in` ao lado, ele vira a entrada do `input()`, e cada resposta aparece logo depois da pergunta, como alguém digitando. Foi assim que as aulas do módulo 37 (exemplos em `exemplos/`) foram feitas. Mantenha as linhas dos exemplos com até 64 caracteres para caberem na coluna de código.
 
 ## Telas ilustrativas
