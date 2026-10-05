@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Manipulação de Arquivos II</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 17</div>
+    <h1>Manipulação<br><em>de arquivos II</em></h1>
+    <p class="lead">Além do conteúdo, programas precisam lidar com <strong>caminhos e pastas</strong>: montar o nome de um arquivo, saber se ele existe, listar o que tem numa pasta, criar, renomear, copiar e apagar. O módulo <code>pathlib</code> faz isso com objetos <code>Path</code>, e o <code>shutil</code> cuida das cópias e das pastas inteiras. Nesta aula: as partes de um caminho, ler e gravar direto pelo <code>Path</code>, listar com <code>iterdir</code>, <code>glob</code> e <code>rglob</code>, criar e renomear, e as operações do <code>shutil</code>.</p>
+    <div class="chips"><span>Path · operador /</span><span>name · stem · suffix · parent</span><span>read_text · write_text</span><span>iterdir · glob · rglob</span><span>mkdir · rename · unlink</span><span>shutil</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (pathlib; shutil; os.stat_result), consultados em outubro de 2026 · Exemplos testados com Python 3.14 (Linux) em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Caminhos</span><span class="n">01</span></div>
+  <h2>Montando e <em>desmontando caminhos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>caminhos.py</b></div>
+      <pre class="code">from pathlib import Path
+
+arquivo = Path("relatorios") / "2026" / "vendas_outubro.csv"
+print(arquivo)                 <span class="c"># o / junta partes do caminho</span>
+print(arquivo.name)
+print(arquivo.stem, "|", arquivo.suffix)
+print(arquivo.parent)
+print(arquivo.with_suffix(".xlsx"))
+print(arquivo.parts)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">relatorios/2026/vendas_outubro.csv
+vendas_outubro.csv
+vendas_outubro | .csv
+relatorios/2026
+relatorios/2026/vendas_outubro.xlsx
+('relatorios', '2026', 'vendas_outubro.csv')</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O <code>/</code> entre <code>Path</code> e textos junta as partes com o separador certo do sistema</li>
+        <li><code>name</code>: nome completo; <code>stem</code>: sem extensão; <code>suffix</code>: a extensão</li>
+        <li><code>parent</code>: a pasta; <code>with_suffix</code>: o mesmo caminho com outra extensão</li>
+        <li>Nada disso acessa o disco: é só manipulação do caminho</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">No Windows, o mesmo código mostra <code>relatorios\2026\vendas_outubro.csv</code>. Por isso, monte caminhos com <code>/</code> do <code>Path</code>, nunca concatenando texto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Ler e gravar</span><span class="n">02</span></div>
+  <h2>Atalhos do Path <em>e perguntas ao disco</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>ler_gravar.py</b></div>
+      <pre class="code">from pathlib import Path
+
+nota = Path("lembrete.txt")
+nota.write_text("comprar café\n", encoding="utf-8")
+print(nota.read_text(encoding="utf-8"), end="")
+print(nota.exists(), nota.is_file(), nota.is_dir())
+print(nota.stat().st_size, "bytes")
+print(Path("sumiu.txt").exists())</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">comprar café
+True True False
+14 bytes
+False</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>write_text</code> e <code>read_text</code> abrem, gravam ou leem e fecham numa linha só</li>
+        <li><code>exists()</code>, <code>is_file()</code> e <code>is_dir()</code> perguntam ao disco</li>
+        <li><code>stat().st_size</code> dá o tamanho em bytes ("café" tem acento: 14, não 13)</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Para arquivos pequenos, os atalhos bastam; para ler aos poucos, continue com <code>open</code> e <code>for</code> (aula 16).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>A pasta de teste</span><span class="n">03</span></div>
+  <h2>Preparando uma <em>área para os exemplos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>preparar.py</b></div>
+      <pre class="code">"""Cria a pasta area_teste/ usada nos exemplos desta aula."""
+import shutil
+from pathlib import Path
+
+
+def preparar():
+    raiz = Path("area_teste")
+    if raiz.exists():
+        shutil.rmtree(raiz)              <span class="c"># recomeça do zero</span>
+    (raiz / "fotos").mkdir(parents=True)
+    (raiz / "docs" / "2026").mkdir(parents=True)
+    for nome in ["praia.jpg", "festa.jpg", "logo.png"]:
+        (raiz / "fotos" / nome).write_bytes(b"\x00" * 10)
+    (raiz / "docs" / "notas.txt").write_text("8\n9\n", "utf-8")
+    plano = raiz / "docs" / "2026" / "plano.md"
+    plano.write_text("# Plano", "utf-8")
+    return raiz</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>area_teste/</b>raiz</div>
+        <div class="n"><b>fotos/</b>3 imagens</div>
+        <div class="n key"><b>docs/</b>notas.txt · 2026/plano.md</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li><code>mkdir(parents=True)</code> cria também as pastas do meio</li>
+        <li><code>write_bytes</code> cria arquivos binários de mentira, só para existirem</li>
+        <li><code>shutil.rmtree</code> apaga a pasta antiga: cada exemplo começa do mesmo estado</li>
+        <li>Os próximos exemplos importam <code>preparar()</code> e mexem nessa pasta</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Teste operações de apagar e mover numa pasta só para isso, nunca nos seus arquivos de verdade.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Listar</span><span class="n">04</span></div>
+  <h2>iterdir, glob <em>e rglob</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>listar.py</b></div>
+      <pre class="code">from preparar import preparar
+
+raiz = preparar()
+
+print(sorted(p.name for p in raiz.iterdir()))       <span class="c"># 1 nível</span>
+print(sorted(p.name for p in raiz.glob("fotos/*.jpg")))
+for p in sorted(raiz.rglob("*.*")):        <span class="c"># todos os níveis</span>
+    print(p.relative_to(raiz))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">['docs', 'fotos']
+['festa.jpg', 'praia.jpg']
+docs/2026/plano.md
+docs/notas.txt
+fotos/festa.jpg
+fotos/logo.png
+fotos/praia.jpg</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Método</th><th>Devolve</th></tr></thead>
+      <tbody>
+        <tr><td><code>iterdir()</code></td><td>o que está direto na pasta</td></tr>
+        <tr><td><code>glob("fotos/*.jpg")</code></td><td>o que casa com o padrão</td></tr>
+        <tr><td><code>rglob("*.*")</code></td><td>o padrão em todas as subpastas</td></tr>
+      </tbody></table>
+      <ul class="checklist" style="margin:10px">
+        <li>Os três devolvem <strong>iteradores</strong> de <code>Path</code></li>
+        <li>A ordem não é garantida: use <code>sorted</code> quando ela importar</li>
+        <li><code>relative_to(raiz)</code> mostra o caminho a partir da pasta</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Criar · renomear · apagar</span><span class="n">05</span></div>
+  <h2>Mexendo em <em>pastas e arquivos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>pastas.py</b></div>
+      <pre class="code">from pathlib import Path
+from preparar import preparar
+
+raiz = preparar()
+destino = raiz / "backup" / "outubro"
+destino.mkdir(parents=True, exist_ok=True)  <span class="c"># cria tudo</span>
+destino.mkdir(parents=True, exist_ok=True)  <span class="c"># não reclama</span>
+print(destino.is_dir())
+
+antigo = raiz / "docs" / "notas.txt"
+novo = antigo.rename(raiz / "docs" / "notas_2026.txt")
+print(novo.name, antigo.exists())
+
+(raiz / "fotos" / "logo.png").unlink()          <span class="c"># apaga</span>
+print(sorted(p.name for p in (raiz / "fotos").iterdir()))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">True
+notas_2026.txt False
+['festa.jpg', 'praia.jpg']</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>mkdir(parents=True, exist_ok=True)</code> cria o caminho todo e não dá erro se já existir</li>
+        <li><code>rename</code> renomeia ou move, e devolve o novo caminho</li>
+        <li><code>unlink()</code> apaga um arquivo; <code>rmdir()</code>, uma pasta vazia</li>
+      </ul>
+      <div class="callout danger" style="margin-top:10px">Apagar pelo Python não manda para a lixeira: o arquivo some de vez.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>shutil</span><span class="n">06</span></div>
+  <h2>Copiar, mover <em>e apagar pastas inteiras</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>copiar.py</b></div>
+      <pre class="code">import shutil
+from preparar import preparar
+
+raiz = preparar()
+copia = shutil.copy(raiz / "docs" / "notas.txt", raiz / "fotos")
+print(copia)
+
+
+shutil.copytree(raiz / "fotos", raiz / "fotos_bkp")  <span class="c"># pasta</span>
+shutil.move(raiz / "docs" / "2026", raiz / "morto")   <span class="c"># move</span>
+shutil.rmtree(raiz / "fotos_bkp")              <span class="c"># apaga tudo</span>
+print(sorted(p.name for p in raiz.iterdir()))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">area_teste/fotos/notas.txt
+['docs', 'fotos', 'morto']</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Função</th><th>Faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>shutil.copy(origem, destino)</code></td><td>copia um arquivo (destino pode ser uma pasta)</td></tr>
+        <tr><td><code>shutil.copytree(a, b)</code></td><td>copia uma pasta com tudo dentro</td></tr>
+        <tr><td><code>shutil.move(a, b)</code></td><td>move arquivo ou pasta</td></tr>
+        <tr><td><code>shutil.rmtree(pasta)</code></td><td>apaga a pasta e todo o conteúdo</td></tr>
+      </tbody></table>
+      <div class="callout warn" style="margin:10px"><code>rmtree</code> não pergunta nada. Confira o caminho antes de chamar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Organizar <em>os downloads</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> mova cada arquivo de uma pasta bagunçada para uma subpasta com o nome da extensão (jpg, pdf, txt...), ignorando maiúsculas.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">from pathlib import Path
+from preparar import preparar
+
+raiz = preparar()
+baguncada = raiz / "downloads"
+baguncada.mkdir()
+for nome in ["foto.jpg", "nota.pdf", "selfie.JPG", "doc.txt"]:
+    (baguncada / nome).write_text("", encoding="utf-8")
+
+for arquivo in list(baguncada.iterdir()):   <span class="c"># lista antes</span>
+    tipo = arquivo.suffix.lower().lstrip(".") or "sem_tipo"
+    pasta = baguncada / tipo
+    pasta.mkdir(exist_ok=True)
+    arquivo.rename(pasta / arquivo.name)
+
+for pasta in sorted(baguncada.iterdir()):
+    print(pasta.name, sorted(p.name for p in pasta.iterdir()))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">jpg ['foto.jpg', 'selfie.JPG']
+pdf ['nota.pdf']
+txt ['doc.txt']</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>list(...)</code> guarda a lista antes de mover: não é seguro mudar uma pasta enquanto ela é percorrida</li>
+        <li><code>suffix.lower()</code> junta <code>.JPG</code> e <code>.jpg</code></li>
+        <li>Desafio: se já existir um arquivo com o mesmo nome no destino, acrescente um número</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Path("a/relatorio.pdf").stem vale:</p>
+        <div class="opts"><div>A) "relatorio.pdf"</div><div>B) "relatorio"</div><div>C) ".pdf"</div><div>D) "a"</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para listar todos os .txt em todas as subpastas:</p>
+        <div class="opts"><div>A) iterdir()</div><div>B) glob("*.txt")</div><div>C) rglob("*.txt")</div><div>D) listdir()</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. mkdir sem erro se a pasta já existir:</p>
+        <div class="opts"><div>A) mkdir()</div><div>B) mkdir(exist_ok=True)</div><div>C) mkdir(force=True)</div><div>D) makedirs()</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual apaga uma pasta com tudo dentro?</p>
+        <div class="opts"><div>A) Path.unlink()</div><div>B) Path.rmdir()</div><div>C) shutil.rmtree()</div><div>D) shutil.copy()</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Caminhos e pastas<br><em>sem dor de cabeça</em></h1>
+    <p class="lead">Monte caminhos com <code>Path</code> e <code>/</code>, use <code>name</code>, <code>stem</code>, <code>suffix</code> e <code>parent</code> para desmontá-los, e <code>read_text</code>/<code>write_text</code> para arquivos pequenos. Liste com <code>iterdir</code>, <code>glob</code> e <code>rglob</code>; crie com <code>mkdir(parents=True, exist_ok=True)</code>; renomeie e apague com cuidado, e use o <code>shutil</code> para copiar e mover pastas inteiras.</p>
+    <div class="chips"><span>Path /</span><span>stem · suffix</span><span>glob · rglob</span><span>mkdir · rename</span><span>shutil</span></div>
+    <div class="next">Próxima aula → 18 · Manipulação de Arquivos III</div>
+    <div class="source">Fontes: docs.python.org/3/library/pathlib.html; docs.python.org/3/library/shutil.html; docs.python.org/3/library/os.html#os.stat_result, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4 no Linux.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
