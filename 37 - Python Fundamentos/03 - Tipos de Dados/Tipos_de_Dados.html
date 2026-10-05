@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Tipos de Dados</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Fundamentos · Aula 3</div>
+    <h1>Tipos<br><em>de dados</em></h1>
+    <p class="lead">Todo valor em Python tem um <strong>tipo</strong>: texto, número inteiro, número decimal, verdadeiro ou falso, "nada". O tipo decide o que dá para fazer com o valor. Nesta aula: variáveis, os cinco tipos básicos, <code>type()</code>, as surpresas do <code>float</code>, conversões entre tipos e o que acontece quando uma conversão falha.</p>
+    <div class="chips"><span>Variáveis</span><span>str · int · float · bool · None</span><span>type()</span><span>int() · float() · str() · bool()</span><span>isinstance()</span><span>ValueError</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Built-in Types, Floating-Point Arithmetic, Built-in Functions), consultados em outubro de 2026 · Exemplos testados com Python 3.14 na pasta <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Conceito</span><span class="n">01</span></div>
+  <h2>Variáveis: <em>nomes para valores</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <p class="intro" style="margin-bottom:8px">Uma <strong>variável</strong> é um nome que aponta para um valor. Você cria com <code>=</code> (atribuição) e pode trocar o valor depois. Em Python não se declara o tipo: ele vem do valor.</p>
+      <pre class="code">idade = 29          <span class="c"># cria a variável</span>
+idade = idade + 1   <span class="c"># usa e troca o valor</span>
+print(idade)        <span class="c"># 30</span></pre>
+      <div class="callout warn" style="margin-top:10px">O <code>=</code> não é "igual" da matemática: é "guarde este valor neste nome". Para <strong>comparar</strong>, usa-se <code>==</code> (aula 06).</div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Regra de nome</th><th>Exemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Letras, números e _</td><td><code>nota_final</code>, <code>aluno2</code></td></tr>
+          <tr><td>Não começa com número</td><td><code>2aluno</code> é erro</td></tr>
+          <tr><td>Sem espaço nem hífen</td><td><code>nota-final</code> é erro</td></tr>
+          <tr><td>Maiúscula ≠ minúscula</td><td><code>Idade</code> e <code>idade</code> são diferentes</td></tr>
+          <tr><td>Não use palavras do Python</td><td><code>if</code>, <code>for</code>, <code>class</code>…</td></tr>
+        </tbody></table></div>
+      <div class="callout good" style="margin-top:10px">Convenção do Python (PEP 8): <strong>snake_case</strong>, minúsculas com <code>_</code>. Nomes que dizem o que guardam: <code>preco_total</code>, não <code>x</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Tipos básicos</span><span class="n">02</span></div>
+  <h2>Os cinco <em>tipos básicos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tipos.py</b></div>
+      <pre class="code">nome = "Ana"        <span class="c"># str: texto</span>
+idade = 29          <span class="c"># int: número inteiro</span>
+altura = 1.68       <span class="c"># float: número com casas decimais</span>
+estudante = True    <span class="c"># bool: verdadeiro ou falso</span>
+apelido = None      # NoneType: "nenhum valor"
+
+print(type(nome))
+print(type(idade))
+print(type(altura))
+print(type(estudante))
+print(type(apelido))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">&lt;class 'str'&gt;
+&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'bool'&gt;
+&lt;class 'NoneType'&gt;</pre>
+      <div class="table-wrap" style="margin-top:10px"><table>
+        <thead><tr><th>Tipo</th><th>Guarda</th></tr></thead>
+        <tbody>
+          <tr><td>str</td><td>Texto, entre aspas</td></tr>
+          <tr><td>int</td><td>Inteiros: -3, 0, 42</td></tr>
+          <tr><td>float</td><td>Decimais, com <strong>ponto</strong>: 1.68</td></tr>
+          <tr><td>bool</td><td><code>True</code> ou <code>False</code> (com maiúscula)</td></tr>
+          <tr><td>NoneType</td><td><code>None</code>: ausência de valor</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Números</span><span class="n">03</span></div>
+  <h2>int, float <em>e suas surpresas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>numeros.py</b></div>
+      <pre class="code"><span class="c"># int não tem limite de tamanho</span>
+print(2 ** 100)
+
+<span class="c"># float é aproximado: alguns decimais não são exatos</span>
+print(0.1 + 0.2)
+print(round(0.1 + 0.2, 2))
+
+<span class="c"># Divisão com / sempre dá float, mesmo quando é exata</span>
+print(10 / 2)
+print(type(10 / 2))
+
+<span class="c"># Separador de milhar com _ (só para leitura)</span>
+populacao = 203_080_756
+print(populacao)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">1267650600228229401496703205376
+0.30000000000000004
+0.3
+5.0
+&lt;class 'float'&gt;
+203080756</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>int</code> não estoura: <code>2 ** 100</code> sai inteiro</li>
+        <li><code>0.1 + 0.2</code> dá <code>0.30000000000000004</code>: o <code>float</code> é guardado em binário e alguns decimais não são exatos</li>
+        <li>Para dinheiro, arredonde ao mostrar (<code>round</code>, ou <code>:.2f</code> na aula 05)</li>
+        <li><code>/</code> sempre devolve <code>float</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:10px">Não é bug do Python: quase todas as linguagens se comportam assim com ponto flutuante. Contas financeiras exatas usam o módulo <code>decimal</code>.</div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Conversões</span><span class="n">04</span></div>
+  <h2>Convertendo <em>entre tipos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>conversoes.py</b></div>
+      <pre class="code">print(int("42") + 1)       <span class="c"># texto -&gt; inteiro</span>
+print(float("3.5") * 2)    <span class="c"># texto -&gt; float</span>
+print(str(10) + "0")       <span class="c"># inteiro -&gt; texto</span>
+print(int(9.99))           <span class="c"># float -&gt; int: corta as decimais</span>
+print(round(9.99))         <span class="c"># para arredondar, use round()</span>
+
+<span class="c"># bool(): vazio e zero são False; o resto é True</span>
+print(bool(0), bool(""), bool(None))
+print(bool(7), bool("oi"), bool(" "))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">43
+7.0
+100
+9
+10
+False False False
+True True True</pre>
+      <div class="table-wrap" style="margin-top:10px"><table>
+        <thead><tr><th>Função</th><th>Converte para</th></tr></thead>
+        <tbody>
+          <tr><td>int()</td><td>Inteiro (corta decimais)</td></tr>
+          <tr><td>float()</td><td>Decimal</td></tr>
+          <tr><td>str()</td><td>Texto</td></tr>
+          <tr><td>bool()</td><td>True ou False</td></tr>
+          <tr><td>round()</td><td>Arredonda</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Erros</span><span class="n">05</span></div>
+  <h2>Quando a conversão <em>falha</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="lbl"><b>erro_conversao.py</b></div>
+      <pre class="code">idade = int("vinte")</pre>
+      <pre class="out" style="margin-top:6px;border-color:#5A3431;color:#f3c6c0">Traceback (most recent call last):
+  File "erro_conversao.py", line 1, in &lt;module&gt;
+    idade = int("vinte")
+ValueError: invalid literal for int() with base 10: 'vinte'</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><strong>ValueError</strong>: o tipo está certo (é um texto), mas o <strong>valor</strong> não serve</li>
+        <li><code>int("42")</code> funciona; <code>int("vinte")</code> e <code>int("4.5")</code> não</li>
+        <li>Para <code>"4.5"</code>, converta com <code>float()</code></li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Esse erro vai aparecer muito na próxima aula: tudo o que vem do teclado é texto, e o usuário pode digitar qualquer coisa. Tratar o erro é assunto do capítulo 12 do guia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Verificando</span><span class="n">06</span></div>
+  <h2>type() <em>e isinstance()</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>isinstance_ex.py</b></div>
+      <pre class="code">valor = 3.14
+print(isinstance(valor, float))         <span class="c"># True</span>
+print(isinstance(valor, int))           <span class="c"># False</span>
+print(isinstance(valor, (int, float)))  <span class="c"># True: é um dos dois</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">True
+False
+True</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>type(x)</code> mostra o tipo: ótimo para investigar no REPL</li>
+        <li><code>isinstance(x, tipo)</code> responde <code>True</code> ou <code>False</code>: melhor para decisões no código</li>
+        <li>Aceita uma tupla de tipos: "é int <strong>ou</strong> float?"</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Detalhe curioso: <code>bool</code> é um tipo especial de <code>int</code>. <code>True</code> vale 1 e <code>False</code> vale 0, por isso <code>True + 1</code> dá 2.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Mapa</span><span class="n">07</span></div>
+  <h2>Tipos que vêm <em>nas próximas aulas</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Exemplo</th><th>Mutável?</th><th>Aula</th></tr></thead>
+    <tbody>
+      <tr><td>str</td><td>"Python"</td><td>Não</td><td>07 e 08 · Strings</td></tr>
+      <tr><td>list</td><td>[1, 2, 3]</td><td>Sim</td><td>09 · Listas</td></tr>
+      <tr><td>tuple</td><td>(1, 2, 3)</td><td>Não</td><td>10 · Tuplas</td></tr>
+      <tr><td>set</td><td>{1, 2, 3}</td><td>Sim</td><td>11 · Set</td></tr>
+      <tr><td>dict</td><td>{"nome": "Ana"}</td><td>Sim</td><td>12 · Dicionário</td></tr>
+    </tbody></table></div>
+  <div class="callout" style="margin-top:12px"><strong>Mutável</strong> = dá para alterar o valor sem criar outro. Essa ideia separa listas de tuplas e explica vários comportamentos que aparecem nas aulas 07 a 10.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Com o agente</span><span class="n">08</span></div>
+  <h2>Investigando tipos <em>com o Cursor</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="promptbox">Sou iniciante em Python. Por que 0.1 + 0.2 não dá
+0.3 exatamente? Explique com uma analogia simples
+e diga como devo mostrar valores em dinheiro.</div>
+      <div class="promptbox" style="margin-top:8px">Faça 5 perguntas de "qual é o tipo deste valor?"
+para eu responder, com valores como "10", 10,
+10.0 e True. Só me diga as respostas depois que
+eu tentar.</div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Peça <strong>analogias</strong> e exemplos curtos</li>
+        <li>Peça <strong>exercícios</strong> no seu nível, não respostas prontas</li>
+        <li>Confira cada resposta no REPL: <code>type(10.0)</code></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">O REPL é o seu laboratório: qualquer dúvida de tipo se resolve em um segundo com <code>type()</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">09</span></div>
+  <h2>Descubra <em>e converta</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> numa lista com <code>"42"</code>, <code>3.7</code>, <code>True</code> e <code>"2.5"</code>, mostre o tipo dos três primeiros; depois dobre o <code>"42"</code> como número, converta <code>3.7</code> em inteiro, some 1 a <code>"2.5"</code> e a <code>True</code>.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code"><span class="c"># Exercício: descubra o tipo e converta</span>
+valores = ["42", 3.7, True, "2.5"]
+print(type(valores[0]), type(valores[1]), type(valores[2]))
+print(int(valores[0]) * 2)       # "42" -&gt; 42
+print(int(valores[1]))           <span class="c"># 3.7 -&gt; 3</span>
+print(float(valores[3]) + 1)     # "2.5" -&gt; 3.5
+print(int(valores[2]) + 1)       <span class="c"># True vale 1</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">&lt;class 'str'&gt; &lt;class 'float'&gt; &lt;class 'bool'&gt;
+84
+3
+3.5
+2</pre>
+      <div class="callout" style="margin-top:10px"><code>valores[0]</code> pega o primeiro item da lista. Listas são o assunto da aula 09; por ora, basta saber que a posição começa em 0.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Qual é o tipo de 10 / 2?</p>
+        <div class="opts"><div>A) int</div><div>B) float</div><div>C) str</div><div>D) bool</div></div>
+        <div class="answer"><b>B.</b> A divisão com / sempre dá float (5.0).</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O que int(9.99) devolve?</p>
+        <div class="opts"><div>A) 10</div><div>B) 9</div><div>C) 9.99</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b> Corta as decimais; para arredondar, round().</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. int("vinte") gera qual erro?</p>
+        <div class="opts"><div>A) TypeError</div><div>B) NameError</div><div>C) ValueError</div><div>D) Nenhum</div></div>
+        <div class="answer"><b>C.</b> O valor não é um número válido.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual destes é False?</p>
+        <div class="opts"><div>A) bool(" ")</div><div>B) bool("0")</div><div>C) bool(0)</div><div>D) bool(-1)</div></div>
+        <div class="answer"><b>C.</b> " " e "0" são textos não vazios.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Fundamentos</div>
+    <h1 style="font-size:40px">Cada valor<br><em>tem um tipo</em></h1>
+    <p class="lead">Variáveis guardam valores, e o tipo vem do valor: <code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code> e <code>None</code>. <code>type()</code> e <code>isinstance()</code> investigam; <code>int()</code>, <code>float()</code>, <code>str()</code> e <code>bool()</code> convertem; e um valor que não serve gera <strong>ValueError</strong>.</p>
+    <div class="chips"><span>snake_case</span><span>str · int · float · bool · None</span><span>0.1 + 0.2</span><span>Conversões</span><span>ValueError</span></div>
+    <div class="next">Próxima aula → 04 · Utilizando o Input</div>
+    <div class="source">Fontes: docs.python.org/3/library/stdtypes.html; docs.python.org/3/tutorial/floatingpoint.html; docs.python.org/3/library/functions.html; peps.python.org/pep-0008, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
