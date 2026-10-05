@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Programação Funcional</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 13</div>
+    <h1>Programação<br><em>funcional</em></h1>
+    <p class="lead">Programação funcional é um estilo: montar o programa com <strong>funções puras</strong> (mesma entrada, mesma saída, sem mexer em nada de fora), <strong>dados que não mudam</strong> e funções que recebem e devolvem outras funções. O Python não é uma linguagem puramente funcional, mas oferece as ferramentas. Nesta aula: funções puras, evitar mutação, funções de alta ordem e composição, <code>reduce</code>, <code>partial</code>, <code>itemgetter</code>/<code>attrgetter</code> e um pipeline com <code>map</code>, <code>filter</code> e <code>reduce</code>.</p>
+    <div class="chips"><span>Funções puras</span><span>Sem mutação</span><span>Alta ordem</span><span>Composição</span><span>reduce · partial</span><span>itemgetter · attrgetter</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (Functional Programming HOWTO; functools: reduce, partial; operator: itemgetter, attrgetter; collections.namedtuple), consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Funções puras</span><span class="n">01</span></div>
+  <h2>Mesma entrada, <em>mesma saída</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>puras.py</b></div>
+      <pre class="code">total = 0
+
+
+def somar_impura(valor):        <span class="c"># depende e altera algo de fora</span>
+    global total
+    total += valor
+    return total
+
+
+def somar_pura(acumulado, valor):   <span class="c"># só usa o que recebe</span>
+    return acumulado + valor
+
+
+print(somar_impura(5), somar_impura(5))   <span class="c"># mesma entrada...</span>
+print(somar_pura(0, 5), somar_pura(0, 5))  <span class="c"># ...mesma saída</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">5 10
+5 5</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A impura muda a variável global <code>total</code>: chamada duas vezes com 5, responde 5 e depois 10</li>
+        <li>A pura só usa os argumentos e não altera nada fora dela</li>
+        <li>Funções puras são fáceis de testar, reaproveitar e entender isoladas</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Todo programa precisa de efeitos (imprimir, gravar arquivo). A ideia é concentrá-los em poucos lugares e manter o resto puro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Imutabilidade</span><span class="n">02</span></div>
+  <h2>Criar o novo, <em>sem alterar o antigo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>sem_mutar.py</b></div>
+      <pre class="code">notas = [7, 10, 5]
+
+ordenadas = sorted(notas)        <span class="c"># cria uma lista nova</span>
+print(notas, ordenadas)          <span class="c"># a original não mudou</span>
+
+aluno = {"nome": "Ana", "nota": 7}
+atualizado = {**aluno, "nota": 9}    <span class="c"># novo dicionário</span>
+print(aluno)
+print(atualizado)
+
+ponto = (2, 3)                   <span class="c"># tupla: não dá para alterar</span>
+print(ponto + (4,))              <span class="c"># cria outra tupla</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[7, 10, 5] [5, 7, 10]
+{'nome': 'Ana', 'nota': 7}
+{'nome': 'Ana', 'nota': 9}
+(2, 3, 4)</pre>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Altera o original</th><th>Cria um novo</th></tr></thead>
+      <tbody>
+        <tr><td><code>lista.sort()</code></td><td><code>sorted(lista)</code></td></tr>
+        <tr><td><code>lista.append(x)</code></td><td><code>lista + [x]</code></td></tr>
+        <tr><td><code>d["chave"] = v</code></td><td><code>{**d, "chave": v}</code></td></tr>
+        <tr><td><code>list</code>, <code>dict</code>, <code>set</code></td><td><code>tuple</code>, <code>frozenset</code>, <code>str</code></td></tr>
+      </tbody></table>
+      <div class="callout" style="margin:10px">Dados que não mudam evitam o bug "quem alterou minha lista?" quando várias partes do código compartilham o mesmo objeto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Alta ordem</span><span class="n">03</span></div>
+  <h2>Funções que recebem <em>e devolvem funções</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>alta_ordem.py</b></div>
+      <pre class="code">def aplicar_duas_vezes(funcao, valor):
+    return funcao(funcao(valor))
+
+
+def compor(f, g):
+    return lambda x: f(g(x))     <span class="c"># devolve uma função nova</span>
+
+
+print(aplicar_duas_vezes(lambda n: n * 3, 2))
+
+limpar = compor(str.title, str.strip)
+print(repr(limpar("   maria da silva  ")))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">18
+'Maria Da Silva'</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>aplicar_duas_vezes</code> recebe uma função como argumento: 2 × 3 × 3 = 18</li>
+        <li><code>compor(f, g)</code> devolve uma função nova que faz <code>f(g(x))</code></li>
+        <li><code>map</code>, <code>filter</code>, <code>sorted(key=)</code> e os decoradores (aula 10) são funções de alta ordem</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Compor funções pequenas é o coração do estilo funcional: cada peça faz uma coisa só.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>reduce</span><span class="n">04</span></div>
+  <h2>Reduzir uma sequência <em>a um valor</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>usando_reduce.py</b></div>
+      <pre class="code">from functools import reduce
+from operator import add, mul
+
+nums = [3, 4, 5]
+
+print(reduce(add, nums))               <span class="c"># ((3 + 4) + 5)</span>
+print(reduce(mul, nums))               <span class="c"># ((3 * 4) * 5)</span>
+print(reduce(lambda a, b: a if a &gt; b else b, nums))
+print(reduce(add, [], 0))         <span class="c"># valor inicial evita erro</span></pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">12
+60
+5
+0</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>3 · 4</b>12</div>
+        <div class="n"><b>12 · 5</b>60</div>
+        <div class="n key"><b>60</b>resultado</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li><code>reduce(f, itens)</code> combina dois a dois, levando o acumulado adiante</li>
+        <li>O terceiro argumento é o valor inicial: sem ele, lista vazia dá erro</li>
+        <li>Para somar, contar ou achar o maior, prefira <code>sum</code>, <code>len</code> e <code>max</code>: são mais claros</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>partial</span><span class="n">05</span></div>
+  <h2>Fixar argumentos: <em>funções sob medida</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>usando_partial.py</b></div>
+      <pre class="code">from functools import partial
+
+binario = partial(int, base=2)         <span class="c"># fixa o argumento base</span>
+print(binario("1011"), binario("11111111"))
+
+
+def preco_final(valor, imposto):
+    return round(valor * (1 + imposto), 2)
+
+
+com_icms = partial(preco_final, imposto=0.18)
+print(com_icms(100), com_icms(59.9))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">11 255
+118.0 70.68</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>partial(função, ...)</code> devolve uma nova função com alguns argumentos já preenchidos</li>
+        <li><code>binario</code> é o <code>int</code> com <code>base=2</code> embutido</li>
+        <li>Útil para passar funções "configuradas" a <code>map</code>, botões, callbacks</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">A alíquota de 18% é só um valor de exemplo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>operator</span><span class="n">06</span></div>
+  <h2>itemgetter <em>e attrgetter</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>getters.py</b></div>
+      <pre class="code">from operator import itemgetter, attrgetter
+from collections import namedtuple
+
+vendas = [("ana", 300), ("bia", 950), ("caio", 120)]
+print(sorted(vendas, key=itemgetter(1), reverse=True))
+
+Livro = namedtuple("Livro", "titulo ano")
+livros = [Livro("Duna", 1965), Livro("1984", 1949)]
+por_ano = sorted(livros, key=attrgetter("ano"))
+print([livro.titulo for livro in por_ano])</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[('bia', 950), ('ana', 300), ('caio', 120)]
+['1984', 'Duna']</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>itemgetter(1)</code> é uma função pronta que faz <code>x[1]</code></li>
+        <li><code>attrgetter("ano")</code> faz <code>x.ano</code></li>
+        <li>Substituem lambdas como <code>lambda v: v[1]</code> no <code>key=</code>, com nome mais claro</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Juntando tudo</span><span class="n">07</span></div>
+  <h2>map, filter <em>e reduce</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>pipeline_funcional.py</b></div>
+      <pre class="code">from functools import reduce
+
+pedidos = [120.0, 35.5, 980.0, 15.0, 410.0]
+
+total_grandes = reduce(
+    lambda acc, v: acc + v,
+    map(lambda v: v * 0.9,              <span class="c"># 10% de desconto</span>
+        filter(lambda v: v &gt;= 100, pedidos)),
+    0,
+)
+print(round(total_grandes, 2))
+
+<span class="c"># o mesmo, mais legível:</span>
+print(round(sum(v * 0.9 for v in pedidos if v &gt;= 100), 2))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">1359.0
+1359.0</pre>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>filter</b>pedidos ≥ 100</div>
+        <div class="n"><b>map</b>10% de desconto</div>
+        <div class="n key"><b>reduce</b>soma</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>As três etapas encaixadas dão o total dos pedidos grandes com desconto</li>
+        <li>A versão com <code>sum</code> e expressão geradora dá o mesmo e é mais fácil de ler</li>
+        <li>Em Python, use o estilo funcional quando ele deixar o código mais claro, não por regra</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">08</span></div>
+  <h2>Compondo <em>várias funções</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> escreva <code>compor(*funcoes)</code>, que aplica as funções em sequência, e use para normalizar um texto: tirar espaços das pontas, juntar espaços repetidos e passar para minúsculas.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">from functools import reduce
+import re
+
+
+def compor(*funcoes):
+    """Aplica as funções da esquerda para a direita."""
+    return lambda x: reduce(lambda acc, f: f(acc), funcoes, x)
+
+
+def juntar_espacos(texto):
+    return re.sub(r"\s+", " ", texto)
+
+
+normalizar = compor(str.strip, juntar_espacos, str.lower)
+
+print(repr(normalizar("  Olá    MUNDO   Python  ")))</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">'olá mundo python'</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>reduce</code> passa o texto por cada função, da esquerda para a direita</li>
+        <li>Cada etapa é uma função pura e pequena, fácil de trocar</li>
+        <li>Desafio: acrescente uma etapa que remove acentos</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Uma função pura:</p>
+        <div class="opts"><div>A) Altera variáveis globais</div><div>B) Para a mesma entrada, dá sempre a mesma saída</div><div>C) Não pode ter return</div><div>D) Precisa ser lambda</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Qual NÃO altera a lista original?</p>
+        <div class="opts"><div>A) lista.sort()</div><div>B) lista.append(1)</div><div>C) sorted(lista)</div><div>D) lista.pop()</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. reduce(lambda a, b: a + b, [1, 2, 3]) vale:</p>
+        <div class="opts"><div>A) [1, 3, 6]</div><div>B) 6</div><div>C) 3</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. partial(int, base=16)("ff") devolve:</p>
+        <div class="opts"><div>A) "ff"</div><div>B) 255</div><div>C) 16</div><div>D) Erro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Funções pequenas,<br><em>dados que não mudam</em></h1>
+    <p class="lead">Prefira funções puras e crie dados novos em vez de alterar os antigos. Funções são valores: passe, devolva e componha. <code>reduce</code> resume uma sequência, <code>partial</code> fixa argumentos e <code>itemgetter</code>/<code>attrgetter</code> substituem lambdas simples. Use o estilo funcional onde ele deixa o código mais claro.</p>
+    <div class="chips"><span>Pura</span><span>Imutável</span><span>Alta ordem</span><span>reduce · partial</span><span>operator</span></div>
+    <div class="next">Próxima aula → 14 · Usando Type Hint</div>
+    <div class="source">Fontes: docs.python.org/3/howto/functional.html; docs.python.org/3/library/functools.html (reduce, partial); docs.python.org/3/library/operator.html (add, mul, itemgetter, attrgetter); docs.python.org/3/library/collections.html#collections.namedtuple, consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
