@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Validação de Dados</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Python Intermediário · Aula 7</div>
+    <h1>Validação<br><em>de dados</em></h1>
+    <p class="lead">Dado que chega de fora (formulário, planilha, API, <code>input()</code>) não é confiável até ser conferido. Validar é checar o <strong>formato</strong> (regex), o <strong>tipo</strong> (conversão com <code>try/except</code>), a <strong>faixa</strong> e as <strong>regras de negócio</strong>, e responder com mensagens claras. Nesta aula: e-mail e CEP, CPF com dígitos verificadores, números, datas reais, um formulário que junta todos os erros e como lançar seu próprio <code>ValueError</code>.</p>
+    <div class="chips"><span>fullmatch para formato</span><span>CPF</span><span>try/except ValueError</span><span>datetime.strptime</span><span>Lista de erros</span><span>raise ValueError</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em docs.python.org (re; Errors and Exceptions; datetime.strptime; Built-in Exceptions: ValueError) e no algoritmo público dos dígitos verificadores do CPF, consultados em outubro de 2026 · Exemplos testados com Python 3.14 em <code>exemplos/</code> · Saídas reais</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Formato</span><span class="n">01</span></div>
+  <h2>E-mail e CEP <em>com fullmatch</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>email_cep.py</b></div>
+      <pre class="code">import re
+
+EMAIL = re.compile(r"[\w.+-]+@[\w-]+(\.[\w-]+)+")
+CEP = re.compile(r"\d{5}-?\d{3}")
+
+for e in ["ana@site.com", "bia@site",
+          "caio @x.com", "d@x.com.br"]:
+    print(f"{e:13} -&gt;", bool(EMAIL.fullmatch(e)))
+for c in ["01310-100", "01310100", "1310-100"]:
+    print(f"{c:13} -&gt;", bool(CEP.fullmatch(c)))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">ana@site.com  -&gt; True
+bia@site      -&gt; False
+caio @x.com   -&gt; False
+d@x.com.br    -&gt; True
+01310-100     -&gt; True
+01310100      -&gt; True
+1310-100      -&gt; False</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Para validar, use <code>fullmatch</code>: o texto <strong>inteiro</strong> tem de seguir o padrão</li>
+        <li>Com <code>search</code>, "lixo ana@site.com lixo" passaria</li>
+        <li><code>-?</code> deixa o hífen do CEP opcional</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Regex de e-mail só confere o formato. Se o e-mail existe, só um e-mail de confirmação diz.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Regra de negócio</span><span class="n">02</span></div>
+  <h2>CPF: formato <em>e dígitos verificadores</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>cpf.py</b></div>
+      <pre class="code">import re
+
+
+def cpf_valido(cpf):
+    numeros = re.sub(r"\D", "", cpf)      <span class="c"># só os dígitos</span>
+    repetido = numeros == numeros[0] * 11
+    if len(numeros) != 11 or repetido:
+        return False
+    for tamanho in (9, 10):           <span class="c"># os 2 dígitos finais</span>
+        soma = sum(int(d) * (tamanho + 1 - i)
+                   for i, d in enumerate(numeros[:tamanho]))
+        digito = soma * 10 % 11 % 10
+        if digito != int(numeros[tamanho]):
+            return False
+    return True
+
+
+for cpf in ["529.982.247-25", "529.982.247-26",
+            "111.111.111-11"]:
+    print(cpf, cpf_valido(cpf))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">529.982.247-25 True
+529.982.247-26 False
+111.111.111-11 False</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>re.sub(r"\D", "", cpf)</code> aceita com ou sem pontos e traço</li>
+        <li>Sequências repetidas (111.111...) têm dígitos "certos", mas não são CPFs válidos</li>
+        <li>Os dois últimos dígitos são calculados a partir dos anteriores, com pesos decrescentes</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Os CPFs são de exemplo, gerados só para testar a conta. Nunca use CPF real em código de estudo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Tipo e faixa</span><span class="n">03</span></div>
+  <h2>Converter <em>e conferir os limites</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>numeros.py</b></div>
+      <pre class="code">def ler_idade(texto):
+    try:
+        idade = int(texto)
+    except ValueError:
+        return None, f"'{texto}' não é um número inteiro"
+    if not 0 &lt;= idade &lt;= 120:
+        return None, f"{idade} está fora da faixa 0-120"
+    return idade, "ok"
+
+
+for entrada in ["34", "trinta", "-3", "150", " 42 "]:
+    print(repr(entrada), "-&gt;", ler_idade(entrada))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">'34' -&gt; (34, 'ok')
+'trinta' -&gt; (None, "'trinta' não é um número inteiro")
+'-3' -&gt; (None, '-3 está fora da faixa 0-120')
+'150' -&gt; (None, '150 está fora da faixa 0-120')
+' 42 ' -&gt; (42, 'ok')</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Tentar converter e tratar o <code>ValueError</code> é mais confiável que prever todos os formatos</li>
+        <li>Depois do tipo, a faixa: idade negativa é número, mas não é idade</li>
+        <li><code>int(" 42 ")</code> ignora espaços nas pontas</li>
+        <li>Devolver <code>(valor, mensagem)</code> deixa claro o que deu errado</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Datas</span><span class="n">04</span></div>
+  <h2>A data <em>existe mesmo?</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>datas.py</b></div>
+      <pre class="code">from datetime import datetime
+
+
+def data_valida(texto):
+    try:
+        return datetime.strptime(texto, "%d/%m/%Y").date()
+    except ValueError:
+        return None
+
+
+for d in ["05/10/2026", "31/02/2026",
+          "29/02/2024", "2026-10-05"]:
+    print(d, "-&gt;", data_valida(d))</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">05/10/2026 -&gt; 2026-10-05
+31/02/2026 -&gt; None
+29/02/2024 -&gt; 2024-02-29
+2026-10-05 -&gt; None</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Um regex aceitaria <code>31/02/2026</code>; o <code>strptime</code> sabe que fevereiro não tem 31</li>
+        <li>Também conhece ano bissexto: <code>29/02/2024</code> passa</li>
+        <li><code>"%d/%m/%Y"</code> é o formato esperado: outra ordem dá <code>ValueError</code></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Formato com regex, existência com a biblioteca certa: cada ferramenta no seu papel.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Formulário</span><span class="n">05</span></div>
+  <h2>Mostre <em>todos os erros</em> de uma vez</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>formulario.py</b></div>
+      <pre class="code">import re
+
+
+def validar(cadastro):
+    erros = []
+    if len(cadastro.get("nome", "").strip()) &lt; 3:
+        erros.append("nome: mínimo de 3 letras")
+    if not re.fullmatch(r"[\w.+-]+@[\w-]+(\.[\w-]+)+",
+                        cadastro.get("email", "")):
+        erros.append("email: formato inválido")
+    if not str(cadastro.get("idade", "")).isdigit():
+        erros.append("idade: use só números")
+    return erros
+
+
+bom = {"nome": "Ana", "email": "ana@site.com", "idade": "30"}
+ruim = {"nome": " B ", "email": "b@", "idade": "trinta"}
+print(validar(bom))
+for erro in validar(ruim):
+    print("-", erro)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">[]
+- nome: mínimo de 3 letras
+- email: formato inválido
+- idade: use só números</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Em vez de parar no primeiro problema, a função junta todos numa lista</li>
+        <li>Lista vazia significa cadastro válido</li>
+        <li><code>.get(campo, "")</code> evita erro quando o campo nem veio</li>
+        <li><code>.strip()</code> impede que espaços contem como letras</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>raise</span><span class="n">06</span></div>
+  <h2>Recusando valores <em>com ValueError</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>levantar.py</b></div>
+      <pre class="code">def definir_desconto(percentual):
+    if not 0 &lt;= percentual &lt;= 50:
+        raise ValueError(f"desconto deve ficar entre 0 e 50, "
+                         f"veio {percentual}")
+    return percentual / 100
+
+
+print(definir_desconto(15))
+try:
+    definir_desconto(80)
+except ValueError as erro:
+    print("Erro:", erro)</pre>
+      <div class="lbl s" style="margin-top:10px">Saída</div>
+      <pre class="out">0.15
+Erro: desconto deve ficar entre 0 e 50, veio 80</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Quando uma função recebe um valor que não faz sentido, ela pode <strong>recusar</strong> com <code>raise</code></li>
+        <li><code>ValueError</code> é a exceção para "tipo certo, valor errado"</li>
+        <li>Quem chama decide o que fazer, com <code>try/except</code></li>
+        <li>A mensagem diz o limite e o valor recebido</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Exercício</span><span class="n">07</span></div>
+  <h2>Senha <em>forte</em></h2>
+  <div class="par">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Enunciado:</strong> diga o que falta para uma senha ser forte: 8 caracteres, uma maiúscula, uma minúscula e um número.</p>
+      <div class="lbl"><b>Uma resposta possível</b></div>
+      <pre class="code">import re
+
+REGRAS = [
+    (r".{8,}", "pelo menos 8 caracteres"),
+    (r"[A-Z]", "uma letra maiúscula"),
+    (r"[a-z]", "uma letra minúscula"),
+    (r"\d", "um número"),
+]
+
+
+def problemas_da_senha(senha):
+    return [msg for padrao, msg in REGRAS
+            if not re.search(padrao, senha)]
+
+
+for s in ["abc", "Senha2026", "senhafraca1"]:
+    faltam = problemas_da_senha(s)
+    print(s, "-&gt;", "forte" if not faltam else "falta:")
+    for item in faltam:
+        print("   -", item)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">abc -&gt; falta:
+   - pelo menos 8 caracteres
+   - uma letra maiúscula
+   - um número
+Senha2026 -&gt; forte
+senhafraca1 -&gt; falta:
+   - uma letra maiúscula</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>As regras ficam numa lista de dados: dá para acrescentar uma sem mexer na função</li>
+        <li>Desafio: exija também um símbolo, como <code>!@#$</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">08</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Para validar o formato de um campo inteiro, use:</p>
+        <div class="opts"><div>A) re.search</div><div>B) re.fullmatch</div><div>C) re.findall</div><div>D) re.sub</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. int("doze") lança:</p>
+        <div class="opts"><div>A) TypeError</div><div>B) ValueError</div><div>C) KeyError</div><div>D) Nada: devolve 0</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Qual pega "31/02/2026" como inválida?</p>
+        <div class="opts"><div>A) r"\d{2}/\d{2}/\d{4}"</div><div>B) datetime.strptime</div><div>C) str.isdigit</div><div>D) len(texto) == 10</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Por que juntar os erros numa lista?</p>
+        <div class="opts"><div>A) Para mostrar todos de uma vez</div><div>B) Para o código ficar mais rápido</div><div>C) Porque o raise exige</div><div>D) Para esconder os erros</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Python Intermediário</div>
+    <h1 style="font-size:40px">Confie,<br><em>mas confira</em></h1>
+    <p class="lead">Valide em camadas: o formato com <code>re.fullmatch</code>, o tipo convertendo com <code>try/except</code>, a faixa com comparações, a existência com a biblioteca certa (<code>strptime</code>) e as regras de negócio (dígitos do CPF) com uma função própria. Junte os erros numa lista para o usuário corrigir tudo de uma vez, e use <code>raise ValueError</code> quando uma função receber um valor sem sentido.</p>
+    <div class="chips"><span>fullmatch</span><span>try/except</span><span>Faixa</span><span>strptime</span><span>Lista de erros</span><span>raise</span></div>
+    <div class="next">Próxima aula → 08 · Usando Map</div>
+    <div class="source">Fontes: docs.python.org/3/library/re.html; docs.python.org/3/tutorial/errors.html; docs.python.org/3/library/datetime.html#datetime.datetime.strptime; docs.python.org/3/library/exceptions.html#ValueError; algoritmo dos dígitos verificadores do CPF (módulo 11), consultados em outubro de 2026. Exemplos em <code>exemplos/</code>, executados com Python 3.14.4.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
