@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Bloqueia o push quando algum PDF enviado está fora do tema escuro do curso:
 # PDF claro (precisa ser reconstruído) ou com margens brancas.
-# Verifica só os PDFs adicionados/alterados nos commits do push, lendo o conteúdo
+# Verifica só os PDFs adicionados, alterados, renomeados ou copiados nos commits do push, lendo o conteúdo
 # commitado. Varredura do repositório inteiro: .venv/bin/python scripts/check_pdfs.py --all
 # Ativação (uma vez por clone): git config core.hooksPath .githooks
 # Para ignorar num caso excepcional: git push --no-verify

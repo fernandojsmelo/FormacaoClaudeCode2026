@@ -15,7 +15,7 @@ O script renderiza a primeira página de cada PDF a 20 DPI e aponta dois problem
 - **PDF claro** — brilho médio acima de ~150. O normal do tema escuro fica entre ~20 e ~55 nessa métrica (a média sobe com o texto claro e o anti-aliasing em baixa resolução); não confundir isso com um PDF fora do padrão. Precisa ser reconstruído (passos abaixo).
 - **Margens brancas** — conteúdo escuro, mas bordas da página claras. Corrigir com `.venv/bin/python scripts/fill_pdf_margins.py <arquivo.pdf>`, que pinta as margens com `--bg` por baixo do conteúdo, sem alterar texto, páginas ou links.
 
-O hook versionado `.githooks/pre-push` roda a mesma checagem automaticamente, só nos PDFs adicionados ou alterados nos commits do push, e bloqueia o envio se encontrar problema (ignorar só em caso excepcional com `git push --no-verify`). Ele usa o `.venv` do projeto: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`. A ativação é a mesma do pre-commit: `git config core.hooksPath .githooks`. O hook não dispensa a varredura completa acima, que pega também PDFs antigos.
+O hook versionado `.githooks/pre-push` roda a mesma checagem automaticamente, só nos PDFs adicionados, alterados ou renomeados nos commits do push, e bloqueia o envio se encontrar problema (ignorar só em caso excepcional com `git push --no-verify`). Ele usa o `.venv` do projeto: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`. A ativação é a mesma do pre-commit: `git config core.hooksPath .githooks`. O hook não dispensa a varredura completa acima, que pega também PDFs antigos.
 
 Ao encontrar um PDF fora do padrão:
 1. Extrair o texto completo com `pdftotext -layout` e ler por inteiro antes de reescrever — nunca inventar ou resumir conteúdo.

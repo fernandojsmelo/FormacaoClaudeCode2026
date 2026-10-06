@@ -62,7 +62,11 @@ def todos_os_pdfs():
 
 
 def pdfs_do_push():
-    """Para cada ref enviada, lista (sha, caminho) dos PDFs adicionados ou alterados."""
+    """Para cada ref enviada, lista (sha, caminho) dos PDFs adicionados, alterados, renomeados ou copiados.
+
+    Renomeados (R) e copiados (C) entram para que mover uma pasta não deixe os PDFs sem conferência;
+    com --name-only, o git devolve o caminho novo.
+    """
     vistos = {}
     for linha in sys.stdin:
         partes = linha.split()
@@ -72,9 +76,9 @@ def pdfs_do_push():
         if local_sha == ZERO:  # branch sendo apagado
             continue
         if remote_sha != ZERO:
-            cmd = ["git", "diff", "--name-only", "-z", "--diff-filter=AM", remote_sha, local_sha]
+            cmd = ["git", "diff", "--name-only", "-z", "--diff-filter=AMRC", remote_sha, local_sha]
         else:  # branch novo: só o que ainda não existe em nenhum remoto
-            cmd = ["git", "log", "--name-only", "-z", "--diff-filter=AM", "--pretty=format:",
+            cmd = ["git", "log", "--name-only", "-z", "--diff-filter=AMRC", "--pretty=format:",
                    local_sha, "--not", "--remotes"]
         saida = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout
         for caminho in saida.split("\0"):
