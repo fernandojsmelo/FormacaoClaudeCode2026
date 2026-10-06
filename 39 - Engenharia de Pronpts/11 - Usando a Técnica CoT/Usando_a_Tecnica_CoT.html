@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usando a Técnica CoT</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+.card .v{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 11</div>
+    <h1>Chain of Thought:<br><em>o raciocínio à mostra</em></h1>
+    <p class="lead">Na técnica <strong>Chain of Thought</strong> (CoT, cadeia de pensamento), você pede que o modelo <strong>mostre o raciocínio</strong> antes da conclusão. Na aula 10, quem definia os passos era você; aqui, o próprio modelo monta o caminho. Nesta aula, com o notebook <code>08-cot.ipynb</code>: CoT com tags <code>&lt;cot&gt;</code> em marketing, saúde, investimentos e produto, o CoT simples e a diferença para o raciocínio interno do gpt-oss.</p>
+    <div class="chips"><span>&lt;cot&gt; … &lt;/cot&gt;</span><span>Papel developer</span><span>Auditar o raciocínio</span><span>Passo a passo</span><span>message.reasoning</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/reasoning, console.groq.com/docs/api-reference e no Guia de Engenharia de Prompt da aula 16 (seção 8), consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>08-cot.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>A ideia</span><span class="n">01</span></div>
+  <h2>Pensar antes, <em>concluir depois</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>08-cot.ipynb · célula de texto</b></div>
+      <pre class="code">Útil em situações:
+- Raciocínio estruturado e explícito
+- Explicação transparente do raciocínio
+- Clareza na tomada de decisão</pre>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+        <div class="n"><b>&lt;cot&gt;</b>hipóteses, contas, critérios</div>
+        <div class="n"><b>&lt;/cot&gt;</b>fim do raciocínio</div>
+        <div class="n key"><b>Conclusão</b>objetiva</div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O padrão do notebook: "Mostre o raciocínio dentro de <code>&lt;cot&gt;</code> e depois dê uma conclusão objetiva"</li>
+        <li>As tags separam o <strong>caminho</strong> do <strong>resultado</strong>: dá para exibir só a conclusão ao usuário e guardar o raciocínio para revisão</li>
+        <li>O grande ganho é a <strong>auditoria</strong>: se a conclusão estiver errada, você vê em qual passo o erro entrou</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Aula 10 × aula 11: em múltiplos passos, você escreve a metodologia; no CoT, você pede que o modelo exponha a dele.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Marketing</span><span class="n">02</span></div>
+  <h2>CoT numa <em>estratégia de marketing</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 5</b></div>
+      <pre class="code s">system_prompt = """
+Você é um estrategista de marketing que sempre usa Chain of Thoughts (CoT).
+Mostre o raciocínio dentro de &lt;cot&gt; e depois dê uma conclusão objetiva.
+"""
+
+user_prompt = """
+Uma empresa de moda quer lançar uma campanha para atrair a Geração Z.
+Dados:
+- Orçamento: R$ 500 mil
+- Principais canais: Instagram, TikTok, YouTube
+- Objetivo: aumentar vendas online em 30% em 6 meses
+- Concorrência: 3 marcas fortes no mesmo segmento
+
+Crie um plano de campanha explicando o raciocínio passo a passo.
+"""
+
+response = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "developer", "content": system_prompt},
+           {"role": "user", "content": user_prompt}],
+    temperature=0.4
+)
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">Plano de Marketing: &lt;cot&gt;
+**1. Entender o público‑alvo (Gen Z)**  
+- Idade: 16‑24 anos.  
+- Valores: autenticidade, diversidade, sustentabilidade, rapidez e conteúdo visual/curto.  
+- Hábitos: consumo intenso de vídeo curto (TikTok, Reels), busca por tendências em tempo real, alta confiança em influenciadores micro‑e nano‑influenciadores.  
+
+**2. Analisar o cenário competitivo**  
+- 3 concorrentes fortes já investem pesado em TikTok e colaborações com creators.  
+- Diferencial necessário: storytelling de marca + foco em sustentabilidade + experiências interativas (AR, challenges).  
+
+**3. Definir metas SMART**  
+- Aumentar vendas online 30 % em 6 meses → crescimento médio mensal de ≈4,5 % nas conversões.  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Repare em <code>"role": "developer"</code>: o SDK do Groq aceita <code>developer</code> como sinônimo de <code>system</code></li>
+        <li>Conferido: crescer 4,5% ao mês por 6 meses dá 1,045⁶ ≈ 1,30, ou seja, +30%</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Saúde</span><span class="n">03</span></div>
+  <h2>Hipóteses clínicas: <em>o que o modelo supôs</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 7 (prompts)</b></div>
+      <pre class="code s">system_prompt = """
+Você é um médico que usa Chain of Thoughts (CoT) para raciocínio clínico.
+Sempre apresente hipóteses dentro de &lt;cot&gt; e finalize com recomendação objetiva.
+"""
+
+user_prompt = """
+Paciente: 45 anos, sedentário, fumante, apresenta dores no peito durante esforço físico.
+Exames iniciais: colesterol alto, pressão arterial elevada.
+
+Qual deve ser a recomendação inicial para o paciente?
+"""
+<span class="c">…</span></pre>
+      <div class="callout danger" style="margin-top:10px">Exemplo didático de técnica de prompt, <strong>não</strong> orientação médica. A resposta chega a sugerir remédios e doses: decisão clínica é de profissional de saúde.</div>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">Análise clínica: &lt;cot&gt;
+- **Hipótese principal:** Angina de esforço devido a doença arterial coronariana (DAC) incipiente, considerando dor torácica associada ao esforço, hipertensão e hipercolesterolemia.
+- **Hipóteses secundárias:**  
+  1. Dor torácica musculoesquelética relacionada ao sedentarismo.  
+  2. Doença pulmonar obstrutiva crônica (DPOC) precoce por tabagismo, com dor torácica referida.  
+  3. Síndrome metabólica (obesidade, hipertensão, dislipidemia, tabagismo) predispondo a eventos cardiovasculares.
+- **Fatores de risco relevantes:** idade (45 anos), tabagismo ativo, sedentarismo, colesterol LDL elevado, pressão arterial sistólica &gt; 140 mmHg.
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O CoT mostra o que o modelo <strong>acrescentou</strong>: "obesidade" e "PA sistólica &gt; 140 mmHg" não estavam nos dados do paciente</li>
+        <li>Sem o raciocínio exposto, essas suposições passariam despercebidas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Investimentos</span><span class="n">04</span></div>
+  <h2>Auditando <em>as contas</em> do raciocínio</h2>
+  <div class="par e">
+    <div>
+      <div class="lbl s">célula 9 · trechos da saída gravada</div>
+      <pre class="out w">- Receita atual: R$ 300 mil/mês → R$ 3,6 mi/ano.  
+- Crescimento de 12 % ao mês equivale a aproximadamente 3,8 × ao ano ( (1,12)^12 ≈ 3,8 ).  
+- Projeção de receita anual em 12 meses: R$ 3,6 mi × 3,8 ≈ R$ 13,7 mi.  
+- Receita projetada em 24 meses: R$ 13,7 mi × 3,8 ≈ R$ 52 mi.
+…
+- Mesmo com custos totais de ~R$ 2,5 mi/ano, a margem EBITDA projetada para o próximo ano seria: (R$ 13,7 mi – R$ 2,5 mi) ≈ R$ 11,2 mi → margem EBITDA ≈ 82 %. Essa margem parece **excessivamente alta**, indicando que os custos provavelmente estão subestimados ou que a projeção de receita é otimista.
+…</pre>
+      <p class="note">Prompt: startup com receita de R$ 300 mil/mês, crescendo 12% ao mês, levantando R$ 5 milhões.</p>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>No raciocínio</th><th>Conferência</th></tr></thead>
+        <tbody>
+          <tr><td>1,12¹² ≈ 3,8</td><td>1,12¹² = <b>3,90</b>: arredondou para baixo</td></tr>
+          <tr><td>"Receita anual em 12 meses ≈ R$ 13,7 mi"</td><td>É o <b>ritmo anual</b> no 12º mês. A receita somada dos próximos 12 meses dá <b>≈ R$ 8,1 mi</b></td></tr>
+          <tr><td>Margem EBITDA a partir de R$ 2,5 mi de custos</td><td>≈ 82%, irreal; o próprio modelo depois sugere 30 a 40%</td></tr>
+          <tr><td>R$ 5 mi por 20% → pré-money R$ 20 mi</td><td>Correto</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout good" style="margin-top:10px">O CoT não garante acerto, mas deixa cada número à vista. É por isso que dá para encontrar os erros.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Produto</span><span class="n">05</span></div>
+  <h2>Priorizando o <em>MVP</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 11 (user)</b></div>
+      <pre class="code s">user_prompt = """
+Estamos desenvolvendo um aplicativo de bem-estar.
+Funcionalidades propostas:
+1. Meditação guiada
+2. Monitoramento de sono
+3. Gamificação de hábitos
+4. Relatórios personalizados
+
+Orçamento permite lançar apenas duas no MVP.
+Qual priorizar?
+"""
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O raciocínio usa um <strong>critério explícito</strong>: "alto impacto + esforço moderado"</li>
+        <li>Verifica dependências: relatórios precisam de dados que meditação e sono geram</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (final)</div>
+      <pre class="out w">**4. Verificar risco de dependência**  
+- Relatórios personalizados precisam de dados; ao escolher meditação + sono já temos duas fontes de dados suficientes para gerar relatórios simples no futuro, sem precisar lançá‑los no MVP.  
+- Gamificação pode ser adicionada depois, usando os mesmos eventos de meditação e sono como gatilhos de recompensas.
+
+**5. Conclusão**  
+As duas funcionalidades que melhor equilibram valor ao usuário, viabilidade de entrega e potencial de diferenciação são **Meditação guiada** e **Monitoramento de sono**. Elas permitem validar a proposta de bem‑estar, gerar engajamento diário e coletar dados críticos para evoluções posteriores (relatórios e gamificação).  
+&lt;/cot&gt;
+
+**Prioridade para o MVP (duas funcionalidades):**  
+1️⃣ Meditação guiada  
+2️⃣ Monitoramento de sono</pre>
+      <p class="note">O &lt;/cot&gt; fecha o raciocínio; depois vem só a decisão, pronta para mostrar a quem pediu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>CoT simples</span><span class="n">06</span></div>
+  <h2>"Pense passo a passo" <em>sem tags</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 12</b></div>
+      <pre class="code"><span class="c"># Chain of Thoughts</span>
+cot_prompt = """
+Quais as vantagens de trabalhar remoto? 
+Use Chain of Thoughts para pensar passo a passo antes de responder.
+"""
+
+response_cot = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "user", "content": cot_prompt}],
+    temperature=0.5
+)
+
+print("=== CHAIN OF THOUGHTS ===")
+print(response_cot.choices[0].message.content)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">**Raciocínio passo a passo (Chain of Thoughts)**  
+
+1. **Identificar os principais aspectos da vida profissional que podem ser impactados por um modelo remoto.**  
+   - Horário e flexibilidade.  
+   - Deslocamento e custos associados.  
+   - Ambiente de trabalho e conforto.  
+   - Produtividade e foco.  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Funciona, mas raciocínio e resposta saem misturados num texto só (67 linhas)</li>
+        <li>Com tags, um código simples separa as duas partes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Raciocínio interno</span><span class="n">07</span></div>
+  <h2>O gpt-oss <em>já pensa sozinho</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O gpt-oss-120b é um modelo de raciocínio: antes de responder, ele produz um raciocínio interno</li>
+        <li>No Groq, esse raciocínio vem por padrão no campo <code>message.reasoning</code>, separado de <code>message.content</code>; os notebooks só imprimem o <code>content</code></li>
+        <li><code>include_reasoning=False</code> tira o raciocínio da resposta; <code>reasoning_effort</code> (<code>low</code>, <code>medium</code>, <code>high</code>) controla o quanto ele pensa</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">O CoT no prompt continua útil: ele produz um raciocínio <strong>no formato que você pediu</strong> (tags, passos, critérios), pensado para ser lido por pessoas.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>Lendo o raciocínio interno (não está no notebook)</b></div>
+      <pre class="code">r = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "user", "content": "..."}],
+    reasoning_effort="high",
+)
+print(r.choices[0].message.reasoning)  <span class="c"># o "rascunho"</span>
+print(r.choices[0].message.content)    <span class="c"># a resposta</span></pre>
+      <p class="note">Parâmetros conforme console.groq.com/docs/reasoning (seção GPT-OSS Models).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Quando usar</span><span class="n">08</span></div>
+  <h2>CoT ajuda <em>e</em> custa</h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Use quando</div><ul class="checklist" style="margin:6px 0 0">
+      <li>Há contas, critérios ou várias etapas lógicas</li>
+      <li>A decisão precisa ser justificada (negócios, priorização)</li>
+      <li>Você quer auditar como a conclusão foi construída</li>
+    </ul></div>
+    <div class="card"><div class="k">Evite quando</div><ul class="checklist" style="margin:6px 0 0">
+      <li>A tarefa é simples (traduzir, formatar, classificar)</li>
+      <li>Tempo e tokens importam: o raciocínio pode multiplicar o tamanho da resposta</li>
+      <li>O usuário final não deve ver o raciocínio: separe com tags e mostre só a conclusão</li>
+    </ul></div>
+  </div>
+  <div class="callout warn" style="margin-top:12px">Um raciocínio bem escrito <strong>parece</strong> confiável. Confira números, premissas e fatos acrescentados, como nas seções 03 e 04.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">09</span></div>
+  <h2>Separe o raciocínio <em>com código</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> peça um CoT com tags para decidir entre alugar e financiar um imóvel e mostre só a conclusão.</p>
+      <pre class="code">texto = response.choices[0].message.content
+if "&lt;/cot&gt;" in texto:
+    raciocinio, conclusao = texto.split("&lt;/cot&gt;", 1)
+    print(conclusao.strip())
+else:
+    print(texto)  <span class="c"># o modelo não usou as tags</span></pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Dê dados no <code>user</code>: valor do aluguel, parcela, juros, prazo</li>
+        <li>Confira as contas do raciocínio com uma calculadora</li>
+        <li>Compare com a mesma pergunta sem CoT</li>
+        <li>Desafio: imprima também <code>message.reasoning</code> e compare com o conteúdo de <code>&lt;cot&gt;</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Para que servem as tags &lt;cot&gt; nos prompts?</p>
+        <div class="opts"><div>A) Deixar mais rápido</div><div>B) Separar raciocínio e conclusão</div><div>C) Trocar de modelo</div><div>D) Reduzir custos</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. No SDK do Groq, o papel "developer" equivale a:</p>
+        <div class="opts"><div>A) user</div><div>B) assistant</div><div>C) system</div><div>D) tool</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O maior benefício do CoT nesta aula foi:</p>
+        <div class="opts"><div>A) Respostas sempre certas</div><div>B) Poder auditar premissas e contas</div><div>C) Respostas menores</div><div>D) Dispensar dados</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Onde o gpt-oss devolve o raciocínio interno?</p>
+        <div class="opts"><div>A) message.content</div><div>B) message.reasoning</div><div>C) usage</div><div>D) Não devolve</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Raciocínio visível,<br><em>erros visíveis</em></h1>
+    <p class="lead">Pedir o raciocínio dentro de <code>&lt;cot&gt;</code> e a conclusão depois deixa cada premissa e cada conta à vista. Isso não torna o modelo infalível, mas torna os erros encontráveis. No gpt-oss, há ainda o raciocínio interno em <code>message.reasoning</code>, controlado por <code>reasoning_effort</code>.</p>
+    <div class="chips"><span>&lt;cot&gt;</span><span>Auditoria</span><span>developer = system</span><span>message.reasoning</span><span>reasoning_effort</span></div>
+    <div class="next">Próxima aula → 12 · Trabalhando com Sumarização</div>
+    <div class="source">Fontes: console.groq.com/docs/reasoning (GPT-OSS Models, include_reasoning, reasoning_effort); console.groq.com/docs/api-reference; SDK groq 1.7.0 (mensagem de sistema com role "system" ou "developer"); Guia de Engenharia de Prompt (aula 16), seção 8, consultados em outubro de 2026. Código e saídas: notebook <code>08-cot.ipynb</code> desta aula; contas da seção 04 refeitas à mão.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
