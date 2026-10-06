@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usando a Técnica de Múltiplos Passos</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 10</div>
+    <h1>A técnica de<br><em>múltiplos passos</em></h1>
+    <p class="lead">Tarefas grandes saem melhores quando o prompt as divide numa <strong>sequência numerada de passos</strong>: o modelo segue a ordem, mostra o resultado de cada etapa e você confere uma por uma. Nesta aula, com o notebook <code>07-steps.ipynb</code>: um cálculo de mochila de trekking, uma análise de qualidade do ar, uma campanha criativa e a comparação entre passo único e múltiplos passos.</p>
+    <div class="chips"><span>Metodologia no system</span><span>Passos numerados</span><span>Conferir cada passo</span><span>Análise</span><span>Criação</span><span>Passo único × múltiplos</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/prompting/patterns e no Guia de Engenharia de Prompt da aula 16 (seção 13, Prompt Chaining), consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>07-steps.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>A ideia</span><span class="n">01</span></div>
+  <h2>Uma tarefa grande, <em>vários passos pequenos</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Escreva a metodologia no system</h3><p>Uma lista numerada: o que fazer em cada etapa e em que ordem.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Dados organizados no user</h3><p>Com rótulos (ITENS E PESOS, DADOS, BRIEF) e a meta explícita.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Peça cada passo com título</h3><p>"Formate cada passo com títulos claros" ou "Responda com seções numeradas".</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Confira passo a passo</h3><p>Um erro no passo 1 contamina os seguintes; com a resposta separada, ele aparece.</p></div></div>
+    </div>
+    <div>
+      <div class="callout good">Cada passo usa o resultado do anterior: somar → calcular a base → definir a meta → propor trocas → verificar. É o mesmo raciocínio que você faria numa planilha.</div>
+      <div class="callout" style="margin-top:10px">Na aula 11 (Chain of Thought), o modelo é que vai explicitar o próprio raciocínio. Aqui, quem define os passos é você.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Multi step básico</span><span class="n">02</span></div>
+  <h2>A mochila de <em>trekking ultraleve</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>07-steps.ipynb · célula 4 (system)</b></div>
+      <pre class="code s">system_prompt = """
+Você é um guia de trekking ultraleve. Siga a metodologia multi-step:
+1) Liste e some os pesos por categoria
+2) Calcule o peso-base (sem comida/água/combustível)
+3) Defina a meta de redução (15% do peso-base)
+4) Proponha trocas/reduções para alcançar a meta
+5) Verifique consistência e riscos (clima/segurança)
+Formate cada passo com títulos claros.
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl"><b>célula 4 (user, trecho)</b></div>
+      <pre class="code s">user_prompt = """
+PLANEJAMENTO (2 dias, clima ameno, sem chuva prevista)
+ITENS E PESOS (g):
+• Abrigo (barraca): 1450
+• Saco de dormir: 900
+• Isolante: 420
+• Mochila: 1100
+<span class="c">…</span>
+    <span class="c"># … mais 11 itens …</span>
+
+META: reduzir o peso-base em 15% mantendo segurança e conforto térmico.
+PASSOS: execute 1→5 conforme metodologia.
+"""</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>15 itens com pesos em gramas</li>
+        <li>A meta é numérica (15%) e tem restrições (segurança e conforto térmico)</li>
+        <li>Temperatura 0.25: há contas, então pouca variação</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Conferindo</span><span class="n">03</span></div>
+  <h2>As contas <em>batem</em>?</h2>
+  <div class="par e">
+    <div>
+      <div class="lbl s">célula 5 · trechos da saída gravada</div>
+      <pre class="out w">| **TOTAL** | | **5 455 g** (≈ 5,46 kg) |
+…
+Meta = 15 % do peso‑base  
+
+\[
+0,15 \times 5 455 g = 818 g \;\approx\; 0,82 kg
+\]
+
+Precisamos eliminar **≈ 820 g**.
+…
+| **Total de economia** | | | **‑920 g** |
+…</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Passo</th><th>Modelo</th><th>Conferência</th></tr></thead>
+        <tbody>
+          <tr><td>1 · soma</td><td>5 455 g</td><td>1450+900+420+…+140 = <b>5 455</b> ✓</td></tr>
+          <tr><td>3 · meta</td><td>818 g</td><td>0,15 × 5 455 = <b>818,25</b> ✓</td></tr>
+          <tr><td>4 · economia</td><td>920 g</td><td>450+170+70+60+60+110 = <b>920</b> ✓</td></tr>
+          <tr><td>4 · redução</td><td>16,9%</td><td>920 ÷ 5 455 = <b>16,87%</b> ✓</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout good" style="margin-top:10px">Com os passos separados, a conferência leva um minuto. Num texto corrido, seria difícil achar onde cada número foi calculado.</div>
+      <p class="note">O modelo escreveu as fórmulas em LaTeX (\[ … \]); o print mostra as marcas cruas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Multi passo avançado</span><span class="n">04</span></div>
+  <h2>Qualidade do ar <em>em 4 bairros</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 7</b></div>
+      <pre class="code s">system_prompt = """
+Você é um analista ambiental. Metodologia:
+1) Estruture os dados em tabela mental e calcule médias/medianas por bairro
+2) Detecte tendências (alta/baixa) e outliers
+3) Calcule correlações qualitativas (tráfego x PM2.5; área verde x PM2.5)
+4) Classifique risco por bairro (baixo/médio/alto) com justificativa
+5) Recomende 3 ações operacionais e 2 ações estruturais
+6) Valide limitações dos dados
+Responda com seções numeradas.
+"""
+
+user_prompt = """
+DADOS (4 semanas, valores médios semanais):
+Bairro A: PM2.5[23, 26, 29, 31] μg/m³; Tráfego[alto]; Área verde[baixa]
+Bairro B: PM2.5[14, 13, 16, 15]; Tráfego[médio]; Área verde[média]
+Bairro C: PM2.5[11, 12, 10, 12]; Tráfego[baixo]; Área verde[alta]
+Bairro D: PM2.5[28, 35, 33, 37]; Tráfego[muito alto]; Área verde[baixa]
+Limite guia OMS (anual): 5 μg/m³ (referência).
+Aplique a metodologia.
+"""</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 8 · passo 1 da saída gravada</div>
+      <pre class="out w">**1. Estruturação dos dados e cálculo de médias/medianas por bairro**  
+
+| Bairro | PM2.5 (µg/m³) – semanas | Média | Mediana | Tráfego | Área verde |
+|--------|------------------------|-------|---------|---------|------------|
+| A | 23, 26, 29, 31 | **27,25** | **27,5** | alto | baixa |
+| B | 14, 13, 16, 15 | **14,5** | **14,5** | médio | média |
+| C | 11, 12, 10, 12 | **11,25** | **11,5** | baixo | alta |
+| D | 28, 35, 33, 37 | **33,25** | **34** | muito alto | baixa |
+…</pre>
+      <p class="note">Conferido: médias 27,25 · 14,5 · 11,25 · 33,25 e medianas 27,5 · 14,5 · 11,5 · 34 estão certas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Os passos 3 a 6</span><span class="n">05</span></div>
+  <h2>Correlações, risco <em>e limitações</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl s">célula 8 · passo 3 da saída gravada (trecho)</div>
+      <pre class="out w">- **Tráfego × PM2.5** – correlação de Spearman = **+1,0** (classificação perfeita: quanto maior o tráfego, maior a concentração de PM2.5).  
+- **Área verde × PM2.5** – correlação de Spearman ≈ **‑0,8** (quanto maior a cobertura verde, menores as concentrações de PM2.5).  
+…</pre>
+      <div class="lbl s" style="margin-top:8px">passo 4 · critério que o modelo adotou</div>
+      <pre class="out w">Critério adotado (comparativo com o limite anual da OMS = 5 µg/m³, embora os valores aqui sejam semanais):  
+
+- **Baixo risco**: média ≤ 12 µg/m³  
+- **Médio risco**: 12 &lt; média ≤ 25 µg/m³  
+- **Alto risco**: média &gt; 25 µg/m³  
+…</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Tráfego × PM2.5: a ordem dos bairros coincide (C &lt; B &lt; A &lt; D), então Spearman = +1 está certo</li>
+        <li>Área verde × PM2.5: refazendo com empates, dá cerca de −0,85; o "≈ −0,8" é razoável</li>
+        <li>Os limites de risco (12 e 25 µg/m³) foram <strong>inventados pelo modelo</strong>: o prompt não os deu. A resposta avisa isso, mas a decisão é sua</li>
+        <li>O passo 6 (limitações) faz o modelo apontar os pontos fracos: 4 semanas de dados, categorias qualitativas, limite anual × médias semanais</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Se o critério importa, coloque-o no prompt. Passo que o modelo precisa inventar é passo que você precisa revisar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Multi passo criativo</span><span class="n">06</span></div>
+  <h2>Uma campanha em <em>seis etapas</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 10</b></div>
+      <pre class="code s">system_prompt = """
+Você é um diretor de criação. Processo:
+1) Defina público-alvo e objetivo mensurável
+2) Faça brainstorming (5 ideias, variadas)
+3) Escolha 2 ideias e crie um conceito central para cada
+4) Esboce roteiro de peça principal (30s vídeo) com gancho, meio e CTA
+5) Ajuste tom/linguagem para canais (outdoor, social, escola)
+6) Checklist de validação (mensagem, viabilidade, medição)
+Responda com tópicos claros e curtos.
+"""
+
+user_prompt = """
+BRIEF: Reduzir descarte de lixo nas praças de uma cidade média em 20% em 3 meses.
+Recursos: verba limitada, apoio de escolas e associações de bairro.
+Restrições: não usar linguagem punitiva; incentivar orgulho local.
+"""</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 11 · títulos da saída gravada</div>
+      <pre class="out w">**1️⃣ Público‑Alvo &amp; Objetivo Mensurável**  
+…
+**2️⃣ Brainstorming – 5 Ideias Variadas**  
+…
+**3️⃣ Seleção &amp; Conceitos Centrais**  
+…
+**4️⃣ Roteiro da Peça Principal – Vídeo 30 s**  
+…
+**5️⃣ Ajuste de Tom/Linguagem por Canal**  
+…
+**6️⃣ Checklist de Validação**  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Criação também se beneficia: primeiro divergir (5 ideias), depois convergir (2 conceitos), depois executar (roteiro)</li>
+        <li>Temperatura 0.6: mais variedade que nas tarefas de cálculo</li>
+        <li>O último passo é um checklist de validação, que mantém a campanha dentro do brief</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Comparação</span><span class="n">07</span></div>
+  <h2>Passo único × <em>múltiplos passos</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 13 · passo único</b></div>
+      <pre class="code s">single_prompt = """
+Crie um plano para instalar painéis solares residenciais para uma casa de 3 quartos.
+Considere orçamento moderado e retorno em 6-8 anos.
+"""
+<span class="c">…</span></pre>
+      <div class="lbl"><b style="display:block;margin-top:8px">célula 14 · múltiplos passos</b></div>
+      <pre class="code s">multi_prompt = """
+Elabore o plano em múltiplos passos:
+PASSO 1: Levantamento (perfil de consumo mensal, telhado, sombreamento)
+PASSO 2: Dimensionamento preliminar (kWp, inversor, string)
+PASSO 3: Custos (equipamentos, instalação, manutenção) e incentivos
+PASSO 4: Projeção financeira (payback, TIR, sensibilidade)
+PASSO 5: Riscos operacionais e mitigação
+PASSO 6: Checklist de execução e cronograma em 30/60/90 dias
+Formate cada passo com bullets + mini-tabela quando pertinente.
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Primeiras linhas das duas saídas gravadas</div>
+      <pre class="out w">=== Single Step ===
+## Plano de Instalação de Painéis Solares Residenciais  
+**Objetivo:** Dimensionar e instalar um sistema fotovoltaico para uma casa de 3 quartos, com orçamento moderado e prazo de retorno de investimento (payback) entre 6 e 8 anos.
+…
+
+=== Multi Step ===
+**PLANO DE IMPLEMENTAÇÃO DE SISTEMA FOTOVOLTAICO RESIDENCIAL / COMERCIAL**  
+…</pre>
+      <div class="callout warn" style="margin-top:10px">O prompt de múltiplos passos <strong>esqueceu o contexto</strong>: não fala em casa de 3 quartos, orçamento moderado nem retorno em 6 a 8 anos. A resposta virou um plano "residencial / comercial" genérico, com exemplo de 10 kWp e payback abaixo de 5 anos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>A lição</span><span class="n">08</span></div>
+  <h2>Passos <em>+</em> contexto</h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Passo único</th><th>Múltiplos passos</th></tr></thead>
+        <tbody>
+          <tr><td>Contexto da casa</td><td>Sim (3 quartos, 6–8 anos)</td><td>Não</td></tr>
+          <tr><td>Estrutura</td><td>O modelo escolheu (9 seções)</td><td>Os 6 passos pedidos</td></tr>
+          <tr><td>Tamanho</td><td>~188 linhas</td><td>~187 linhas</td></tr>
+          <tr><td>Exemplo usado</td><td>4 kW, ≈ R$ 27.500</td><td>10 kWp, ≈ R$ 44.500</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Valores tirados das saídas gravadas do notebook; são estimativas do modelo, não orçamentos.</p>
+    </div>
+    <div>
+      <div class="callout good">A técnica de múltiplos passos organiza <strong>como</strong> o modelo trabalha, mas não substitui <strong>sobre o que</strong> ele trabalha. Junte os dois: o contexto (aula 06) e a sequência de passos.</div>
+      <div class="lbl" style="margin-top:12px"><b>Versão combinada</b></div>
+      <pre class="code s">multi_prompt = """
+Casa de 3 quartos, orçamento moderado,
+retorno desejado em 6-8 anos.
+
+Elabore o plano em múltiplos passos:
+PASSO 1: Levantamento (...)
+...
+PASSO 6: Checklist e cronograma 30/60/90 dias
+"""</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">09</span></div>
+  <h2>Planeje uma <em>viagem em passos</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> escreva um <code>system</code> com metodologia de 5 passos para montar o orçamento de uma viagem e envie os seus dados no <code>user</code>.</p>
+      <pre class="code">system_prompt = """
+Você é um planejador de viagens. Metodologia:
+1) Liste os custos por categoria e some
+2) Calcule o custo por dia e por pessoa
+3) Compare com o orçamento informado
+4) Proponha cortes se passar do orçamento
+5) Liste riscos e uma reserva de emergência
+Responda com seções numeradas.
+"""</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>No <code>user</code>, use rótulos: DESTINO, DIAS, PESSOAS, ORÇAMENTO, CUSTOS</li>
+        <li>Temperatura baixa: há contas</li>
+        <li>Confira as contas do passo 1 e do passo 2 com uma calculadora</li>
+        <li>Rode também sem a metodologia e compare</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Onde fica a metodologia de passos nos exemplos?</p>
+        <div class="opts"><div>A) No system</div><div>B) No nome do modelo</div><div>C) No .env</div><div>D) Em max_completion_tokens</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Maior vantagem de separar a resposta em passos:</p>
+        <div class="opts"><div>A) Fica mais curta</div><div>B) Dá para conferir cada etapa</div><div>C) Custa menos</div><div>D) Dispensa os dados</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Por que o plano solar em passos ficou genérico?</p>
+        <div class="opts"><div>A) Temperatura alta</div><div>B) Faltou o contexto da casa</div><div>C) Passos demais</div><div>D) Erro da API</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O modelo criou um critério de risco que você não deu. Você deve:</p>
+        <div class="opts"><div>A) Aceitar</div><div>B) Revisar e, se importa, pô-lo no prompt</div><div>C) Subir a temperatura</div><div>D) Tirar o passo</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Divida,<br><em>confira, junte</em></h1>
+    <p class="lead">Uma metodologia numerada no <code>system</code> faz o modelo trabalhar em etapas e mostrar cada resultado, o que facilita conferir contas e critérios. Os passos organizam o trabalho, mas o contexto continua indispensável: sem ele, até uma resposta bem estruturada sai genérica.</p>
+    <div class="chips"><span>Metodologia numerada</span><span>Seções por passo</span><span>Conferência</span><span>Contexto + passos</span></div>
+    <div class="next">Próxima aula → 11 · Usando a Técnica CoT</div>
+    <div class="source">Fontes: console.groq.com/docs/prompting/patterns; console.groq.com/docs/prompting; Guia de Engenharia de Prompt (aula 16), seção 13, consultados em outubro de 2026. Código e saídas: notebook <code>07-steps.ipynb</code> desta aula. Contas da seção 03 e médias, medianas e correlações das seções 04 e 05 conferidas à mão.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
