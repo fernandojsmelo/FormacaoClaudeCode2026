@@ -1,0 +1,22 @@
+{
+ "rp": "53",
+ "h1": "Few-shot e Chain-of-Thought: formato padronizado e lógica certa",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Prompts e o Analista com Resultados 'Quase Certos'\": o que são few-shot e chain-of-thought e quando usar cada um, prompts prontos para padronizar relatórios e acertar contas, a combinação das duas técnicas em reembolsos, comissões e custos de projetos, e os cuidados com custo, exemplos ruins e justificativas.",
+ "byline": "Fernando Melo · 6 de outubro de 2026 · Pesquisa no Modo IA do Google, 09:54",
+ "secs": [
+  "Few-shot e chain-of-thought",
+  "Dois prompts para testar",
+  "Links: few-shot e CoT",
+  "Misturando as duas técnicas",
+  "Custos de projetos",
+  "Incluindo custos fixos",
+  "Modelo pronto para o caso real",
+  "Few-shot em uma frase",
+  "Chain-of-thought em uma frase",
+  "Pronto para os testes",
+  "Critério de uso e cuidados",
+  "Despedida"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos; na seção 03, a busca devolveu apenas a lista de links, reproduzida com título e fonte. Os blocos de prompt aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática; o emoji de gráfico subindo foi trocado por 🚀, porque não é exibido corretamente neste PDF.",
+ "body_css": "body{font-size:11pt;line-height:1.64}\ntable{break-inside:avoid}"
+}

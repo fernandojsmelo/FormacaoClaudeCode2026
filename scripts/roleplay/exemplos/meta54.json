@@ -1,0 +1,18 @@
+{
+ "rp": "54",
+ "h1": "Few-shot prompting: ensinando a IA com exemplos",
+ "lead": "Resumo da pesquisa feita durante a prática \"Professor por um Dia: Ensinando a IA com Prompts\": o que é few-shot prompting (zero, one e few-shot), exemplos de classificação, padronização de dados e tom de voz, um prompt few-shot para correção gramatical e três exercícios práticos que viram um template definitivo.",
+ "byline": "Fernando Melo · 6 de outubro de 2026 · Pesquisa no Modo IA do Google, 10:43",
+ "secs": [
+  "O que é few-shot prompting",
+  "Corrigindo erros gramaticais",
+  "Testando uma frase",
+  "Exercício: três frases",
+  "Frase 1: houve",
+  "Frase 2: seguem em anexo",
+  "Frase 3 e o prompt definitivo",
+  "Despedida"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e cards de links) foram omitidos. O bloco do prompt definitivo aparece cortado à direita na página impressa e foi completado com o texto da transcrição da prática.",
+ "body_css": "body{font-size:10.5pt;line-height:1.6}\ntable{break-inside:avoid}"
+}

@@ -107,4 +107,5 @@ Lições destes role plays:
 - `Fix.headings(pdf)` já reconstrói títulos com palavras em fonte mono (ex.: "O que é esse <code>index=False</code>?"); confira antes de corrigi-los à mão.
 - `Fix.code_from(..., langs=(..., 'csv'))` aceita blocos com rótulo `csv`/`text` quando eles também existirem na transcrição.
 - Resumos que começam no meio de uma lista de links: abra a seção com a pergunta do cabeçalho da página 1, liste só os links visíveis e registre isso no `foot` (ver `exemplos/meta50.json`).
-- Os exemplos `fix48`–`fix52`, `fix_res48`–`fix_res52` e `meta48`–`meta52` estão em `exemplos/`.
+- Os exemplos `fix48`–`fix54`, `fix_res48`–`fix_res54` e `meta48`–`meta54` estão em `exemplos/`.
+- Prompts colados na conversa saem quebrados pela largura da página: no XML, a linha quebrada chega à margem (largura ≥ 740). `exemplos/fix53.py` junta só essas, sem grudar itens numerados ou com marcador; confira com o resumo, que mostra cada linha original numa linha só.
