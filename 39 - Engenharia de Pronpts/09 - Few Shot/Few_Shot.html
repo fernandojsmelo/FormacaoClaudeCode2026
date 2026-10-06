@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Few Shot</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 09</div>
+    <h1>Few shot:<br>ensinar <em>com exemplos</em></h1>
+    <p class="lead">Em vez de só descrever o que quer, você <strong>mostra exemplos</strong> de pergunta e resposta, e o modelo imita o padrão. Nesta aula, com o notebook <code>06-few_shot.ipynb</code>, o mesmo chef recebe zero, um e três exemplos, e a diferença aparece no tamanho e no formato da resposta.</p>
+    <div class="chips"><span>Zero shot</span><span>One shot</span><span>Few shot</span><span>Tags &lt;exemplos&gt;</span><span>Few shot criativo</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/prompting/patterns e no Guia de Engenharia de Prompt da aula 16 (seções 6 e 7), consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>06-few_shot.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Os três tipos</span><span class="n">01</span></div>
+  <h2>Quantos exemplos <em>você dá</em></h2>
+  <div class="grid g3">
+    <div class="card"><div class="k">Zero shot</div><p><strong>Nenhum exemplo</strong>, só a instrução. O modelo decide sozinho o tamanho e o formato.</p></div>
+    <div class="card"><div class="k">One shot</div><p><strong>Um exemplo</strong>. Já indica o estilo, mas um exemplo só pode ser lido como coincidência.</p></div>
+    <div class="card"><div class="k">Few shot</div><p><strong>Vários exemplos</strong> (2 a 5, em geral) com o mesmo formato. O padrão fica claro.</p></div>
+  </div>
+  <div class="callout good" style="margin-top:14px">No notebook, o <code>system</code> e o modelo são os mesmos nas três primeiras células: muda o número de exemplos (e a temperatura cai de 0.5 para 0.4 no few shot).</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Zero shot</span><span class="n">02</span></div>
+  <h2>Sem exemplos: <em>uma receita inteira</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>06-few_shot.ipynb · célula 5</b></div>
+      <pre class="code">system_prompt = """
+Você é um chef renomado. 
+Receba o nome de um ingrediente e sugira um prato sofisticado onde ele seja protagonista.
+"""
+
+user_prompt = "Abacate"
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A instrução pede "um prato", sem dizer o tamanho da resposta</li>
+        <li>A resposta gravada tem <strong>82 linhas</strong>: conceito, tabela de ingredientes, preparo passo a passo…</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== Zero Shot ===
+Resposta: ### **Vieiras ao Ceviche de Lima Kaffir com Purê de Abacate e Pérolas de Yuzu**  
+*Um prato onde o abacate assume o papel de textura aveludada e contraste refrescante, elevando o frescor do mar a um patamar de alta gastronomia.*
+
+---
+
+#### **Conceito do prato**
+- **Protagonista:** Abacate – transformado em um purê aveludado que serve de “cama” para as vieiras.  
+- **Contraponto cítrico:** Lima kaffir (folhas e suco) e yuzu, que trazem acidez perfumada.  
+- **Textura:** Crocância delicada das pérolas de yuzu e um leve toque de sal marinho cristalizado.  
+- **Harmonia:** Mar, fruta tropical e herbáceo, finalizados com um fio de azeite de oliva extra‑virgem envelhecido.
+…</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>One shot</span><span class="n">03</span></div>
+  <h2>Um exemplo: <em>menor, mas ainda longo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 7</b></div>
+      <pre class="code">system_prompt = """
+Você é um chef renomado. 
+Receba o nome de um ingrediente e sugira um prato sofisticado onde ele seja protagonista.
+
+Exemplo:
+Ingrediente: Salmão
+Sugestão -&gt; Tartar de salmão fresco com molho cítrico e torradas de brioche
+"""
+
+user_prompt = "Cogumelos"
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O exemplo mostra o formato <code>Sugestão -&gt; prato</code> numa linha</li>
+        <li>A resposta caiu para 16 linhas e repetiu "Ingrediente:", mas acrescentou descrição, montagem e harmonização</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== One Shot ===
+Resposta: **Ingrediente:** Cogumelos  
+
+**Sugestão de prato sofisticado:**  
+**Ravioli de cogumelos silvestres ao molho de trufa negra, espuma de parmesão e crocante de alho-rosemary**  
+
+**Descrição:**  
+…</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Few shot</span><span class="n">04</span></div>
+  <h2>Três exemplos: <em>o formato exato</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 9</b></div>
+      <pre class="code">system_prompt = """
+Você é um chef renomado. 
+Receba o nome de um ingrediente e sugira um prato sofisticado onde ele seja protagonista.
+
+&lt;exemplos&gt;
+Ingrediente: Tomate
+Sugestão &lt;-&gt; Carpaccio de tomate com azeite trufado e manjericão fresco
+
+Ingrediente: Chocolate
+Sugestão &lt;-&gt; Soufflé de chocolate meio amargo com calda de frutas vermelhas
+
+Ingrediente: Batata
+Sugestão &lt;-&gt; Nhoque artesanal de batata ao molho de manteiga e sálvia
+&lt;/exemplos&gt;
+"""
+
+user_prompt = "Camarão"
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (completa)</div>
+      <pre class="out w">=== Few Shot ===
+Resposta: Ingrediente: Camarão  
+Sugestão &lt;-&gt; Camarões ao vapor em espuma de champagne com limão siciliano, acompanhados de risoto de açafrão e crocante de pistache torrado.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Duas linhas, no mesmo padrão dos exemplos, inclusive o símbolo incomum <code>&lt;-&gt;</code></li>
+        <li>As tags <code>&lt;exemplos&gt;…&lt;/exemplos&gt;</code> separam os exemplos da instrução (os delimitadores da aula 06)</li>
+        <li>Três exemplos <strong>diferentes</strong> (salgado, doce, massa) mostram o que varia e o que se repete</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Few shot criativo</span><span class="n">05</span></div>
+  <h2>Quando os exemplos <em>não bastam</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 11</b></div>
+      <pre class="code s">system_prompt = """
+Você é um chef criativo que mistura ingredientes improváveis em pratos sofisticados.
+
+Exemplos:
+Combinação: Manga + Pimenta
+Prato -&gt; Ceviche de manga apimentado com chips de batata doce
+
+Combinação: Café + Laranja
+Prato -&gt; Entrecôte ao molho de café e raspas de laranja
+
+Combinação: Queijo azul + Melancia
+Prato -&gt; Salada refrescante de melancia com queijo azul e nozes
+"""
+
+user_prompt = "Combinação: Morango + Manjericão"
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== Few Shot Criativo ===
+Resposta: **Prato:** *Mousse de Morango com Espuma de Manjericão e Crocante de Pistache*  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Os exemplos mostram uma linha <code>Prato -&gt; …</code>, mas a resposta tem <strong>53 linhas</strong> com ingredientes e preparo</li>
+        <li>Diferenças em relação à célula 9: sem tags, temperatura 0.7 e um <code>system</code> que pede criatividade</li>
+        <li>Exemplos sugerem um padrão; para <strong>exigir</strong>, diga também: "responda só com uma linha no formato <code>Prato -&gt; …</code>"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Variação</span><span class="n">06</span></div>
+  <h2>Exemplos como <em>turnos da conversa</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>Mesmo few shot, em pares user/assistant (não está no notebook)</b></div>
+      <pre class="code">messages=[
+    {"role": "system", "content": "Você é um chef renomado. "
+        "Responda com um prato, numa linha."},
+    {"role": "user", "content": "Tomate"},
+    {"role": "assistant", "content": "Carpaccio de tomate "
+        "com azeite trufado e manjericão fresco"},
+    {"role": "user", "content": "Chocolate"},
+    {"role": "assistant", "content": "Soufflé de chocolate "
+        "meio amargo com calda de frutas vermelhas"},
+    {"role": "user", "content": "Camarão"},
+]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Usa o papel <code>assistant</code> da aula 04: o modelo "lembra" de ter respondido assim antes</li>
+        <li>Separa naturalmente cada pergunta da sua resposta</li>
+        <li>Útil quando os exemplos são longos ou quando você monta a lista no código a partir de um banco de exemplos</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">As duas formas funcionam. Escolha a que deixa o prompt mais fácil de ler e de manter.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Boas práticas</span><span class="n">07</span></div>
+  <h2>Como escolher <em>bons exemplos</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Formato idêntico em todos</h3><p>Mesmos rótulos, mesma ordem, mesmo tamanho. O modelo copia o que se repete.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Conteúdo variado</h3><p>Casos diferentes entre si, para o modelo não copiar um tema específico.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Separe com delimitadores</h3><p><code>&lt;exemplos&gt;</code> ou turnos user/assistant.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Instrução + exemplos</h3><p>Diga o formato com palavras e mostre-o. Um reforça o outro.</p></div></div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Célula</th><th>Exemplos</th><th>Linhas da resposta</th></tr></thead>
+        <tbody>
+          <tr><td>5 · zero shot</td><td>0</td><td>82</td></tr>
+          <tr><td>7 · one shot</td><td>1</td><td>16</td></tr>
+          <tr><td>9 · few shot</td><td>3 (com tags)</td><td>2</td></tr>
+          <tr><td>11 · criativo</td><td>3 (sem tags, temp. 0.7)</td><td>53</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Linhas da resposta (sem o cabeçalho impresso) nas saídas gravadas do notebook. Uma única execução de cada: outras execuções podem variar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">08</span></div>
+  <h2>Um classificador <em>de sentimento</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> faça o modelo classificar avaliações de clientes em POSITIVA, NEGATIVA ou NEUTRA, respondendo só com a palavra.</p>
+      <pre class="code">system_prompt = """
+Classifique o sentimento da avaliação.
+
+&lt;exemplos&gt;
+Avaliação: Chegou rápido e funciona bem.
+Sentimento: POSITIVA
+
+Avaliação: ...
+Sentimento: NEGATIVA
+
+Avaliação: ...
+Sentimento: NEUTRA
+&lt;/exemplos&gt;
+"""</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Complete os exemplos e teste 5 avaliações novas</li>
+        <li>Rode primeiro <strong>sem</strong> os exemplos e compare o formato das respostas</li>
+        <li>Use temperatura baixa (aula 05): classificar tem resposta certa</li>
+        <li>Desafio: transforme os exemplos em pares user/assistant</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Um prompt com dois exemplos de entrada e saída é:</p>
+        <div class="opts"><div>A) Zero shot</div><div>B) One shot</div><div>C) Few shot</div><div>D) Fallback</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. No few shot da célula 9, o modelo copiou até:</p>
+        <div class="opts"><div>A) A temperatura</div><div>B) O símbolo &lt;-&gt;</div><div>C) O nome do modelo</div><div>D) Nada</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Os exemplos devem ter:</p>
+        <div class="opts"><div>A) Formatos diferentes</div><div>B) Mesmo formato e conteúdos variados</div><div>C) O mesmo conteúdo</div><div>D) Só emojis</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Os exemplos não foram seguidos. O que acrescentar?</p>
+        <div class="opts"><div>A) Uma instrução explícita de formato</div><div>B) Mais temperatura</div><div>C) Menos exemplos</div><div>D) Outro client</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Mostre,<br><em>não só descreva</em></h1>
+    <p class="lead">Zero, um ou vários exemplos mudam o quanto o modelo imita o padrão. Few shot com formato idêntico, conteúdo variado e delimitadores produziu a resposta mais previsível do notebook. Para garantir, junte exemplos e uma instrução explícita de formato.</p>
+    <div class="chips"><span>Zero shot</span><span>One shot</span><span>Few shot</span><span>&lt;exemplos&gt;</span><span>user/assistant</span></div>
+    <div class="next">Próxima aula → 10 · Usando a Técnica de Múltiplos Passos</div>
+    <div class="source">Fontes: console.groq.com/docs/prompting/patterns; console.groq.com/docs/prompting; Guia de Engenharia de Prompt (aula 16), seções 6 e 7, consultados em outubro de 2026. Código e saídas: notebook <code>06-few_shot.ipynb</code> desta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
