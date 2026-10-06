@@ -13,6 +13,7 @@ Kit para criar decks de aula e manuais no padrão do curso (design system do `CL
 | `telas/` | Fontes das telas usadas nas aulas (`mNN_aXX_nome.html`), para renderizar de novo. As prévias `.png` ficam fora do Git |
 | `preview_mock.py` | Gera a prévia `.png` de um mockup e avisa se ele transbordou de uma página |
 | `incluir_codigo.py` | Troca `{{CODE:arquivo:ini-fim}}` no corpo pelas linhas reais do arquivo (escapadas, sem o recuo comum, comentários em destaque), para o código do deck ser o mesmo que foi testado |
+| `incluir_notebook.py` | Troca `{{NB:caderno.ipynb:N[:ini-fim]}}` pelo código da célula N e `{{NBOUT:…}}` pela saída **gravada** no notebook, para aulas cuja API pede chave (ex.: Groq) |
 | `build_aula.py` | Junta cabeçalho + corpo, embute as telas, gera `.html` autocontido e `.pdf`, confere páginas e monta a folha de contato |
 
 ## Fluxo de uma aula
@@ -45,6 +46,24 @@ Nas aulas de projeto, o código de referência fica testado na pasta `projeto/` 
 Se uma seção transbordar por causa de código longo, `python3 scripts/aulas/saida_direita.py corpo.html eNN/arquivo.py ...` move a saída dessas seções para a coluna da direita.
 
 `{{OUT:arquivo.py}}` roda o script e coloca no slide a **saída real**, inclusive mensagens de erro (com caminho curto, como no terminal). Se existir `arquivo.in` ao lado, ele vira a entrada do `input()`, e cada resposta aparece logo depois da pergunta, como alguém digitando. Foi assim que as aulas do módulo 37 (exemplos em `exemplos/`) foram feitas. Mantenha as linhas dos exemplos com até 64 caracteres para caberem na coluna de código.
+
+## Aulas a partir de notebooks
+
+Quando o código da aula está num `.ipynb` que chama uma API com chave (módulo 39, Groq), o deck mostra o código e a **saída real gravada** no notebook, sem rodar de novo:
+
+```bash
+python3 scripts/aulas/incluir_notebook.py corpo.html corpo.nb.html "39 - Engenharia de Pronpts"
+python3 scripts/aulas/build_aula.py corpo.nb.html "<aula>/Nome.html" --title "…"
+```
+
+- As células são numeradas a partir de 0, na ordem do arquivo; `ini-fim` recorta linhas (1-based) e acrescenta "…" quando sobra texto.
+- Saídas longas: use a classe `.out.w` (quebra de linha) e recorte só o trecho que interessa; diga no rótulo "saída gravada (início)".
+- Troque 📈/🎚️ por 🚀/🔧 depois da inclusão (o código do notebook pode tê-los) e avise numa nota.
+- Gere também o material de apoio do notebook com `scripts/notebook_to_pdf.py` (ver `CLAUDE.md`).
+
+## Guias A4 a partir de um markup
+
+`scripts/guia_para_html.py fonte.txt saida.html "Título"` monta um guia A4 no tema escuro (capa, sumário, uma seção por página, tabelas, blocos de prompt e caixas "Dica") a partir de um markup simples, descrito no topo do script. Foi usado para reconstruir o Guia de Engenharia de Prompt da aula 16 do módulo 39, que veio claro e sem acentos. Para extrair o original, `pdfplumber` (instalado com `--target` numa pasta à parte) separa tabelas de verdade (2+ colunas) das caixas de código, que saem linha a linha com a fonte (Courier = código). Confira o resultado com uma comparação palavra a palavra sem acentos.
 
 ## Telas ilustrativas
 

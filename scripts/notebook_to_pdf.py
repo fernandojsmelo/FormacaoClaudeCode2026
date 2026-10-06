@@ -86,6 +86,17 @@ def markdown_to_html(md, eyebrow):
         md = md.replace(bad, good)
     # Sublistas com 2 espaços (padrão do Jupyter) precisam de 4 para o python-markdown.
     md = re.sub(r"^  - ", "    - ", md, flags=re.M)
+    # Lista colada num parágrafo ("Útil em:\n- item"): o Jupyter mostra como lista, o python-markdown
+    # só reconhece com uma linha em branco antes. Fora dos blocos de código, insere essa linha.
+    linhas, dentro = [], False
+    for linha in md.split("\n"):
+        if linha.startswith("```"):
+            dentro = not dentro
+        elif (not dentro and re.match(r"[-*] |\d+\. ", linha) and linhas and linhas[-1].strip()
+              and not re.match(r"\s*([-*] |\d+\. |#)", linhas[-1])):
+            linhas.append("")
+        linhas.append(linha)
+    md = "\n".join(linhas)
     body = markdown.markdown(md, extensions=["fenced_code", "tables", "sane_lists"])
 
     m = re.match(r"\s*<h1>(.*?)</h1>\s*", body, re.S)

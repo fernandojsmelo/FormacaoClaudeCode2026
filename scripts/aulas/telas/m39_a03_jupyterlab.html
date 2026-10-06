@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@page{size:1200px 560px;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;width:1200px;height:560px;background:#e9e9e9;font-family:Inter,system-ui,sans-serif;color:#212121;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow:hidden}
+.win{position:absolute;inset:14px;background:#fff;border:1px solid #c8c8c8;border-radius:10px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.top{height:30px;display:flex;align-items:center;gap:18px;padding:0 12px;border-bottom:1px solid #e0e0e0;font-size:12.5px;color:#333}
+.top .logo{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#fff 0 35%,transparent 36%),conic-gradient(#f37726 0 25%,#fff 0 50%,#f37726 0 75%,#fff 0)}
+.body{display:grid;grid-template-columns:34px 250px 1fr;height:calc(100% - 30px)}
+.rail{background:#f5f5f5;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;align-items:center;padding-top:8px;gap:12px;color:#616161;font-size:14px}
+.rail .on{color:#1976d2;border-left:2px solid #1976d2;width:100%;text-align:center}
+.files{border-right:1px solid #e0e0e0;font-size:12px}
+.files .bar{display:flex;gap:10px;padding:8px 10px;color:#616161;border-bottom:1px solid #eee}
+.files .path{padding:6px 10px;color:#616161;font-size:11.5px}
+.files .hd{display:flex;justify-content:space-between;padding:4px 10px;color:#757575;font-size:11px;border-bottom:1px solid #eee}
+.f{display:flex;justify-content:space-between;padding:4px 10px}
+.f.sel{background:#e3f2fd}
+.f i{font-style:normal;margin-right:6px;color:#f37726}
+.f i.d{color:#9e9e9e}.f i.t{color:#607d8b}
+.f small{color:#9e9e9e}
+.main{display:flex;flex-direction:column;min-width:0}
+.tabs{display:flex;border-bottom:1px solid #e0e0e0;background:#f5f5f5;font-size:12px}
+.tab{padding:7px 14px;border-right:1px solid #e0e0e0;color:#616161}
+.tab.on{background:#fff;color:#212121;border-top:2px solid #1976d2}
+.tools{display:flex;align-items:center;gap:14px;padding:6px 12px;border-bottom:1px solid #eee;font-size:13px;color:#616161}
+.tools .sel{border:1px solid #ccc;border-radius:3px;padding:1px 6px;font-size:11.5px}
+.tools .k{margin-left:auto;font-size:11.5px;display:flex;align-items:center;gap:6px}
+.tools .k i{width:9px;height:9px;border-radius:50%;border:1.5px solid #616161;display:inline-block}
+.nb{padding:12px 16px 0 6px;overflow:hidden}
+.cell{display:grid;grid-template-columns:62px 1fr;margin-bottom:9px;position:relative}
+.cell .p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#9e9e9e;text-align:right;padding:6px 8px 0 0}
+.cell .p.o{color:#d84315}
+.src{background:#f7f7f7;border:1px solid #e0e0e0;border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.5;padding:5px 9px;white-space:pre;color:#212121}
+.kw{color:#008000;font-weight:600}.st{color:#ba2121}.cm{color:#3d7b7b;font-style:italic}.fn{color:#0000ff}
+.cell.act::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#1976d2}
+.cell.act .src{border-color:#1976d2}
+.md h3{margin:4px 0 2px;font-size:17px;font-weight:600}
+.out{font-size:12px;line-height:1.5;padding:4px 9px;color:#212121}
+.n{position:absolute;width:22px;height:22px;border-radius:50%;background:#DE8B62;color:#171310;font:600 12px 'IBM Plex Mono',monospace;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(222,139,98,.3);z-index:5}
+</style></head><body>
+<div class="win">
+  <div class="top"><span class="logo"></span><span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span><span>Tabs</span><span>Settings</span><span>Help</span></div>
+  <div class="body">
+    <div class="rail"><span class="on">▤</span><span>●</span><span>☰</span><span>⧉</span></div>
+    <div class="files">
+      <div class="bar"><span>＋</span><span>⇪</span><span>⟳</span></div>
+      <div class="path">📁 / Eng_prompt /</div>
+      <div class="hd"><span>Name</span><span>Last Modified</span></div>
+      <div class="f sel"><span><i>◉</i>01-roles.ipynb</span><small>agora</small></div>
+      <div class="f"><span><i>◉</i>02-params.ipynb</span><small>1 dia</small></div>
+      <div class="f"><span><i>◉</i>03-boas_praticas.ipynb</span><small>1 dia</small></div>
+      <div class="f"><span><i>◉</i>04-output_estruturado.ipynb</span><small>1 dia</small></div>
+      <div class="f"><span><i class="t">≡</i>requirements.txt</span><small>2 dias</small></div>
+      <div class="f"><span><i class="t">≡</i>teste_groq.py</span><small>2 dias</small></div>
+    </div>
+    <div class="main">
+      <div class="tabs"><div class="tab">Launcher</div><div class="tab on">01-roles.ipynb ✕</div></div>
+      <div class="tools"><span>💾</span><span>＋</span><span>✂</span><span>⧉</span><span>📋</span><span>▶</span><span>■</span><span>↻</span><span>⏩</span><span class="sel">Code ▾</span><span class="k">Python 3 (ipykernel) <i></i></span></div>
+      <div class="nb">
+        <div class="cell"><div class="p">[1]:</div><div class="src"><span class="kw">from</span> dotenv <span class="kw">import</span> load_dotenv
+<span class="kw">from</span> groq <span class="kw">import</span> Groq
+<span class="kw">import</span> os
+load_dotenv()
+
+client = Groq(api_key=os.environ.get(<span class="st">"GROQ_API"</span>))</div></div>
+        <div class="cell md"><div class="p"></div><div><h3>Compreendendo os Roles</h3></div></div>
+        <div class="cell act"><div class="p">[2]:</div><div class="src">chat_completion = client.chat.completions.create(
+    messages=[{<span class="st">"role"</span>: <span class="st">"user"</span>,
+               <span class="st">"content"</span>: <span class="st">"Me explique de forma reduzida o que são as LLMs"</span>}],
+    model=<span class="st">"openai/gpt-oss-120b"</span>,
+)
+<span class="fn">print</span>(chat_completion.choices[0].message.content)</div></div>
+        <div class="cell"><div class="p"></div><div class="out">As <b>LLMs (Large Language Models)</b> são modelos de inteligência artificial treinados com enormes quantidades de texto…</div></div>
+      </div>
+    </div>
+  </div>
+  <span class="n" style="left:425px;top:4px">1</span>
+  <span class="n" style="left:150px;top:118px">2</span>
+  <span class="n" style="left:470px;top:34px">3</span>
+  <span class="n" style="left:595px;top:62px">4</span>
+  <span class="n" style="left:1075px;top:92px">5</span>
+  <span class="n" style="left:262px;top:300px">6</span>
+</div>
+</body></html>
