@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Complementando Textos</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+.card .v{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 13</div>
+    <h1>Complementando<br><em>textos</em></h1>
+    <p class="lead">O caminho inverso do resumo: partir de pouco texto (tópicos, uma ideia, um argumento, um conceito, um <em>outline</em>) e pedir que o modelo <strong>desenvolva</strong>. Nesta aula, com o notebook <code>10-texto_complemento.ipynb</code>: cinco tipos de expansão, o tamanho que cada uma atingiu e o risco que cresce junto com o texto, que é a invenção de dados.</p>
+    <div class="chips"><span>Tópicos</span><span>Criativa</span><span>Argumentativa</span><span>Técnica</span><span>Outline</span><span>Controlar o tamanho</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/prompting e no Guia de Engenharia de Prompt da aula 16 (seções 17 e 18), consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>10-texto_complemento.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Os cinco tipos</span><span class="n">01</span></div>
+  <h2>Do pouco <em>ao completo</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Entrada</th><th>Saída esperada</th><th>Tamanho gravado</th></tr></thead>
+    <tbody>
+      <tr><td><b>Tópicos</b></td><td>3 itens sobre liderança</td><td>Um parágrafo por item, com exemplos</td><td>≈ 600 palavras</td></tr>
+      <tr><td><b>Criativa</b></td><td>Uma frase de ideia</td><td>Micro-história com cenário e personagens</td><td>≈ 700 palavras</td></tr>
+      <tr><td><b>Argumentativa</b></td><td>Uma tese</td><td>Justificativas, dados, contrapontos, conclusão</td><td>≈ 1.000 palavras</td></tr>
+      <tr><td><b>Técnica</b></td><td>Um conceito de dados</td><td>Funcionamento, código, casos, boas práticas</td><td>≈ 2.500 palavras</td></tr>
+      <tr><td><b>Outline</b></td><td>Título + 6 itens</td><td>Artigo completo</td><td>≈ 700 palavras</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn" style="margin-top:12px">Nenhuma célula diz o tamanho desejado. "Micro-história" virou ~700 palavras e o conceito técnico, ~2.500. Na expansão, <strong>defina o tamanho</strong>, ou o modelo decide por você.</div>
+  <p class="note">Contagem de palavras das saídas gravadas no notebook (inclui o cabeçalho impresso).</p>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Tópicos</span><span class="n">02</span></div>
+  <h2>Expansão <em>de tópicos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>10-texto_complemento.ipynb · célula 4</b></div>
+      <pre class="code s">system_prompt = """
+Você é um especialista em comunicação corporativa.
+Expanda tópicos curtos em parágrafos claros que:
+1) Desenvolvam cada ideia com exemplos reais
+2) Mantenham fluidez e coerência
+3) Sejam úteis para profissionais em cargos de liderança
+"""
+
+user_prompt = """
+Expanda estes tópicos sobre liderança moderna:
+
+• Comunicação transparente
+• Gestão de equipes híbridas
+• Incentivo à inovação
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início do 3º tópico)</div>
+      <pre class="out w">**Incentivo à inovação**  
+Inovar não é um evento pontual, mas um hábito institucionalizado. A 3M, famosa por seu programa “15 % Time”, permite que os funcionários dediquem parte de sua jornada semanal a projetos pessoais que não estejam diretamente ligados às suas funções. Essa política gerou invenções icônicas, como o Post‑it. Para que líderes modernos cultivem esse espírito, eles podem: (i) criar “labs” internos ou “innovation sprints” de curta duração, onde equipes multidisciplinares recebem um problema real da empresa e têm 48‑72 horas para prototipar soluções; (ii) adotar metodologias ágeis de experimentação, como o “Lean Startup”, incentivando a construção de MVPs (Minimum Viable Products) e a coleta rápida de feedback dos usuários internos ou externos; (iii) reconhecer e recompensar o fracasso inteligente, celebrando aprendizados obtidos a partir de tentativas que não deram certo, o que diminui o medo de errar; (iv) conectar a inovação ao propósito da organização, mostrando como cada ideia pode impactar clientes, sustentabilidade ou a comunidade. Um líder que reserva tempo e recursos para hackathons internos, que promove parcerias com startups por meio de programas de aceleração corporativa e que comunica os resultados desses experimentos de forma visível, cria um ecossistema onde a criatividade flui continuamente e se traduz em vantagem competitiva.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>"Desenvolvam cada ideia com <strong>exemplos reais</strong>" fez o modelo citar empresas (Atlassian, Microsoft, 3M)</li>
+        <li>Exemplos reais trazem credibilidade, mas cada nome e cada política citada precisam ser conferidos antes de publicar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Criativa</span><span class="n">03</span></div>
+  <h2>Uma frase <em>vira história</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 6</b></div>
+      <pre class="code s">system_prompt = """
+Você é um escritor criativo. Expanda ideias simples criando:
+1) Cenário vívido
+2) Personagens interessantes
+3) Atmosfera envolvente
+"""
+
+user_prompt = """
+Expanda esta ideia em uma micro-história:
+"Um barista descobre um bilhete misterioso escondido dentro de um saco de café."
+"""
+
+response_creative = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ],
+    temperature=0.8
+)
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">**O Aroma do Mistério**
+
+O sol ainda lutava contra a névoa da manhã quando o relógio da fachada do *Café Aurora* deu as oito badaladas. Dentro, a luz amarela das lâmpadas pendentes se espalhava como um abraço quente sobre as mesas de madeira desgastada, enquanto o cheiro de grãos torrados, ligeiramente caramelizados, preenchia o ar como uma promessa de energia. A vitrine de vidro mostrava a fila de clientes habituais – o professor de literatura que sempre pedia um expresso forte, a jovem artista que desenhava com lápis de cor nas servilhas e o senhor Joaquim, veterano da estação de metrô, que nunca deixava de comentar sobre o “tempo que passa mais rápido aqui dentro”.
+
+Lúcia, a barista de cabelos curtos tingidos de cobre e olhos que pareciam refletir a própria cor do café, já conhecia cada canto daquele pequeno refúgio. Ela movia as mãos com a destreza de quem tem o coração sincronizado ao ritmo da máquina de espresso, ajustando a pressão, moendo os grãos e, com um sorriso ligeiro, entregando o primeiro cappuccino do dia ao cliente que sempre chegava às oito e quinze. 
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Temperatura 0.8: aqui a variedade é desejada</li>
+        <li>Os três pedidos do system aparecem: cenário (Café Aurora), personagens (Lúcia, seu Joaquim) e atmosfera</li>
+        <li>Na ficção, inventar é a tarefa, então não há o que conferir</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Argumentativa</span><span class="n">04</span></div>
+  <h2>Argumentos com <em>"dados de apoio"</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 8</b></div>
+      <pre class="code s">system_prompt = """
+Você é um consultor estratégico.
+Expanda argumentos básicos incluindo:
+1) Justificativas bem fundamentadas
+2) Exemplos e dados de apoio
+3) Consideração de contrapontos
+4) Conclusão persuasiva
+"""
+
+user_prompt = """
+Expanda este argumento:
+"As empresas devem adotar a semana de trabalho de 4 dias."
+"""
+<span class="c">…</span></pre>
+      <div class="callout good" style="margin-top:10px">A estrutura é boa: justificativas, casos, contrapontos com respostas e conclusão, exatamente o que o system pediu.</div>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (trechos)</div>
+      <pre class="out w">| **Microsoft Japan** | Tecnologia | “Summer Friday” – 4 dias, salário integral (2022) | **Produtividade +39 %**, **energia consumida -23 %**, **e‑mail enviados -25 %**. |
+…
+* **Eurostat (2023)**: trabalhadores em países com jornada curta (ex.: Dinamarca, Holanda) apresentam **PIB per capita 8 % superior** à média da UE, em parte atribuída a maior produtividade por hora.  
+* **World Economic Forum (2022)**: Cada hora extra de trabalho gera **0,5 % de perda de eficiência** devido ao cansaço cognitivo.  
+* **Gallup (2024)**: 54 % dos trabalhadores globais se sentem “desgastados” – a redução de dias pode cortar esse número pela metade.  
+…</pre>
+      <div class="callout danger" style="margin-top:10px">O pedido de "exemplos e dados de apoio" faz o modelo produzir números com nome de instituição. O teste da Microsoft no Japão foi divulgado em <strong>2019</strong>, não em 2022, e os demais números aparecem sem relatório nem link. Nada disso pode ir para um documento sem checagem.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Técnica</span><span class="n">05</span></div>
+  <h2>Um conceito, <em>2.500 palavras</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 10</b></div>
+      <pre class="code s">system_prompt = """
+Você é um instrutor técnico especializado em ciência de dados.
+Expanda conceitos explicando:
+1) Como funciona na prática
+2) Exemplos de código quando útil
+3) Casos de uso aplicados em empresas
+4) Boas práticas de implementação
+"""
+
+user_prompt = """
+Expanda este conceito técnico:
+"Aplicação de modelos preditivos em análise de churn de clientes."
+"""
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>A resposta gravada tem 359 linhas: tabelas, código em Python, casos por setor e boas práticas</li>
+        <li>Sem <code>max_completion_tokens</code> nem tamanho no prompt, terminou inteira, mas levou muito mais tokens</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">## Aplicação de Modelos Preditivos em Análise de Churn de Clientes  
+
+A análise de churn (ou “rotatividade”) tem como objetivo identificar, **antes que aconteça**, quais clientes têm maior probabilidade de abandonar um produto ou serviço. Quando combinada com **modelos preditivos**, a empresa pode agir de forma proativa – oferecendo incentivos, ajustando o atendimento ou alterando o produto – e, assim, reduzir perdas de receita e melhorar a experiência do cliente.
+
+A seguir, detalhamos o processo completo, do ponto de vista técnico e de negócio, dividido em quatro blocos:
+
+| Bloco | O que será abordado |
+|-------|----------------------|
+| **1️⃣ Como funciona na prática** | Pipeline de dados, definição de churn, engenharia de features, escolha e treinamento de modelos, avaliação e implantação. |
+| **2️⃣ Exemplos de código** | Scripts em Python (pandas, scikit‑learn, XGBoost, LightGBM, PySpark) que ilustram cada etapa. |
+| **3️⃣ Casos de uso em empresas** | Telecom, SaaS, bancos, e‑commerce, streaming, utilities, etc. |
+| **4️⃣ Boas práticas de implementação** | Qualidade de dados, tratamento de desbalanceamento, interpretabilidade, monitoramento, governança e privacidade. |
+…</pre>
+      <p class="note">O próprio modelo montou um sumário com os 4 blocos pedidos no system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Outline</span><span class="n">06</span></div>
+  <h2>Do esqueleto <em>ao artigo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 12</b></div>
+      <pre class="code">outline_prompt = """
+Expanda este outline em um artigo curto e completo:
+
+TÍTULO: "Tendências em Educação Digital para 2026"
+
+OUTLINE:
+1. Introdução - Acelerando a transformação educacional
+2. Plataformas personalizadas de aprendizagem
+3. Realidade aumentada e gamificação
+4. Aprendizado contínuo para profissionais
+5. Desafios e riscos
+6. Conclusão - O futuro da educação
+"""
+
+response_outline = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "user", "content": outline_prompt}],
+    temperature=0.6
+)
+
+print("\n=== EXPANSÃO DE OUTLINE ===")
+print(response_outline.choices[0].message.content)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">**Tendências em Educação Digital para 2026**  
+
+---
+
+### 1. Introdução – Acelerando a transformação educacional  
+
+Nos últimos anos, a combinação de avanços tecnológicos, demandas do mercado de trabalho e a necessidade de tornar o ensino mais inclusivo tem impulsionado uma revolução na forma como aprendemos. A pandemia de COVID‑19 atuou como catalisador, mostrando que a educação pode – e deve – ser flexível, acessível e centrada no estudante. Em 2026, essa transformação já não será mais um experimento, mas uma realidade consolidada, guiada por plataformas inteligentes, ambientes imersivos e um foco crescente no aprendizado ao longo da vida.
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O outline dá o controle da <strong>estrutura</strong>: o artigo seguiu os 6 itens, na ordem</li>
+        <li>Só o <code>user</code>, sem system: o tom ficou genérico</li>
+        <li>Frases como "aumenta a retenção em até 60% segundo pesquisas recentes" aparecem sem fonte</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Controle</span><span class="n">07</span></div>
+  <h2>Expandir <em>com rédea</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Tamanho</h3><p>"Um parágrafo de 80 a 100 palavras por tópico", "micro-história de até 200 palavras".</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Público e tom</h3><p>No system: para quem é o texto e em que registro.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Regra para dados</h3><p>"Não invente números. Use só os dados fornecidos; marque [FONTE?] onde um dado seria útil."</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Dê o material</h3><p>Se quer números reais, coloque-os no prompt entre delimitadores (aula 06).</p></div></div>
+    </div>
+    <div>
+      <div class="lbl"><b>Exemplo de system com rédea</b></div>
+      <pre class="code">system_prompt = """
+Você é um consultor estratégico.
+Expanda o argumento em até 250 palavras:
+1) 3 justificativas
+2) 1 contraponto com resposta
+3) Conclusão em 1 frase
+Não invente números, estudos ou empresas.
+Onde um dado ajudaria, escreva [FONTE?].
+"""</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">08</span></div>
+  <h2>Mesma tese, <em>duas versões</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> expanda a tese "o trabalho remoto deve ser opcional" duas vezes: com o system da célula 8 e com o system com rédea da seção anterior.</p>
+      <ul class="checklist">
+        <li>Conte as palavras de cada versão</li>
+        <li>Grife cada número ou estudo citado: de onde ele veio?</li>
+        <li>Na versão com rédea, onde apareceram os <code>[FONTE?]</code>?</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good">Uso honesto da expansão: o modelo estrutura e redige; você fornece os fatos ou confere cada um antes de publicar.</div>
+      <div class="callout" style="margin-top:10px">Desafio: expanda um outline seu (aula, post, relatório) dando o tamanho de cada seção.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Sem tamanho definido, uma expansão técnica chegou a:</p>
+        <div class="opts"><div>A) 100 palavras</div><div>B) 500 palavras</div><div>C) ≈ 2.500 palavras</div><div>D) Erro</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Em qual tipo inventar é aceitável?</p>
+        <div class="opts"><div>A) Argumentativa</div><div>B) Técnica</div><div>C) Criativa (ficção)</div><div>D) Nenhum</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O pedido de "dados de apoio" sem dados fornecidos leva a:</p>
+        <div class="opts"><div>A) Respostas mais curtas</div><div>B) Números possivelmente inventados</div><div>C) Erro 400</div><div>D) JSON</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O outline controla principalmente:</p>
+        <div class="opts"><div>A) A estrutura do texto</div><div>B) A veracidade</div><div>C) A temperatura</div><div>D) O modelo</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Mais texto,<br><em>mais conferência</em></h1>
+    <p class="lead">Expansões de tópicos, ideias, argumentos, conceitos e outlines transformam pouco em muito. Defina tamanho, público e tom; forneça os fatos ou proíba números inventados; e trate exemplos e estatísticas gerados como rascunho até conferir.</p>
+    <div class="chips"><span>Tamanho no prompt</span><span>Outline = estrutura</span><span>[FONTE?]</span><span>Ficção × fatos</span></div>
+    <div class="next">Próxima aula → 14 · Transformação Textual</div>
+    <div class="source">Fontes: console.groq.com/docs/prompting; Guia de Engenharia de Prompt (aula 16), seções 17 e 18, consultados em outubro de 2026. Código e saídas: notebook <code>10-texto_complemento.ipynb</code> desta aula; contagens de palavras feitas nas saídas gravadas. Os números e estudos citados nas saídas foram gerados pelo modelo e não foram verificados.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
