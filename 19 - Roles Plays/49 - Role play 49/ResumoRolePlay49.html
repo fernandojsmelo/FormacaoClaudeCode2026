@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Resumo — Role Play 49</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:15mm 15mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.7pt;line-height:1.52}
+.wrap{max-width:730px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+h1{font-family:var(--display);font-weight:600;font-size:21pt;line-height:1.18;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 8px}
+.byline{font-family:var(--mono);font-size:8.5pt;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:6px}
+section.turn{break-before:page;page-break-before:always}
+section.turn.first{break-before:auto;page-break-before:auto;margin-top:18px}
+.sec{font-family:var(--mono);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px}
+.q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:10px 14px;font-style:italic;color:var(--ink);margin-bottom:14px}
+.q .k{font-family:var(--mono);font-style:normal;font-size:8pt;color:var(--muted);display:block;margin-bottom:3px}
+p{margin:0 0 8px}
+h3{font-family:var(--display);font-weight:600;font-size:12.5pt;margin:12px 0 5px;color:var(--ink);break-after:avoid}
+h4{font-size:10pt;margin:11px 0 5px;color:var(--accent-ink);break-after:avoid}
+ul,ol{margin:0 0 8px;padding-left:20px}
+li{margin:3px 0}
+strong{color:var(--accent-ink);font-weight:600}
+code{font-family:var(--mono);font-size:8.6pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 4px}
+table{width:100%;border-collapse:collapse;font-size:9.1pt;margin:6px 0 12px;border:1px solid var(--border-2)}
+tr{break-inside:avoid}
+th{background:var(--surface-2);font-family:var(--mono);font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:7px 10px;font-weight:500}
+td{border-top:1px solid var(--border);padding:7px 10px;vertical-align:top;background:var(--surface)}
+blockquote{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--mono);font-size:8.6pt;line-height:1.55;color:var(--ink);break-inside:avoid}
+.follow{background:var(--good-soft);border:1px solid #35493B;border-radius:10px;padding:8px 13px;margin-top:10px;break-inside:avoid}
+.follow p{margin-bottom:4px}
+.follow ul{margin:0}
+.err{color:var(--muted);font-style:italic}
+.note{background:var(--warn-soft);border:1px solid #54421F;border-radius:10px;padding:10px 14px;margin-top:12px;break-inside:avoid}
+.foot{font-family:var(--mono);font-size:8pt;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:10px;break-before:avoid}
+blockquote div{margin:0 0 2px;white-space:pre-wrap}
+.codenote{font-family:var(--mono);font-size:7.6pt;color:var(--muted);margin:-6px 0 10px}
+.flow{margin:6px 0 10px;padding:9px 13px;background:#100D0A;border:1px solid var(--border-2);border-radius:8px;font-family:var(--mono);font-size:8.4pt;line-height:1.5;text-align:center;break-inside:avoid}
+.flow .ar{color:var(--accent);margin:2px 0}
+ol ol{margin:4px 0 2px}
+body{font-size:9.3pt;line-height:1.47}
+blockquote div{min-height:1.2em}
+body{font-size:11pt;line-height:1.68}
+table{break-inside:avoid}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · Role play 49</div>
+  <h1>map, filter e compreensões de lista — e o salto para o Pandas</h1>
+  <p class="lead">Resumo da pesquisa feita durante a prática "O Especialista em Python e o Analista dos Laços Verbosos": map e filter contra o laço com append, quando o map ainda vale a pena, o desafio dos dados de vendas, if/else dentro da compreensão de lista, leitura de um CSV real, a mesma tarefa com Pandas (filtros e exportação com to_csv) e o desafio do aluguel de carros.</p>
+  <div class="byline">Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 14:47</div>
+
+  <!-- 01 -->
+  <section class="turn first">
+    <div class="sec">01 — Links: listas em Python</div>
+    <div class="q"><span class="k">Pergunta</span>"Opa! Eu tô aprendendo Python pra tratar dados e faço tudo na base do laço manual: crio uma lista vazia, faço um for, e …</div>
+    <div class="follow"><p>Confira os principais resultados da Web para saber mais sobre esse tema:</p>
+    <ul>
+      <li>Listas em Python: Métodos, Exemplos e Exercícios · <em>pythonacademy.com.br</em></li>
+      <li>YouTube · <em>YouTube</em></li>
+      <li>Como Usar o Método append() em Listas - Python Tutorial - YouTube · <em>YouTube</em></li>
+      <li>Tutorial dos métodos .append() e .extend() do Python | DataCamp · <em>DataCamp</em></li>
+      <li>Python manipulando lista | Dados - Alura · <em>Alura</em></li>
+      <li>Append e Extend em Python - Como Adicionar Itens em uma Lista · <em>YouTube</em></li>
+      <li>5. Estruturas de dados — Documentação Python 3.14.8 · <em>Python documentation</em></li>
+      <li>Listas em Python (curso Python para machine learning - Aula 2) · <em>YouTube</em></li>
+      <li>Manipulando listas no Python | Blog da TreinaWeb · <em>TreinaWeb</em></li>
+      <li>Manipulando Listas em Python: Dicas e Truques Essenciais - DIO · <em>DIO</em></li>
+    </ul></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="turn">
+    <div class="sec">02 — map e filter na prática</div>
+    <div class="q"><span class="k">Pergunta</span>exemplos por favor</div>
+    <p>Para entender de forma simples e rápida: o <code>map</code> <strong>transforma</strong> cada item da sua lista, enquanto o <code>filter</code> <strong>filtra</strong> os itens mantendo apenas os que passam em um teste.</p>
+    <p>Ambos substituem aquele padrão de criar uma lista vazia, fazer um <code>for</code> e dar <code>append</code>.</p>
+    <p>Aqui estão os exemplos práticos comparando o seu jeito (com <code>for</code>), o jeito com <code>map</code>/ <code>filter</code>, e a forma mais moderna em Python (chamada <strong>List Comprehension</strong>).</p>
+    <h3>1. Transformando dados (Deixar textos em maiúsculo)</h3>
+    <p>Use o <code>map</code> quando você quer aplicar uma função/transformação em <strong>todos</strong> os elementos da lista. O tamanho da lista final continua exatamente o mesmo.</p>
+    <blockquote><div>nomes = ["ana", "bruno", "carla"]</div><div># ❌ Como você faz hoje (Laço manual)</div><div>maiusculos_for = []</div><div>for nome in nomes:</div><div>    maiusculos_for.append(nome.upper())</div><div># 💡 Com map e lambda</div><div># O map precisa ser envolvido por list() para virar uma lista visualizável</div><div>maiusculos_map = list(map(lambda nome: nome.upper(), nomes))</div><div># 🐍 O jeito mais recomendado em Python (List Comprehension)</div><div>maiusculos_list_comp = [nome.upper() for nome in nomes]</div><div>print(maiusculos_map) # Resultado: ['ANA', 'BRUNO', 'CARLA']</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>2. Filtrando dados (Pegar apenas números pares)</h3>
+    <p>Use o <code>filter</code> quando você quer testar cada item com uma condição (que retorna <code>True</code> ou <code>False</code>). Apenas os itens que forem <code>True</code> entram na lista final.</p>
+    <blockquote><div>numeros = [1, 2, 3, 4, 5, 6]</div><div># ❌ Como você faz hoje (Laço manual)</div><div>pares_for = []</div><div>for num in numeros:</div><div>    if num % 2 == 0:</div><div>        pares_for.append(num)</div><div># 💡 Com filter e lambda</div><div># A função lambda aqui faz o teste lógico (num % 2 == 0)</div><div>pares_filter = list(filter(lambda num: num % 2 == 0, numeros))</div><div># 🐍 O jeito mais recomendado em Python (List Comprehension)</div><div>pares_list_comp = [num for num in numeros if num % 2 == 0]</div><div>print(pares_filter) # Resultado: [2, 4, 6]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>Direto ao ponto: Qual usar no dia a dia?</h3>
+    <table>
+      <tr><th>Método</th><th>Quando usar?</th><th>O que ele faz?</th></tr>
+      <tr><td><code>map()</code></td><td>Quando precisa modificar todos os itens (ex: converter moedas, formatar strings).</td><td>Aplica uma função em cada elemento.</td></tr>
+      <tr><td><code>filter()</code></td><td>Quando você precisa reduzir a lista (ex: remover nulos, filtrar idades &gt; 18).</td><td>Testa cada elemento usando uma condição.</td></tr>
+      <tr><td><strong>List Comprehension</strong></td><td>Quase sempre. É o padrão mais amado pela comunidade Python.</td><td>Faz o papel do <code>map</code> e do <code>filter</code> de forma ainda mais legível.</td></tr>
+    </table>
+    <p>Como você mencionou que está aprendendo Python focado em <strong>tratamento de dados</strong>, você já começou a mexer com a biblioteca <strong>Pandas</strong> ou ainda está manipulando arquivos de texto puros (como CSV e TXT) usando as listas nativas?</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="turn">
+    <div class="sec">03 — Pandas agora ou depois?</div>
+    <div class="q"><span class="k">Pergunta</span>Ah, valeu pelo resuminho aí! Sobre sua pergunta, eu ainda tô só no básico mesmo, mexendo com listas e arquivos CSV …</div>
+    <p><strong>Vale a pena dar o salto para o Pandas agora mesmo.</strong> Se o seu objetivo final é tratar dados, o <strong>Pandas é a ferramenta padrão do mercado</strong> e vai poupar muito do seu tempo.</p>
+    <p>Fazer tudo na mão com arquivos CSV nativos em Python é ótimo para entender a lógica de programação, mas no mundo real ninguém limpa dados assim porque dá muito trabalho. O Pandas substitui dezenas de linhas de <code>map</code>, <code>filter</code> ou laços <code>for</code> por comandos de apenas <strong>uma linha</strong>.</p>
+    <p>Veja abaixo uma comparação prática de como você filtraria e transformaria um CSV usando o que sabe hoje versus o jeito Pandas.</p>
+    <h3>O Confronto: Filtrar clientes de SP e deixar o nome em</h3>
+    <h3>maiúsculo</h3>
+    <p>Imagine um arquivo <code>clientes.csv</code> com as colunas: <code>nome, estado, idade</code>.</p>
+    <h3>❌ O jeito nativo (Com arquivos, laços ou list comprehensions)</h3>
+    <p>Você precisa abrir o arquivo, pular o cabeçalho, quebrar as linhas por vírgula, tratar os espaços e aí sim aplicar a lógica.</p>
+    <blockquote><div>import csv</div><div>dados_tratados = []</div><div>with open("clientes.csv", mode="r", encoding="utf-8") as arquivo:</div><div>    leitor = csv.reader(arquivo)</div><div>    cabecalho = next(leitor) # Pula a primeira linha</div><div></div><div>    # Mistura de filter (if) e map (nome.upper()) em um laço</div><div>    for linha in leitor:</div><div>        nome, estado, idade = linha</div><div>        if estado.strip() == "SP":</div><div>            dados_tratados.append([nome.upper(), estado, idade])</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🐼 O jeito Pandas</h3>
+    <p>O Pandas lê o arquivo direto e resolve o filtro e a transformação de forma matemática e direta.</p>
+    <blockquote><div>import pandas as pd</div><div># 1. Carrega o arquivo inteiro como uma tabela (DataFrame)</div><div>df = pd.read_csv("clientes.csv")</div><div># 2. Filtra onde o estado é SP e transforma a coluna nome em maiúsculo</div><div>df_filtrado = df[df["estado"] == "SP"]</div><div>df_filtrado["nome"] = df_filtrado["nome"].str.upper()</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>Por que aprender Pandas já (mas sem abandonar a base)?</h3>
+    <ul>
+      <li><strong>Menos código, menos bugs:</strong> Você não precisa gerenciar abertura de arquivos (<code>with open</code>) nem criar listas vazias.</li>
+      <li><strong>Desempenho brutal:</strong> O Pandas é escrito em C por baixo dos panos. Se o seu CSV tiver 1 milhão de linhas, o seu laço <code>for</code> vai travar ou demorar minutos; o Pandas resolve em segundos.</li>
+      <li><strong>A base ainda é útil:</strong> Lembra do <code>map</code>? No Pandas, quando você quer fazer uma transformação muito doida em uma coluna, você usa uma função do Pandas chamada <code>.apply(lambda x: ...)</code> que funciona <strong>exatamente</strong> igual ao <code>map</code> que você acabou de aprender!</li>
+    </ul>
+    <h3>O veredito para os seus estudos</h3>
+    <p>Não gaste semanas decorando técnicas avançadas de <code>map</code> e <code>filter</code> nativos. Instale o Pandas (<code>pip install pandas</code>) e comece a replicar os seus exercícios de CSV nele.</p>
+    <p>Quer ver como os seus scripts atuais de CSV ficariam usando o Pandas? Se quiser, me mostra a <strong>estrutura de um CSV</strong> que você usa ou <strong>um pedaço do código de laço</strong> que você já escreveu, e eu te ajudo a traduzir ele para o jeito Pandas!</p>
+  </section>
+
+  <!-- 04 -->
+  <section class="turn">
+    <div class="sec">04 — Quando preferir o map</div>
+    <div class="q"><span class="k">Pergunta</span>Caramba, parece que o Pandas realmente economiza muito tempo, hein? Mas, antes de mergulhar nele, eu quero mesm…</div>
+    <p>Você está coberto de razão!</p>
+    <p>Dominar a base primeiro vai te transformar em um programador muito mais seguro, inclusive na hora de depurar problemas no Pandas mais para a frente.</p>
+    <p>Direto ao ponto: no Python moderno, <strong>você quase nunca deve preferir o</strong> <code>map</code> em vez de uma compreensão de lista (List Comprehension).</p>
+    <p>A própria comunidade Python e o criador da linguagem (Guido van Rossum) preferem as compreensões de lista porque elas são mais legíveis, diretas e dispensam o uso de funções <code>lambda</code> na maioria das vezes.</p>
+    <p>No entanto, existem <strong>3 cenários específicos</strong> onde o <code>map</code> se sai melhor ou é preferível. Veja quais são:</p>
+    <h3>1. Quando você já tem uma função pronta (Sem usar lambda)</h3>
+    <p>Se você não precisa inventar uma função na hora com o <code>lambda</code> e já tem uma função nativa ou criada por você, o <code>map</code> fica extremamente limpo.</p>
+    <ul>
+      <li>📋 <strong>Objetivo:</strong> Converter uma lista de strings numéricas em números inteiros.</li>
+    </ul>
+    <blockquote><div>strings = ["10", "20", "30"]</div><div># 💡 Com map: Você passa a função 'int' direto, sem criar variáveis temporárias</div><div>numeros_map = list(map(int, strings))</div><div># 🐍 Com list comprehension: Você precisa criar a variável temporária 'x'</div><div>numeros_list = [int(x) for x in strings]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Nesse caso, <code>map(int, strings)</code> é muito elegante porque diz diretamente: "aplique a função int nesta coleção".</p>
+    <h3>2. Para economizar memória com listas gigantes (Avaliação</h3>
+    <h3>Preguiçosa)</h3>
+    <p>A grande mágica oculta do <code>map</code> é que ele não cria uma lista nova na memória imediatamente. Ele retorna um <strong>objeto gerador</strong> (um "map object"). Ele só processa o próximo item quando você pede por ele (como em um laço <code>for</code>).</p>
+    <ul>
+      <li>💻 <strong>A diferença de comportamento:</strong></li>
+    </ul>
+    <blockquote><div># 🚨 A List Comprehension processa e joga os 10 milhões de itens na memória NA HORA</div><div>lista_gigante = [x * 2 for x in range(10_000_000)]</div><div># ⚡ O map faz isso INSTANTANEAMENTE e gasta quase zero de memória</div><div>gerador_gigante = map(lambda x: x * 2, range(10_000_000))</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Se você só vai rodar um <code>for</code> logo em seguida para salvar esses dados em um arquivo linha por linha, usar o <code>map</code> (sem o <code>list()</code> em volta) evita que seu computador trave por falta de memória.</p>
+    <p>(Nota: Você também pode fazer isso com compreensões usando parênteses <code>(x * 2 for x in ...)</code>, que viram "generator expressions").</p>
+    <h3>3. Operações com múltiplas listas ao mesmo tempo</h3>
+    <p>O <code>map</code> aceita receber mais de uma lista como argumento se a função que você passar aceitar mais de um parâmetro.</p>
+    <ul>
+      <li>📋 <strong>Objetivo:</strong> Somar os elementos correspondentes de duas listas diferentes.</li>
+    </ul>
+    <blockquote><div>lista_a = [1, 2, 3]</div><div>lista_b = [10, 20, 30]</div><div># 💡 O map puxa um item de cada lista e passa para a função lambda</div><div>resultados_map = list(map(lambda x, y: x + y, lista_a, lista_b))</div><div># 🐍 Na compreensão de lista, você seria obrigado a usar a função zip() junto</div><div>resultados_list = [x + y for x, y in zip(lista_a, lista_b)]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>Resumo da ópera</h3>
+    <ul>
+      <li>Escolha <strong>List Comprehension</strong> em <strong>90% dos casos</strong>. Ela é o padrão visual do Python, aceita filtros (<code>if</code>) facilmente no mesmo comando e qualquer programador Python bate o olho e entende.</li>
+      <li>Escolha <code>map()</code> quando for aplicar uma <strong>função já existente</strong> (como <code>int</code>, <code>str</code>, <code>len</code>) a uma lista, ou quando estiver lidando com <strong>volumes massivos de dados</strong> onde a memória do computador é uma preocupação.</li>
+    </ul>
+    <p>Ficou clara essa diferença de quando um vale mais a pena que o outro? Se você quiser fixar bem o conceito de <strong>Compreensão de Lista</strong>, quer tentar resolver um <strong>pequeno desafio de código</strong> combinando transformação e filtro em uma linha só?</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="turn">
+    <div class="sec">05 — O desafio dos dados de vendas</div>
+    <div class="q"><span class="k">Pergunta</span>Entendi agora! Então, map é mais útil quando já tenho uma função pronta ou pra listas gigantes quando a memória é u…</div>
+    <p>Que excelente ver sua disposição!</p>
+    <p>Dominar isso em uma linha vai abrir sua mente para a forma de pensar do Python.</p>
+    <p>Para este desafio, imagine que você acabou de extrair uma coluna de valores textuais de um arquivo CSV de vendas. Os dados vieram bem bagunçados: misturando texto, valores nulos (vazio) e espaços extras.</p>
+    <h3>🎯 O Desafio dos Dados de Vendas</h3>
+    <p>Você tem a seguinte lista bruta que representa o faturamento de algumas vendas:</p>
+    <blockquote><div>vendas_brutas = [" 150 ", "NULO", "200", "  350", "NULO", "50"]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p><strong>Sua missão:</strong> Crie <strong>uma única linha de código</strong> usando <strong>List Comprehension</strong> que faça as duas coisas abaixo ao mesmo tempo:</p>
+    <ol>
+      <li><strong>Filtrar:</strong> Remova todos os itens que sejam <code>"NULO"</code>.</li>
+      <li><strong>Transformar:</strong> Limpe os espaços em branco de cada número restante (usando <code>.strip()</code>) e converta-os para o tipo inteiro (<code>int</code>).</li>
+    </ol>
+    <p>No final, sua compreensão de lista deve gerar exatamente este resultado:</p>
+    <blockquote><div>[150, 200, 350, 50]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p><strong>Uma dica de ouro:</strong> Na estrutura da List Comprehension, a transformação sempre fica no começo e o filtro (<code>if</code>) fica no final, assim:</p>
+    <blockquote><div>[transformacao_aqui for item in lista if condicao_aqui]</div></blockquote>
+    <p>Pode rabiscar o seu código e mandar aqui. Se travar ou der erro, não tem problema, manda o que conseguiu e a gente ajusta junto! 🚀</p>
+    <p>Mande a sua <strong>linha de código</strong> quando estiver pronto! Se preferir, me diga se quer uma <strong>segunda dica</strong> sobre como tratar os espaços (<code>.strip()</code>) e converter para inteiro na mesma expressão.</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="turn">
+    <div class="sec">06 — Acertou em cheio</div>
+    <div class="q"><span class="k">Pergunta</span>Ah, que massa esse desafio! Beleza, vou tentar aqui e já te digo: [int(venda.strip()) for venda in vendas_brutas if venda …</div>
+    <p>Você <strong>acertou em cheio!</strong> O seu código está absolutamente perfeito e é exatamente a forma mais elegante e idiomática de resolver isso em Python.</p>
+    <blockquote><div>vendas_brutas = [" 150 ", "NULO", "200", "  350", "NULO", "50"]</div><div># A sua solução perfeita:</div><div>[int(venda.strip()) for venda in vendas_brutas if venda != 'NULO']</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Veja por que a sua linha de código é excelente:</p>
+    <ol>
+      <li><strong>O Filtro funciona perfeitamente:</strong> O <code>if venda != 'NULO'</code> barra as strings indesejadas antes que elas passem para a fase de transformação. Se uma string <code>"NULO"</code> tentasse rodar no <code>.strip()</code> e no <code>int()</code>, o Python daria um erro (<code>ValueError</code>). Você evitou isso jogando o filtro no final.</li>
+      <li><strong>A Transformação em cadeia foi precisa:</strong> Você primeiro limpou os espaços invisíveis com o <code>.strip()</code> e, imediatamente depois, passou o resultado limpo para o <code>int()</code>.</li>
+    </ol>
+    <p>Se você tentasse fazer isso usando <code>map</code> e <code>filter</code> tradicionais com funções lambda, o código ficaria bem mais confuso e difícil de ler, porque você precisaria aninhar uma função dentro da outra.</p>
+    <p>Agora que você dominou a estrutura clássica de transformação e filtro, quer dar o próximo passo e ver como fazer um <code>if / else</code> <strong>dentro da List Comprehension</strong> (por exemplo, para transformar o <code>"NULO"</code> em <code>0</code> em vez de deletar ele), ou prefere fechar essa parte e partir para o próximo assunto?</p>
+    <div class="follow"><p>Diga-me o que prefere fazer a seguir:</p>
+    <ul>
+      <li>Aprender a usar o <code>if / else</code> <strong>interno</strong> para substituir valores (ex: transformar "NULO" em <code>0</code>).</li>
+      <li>Ver como aplicar essa mesma lógica de <strong>uma linha dentro de um arquivo CSV de verdade</strong>.</li>
+      <li>Seguir para outro conceito básico que você tenha dúvida!</li>
+    </ul></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="turn">
+    <div class="sec">07 — if/else dentro da compreensão</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, que bom que deu certo! Acho que agora tô começando a pegar o jeito dessa coisa de List …</div>
+    <p>Mudar a estratégia de "deletar" para "substituir" é um cenário clássico no tratamento de dados!</p>
+    <p>A regra de ouro que você precisa decorar aqui é: quando usamos <code>if</code> <strong>e</strong> <code>else</code> <strong>juntos</strong> para substituir valores, a estrutura muda de lugar e <strong>vai toda para o começo</strong> da List Comprehension.</p>
+    <p>Veja a comparação de como a estrutura se comporta:</p>
+    <ul>
+      <li><strong>Só para filtrar (Remover):</strong> O <code>if</code> fica no <strong>final</strong>.</li>
+      <li><strong>Para substituir (Transformar com condicional):</strong> O <code>if/else</code> fica no <strong>começo</strong>.</li>
+    </ul>
+    <h3>O Jeito Certo: Substituindo "NULO" por 0</h3>
+    <p>Veja como fica a linha de código para resolver esse problema:</p>
+    <blockquote><div>vendas_brutas = [" 150 ", "NULO", "200", "  350", "NULO", "50"]</div><div># 💡 A estrutura lê-se: "Faça ISSO se for verdadeiro, SENÃO faça AQUILO"</div><div>vendas_limpas = [int(venda.strip()) if venda != "NULO" else 0 for venda in vendas_brutas]</div><div>print(vendas_limpas)</div><div># Resultado: [150, 0, 200, 350, 0, 50]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🧠 Por que a ordem inverteu?</h3>
+    <p>Pense na List Comprehension como uma esteira de produção:</p>
+    <ol>
+      <li><strong>Quando o</strong> <code>if</code> <strong>está no final (Filtro):</strong> O Python decide se o item entra ou não na esteira. Se o item for "NULO", ele é jogado no lixo e nem passa pela transformação.</li>
+      <li><strong>Quando o</strong> <code>if/else</code> <strong>está no começo (Expressão):</strong> Todos os itens entram na esteira obrigatoriamente. O Python olha para o item e diz: "Se for diferente de 'NULO', vou limpar e converter para inteiro. Caso contrário (else), vou transformar em 0".</li>
+    </ol>
+    <p>Como todos os itens geram um resultado (seja o número ou o zero), a lista final termina com <strong>exatamente o mesmo tamanho</strong> da lista original.</p>
+    <h3>E dá para combinar os dois? (O "Monstro" das Compreensões)</h3>
+    <p>Sim! Você pode usar um <code>if/else</code> no começo para transformar e OUTRO <code>if</code> no final para filtrar.</p>
+    <p>Imagine que você quer substituir os "NULO" por <code>0</code>, <strong>mas</strong> quer deletar completamente o número <code>50</code> da lista por algum motivo de negócio:</p>
+    <blockquote><div># if/else no começo (transformação) + if no final (filtro)</div><div>[int(v) if v != "NULO" else 0 for v in vendas_brutas if v.strip() != "50"]</div><div># Resultado: [150, 0, 200, 350, 0] -&gt; O 50 sumiu e o NULO virou 0!</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>(Dica de amigo: se o seu código começar a ficar complexo assim em uma linha só, geralmente vale mais a pena voltar para o <code>for</code> tradicional ou usar funções para não quebrar a cabeça tentando ler o código depois!).</p>
+    <p>Agora que você tem essas duas ferramentas poderosas no seu cinto de utilidades, o que acha de fazermos o seguinte passo?</p>
+    <ul>
+      <li>Ver como aplicar essa list comprehension de forma prática <strong>lendo um arquivo CSV real</strong> (com o módulo <code>csv</code> nativo).</li>
+      <li>Entender como criar um <strong>Dicionário Comprehension</strong> (Dict Comprehension), que serve para criar tabelas de mapeamento rápidas (tipo um Procv/Vlookup de ID para Nome).</li>
+      <li>Partir direto para os primeiros passos no <strong>Pandas</strong>, já que você pegou a lógica muito rápido.</li>
+    </ul>
+    <p>Qual caminho faz mais sentido para o seu momento atual de estudos?</p>
+  </section>
+
+  <!-- 08 -->
+  <section class="turn">
+    <div class="sec">08 — Lendo um CSV de verdade</div>
+    <div class="q"><span class="k">Pergunta</span>Agora entendi bem como funciona o if/else nas List Comprehensions! Ah, quero muito ver como aplicar isso len…</div>
+    <p>Vamos nessa!</p>
+    <p>Conectar essa lógica com um arquivo real é o melhor jeito de consolidar o aprendizado. Você vai ver que a List Comprehension se encaixa perfeitamente na hora de processar arquivos.</p>
+    <p>Para este exemplo prático, imagine que temos um arquivo chamado <code>vendas.csv</code>. Ele tem uma estrutura simples com três colunas: <code>produto</code>, <code>quantidade</code> e <code>preco_unitario</code>.</p>
+    <p>O arquivo está assim por dentro:</p>
+    <blockquote><div>produto,quantidade,preco_unitario</div><div>Notebook,5,3500</div><div>Mouse,NULO,50</div><div>Teclado,10,120</div><div>Monitor,2, 1200</div><div>Webcam,NULO,250</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Repare que temos espaços extras e valores "NULO" na coluna de quantidade.</p>
+    <h3>O Código Prático</h3>
+    <p>Vamos abrir esse arquivo de forma nativa usando o módulo <code>csv</code> do Python e usar a <strong>List Comprehension</strong> para calcular o <strong>faturamento potencial</strong> de cada produto (multiplicando a quantidade pelo preço).</p>
+    <p>Como temos valores <code>"NULO"</code>, usaremos o <code>if/else</code> no começo para tratar esse problema e considerar a quantidade como <code>0</code> quando estiver zerada.</p>
+    <blockquote><div>import csv</div><div># 1. Abrimos o arquivo de forma segura usando o 'with'</div><div>with open("vendas.csv", mode="r", encoding="utf-8") as arquivo:</div><div>    leitor = csv.reader(arquivo)</div><div></div><div>    # 2. Guardamos o cabeçalho e isolamos as linhas com os dados reais</div><div>    cabecalho = next(leitor)</div><div>    linhas = list(leitor)</div><div># 3. A MAGIA DA LIST COMPREHENSION:</div><div># Cada 'linha' é uma lista de strings: [produto, quantidade, preco]</div><div># linha[1] é a quantidade, linha[2] é o preço unitário</div><div>faturamentos = [</div><div>    (int(linha[1].strip()) if linha[1].strip() != "NULO" else 0) * int(linha[2].strip())</div><div>    for linha in linhas</div><div>]</div><div>print("Faturamento por produto:", faturamentos)</div><div># Resultado esperado: [17500, 0, 1200, 2400, 0]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🔍 O que está acontecendo ali dentro?</h3>
+    <p>Para ficar bem fácil de ler, vamos quebrar a expressão em partes:</p>
+    <ol>
+      <li><code>for linha in linhas</code>: O Python passa por cada linha do CSV (ex: <code>['Mouse',</code> <code>'NULO', '50']</code>).</li>
+      <li><code>linha[1].strip()</code>: Remove os espaços em branco da quantidade.</li>
+      <li><code>if linha[1].strip() != "NULO" else 0</code>: Se for um número válido, faz a conversão para <code>int()</code>. Se for <code>"NULO"</code>, o Python assume o valor <code>0</code>.</li>
+      <li><code>* int(linha[2].strip())</code>: Multiplica o resultado da quantidade (seja o número real ou o zero) pelo preço unitário convertido para inteiro.</li>
+    </ol>
+    <p>Viu que poderoso? Em vez de criar um laço <code>for</code> gigante com várias condicionais indentadas, você resolveu a leitura, a limpeza, o tratamento de nulos e o cálculo matemático em um único bloco de código super enxuto.</p>
+    <p>Agora que você viu como conectar as compreensões de lista com a leitura de arquivos CSV reais, o que você acha que seria mais legal explorar a seguir?</p>
+    <ul>
+      <li>Adicionar mais uma coluna de dados para fazer um <strong>filtro no final</strong> da compreensão (ex: calcular o faturamento apenas para produtos com preço acima de R$ 100).</li>
+      <li>Ver como reescrever esse exato código de uma forma muito mais simples usando o <strong>Pandas</strong>, para você comparar o poder das duas abordagens.</li>
+      <li>Praticar com outro <strong>desafio rápido</strong> de leitura de arquivos.</li>
+    </ul>
+    <p>Me conta <strong>qual desses próximos passos</strong> te chama mais atenção!</p>
+  </section>
+
+  <!-- 09 -->
+  <section class="turn">
+    <div class="sec">09 — O mesmo código com Pandas</div>
+    <div class="q"><span class="k">Pergunta</span>Caramba, isso foi muito prático e direto! Acho que agora seria interessante ver como reescrever esse mesmo código usan…</div>
+    <p>Você vai ver agora o motivo de o Pandas ser o queridinho de quem trabalha com dados.</p>
+    <p>A diferença de abordagem é brutal: em vez de pensarmos linha por linha, nós pensamos na <strong>coluna inteira</strong> de uma vez só.</p>
+    <p>Para o mesmo arquivo <code>vendas.csv</code>, veja como fica a versão em Pandas.</p>
+    <h3>O Código com Pandas</h3>
+    <blockquote><div>import pandas as pd</div><div># 1. Carrega o arquivo inteiro e o Pandas já separa o cabeçalho e as colunas sozinho</div><div>df = pd.read_csv("vendas.csv")</div><div># 2. Tratamento de dados em duas linhas:</div><div># Substitui o "NULO", remove espaços e converte para número</div><div>df["quantidade"] = df["quantidade"].str.strip().replace("NULO", 0).astype(int)</div><div>df["preco_unitario"] = df["preco_unitario"].astype(int)</div><div># 3. Cria a nova coluna fazendo uma multiplicação direta de colunas (Vetorização)</div><div>df["faturamento"] = df["quantidade"] * df["preco_unitario"]</div><div>print(df)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>📊 O que o Pandas nos mostra na tela?</h3>
+    <p>Se você der um <code>print(df)</code>, ele não te joga uma lista solta de números. Ele exibe uma <strong>tabela linda e estruturada</strong> (chamada DataFrame) com o cálculo feito para cada linha:</p>
+    <blockquote><div>    produto  quantidade  preco_unitario  faturamento</div><div>0  Notebook           5            3500        17500</div><div>1     Mouse           0              50            0</div><div>2   Teclado          10             120         1200</div><div>3   Monitor           2            1200         2400</div><div>4    Webcam           0             250            0</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🔍 Por que ficou tão mais simples? As 3 grandes diferenças:</h3>
+    <ol>
+      <li><strong>Adeus,</strong> <code>with open</code> <strong>e loops:</strong> O <code>pd.read_csv()</code> faz todo o trabalho pesado de abrir, ler e fechar o arquivo por baixo dos panos.</li>
+      <li><strong>Substituição direta (</strong> <code>.replace()</code><strong>):</strong> Em vez daquele <code>if/else</code> complexo dentro da list comprehension, nós usamos o <code>.replace("NULO", 0)</code>. O Pandas vai na coluna inteira e troca o que for texto "NULO" pelo número zero num piscar de olhos.</li>
+      <li><strong>Contas como na planilha (Vetorização):</strong> No Python nativo, você precisa multiplicar o item da linha X pelo item da linha Y. No Pandas, você escreve <code>coluna_A * coluna_B</code> e ele multiplica todas as linhas correspondentes de forma automática e extremamente rápida.</li>
+    </ol>
+    <p>Agora você conhece os dois mundos! Sabe como o Python funciona por baixo dos panos usando lógica pura e compreensões de lista, e sabe como o Pandas envelopa tudo isso para te dar produtividade.</p>
+    <div class="follow"><p>O que você achou dessa comparação? Se quiser continuar evoluindo, nós podemos fazer o seguinte:</p>
+    <ul>
+      <li>Posso te ensinar a instalar o Pandas na sua máquina via <strong>Terminal/Pip</strong> para você começar a testar.</li>
+      <li>Podemos ver como fazer um <strong>filtro</strong> no Pandas (ex: trazer só as linhas onde o faturamento foi maior que zero).</li>
+      <li>Ou você prefere tirar mais alguma dúvida sobre a <strong>base do Python</strong>?</li>
+    </ul></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="turn">
+    <div class="sec">10 — Filtros no Pandas</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, que diferença enorme! Fica tudo muito mais limpo com o Pandas. Acho que agora seria legal aprender como …</div>
+    <p>Fazer filtros no Pandas é um dos recursos mais fantásticos da biblioteca!</p>
+    <p>A lógica é muito parecida com a forma como filtramos dados no Excel ou no SQL, mas feita com uma sintaxe bem direta.</p>
+    <p>Para filtrar no Pandas, nós usamos uma técnica chamada <strong>Indexação Booleana</strong>. Parece um nome complicado, mas na prática funciona como uma "pergunta" que você faz para a tabela.</p>
+    <p>Veja como aplicar isso no código que já tínhamos:</p>
+    <h3>O Código com Filtro</h3>
+    <blockquote><div>import pandas as pd</div><div># 1. Carrega e trata os dados (igual ao passo anterior)</div><div>df = pd.read_csv("vendas.csv")</div><div>df["quantidade"] = df["quantidade"].str.strip().replace("NULO", 0).astype(int)</div><div>df["preco_unitario"] = df["preco_unitario"].astype(int)</div><div>df["faturamento"] = df["quantidade"] * df["preco_unitario"]</div><div># 🎯 A MAGIA DO FILTRO EM UMA LINHA:</div><div># Lemos isso como: "Me traga o df onde o df['faturamento'] seja maior que 0"</div><div>df_filtrado = df[df["faturamento"] &gt; 0]</div><div>print(df_filtrado)</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>📊 O Resultado na Tela</h3>
+    <p>Ao dar o <code>print(df_filtrado)</code>, note que as linhas do <strong>Mouse</strong> e da <strong>Webcam</strong> (que tinham faturamento igual a zero) sumiram completamente da tabela:</p>
+    <blockquote><div>    produto  quantidade  preco_unitario  faturamento</div><div>0  Notebook           5            3500        17500</div><div>2   Teclado          10             120         1200</div><div>3   Monitor           2            1200         2400</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🧠 Como isso funciona por trás dos panos?</h3>
+    <p>Se você rodar isoladamente apenas a condição dentro dos colchetes, ou seja, <code>df["faturamento"] &gt; 0</code>, o Pandas cria uma série de <code>True</code> ou <code>False</code> para cada linha da sua tabela:</p>
+    <ul>
+      <li>Linha 0 (Notebook): <code>True</code> (17500 &gt; 0)</li>
+      <li>Linha 1 (Mouse): <code>False</code> (0 &gt; 0)</li>
+      <li>Linha 2 (Teclado): <code>True</code> (1200 &gt; 0)</li>
+      <li>...e assim por diante.</li>
+    </ul>
+    <p>Quando você joga essa lista de <code>True</code>/ <code>False</code> dentro de <code>df[...]</code>, o Pandas entende o recado: <strong>"Mantenha apenas as linhas que retornaram</strong> <code>True</code> <strong>e delete as que retornaram</strong> <code>False</code><strong>"</strong>. É exatamente o conceito do <code>filter()</code> que você aprendeu no Python puro, mas aplicado a uma tabela inteira de uma vez só!</p>
+    <h3>💡 Bônus: E se eu quiser mais de uma condição?</h3>
+    <p>Se você quisesse filtrar produtos com faturamento maior que zero <strong>E</strong> com preço unitário menor que 2000, bastaria usar o operador <code>&amp;</code> (que significa "E") e isolar as condições entre parênteses:</p>
+    <blockquote><div>df_duplo_filtro = df[(df["faturamento"] &gt; 0) &amp; (df["preco_unitario"] &lt; 2000)]</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Diga-me o que achou dessa lógica de filtros do Pandas! Para darmos o próximo passo nos seus estudos de dados, o que prefere?</p>
+    <ul>
+      <li>Entender como <strong>salvar esse resultado filtrado de volta em um novo arquivo CSV</strong> (gerar um arquivo de saída limpo).</li>
+      <li>Ver como fazer operações de <strong>resumo de dados</strong> no Pandas (como somar o faturamento total ou tirar a média dos preços).</li>
+      <li>Descobrir como instalar o Pandas no seu computador se você ainda não tiver ele configurado.</li>
+    </ul>
+    <div class="follow"><p>Para eu te ajudar melhor nas próximas etapas, me conta:</p>
+    <ul>
+      <li>Você já tem o <strong>Pandas instalado</strong> no seu ambiente de desenvolvimento?</li>
+      <li>Qual <strong>editor de código</strong> você está usando para treinar (VS Code, Jupyter Notebook, PyCharm ou outro)?</li>
+    </ul></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="turn">
+    <div class="sec">11 — Salvando o resultado em CSV</div>
+    <div class="q"><span class="k">Pergunta</span>Nossa, essa lógica de filtros com Pandas é muito intuitiva e prática! Acho que agora seria legal aprender como salvar …</div>
+    <p>Salvar os dados tratados de volta em um arquivo é o fechamento de ouro do seu processo de tratamento de dados!</p>
+    <p>No Pandas, isso é tão simples quanto ler o arquivo: basta uma única linha de código usando a função <code>.to_csv()</code>.</p>
+    <p>Como você já está usando o <strong>VS Code</strong> e tem o Pandas instalado, essa etapa vai funcionar perfeitamente no seu ambiente.</p>
+    <p>Veja abaixo o código completo, adicionando o passo final de exportação:</p>
+    <h3>O Código Completo (Leitura, Tratamento, Filtro e Exportação)</h3>
+    <blockquote><div>import pandas as pd</div><div># 1. Carrega os dados</div><div>df = pd.read_csv("vendas.csv")</div><div># 2. Trata e limpa os dados</div><div>df["quantidade"] = df["quantidade"].str.strip().replace("NULO", 0).astype(int)</div><div>df["preco_unitario"] = df["preco_unitario"].astype(int)</div><div>df["faturamento"] = df["quantidade"] * df["preco_unitario"]</div><div># 3. Aplica o filtro</div><div>df_filtrado = df[df["faturamento"] &gt; 0]</div><div># 🎯 A MAGIA DA EXPORTAÇÃO EM UMA LINHA:</div><div># Salva o resultado em um novo arquivo chamado 'vendas_limpas.csv'</div><div>df_filtrado.to_csv("vendas_limpas.csv", index=False, encoding="utf-8")</div><div>print("Arquivo salvo com sucesso!")</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>⚠ O detalhe mais importante: O que é esse <code>index=False</code>?</h3>
+    <p>Quando o Pandas cria um DataFrame, ele adiciona automaticamente uma coluna oculta de números à esquerda (<code>0, 1, 2, 3...</code>) para identificar cada linha.</p>
+    <ul>
+      <li>Se você salvar usando apenas <code>df_filtrado.to_csv("vendas_limpas.csv")</code>, o Pandas <strong>vai colocar esses números dentro do seu novo arquivo CSV</strong> como se fossem uma coluna de dados.</li>
+      <li>Ao colocar o argumento <code>index=False</code>, você diz ao Pandas: "Gere o arquivo CSV apenas com as minhas colunas reais (produto, quantidade, preco_unitario, faturamento), sem salvar esses números de índice". Na imensa maioria das vezes, você vai querer usar o <code>index=False</code>.</li>
+    </ul>
+    <p>O parâmetro <code>encoding="utf-8"</code> garante que acentos e caracteres especiais (como o símbolo de "Notebook" ou "Preço") não venham quebrados ou com símbolos estranhos quando você ou outra pessoa abrir o arquivo no Excel.</p>
+    <h3>📂 O que acontece no seu VS Code?</h3>
+    <p>Assim que você executar esse script, um novo arquivo chamado <code>vendas_limpas.csv</code> vai aparecer instantaneamente na mesma pasta do seu projeto dentro do VS Code. Ao abrir ele, o conteúdo estará perfeitamente limpo:</p>
+    <blockquote><div>produto,quantidade,preco_unitario,faturamento</div><div>Notebook,5,3500,17500</div><div>Teclado,10,120,1200</div><div>Monitor,2,1200,2400</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Parabéns! Você acabou de criar o seu primeiro pipeline completo de engenharia/análise de dados: <strong>Extraiu</strong> os dados (CSV), <strong>Transformou</strong> (limpou nulos, converteu tipos, calculou colunas, filtrou) e <strong>Carregou</strong> (salvou em um novo arquivo). No mundo técnico, chamamos isso de processo <strong>ETL</strong> (Extract, Transform, Load).</p>
+    <p>Agora que você fechou esse ciclo, para onde quer seguir nos seus estudos?</p>
+    <ul>
+      <li>Aprender a fazer <strong>resumos estatísticos</strong> desses dados salvos (como descobrir a soma total do faturamento ou a média de preços das vendas válidas).</li>
+      <li>Entender como lidar com dados de datas no Pandas (outro grande terror de quem trabalha com arquivos CSV).</li>
+      <li>Fazer um <strong>pequeno desafio final</strong> juntando tudo o que você aprendeu de Pandas até aqui para testar no seu VS Code.</li>
+    </ul>
+    <div class="follow"><p>Para eu preparar o próximo passo ideal, me conta:</p>
+    <ul>
+      <li>O seu arquivo <code>vendas.csv</code> original tem alguma coluna de <strong>data</strong> ou <strong>categoria</strong> que você queira aprender a manipular?</li>
+      <li>Você prefere partir para a parte de <strong>cálculos e resumos</strong> (soma, média) ou quer um <strong>desafio prático</strong> para digitar aí no seu VS Code?</li>
+    </ul></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="turn">
+    <div class="sec">12 — O desafio do aluguel de carros</div>
+    <div class="q"><span class="k">Pergunta</span>Caramba, eu nem sabia que dava pra fazer tudo isso com tão pouco código! Muito legal fechar o ciclo com a exportação …</div>
+    <p>Nada melhor do que colocar a mão na massa para fixar de verdade!</p>
+    <p>Preparei um desafio sob medida para você rodar no seu VS Code. Ele simula uma situação real de análise de dados, com um arquivo de dados um pouco mais "sujo" para testar suas novas habilidades.</p>
+    <h3>🎯 O Desafio do Aluguel de Carros</h3>
+    <p>Imagine que você recebeu um arquivo chamado <code>frotas.csv</code> com o histórico de locações de uma empresa. O arquivo tem o seguinte conteúdo (crie esse arquivo na mesma pasta do seu script no VS Code):</p>
+    <blockquote><div>veiculo,dias_alugados,preco_diaria</div><div>Fiat Uno,5,100</div><div>Toyota Corolla,NULO,250</div><div> Chevrolet Onix ,10,120</div><div>Ford Ka,3, 90</div><div>Jeep Compass,NULO,300</div><div> Hyundai HB20 ,7,110</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <h3>🛠 Sua Missão:</h3>
+    <p>Crie um script em Python usando o Pandas que faça os seguintes passos:</p>
+    <ol>
+      <li><strong>Leitura:</strong> Carregue o arquivo <code>frotas.csv</code>.</li>
+      <li><strong>Limpeza e Tratamento:</strong></li>
+    </ol>
+    <ul>
+      <li>1. Remova os espaços em branco invisíveis da coluna <code>veiculo</code> (Dica: use <code>.str.strip()</code> nela).</li>
+      <li>2. Na coluna <code>dias_alugados</code>, remova os espaços, substitua o texto <code>"NULO"</code> pelo número <code>0</code> e converta a coluna inteira para o tipo inteiro (<code>int</code>).</li>
+      <li>3. Garanta que a coluna <code>preco_diaria</code> seja convertida para inteiro (<code>int</code>).</li>
+    </ul>
+    <ol start="3">
+      <li><strong>Cálculo:</strong> Crie uma nova coluna chamada <code>faturamento_total</code> multiplicando <code>dias_alugados</code> por <code>preco_diaria</code>.</li>
+      <li><strong>Filtro:</strong> Filtre a tabela para manter <strong>apenas</strong> os veículos que geraram um <code>faturamento_total</code> maior que zero.</li>
+      <li><strong>Exportação:</strong> Salve o resultado final em um novo arquivo chamado <code>faturamento_frotas.csv</code> sem incluir os números de índice (<code>index=False</code>).</li>
+    </ol>
+    <h3>🏁 O Resultado Esperado</h3>
+    <p>Se o seu código estiver correto, o arquivo final gerado (<code>faturamento_frotas.csv</code>) deverá ter exatamente este conteúdo por dentro:</p>
+    <blockquote><div>veiculo,dias_alugados,preco_diaria,faturamento_total</div><div>Fiat Uno,5,100,500</div><div>Chevrolet Onix,10,120,1200</div><div>Ford Ka,3,90,270</div><div>Hyundai HB20,7,110,770</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>(Repare que o Corolla e o Compass sumiram porque o faturamento deles deu zero, e os nomes do Onix e do HB20 agora estão sem espaços nas pontas).</p>
+    <p>Abra o seu VS Code, crie o arquivo CSV de entrada, escreva o seu código Pandas e tente rodar!</p>
+    <p>Assim que conseguir rodar ou se esbarrar em algum erro, me avise! Se quiser, pode mandar <strong>o código que você escreveu</strong> ou me dizer se <strong>o arquivo final foi gerado idêntico ao esperado</strong>. Como foi o resultado aí na sua máquina?</p>
+  </section>
+
+  <!-- 13 -->
+  <section class="turn">
+    <div class="sec">13 — Boa sorte no desafio</div>
+    <div class="q"><span class="k">Pergunta</span>Show demais! Vou criar o arquivo frotas.csv e tentar resolver esse desafio agora mesmo no VS Code. Já volto pra te cont…</div>
+    <p>Excelente!</p>
+    <p>Essa empolgação é o melhor combustível para aprender a programar. Vá lá, crie os arquivos e faça os testes no seu tempo.</p>
+    <p>Não se preocupe se aparecer algum erro no terminal do VS Code; ler as mensagens de erro faz parte do dia a dia de quem trabalha com dados. Se acontecer, é só copiar o erro e colar aqui que a gente resolve junto.</p>
+    <p>Estou por aqui aguardando. Boa sorte no desafio! 🚀</p>
+    <div class="follow"><p>Quando terminar, me avise se:</p>
+    <ul>
+      <li>O arquivo <code>faturamento_frotas.csv</code> foi gerado com sucesso.</li>
+      <li>Você teve alguma dúvida na hora de aplicar o <code>.str.strip()</code> na coluna de texto.</li>
+      <li>Quer aproveitar para ver como <strong>somar o faturamento total</strong> de todos os carros no final.</li>
+    </ul></div>
+  </section>
+
+  <!-- 14 -->
+  <section class="turn">
+    <div class="sec">14 — Revisão: map</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar map (transformar cada item): No lugar do laço que cria lista vazia e dá append numa versão transformada, o …</div>
+    <p>Acho que você acabou colando uma das explicações anteriores sem querer, ou estava revisando os conceitos do <code>map</code>!</p>
+    <p>Essa sua colinha de resumo está perfeita e resume perfeitamente o modelo mental do <code>map</code>: <strong>TRANSFORMAR</strong> (mantendo a mesma quantidade de itens, mas mudando os valores) e a habilidade bônus de aceitar múltiplos iteráveis estilo <code>zip</code>.</p>
+    <p>E sobre o <strong>Desafio do Aluguel de Carros</strong> no Pandas que você foi testar no VS Code? Conseguiu criar o arquivo <code>frotas.csv</code> e rodar o script?</p>
+    <div class="follow"><p>Me conta se:</p>
+    <ul>
+      <li>O script rodou <strong>sem erros</strong> no terminal do VS Code?</li>
+      <li>O arquivo final <code>faturamento_frotas.csv</code> foi gerado com as 4 linhas corretas?</li>
+      <li>Você quer que eu te mostre a <strong>linha de código gabarito</strong> para você comparar com a sua?</li>
+    </ul></div>
+  </section>
+
+  <!-- 15 -->
+  <section class="turn">
+    <div class="sec">15 — Revisão: filter</div>
+    <div class="q"><span class="k">Pergunta</span>Explicar filter (selecionar um subconjunto): Para manter só alguns itens (só os pares, só os maiores que 10), o …</div>
+    <p>Você está mandando muito bem na consolidação dos conceitos básicos!</p>
+    <p>Esse resumo sobre o <code>filter</code> está impecável, especialmente o bônus do <code>filter(None, lista)</code> para remover os valores "falsos" (Falsy) de uma lista — esse é um truque de veterano em Python que economiza muito tempo.</p>
+    <p>Como você acabou de revisar os dois pilares fundamentais (<code>map</code> e <code>filter</code>), como ficou a execução do seu <strong>Desafio do Pandas</strong> no VS Code? Conseguiu fazer o script rodar e gerar o arquivo <code>faturamento_frotas.csv</code> certinho?</p>
+    <div class="follow"><p>Se você já terminou o desafio, me conte:</p>
+    <ul>
+      <li>O arquivo foi gerado <strong>exatamente com as 4 linhas</strong> esperadas?</li>
+      <li>Quer que eu mostre o <strong>código gabarito</strong> do Pandas para você comparar com o seu?</li>
+      <li>Ficou alguma dúvida na hora de tratar os espaços com o <code>.str.strip()</code>?</li>
+    </ul></div>
+  </section>
+
+  <!-- 16 -->
+  <section class="turn">
+    <div class="sec">16 — Revisão: iteradores preguiçosos</div>
+    <div class="q"><span class="k">Pergunta</span>Cuidados (iterador preguiçoso) + a alternativa pythônica: No Python 3, os dois devolvem iteradores "preguiçosos" — não …</div>
+    <p>Mais um resumo cirúrgico!</p>
+    <p>Esse ponto sobre o <strong>iterador preguiçoso</strong> (lazy evaluation) e o fato de eles serem consumidos uma única vez é um dos conceitos mais avançados e importantes do Python básico. Entender isso te livra de vários bugs onde a lista "some" depois que você usa ela a primeira vez.</p>
+    <p>Com essa trinca de resumos (<code>map</code>, <code>filter</code> e os cuidados/alternativas), você agora tem uma base teórica absurdamente sólida sobre como o Python manipula coleções por baixo dos panos.</p>
+    <p>Agora que a teoria está trancada a sete chaves na sua mente, como ficou o resultado prático aí no seu VS Code com o <strong>Desafio do Aluguel de Carros</strong> usando o Pandas?</p>
+    <p>Conseguiu rodar tudo e gerar o arquivo <code>faturamento_frotas.csv</code> com sucesso, ou o terminal te mandou algum erro? Se quiser, pode <strong>mandar o seu código do Pandas aqui</strong> para validarmos juntos!</p>
+    <p>Se você já terminou o desafio e deu tudo certo, me avise para eu te mostrar o <strong>gabarito</strong> ou se prefere que a gente siga para a parte de <strong>cálculos e resumos</strong> (como somar o faturamento total da empresa). Como quer prosseguir?</p>
+    <div class="foot">Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.</div>
+  </section>
+</div>
+</body>
+</html>
