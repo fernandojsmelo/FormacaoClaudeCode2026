@@ -107,4 +107,4 @@ Lições destes role plays:
 - `Fix.headings(pdf)` já reconstrói títulos com palavras em fonte mono (ex.: "O que é esse <code>index=False</code>?"); confira antes de corrigi-los à mão.
 - `Fix.code_from(..., langs=(..., 'csv'))` aceita blocos com rótulo `csv`/`text` quando eles também existirem na transcrição.
 - Resumos que começam no meio de uma lista de links: abra a seção com a pergunta do cabeçalho da página 1, liste só os links visíveis e registre isso no `foot` (ver `exemplos/meta50.json`).
-- Os exemplos `fix48`–`fix51`, `fix_res48`–`fix_res51` e `meta48`–`meta51` estão em `exemplos/`.
+- Os exemplos `fix48`–`fix52`, `fix_res48`–`fix_res52` e `meta48`–`meta52` estão em `exemplos/`.

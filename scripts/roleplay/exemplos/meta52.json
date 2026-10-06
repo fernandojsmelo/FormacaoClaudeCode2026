@@ -1,0 +1,18 @@
+{
+ "rp": "52",
+ "h1": "system, user e assistant: os papéis da lista de mensagens",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Prompts e o Dev que Joga Tudo numa Mensagem Só\": como estruturar a conversa separando os papéis, por que o system tem mais peso que o user, o que acontece quando o usuário tenta contradizer o system (prompt injection), como blindar o prompt de system e a separação de responsabilidades entre instruções e dados.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 16:57",
+ "secs": [
+  "Lista de mensagens: system, user e assistant",
+  "Por que separar resolve a inconsistência",
+  "Quando o user contradiz o system",
+  "A resposta devolvida por engano",
+  "O escudo e o trilho do chatbot",
+  "Guia de bolso: quem é quem",
+  "Separação de responsabilidades",
+  "Despedida"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. A página impressa começa no meio da primeira resposta: da seção 01, só aparece a parte a partir do primeiro bloco de código. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas e chips de fontes) foram omitidos. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:10pt;line-height:1.55}\ntable{break-inside:avoid}"
+}
