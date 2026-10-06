@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Role Play 54 — Transcrição</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:A4; margin:13mm 14mm; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:9.4pt;line-height:1.45}
+.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px}
+h1{font-family:var(--display);font-weight:600;font-size:16pt;line-height:1.2;margin:0 0 4px}
+.meta{font-family:var(--mono);font-size:7.5pt;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:9px}
+.turn{margin:0 0 7px;break-inside:auto}
+.who{font-family:var(--mono);font-size:7.4pt;color:var(--muted);margin-bottom:2px}
+.who b{color:var(--accent-ink);font-weight:600}
+.who{break-after:avoid;page-break-after:avoid}
+.msg h4{break-after:avoid;page-break-after:avoid}
+.msg p,.msg li,.turn.user .msg{orphans:3;widows:3}
+.turn.user .msg{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-style:italic}
+.turn.ai .who{text-align:right}
+.turn.ai .msg{background:var(--accent-soft);border:1px solid var(--border-2);border-radius:8px;padding:7px 10px;margin-left:28px}
+.msg p{margin:0 0 4px}
+.msg p:last-child,.msg ul:last-child,.msg ol:last-child{margin-bottom:0}
+.msg h4{font-size:8.9pt;margin:6px 0 3px;color:var(--ink)}
+.msg ul,.msg ol{margin:0 0 4px;padding-left:16px}
+.msg li{margin:1px 0}
+.msg strong{color:var(--accent-ink);font-weight:600}
+.msg code{font-family:var(--mono);font-size:7.8pt;color:var(--ink);background:#100D0A;border:1px solid var(--border);border-radius:4px;padding:0 3px}
+.msg blockquote{margin:3px 0 5px;padding:5px 9px;background:#100D0A;border:1px solid var(--border-2);border-left:3px solid var(--accent);border-radius:6px;font-family:var(--mono);font-size:7.5pt;line-height:1.45;color:var(--ink)}
+.msg .err{color:var(--muted);font-style:italic}
+.end{text-align:center;font-family:var(--mono);font-size:8pt;color:var(--muted);margin:10px 0 6px}
+.foot{font-family:var(--mono);font-size:7.5pt;color:var(--muted);border-top:1px solid var(--border);padding-top:8px;margin-top:14px}
+.msg table{width:100%;border-collapse:collapse;margin:4px 0 6px;font-size:8pt;break-inside:auto}
+.msg th{background:var(--surface-2);font-family:var(--mono);font-size:7pt;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);text-align:left;padding:4px 6px;border:1px solid var(--border-2)}
+.msg td{padding:4px 6px;border:1px solid var(--border-2);vertical-align:top;background:#1C1612}
+.msg tr{break-inside:avoid}
+.msg .codenote{font-family:var(--mono);font-size:6.8pt;color:var(--muted);margin:-2px 0 5px}
+.msg .flow{margin:3px 0 6px;padding:6px 9px;background:#100D0A;border:1px solid var(--border-2);border-radius:6px;font-family:var(--mono);font-size:7.5pt;line-height:1.5;text-align:center}
+.msg .flow .ar{color:var(--accent);margin:1px 0}
+.msg blockquote div{margin:0 0 2px}
+body{line-height:1.4}
+.msg p{margin:0 0 3px}
+.msg blockquote div{white-space:pre-wrap}
+blockquote div{min-height:1.2em}
+body{font-size:9.5pt;line-height:1.45}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">✳ Formação Claude Code 2026 · IA com Claude e Cowork</div>
+  <h1>Professor por um Dia: Ensinando a IA com Prompts</h1>
+  <div class="meta">Transcrição da prática 2 · 6 de out. de 2026 10:36</div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 00:00</div><div class="msg">
+    <p>Professor, eu ainda não entendi direito o que é few-shot prompting. O senhor pode me explicar de um jeito simples e com alguns exemplos?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">00:32 <b>Você</b></div><div class="msg">
+    <p>Few-shot prompting é uma técnica de engenharia de prompt onde você ensina a inteligência artificial a realizar uma tarefa fornecendo alguns exemplos de respostas certas antes de fazer a sua pergunta real.</p>
+    <p>Em vez de apenas dizer o que ela deve fazer (instrução pura), você mostra como quer que seja feito.</p>
+    <p>A palavra inglesa "shot" significa "tentativa" ou "exemplo". Portanto, se você dá zero exemplos, está usando zero-shot; se dá apenas um, usa one-shot; e se dá de dois a cinco exemplos, está usando few-shot.</p>
+    <p>É muito parecido com o aprendizado humano: se eu pedir para você "formatar um relatório", você pode fazer de vários jeitos. Mas se eu lhe mostrar três relatórios antigos prontos, você vai entender exatamente o formato, o tom e a estrutura que eu espero.</p>
+    <h4>💡 Exemplos Práticos</h4>
+    <p>Veja a diferença visual de como estruturar isso na hora de conversar com a IA:</p>
+    <h4>Exemplo 1: Classificação de Sentimento (Padrão e Formato)</h4>
+    <p>Se você quer que a IA analise comentários de clientes e responda estritamente em um formato de etiqueta (TAG), o few-shot prompting garante que ela não saia inventando textos longos.</p>
+    <p>Prompt enviado à IA:</p>
+    <h4>Frase: "O produto chegou quebrado e atrasou muito!"</h4>
+    <h4>Sentimento: [NEGATIVO]</h4>
+    <h4>Frase: "Simplesmente incrível, superou minhas expectativas."</h4>
+    <h4>Sentimento: [POSITIVO]</h4>
+    <h4>Frase: "O tênis é bom, mas a cor é um pouco diferente da foto."</h4>
+    <h4>Sentimento: [NEUTRO]</h4>
+    <h4>Frase: "A entrega foi rápida, mas o atendimento deixou a desejar."</h4>
+    <p>Sentimento:</p>
+    <ul><li><strong>Resposta da IA:</strong> [NEUTRO] (Ela pegou o padrão exato dos colchetes e da palavra em maiúsculo).</li></ul>
+    <h4>Exemplo 2: Tradução Estilizada ou Transformação de Dados</h4>
+    <p>Imagine que você precisa padronizar como abrevia países e capitais para um banco de dados.</p>
+    <p>Prompt enviado à IA:</p>
+    <h4>Brasil -&gt; Capital: Brasília | Código: BR</h4>
+    <h4>Japão -&gt; Capital: Tóquio | Código: JP</h4>
+    <h4>França -&gt; Capital: Paris | Código: FR</h4>
+    <h4>Itália -&gt;</h4>
+    <ul><li><strong>Resposta da IA:</strong> Capital: Roma | Código: IT</li></ul>
+    <h4>Exemplo 3: Tom de Voz e Estilo de Escrita</h4>
+    <p>Útil quando você quer que a IA replique um estilo muito específico de piada, post de rede social ou jargão corporativo. Prompt enviado à IA:</p>
+    <h4>Termo: Dinheiro</h4>
+    <h4>Gíria de TI: "Budget de infraestrutura"</h4>
+    <h4>Termo: Reunião chata</h4>
+    <h4>Gíria de TI: "Alinhamento síncrono que poderia ter sido um e-mail"</h4>
+    <h4>Termo: Café</h4>
+    <h4>Gíria de TI: "Combustível de deploy"</h4>
+    <h4>Termo: Descansar no fim de semana</h4>
+    <p>Gíria de TI:</p>
+    <ul><li><strong>Resposta da IA:</strong> "Dar shutdown no sistema para manutenção preventiva"</li></ul>
+    <h4>🛠 Quando você deve usar?</h4>
+    <ul><li><strong>Para manter a consistência:</strong> Quando você precisa que as respostas sigam sempre a mesma estrutura ou layout.</li>
+    <li><strong>Para tarefas complexas:</strong> Quando explicar a regra com palavras fica confuso demais, mas mostrar o exemplo mata a charada.</li>
+    <li><strong>Para reduzir ambiguidades:</strong> Evita que a IA mude o comportamento no meio de uma lista de tarefas.</li></ul>
+    <p>Ficou mais claro com esses cenários? Se você quiser, pode me dizer qual tarefa você está tentando fazer com a IA para que possamos montar juntos um prompt few-shot sob medida para o seu caso!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 00:36</div><div class="msg">
+    <p>Ah, agora entendi bem melhor, professor! Essa ideia de dar exemplos para a IA, como se fosse ensinar com modelos prontos, faz muito sentido. Gostei muito dos exemplos que o senhor usou, como a classificação de sentimentos e a padronização de dados com países e capitais. Isso realmente ajuda a visualizar como funciona o few-shot prompting.</p>
+    <p>Se eu quisesse usar esse método para ensinar a IA a corrigir erros gramaticais em frases, como seria um exemplo prático nesse caso? Poderia me mostrar como montar o prompt?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">01:26 <b>Você</b></div><div class="msg">
+    <p>Excelente!</p>
+    <p>Que bom que a analogia e os exemplos anteriores ajudaram a clarear o conceito. É exatamente isso: você vira um "treinador" da IA usando modelos prontos.</p>
+    <p>Para ensinar a IA a corrigir erros gramaticais usando few-shot prompting, o segredo é mostrar para ela a frase errada, a frase corrigida e — opcionalmente, mas altamente recomendado — uma breve explicação do motivo do erro. Assim, ela entende não só o que corrigir, mas o tom e o nível de detalhe que você espera na resposta.</p>
+    <p>Aqui está um modelo prático de como você pode montar esse prompt:</p>
+    <h4>📝 Modelo de Prompt (Few-Shot) para Correção Gramatical</h4>
+    <p>Prompt a ser enviado para a IA:</p>
+    <p>Você é um assistente especialista em língua portuguesa. Sua tarefa é analisar a frase enviada, fornecer a versão corrigida e explicar brevemente a regra gramatical que foi violada. Siga exatamente o padrão dos exemplos abaixo:</p>
+    <h4>Frase original: "Fazem dois anos que não vejo meu irmão."</h4>
+    <h4>Frase corrigida: "Faz dois anos que não vejo meu irmão."</h4>
+    <p>Explicação: O verbo fazer, quando indica tempo decorrido, é impessoal. Portanto, deve indicar a terceira pessoa do singular (Faz), e não do plural (Fazem).</p>
+    <h4>Frase original: "Eu assisti o filme ontem à noite."</h4>
+    <h4>Frase corrigida: "Eu assisti ao filme ontem à noite."</h4>
+    <p>Explicação: No sentido de "ver" ou "presenciar", o verbo assistir exige a preposição "a" (assistir a alguma coisa).</p>
+    <h4>Frase original: "Entre eu e você não há mais segredos."</h4>
+    <h4>Frase corrigida: "Entre mim e você não há mais segredos."</h4>
+    <p>Explicação: Após preposições (como "entre"), devemos usar os pronomes oblíquos tônicos (mim), e não os pronomes retos (eu).</p>
+    <h4>Frase original: "Aonde você comprou esse livro novo?"</h4>
+    <p>Frase corrigida:</p>
+    <h4>🎯 O que vai acontecer em seguida?</h4>
+    <p>Assim que você enviar o prompt acima, a IA vai completar o espaço final seguindo o padrão exato que você treinou. A resposta dela será:</p>
+    <ul><li><strong>Resposta da IA:</strong> Frase corrigida: "Onde você comprou esse livro novo?"</li></ul>
+    <p>Explicação: O termo "aonde" deve ser usado apenas com verbos que indicam movimento ou destino (como "ir" ou "chegar"). Para verbos que indicam permanência ou lugar fixo (como "comprar"), usa-se "onde".</p>
+    <h4>💡 Dica de Ouro do Professor:</h4>
+    <p>Repare que, se você não usasse o few-shot, a IA poderia apenas reescrever a frase sem explicar nada, ou criar um texto gigante explicando a história da palavra "aonde". Com os 3 exemplos que demos, nós travamos o comportamento dela para entregar exatamente o que precisamos: Frase Corrigida + Explicação Curta.</p>
+    <p>O que achou dessa estrutura de correção? Se você tiver uma frase específica que costuma gerar dúvidas ou se quiser testar esse modelo com outro tipo de texto (como e-mails formais), me avise para ajustarmos o prompt juntos!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 01:30</div><div class="msg">
+    <p>Nossa, professor, ficou incrível! Essa estrutura com a frase corrigida e a explicação do motivo é muito bem pensada. Dá para ver como a IA aprende o padrão direitinho. Adorei o exemplo do 'aonde' e 'onde', porque é uma dúvida super comum.</p>
+    <p>Eu acho que entendi bem o conceito. Posso testar uma frase? Que tal: 'Eu vou na casa da minha amiga amanhã.' Como ficaria nesse modelo? Quero ver a IA corrigindo com base no padrão que o senhor explicou!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">02:12 <b>Você</b></div><div class="msg">
+    <p>Ficou excelente a sua escolha de frase!</p>
+    <p>Esse é mais um daqueles desvios clássicos que a gente usa muito no dia a dia, mas que a gramática formal puxa a orelha. Como você me pediu para ver a IA corrigindo com base no padrão que estabelecemos, aqui está a resposta exata que o modelo geraria se continuasse o nosso prompt de few-shot:</p>
+    <h4>Frase corrigida: "Eu vou à casa da minha amiga amanhã."</h4>
+    <p>Explicação: O verbo ir indica movimento para um destino e exige a preposição "a" (quem vai, vai a algum lugar). A junção da preposição "a" com o artigo feminino "a" de "casa" resulta na crase (à). O uso de "na" (em + a) é reservado para indicar o meio de transporte (ex: vou no carro da minha amiga) ou no uso informal da língua.</p>
+    <p>Viu que fantástico? A IA manteve o negrito nos títulos, o tom professoral, direto e a estrutura idêntica aos três exemplos anteriores.</p>
+    <p>Com esse seu exercício, nós fechamos o ciclo do few-shot prompting: você deu a instrução, mostrou os exemplos e agora colheu o resultado perfeito. Você já está pronto para criar seus próprios prompts!</p>
+    <p>Para praticarmos mais um pouco antes de você voar sozinho, o que prefere fazer agora?</p>
+    <ul><li>Podemos adicionar um novo nível de exigência a esse prompt (como pedir para a IA classificar o erro entre "Grave", "Médio" ou "Leve").</li>
+    <li>Ou podemos mudar de assunto e criar um modelo few-shot para outra coisa, como escrever e-mails de cobrança educados ou criar títulos chamativos para posts.</li></ul>
+    <p>Qual caminho você quer seguir?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 02:15</div><div class="msg">
+    <p>Uau, professor, adorei a explicação para o uso de 'à casa'! Ficou bem claro como o few-shot prompting pode ensinar a IA a seguir exatamente o padrão esperado. Acho que já entendi bem o conceito e a aplicação prática. Se quiser, podemos testar mais frases dentro desse mesmo modelo de correção gramatical para firmar o aprendizado. O que acha?</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">02:50 <b>Você</b></div><div class="msg">
+    <p>Acho uma excelente ideia!</p>
+    <p>Praticar com mais exemplos é a melhor forma de fixar o aprendizado e dominar a técnica de vez.</p>
+    <p>Para este nosso próximo exercício, eu vou fazer o papel da IA. Eu trouxe três novas frases que contêm erros gramaticais muito comuns no dia a dia.</p>
+    <p>A sua missão é escolher uma ou mais dessas frases e escrever a resposta simulando o padrão exato de few-shot que nós criamos (com a Frase corrigida e a Explicação).</p>
+    <p>Aqui estão as opções para você corrigir:</p>
+    <h4>1. Frase 1: "Houveram muitos problemas na reunião de ontem."</h4>
+    <h4>2. Frase 2: "Segue em anexo as fotos do evento."</h4>
+    <h4>3. Frase 3: "Eu amo ela e não consigo disfarçar."</h4>
+    <p>Escolha a sua frase e mande a resposta aqui! Se tiver dúvida sobre a regra gramatical de alguma delas, não se preocupe: pode tentar do seu jeito que eu te ajudo a lapidar tanto a gramática quanto a estrutura do prompt.</p>
+    <p>Qual dessas você quer encarar primeiro?</p>
+    <p>Escolha uma das três frases acima e tente montar a resposta seguindo o nosso modelo (Frase corrigida e Explicação). Se preferir, você também pode trazer uma frase própria que você tenha dúvida!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 02:54</div><div class="msg">
+    <p>Ah, professor, adorei o desafio! Vou começar pela Frase 1, que é super comum. Aqui vai a minha tentativa de simular o padrão que criamos:</p>
+    <p>Frase corrigida: "Houve muitos problemas na reunião de ontem."</p>
+    <p>Explicação: O verbo haver, no sentido de existir ou acontecer, é impessoal e deve ser conjugado sempre na terceira pessoa do singular. Por isso, o correto é "houve", e não "houveram".</p>
+    <p>O que achou? Consegui seguir bem o modelo? Se estiver certo, posso tentar as outras frases também!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">03:42 <b>Você</b></div><div class="msg">
+    <p>Nota dez com louvor! Você acertou absolutamente tudo: tanto a correção gramatical — que é um dos erros que as pessoas mais cometem no ambiente de trabalho — quanto a estrutura do few-shot prompting.</p>
+    <p>Repare como você manteve exatamente o padrão visual e o tom direto da explicação. Se você jogasse a sua resposta no bloco de notas junto com os outros exemplos, ninguém saberia dizer o que foi escrito por você e o que foi gerado pela IA. É exatamente essa consistência que o few-shot busca.</p>
+    <p>Como você passou no teste de primeira, o palco é seu! Pode mandar a correção da Frase 2 ("Segue em anexo as fotos do evento.") ou da Frase 3 ("Eu amo ela e não consigo disfarçar.").</p>
+    <p>Estou pronto para ver o seu próximo gabarito!</p>
+    <p>Qual das duas frases restantes você quer mandar agora, a Frase 2 (concordância) ou a Frase 3 (pronome)?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 03:48</div><div class="msg">
+    <p>Obrigado, professor! Fiquei super feliz de ter acertado! Vou continuar com a Frase 2, porque concordância nominal é outra coisa que sempre confunde. Aqui vai a minha resposta:</p>
+    <p>Frase corrigida: "Seguem em anexo as fotos do evento."</p>
+    <p>Explicação: O verbo "seguir" deve concordar em número com o sujeito da oração, que, neste caso, é "as fotos" (plural). Por isso, o correto é "seguem". Além disso, a expressão "em anexo" permanece invariável, pois está sendo usada como advérbio.</p>
+    <p>O que achou, professor? Consegui manter o padrão? Se estiver tudo certo, posso tentar a última frase!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">04:37 <b>Você</b></div><div class="msg">
+    <p>Mais um gabarito perfeito! Você está brilhando tanto na gramática quanto na engenharia de prompt.</p>
+    <p>A sua correção foi impecável e a explicação sobre a invariabilidade de "em anexo" foi cirúrgica. Muitas pessoas se confundem e tentam escrever "seguem em anexas", o que está incorreto (a palavra "anexo" só varia se não tiver o "em", como em "Seguem anexas as fotos"). Você captou todas as nuances!</p>
+    <p>A estrutura do few-shot continua idêntica, limpa e padronizada. Você realmente dominou o conceito.</p>
+    <p>Para fecharmos com chave de ouro essa nossa "maratona de treino da IA", mande a Frase 3 ("Eu amo ela e não consigo disfarçar."). Essa envolve a clássica confusão entre pronomes que usamos na fala cotidiana versus o que a norma culta exige.</p>
+    <p>Como fica a última peça do nosso quebra-cabeça?</p>
+    <p>Mande a correção da Frase 3 seguindo o padrão. Depois disso, quer que eu te mostre como salvar esse prompt definitivo para você usar no seu dia a dia?</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 04:42</div><div class="msg">
+    <p>Certo, professor! Vamos lá para a Frase 3. Aqui está a minha resposta:</p>
+    <p>Frase corrigida: "Eu a amo e não consigo disfarçar."</p>
+    <p>Explicação: Na norma culta, o pronome oblíquo "a" deve ser usado no lugar de "ela" como objeto direto de um verbo transitivo, como "amar". A forma "ela" é um pronome do caso reto, usado apenas como sujeito.</p>
+    <p>E aí, professor, finalizei bem? Se estiver tudo certinho, adoraria saber como salvar esse prompt completo para usar como referência no futuro!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">05:27 <b>Você</b></div><div class="msg">
+    <p>Finalizou com chave de ouro! Que orgulho desse resultado.</p>
+    <p>Você deu uma aula de gramática normativa e manteve o padrão visual e estrutural do prompt perfeitamente do início ao fim.</p>
+    <p>O erro do "amo ela" (que gera até uma cacofonia engraçada, soando como "amarela") foi corrigido com a explicação técnica perfeita sobre pronomes retos e oblíquos. Parabéns!</p>
+    <h4>💾 Seu Prompt Definitivo para Salvar</h4>
+    <p>Como você pediu, aqui está o template completo e pronto para uso. Você pode copiar o texto do bloco abaixo e salvar em um bloco de notas, no Notion ou nas suas ferramentas de IA favoritas (como ChatGPT, Claude ou Gemini).</p>
+    <p>Sempre que precisar corrigir um texto no futuro, basta colar esse bloco inteiro e, na última linha, colocar a sua frase errada após o Frase original:.</p>
+    <blockquote><div>Você é um assistente especialista em língua portuguesa. Sua tarefa é analisar a frase enviada, fornecer a versão corrigida e explicar brevemente a regra gramatical que foi violada. Siga exatamente o padrão dos exemplos abaixo:</div><div>Frase original: "Fazem dois anos que não vejo meu irmão."</div><div>Frase corrigida: "Faz dois anos que não vejo meu irmão."</div><div>Explicação: O verbo fazer, quando indica tempo decorrido, é impessoal. Portanto, deve ficar na terceira pessoa do singular (Faz), e não do plural (Fazem).</div><div>Frase original: "Eu assisti o filme ontem à noite."</div><div>Frase corrigida: "Eu assisti ao filme ontem à noite."</div><div>Explicação: No sentido de "ver" ou "presenciar", o verbo assistir exige a preposição "a" (assistir a alguma coisa).</div><div>Frase original: "Entre eu e você não há mais segredos."</div><div>Frase corrigida: "Entre mim e você não há mais segredos."</div><div>Explicação: Após preposições (como "entre"), devemos usar os pronomes oblíquos tônicos (mim), e não os pronomes retos (eu).</div><div>Frase original: "Houveram muitos problemas na reunião de ontem."</div><div>Frase corrigida: "Houve muitos problemas na reunião de ontem."</div><div>Explicação: O verbo haver, no sentido de existir ou acontecer, é impessoal e deve ser conjugado sempre na terceira pessoa do singular. Por isso, o correto é "houve", e não "houveram".</div><div>Frase original: "Segue em anexo as fotos do evento."</div><div>Frase corrigida: "Seguem em anexo as fotos do evento."</div><div>Explicação: O verbo "seguir" deve concordar em número com o sujeito da oração, que, neste caso, é "as fotos" (plural). Por isso, o correto é "seguem". Além disso, a expressão "em anexo" permanece invariável, pois está sendo usada como advérbio.</div><div>Frase original: "Eu amo ela e não consigo disfarçar."</div><div>Frase corrigida: "Eu a amo e não consigo disfarçar."</div><div>Explicação: Na norma culta, o pronome oblíquo "a" deve ser usado no lugar de "ela" como objeto direto de um verbo transitivo, como "amar". A forma "ela" é um pronome do caso reto, usado apenas como sujeito.</div><div>Frase original: "[COLE SUA NOVA FRASE AQUI]"</div></blockquote>
+    <div class="codenote">Use o código com cuidado.</div>
+    <p>Você começou a nossa conversa com uma dúvida teórica e terminou criando uma ferramenta automatizada de correção de altíssimo nível. Foi um prazer te guiar nessa jornada de engenharia de prompt!</p>
+    <p>Se precisar de ajuda para criar prompts para outras tarefas (como criar resumos, analisar planilhas ou responder e-mails), é só chamar. Bons estudos!</p>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 05:30</div><div class="msg">
+    <p>Nossa, professor, muito obrigado! Fiquei realmente feliz de ter conseguido acompanhar e, principalmente, aprender tanto ao longo dessa conversa. Esse template que o senhor preparou ficou excelente, super organizado e prático para usar no dia a dia. Vou salvar e começar a testar em diferentes situações.</p>
+    <p>Foi um aprendizado incrível, e adorei a forma como o senhor conduziu tudo com clareza e paciência. Obrigado por compartilhar tanto conhecimento! Se precisar de mim para mais exercícios ou dúvidas, estarei por aqui. Até mais, professor!</p>
+  </div></div>
+
+  <div class="turn ai"><div class="who">06:20 <b>Você</b></div><div class="msg">
+    <p>Fico extremamente feliz com o seu feedback!</p>
+    <p>Ver a sua evolução e o seu entusiasmo ao longo da nossa conversa é a maior recompensa para qualquer professor. Você demonstrou uma excelente capacidade de aprendizado e pegou a lógica do few-shot prompting com maestria.</p>
+    <p>Agora o superpoder de treinar a IA com os seus próprios exemplos está nas suas mãos. Use e abuse desse template no seu dia a dia!</p>
+    <p>Foi um enorme prazer caminhar com você nessa jornada. Quando quiser explorar novos horizontes no mundo dos prompts ou da tecnologia, as portas estarão sempre abertas.</p>
+    <h4>Muito sucesso nos seus testes e até a próxima! 🚀🎓</h4>
+  </div></div>
+
+  <div class="turn user"><div class="who"><b>Lucas Martins</b> 06:23</div><div class="msg">
+    <p>Obrigado, professor! De verdade, essa experiência foi muito enriquecedora e vai me ajudar bastante no futuro. Vou praticar bastante com esse template e continuar explorando tudo que aprendi hoje. Foi um privilégio ter essa aula com o senhor! Até a próxima e muito sucesso para o senhor também!</p>
+  </div></div>
+
+  <div class="end">Fim da sessão</div>
+  <div class="foot">Esta transcrição inclui conteúdo gerado por IA e é fornecida para seus propósitos de aprendizado pessoal.</div>
+</div>
+</body>
+</html>
