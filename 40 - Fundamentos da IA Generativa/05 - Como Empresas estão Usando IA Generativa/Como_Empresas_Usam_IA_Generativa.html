@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Como as empresas usam IA generativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 05</div>
+    <h1>Como as empresas usam<br><em>IA generativa</em></h1>
+    <p class="lead">A adoção de IA cresceu muito, mas os ganhos medidos ainda são, na maioria dos casos, modestos. Esta aula olha para os <strong>números</strong> (quantas empresas usam, em quais áreas e com que resultado), para os <strong>padrões de uso</strong> mais comuns e para o que separa um piloto que empolga de um sistema que vai para produção.</p>
+    <div class="chips"><span>Adoção</span><span>Retorno por área</span><span>Casos de uso</span><span>Padrões de uso</span><span>Piloto × produção</span><span>Maturidade</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado no AI Index Report 2025 (Stanford HAI) e nos estudos "Generative AI at Work" e "How People Use ChatGPT" (NBER), consultados em outubro de 2026 · Os números são de pesquisas; as categorias de casos de uso são uma organização didática desta aula</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Adoção</span><span class="n">01</span></div>
+  <h2>Quase todo mundo <em>já usa</em></h2>
+  <div class="grid g4" style="margin-bottom:12px">
+    <div class="card"><div class="k">Empresas que usam IA</div><div class="v">78%</div><p>em 2024, contra 55% em 2023</p></div>
+    <div class="card"><div class="k">IA generativa em alguma área</div><div class="v">71%</div><p>em 2024, contra 33% em 2023</p></div>
+    <div class="card"><div class="k">Investimento privado</div><div class="v">US$ 33,9 bi</div><p>em IA generativa em 2024, +18,7%</p></div>
+    <div class="card"><div class="k">Frente a 2022</div><div class="v">8,5×</div><p>o investimento privado em IA generativa</p></div>
+  </div>
+  <div class="callout warn"><strong>Cuidado com o que o número mede:</strong> "usa IA em pelo menos uma área" inclui desde um piloto isolado até um sistema crítico. Adoção alta não quer dizer retorno alto (próxima seção).</div>
+  <p class="note">Fonte: AI Index Report 2025, Stanford HAI, capítulo Economia. Percentuais de respondentes de pesquisa; valores em dólares.</p>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Retorno</span><span class="n">02</span></div>
+  <h2>Onde há retorno, <em>ele ainda é modesto</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>Quem reporta economia de custos</b></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Área que usa IA</th><th>Respondentes que reportam economia</th></tr></thead>
+        <tbody>
+          <tr><td>Operações de serviço</td><td>49%</td></tr>
+          <tr><td>Cadeia de suprimentos</td><td>43%</td></tr>
+          <tr><td>Engenharia de software</td><td>41%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <div class="lbl"><b>Quem reporta aumento de receita</b></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Área que usa IA</th><th>Respondentes que reportam ganho</th></tr></thead>
+        <tbody>
+          <tr><td>Marketing e vendas</td><td>71%</td></tr>
+          <tr><td>Cadeia de suprimentos</td><td>63%</td></tr>
+          <tr><td>Operações de serviço</td><td>57%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="callout good" style="margin-top:12px"><strong>A frase que importa:</strong> a maioria das empresas que reportam economia a estima em <strong>menos de 10%</strong>, e o aumento de receita mais comum é <strong>menor que 5%</strong>. O AI Index conclui que a maior parte das empresas está no início da jornada.</div>
+  <p class="note">Fonte: AI Index Report 2025, Stanford HAI.</p>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Casos de uso</span><span class="n">03</span></div>
+  <h2>Onde a IA generativa <em>aparece primeiro</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Área</th><th>Uso típico</th><th>Aula relacionada</th></tr></thead>
+    <tbody>
+      <tr><td><b>Atendimento ao cliente</b></td><td>Sugerir respostas ao atendente, resumir conversas, triagem e roteamento de chamados</td><td>10</td></tr>
+      <tr><td><b>Marketing e vendas</b></td><td>Rascunhos de textos e campanhas, personalização de mensagens, resumo de reuniões</td><td>—</td></tr>
+      <tr><td><b>Engenharia de software</b></td><td>Assistentes de código, explicação de código legado, geração de testes, revisão</td><td>10</td></tr>
+      <tr><td><b>Jurídico e compliance</b></td><td>Resumo e comparação de contratos, busca em normas e políticas</td><td>09</td></tr>
+      <tr><td><b>RH e treinamento</b></td><td>Respostas a dúvidas de colaboradores, material de capacitação</td><td>09</td></tr>
+      <tr><td><b>Finanças e operações</b></td><td>Extração de dados de documentos, conciliação, relatórios explicativos</td><td>10</td></tr>
+      <tr><td><b>Conhecimento interno</b></td><td>Perguntar em linguagem natural à documentação da empresa</td><td>09</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Organização didática desta aula. A coluna "Aula" indica onde o padrão técnico aparece neste módulo.</p>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Padrões</span><span class="n">04</span></div>
+  <h2>Cinco jeitos de <em>colocar IA para trabalhar</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">1 · Assistente (copiloto)</div><p>Uma pessoa conversa com o modelo e decide o que aproveitar. Baixo risco, retorno depende do hábito de uso.</p></div>
+    <div class="card"><div class="k">2 · Geração em lote</div><p>O sistema aplica o modelo a muitos itens (resumir mil e-mails, classificar avaliações). Exige avaliação de qualidade.</p></div>
+    <div class="card"><div class="k">3 · Conhecimento da empresa (RAG)</div><p>O modelo responde com base em documentos internos, citando a fonte (aula 09).</p></div>
+    <div class="card"><div class="k">4 · Workflow</div><p>Passos fixos que misturam código e chamadas ao modelo, como triagem → resposta → registro (aula 10).</p></div>
+    <div class="card"><div class="k">5 · Agente</div><p>O modelo escolhe os passos e as ferramentas. Mais flexível, mais difícil de controlar (aula 10).</p></div>
+    <div class="card"><div class="k">Regra</div><p>Comece pelo padrão mais simples que resolve o problema e só suba quando for preciso.</p></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Uso individual</span><span class="n">05</span></div>
+  <h2>As pessoas já usam, <em>com ou sem a empresa</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Um estudo do NBER sobre conversas com o ChatGPT encontrou que as mensagens <strong>não relacionadas a trabalho</strong> cresceram de 53% para <strong>mais de 70%</strong> do uso</li>
+        <li>Os três temas mais comuns, "orientação prática", "busca de informação" e "escrita", somam cerca de <strong>80%</strong> das conversas</li>
+        <li>O uso para trabalho é mais comum entre pessoas escolarizadas e em ocupações profissionais bem remuneradas</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>Implicação para a empresa:</strong> mesmo sem um projeto oficial, colaboradores usam ferramentas pessoais de IA, e podem colar dados da empresa nelas. Ter política, ferramenta aprovada e treinamento é mais seguro do que proibir (aula 08).</div>
+      <p class="note" style="margin-top:8px">Fonte: "How People Use ChatGPT", NBER Working Paper 34255.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Estudo de caso</span><span class="n">06</span></div>
+  <h2>Atendimento: <em>o que um estudo mediu</em></h2>
+  <div class="par e">
+    <div>
+      <div class="grid g2">
+        <div class="card"><div class="k">Produtividade média</div><div class="v">+14%</div><p>chamados resolvidos por hora</p></div>
+        <div class="card"><div class="k">Novatos e menos qualificados</div><div class="v">+34%</div><p>no mesmo indicador</p></div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O estudo "Generative AI at Work" (NBER) avaliou um assistente de IA para atendentes de suporte ao cliente</li>
+        <li>Efeito <strong>mínimo</strong> para os atendentes experientes e muito qualificados</li>
+        <li>O assistente parece disseminar as práticas dos melhores atendentes, e ajudar quem é novo a "subir a curva" mais rápido</li>
+        <li>Também melhorou o sentimento dos clientes e aumentou a retenção de funcionários</li>
+      </ul>
+      <p class="note">Fonte: nber.org/papers/w31161. Um estudo, em uma empresa, num tipo de trabalho: serve como indício, não como regra geral.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Maturidade</span><span class="n">07</span></div>
+  <h2>Em que degrau <em>a empresa está</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div><h3>Uso individual, sem regra</h3><p>Cada pessoa usa a ferramenta que quer. Sem política, sem medição.</p></div></div>
+    <div class="step"><div class="b">2</div><div><h3>Pilotos isolados</h3><p>Algumas áreas testam. Resultados difíceis de comparar, dados dispersos.</p></div></div>
+    <div class="step"><div class="b">3</div><div><h3>Casos em produção</h3><p>Um ou dois sistemas com dono, avaliação e monitoramento.</p></div></div>
+    <div class="step"><div class="b">4</div><div><h3>Plataforma e governança</h3><p>Padrões, ferramentas aprovadas e política comuns, reaproveitados pelas áreas.</p></div></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Os degraus são uma régua de conversa, não uma certificação. Servem para decidir <strong>o próximo passo</strong> (aula 06), não para ter pressa em chegar ao último.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Piloto × produção</span><span class="n">08</span></div>
+  <h2>O que faz um piloto <em>virar produto</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Fator</th><th>No piloto</th><th>Em produção</th></tr></thead>
+    <tbody>
+      <tr><td><b>Dados</b></td><td>Amostra limpa, escolhida a dedo</td><td>Dados reais, bagunçados, com permissão de uso</td></tr>
+      <tr><td><b>Avaliação</b></td><td>"Parece bom"</td><td>Conjunto de teste, métrica e limite de qualidade (aula 03)</td></tr>
+      <tr><td><b>Integração</b></td><td>Tela separada</td><td>Dentro do sistema e do fluxo de quem trabalha</td></tr>
+      <tr><td><b>Responsável</b></td><td>Equipe entusiasta</td><td>Dono do processo e do resultado</td></tr>
+      <tr><td><b>Risco</b></td><td>Não avaliado</td><td>Segurança, privacidade e conformidade tratadas (aula 08)</td></tr>
+      <tr><td><b>Custo</b></td><td>Ignorado</td><td>Por tarefa, medido e comparado ao ganho (aula 07)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">09</span></div>
+  <h2>Faça o seu <em>mapa de oportunidades</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> liste 5 tarefas repetitivas da sua área e preencha a tabela.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tarefa</th><th>Volume/mês</th><th>Padrão (seção 04)</th><th>Risco se errar</th></tr></thead>
+        <tbody>
+          <tr><td>…</td><td></td><td></td><td></td></tr>
+          <tr><td>…</td><td></td><td></td><td></td></tr>
+          <tr><td>…</td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Comece pelas de <strong>alto volume e baixo risco</strong></li>
+        <li>Escolha o padrão mais simples que resolve (assistente antes de agente)</li>
+        <li>Guarde a tabela: ela será a base da priorização da aula 06</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Segundo o AI Index 2025, a maioria das empresas que reporta economia com IA a estima em:</p>
+        <div class="opts"><div>A) Mais de 50%</div><div>B) Menos de 10%</div><div>C) Exatamente 25%</div><div>D) Zero</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. No estudo de atendimento, quem mais se beneficiou foi:</p>
+        <div class="opts"><div>A) O atendente mais experiente</div><div>B) Os novatos e menos qualificados</div><div>C) Os gerentes</div><div>D) Ninguém</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. "78% das empresas usam IA" significa:</p>
+        <div class="opts"><div>A) 78% têm grande retorno</div><div>B) 78% usam IA em alguma medida, o que inclui pilotos</div><div>C) 78% usam agentes</div><div>D) 78% treinam modelos</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para começar, o melhor padrão de uso é:</p>
+        <div class="opts"><div>A) O mais complexo</div><div>B) O mais simples que resolve o problema</div><div>C) Sempre um agente</div><div>D) Treinar um modelo próprio</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Muito uso,<br><em>retorno ainda em construção</em></h1>
+    <p class="lead">A maioria das empresas já usa IA, mas a maior parte dos ganhos reportados ainda é pequena, e o que funciona melhor são casos bem escolhidos, com dados, avaliação, dono e integração ao trabalho. Mapeie as tarefas repetitivas, comece pelo padrão mais simples e meça antes de escalar.</p>
+    <div class="chips"><span>78% · 71%</span><span>&lt; 10% de economia</span><span>+14% · +34%</span><span>Cinco padrões</span><span>Piloto → produção</span></div>
+    <div class="next">Próxima aula → 06 · Como Aplicar IA nas Organizações</div>
+    <div class="source">Fontes: hai.stanford.edu/ai-index/2025-ai-index-report (e /economy); nber.org/papers/w31161 (Generative AI at Work); nber.org/papers/w34255 (How People Use ChatGPT), consultados em outubro de 2026.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
