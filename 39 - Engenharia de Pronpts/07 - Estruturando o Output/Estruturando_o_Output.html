@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Estruturando o Output</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 07</div>
+    <h1>Estruturando<br>o <em>output</em></h1>
+    <p class="lead">Quando o <code>system</code> traz um <strong>molde</strong> da resposta, o modelo tende a preencher esse molde. Nesta aula, com o notebook <code>04-output_estruturado.ipynb</code>: tabela, listas simples, numeradas e hierárquicas, parágrafos com seções fixas, cards, checklists e um relatório executivo, e o que acontece quando o molde é vago.</p>
+    <div class="chips"><span>Tabela</span><span>Lista</span><span>Hierarquia</span><span>Seções fixas</span><span>Card</span><span>Checklist</span><span>Relatório</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/api-reference (response_format) e no Guia de Engenharia de Prompt da aula 16, consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>04-output_estruturado.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Tabela</span><span class="n">01</span></div>
+  <h2>O cabeçalho da tabela <em>dentro do system</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>04-output_estruturado.ipynb · célula 3</b></div>
+      <pre class="code">system_prompt = """
+Você é um historiador especializado em civilizações antigas.
+Sempre responda no formato de tabela:
+
+| Civilização | Período | Contribuição Marcante | Região |
+|-------------|---------|-----------------------|--------|
+"""
+
+user_prompt = "Crie uma tabela comparando 4 civilizações antigas (Egito, Mesopotâmia, Grécia, Roma)."
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O <code>system</code> mostra as colunas exatas, no formato Markdown</li>
+        <li>O <code>user</code> só diz o conteúdo: 4 civilizações</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (completa)</div>
+      <pre class="out w">| Civilização | Período | Contribuição Marcante | Região |
+|-------------|---------|-----------------------|--------|
+| Egito Antigo | c. 3100 – 30 a.C. | Escrita hieroglífica, arquitetura monumental (pirâmides, templos) e sistema de governo centralizado sob os faraós | Vale do Nilo, Norte da África |
+| Mesopotâmia | c. 3500 – 539 a.C. | Invenção da escrita cuneiforme, códigos legais (Código de Hamurabi) e desenvolvimento da irrigação e da cidade‑estado | Entre os rios Tigre e Eufrates (atual Iraque) |
+| Grécia Antiga | c. 800 – 146 a.C. | Democracia ateniense, filosofia (Sócrates, Platão, Aristóteles), teatro, ciência e artes clássicas | Península Balcânica, ilhas do Egeu e costa da Ásia Menor |
+| Roma Antiga | c. 753 a.C. – 476 d.C. | Direito romano, engenharia (aquedutos, estradas, concreto), administração de um império vasto e latim como língua de referência | Península Itálica e, posteriormente, todo o Mediterrâneo ocidental |</pre>
+      <p class="note">As quatro colunas pedidas, na mesma ordem, sem texto antes ou depois.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Molde vago</span><span class="n">02</span></div>
+  <h2>Pediu "listas", <em>recebeu uma tabela</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 5</b></div>
+      <pre class="code">system_prompt_simples = "Você é um crítico de cinema que apresenta informações em listas claras."
+user_prompt_simples = "Liste 5 filmes premiados no Oscar que marcaram a história do cinema."
+<span class="c">…</span></pre>
+      <div class="callout warn" style="margin-top:10px">"Apresenta informações em listas claras" não mostra <strong>como</strong> é a lista. O modelo decidiu por conta própria e respondeu com uma tabela de 4 colunas, mais título e comentário final.</div>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">**5 filmes premiados no Oscar que marcaram a história do cinema**
+
+| Filme | Ano de lançamento | Oscar(s) principal(is) | Por que ficou histórico |
+|-------|-------------------|------------------------|--------------------------|
+| **E o Vento Levou** (*Gone with the Wind*) | 1939 | Melhor Filme, Melhor Direção (Victor Fleming) e 7 prêmios no total | Primeiro grande épico de Hollywood a alcançar recorde de bilheteria; consolidou o formato de produção em larga escala e influenciou gerações de cineastas. |
+…</pre>
+      <p class="note">Compare com a próxima seção, em que o molde está escrito no system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Listas</span><span class="n">03</span></div>
+  <h2>Lista numerada e <em>lista hierárquica</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 7 · numerada</b></div>
+      <pre class="code s">system_prompt_numerada = """
+Você cria listas numeradas no formato:
+1. [Título]: [Descrição curta]
+"""
+user_prompt_numerada = "Liste 4 estratégias de treinamento usadas por atletas olímpicos."
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:6px">Saída gravada (completa)</div>
+      <pre class="out w">1. Periodização de Carga: Estrutura o treinamento em ciclos de volume e intensidade para otimizar picos de performance.  
+2. Treinamento de Alta Intensidade (HIIT): Sessões curtas e intensas que aumentam a capacidade aeróbica e anaeróbica.  
+3. Simulação de Competição: Replicação das condições de prova (tempo, ambiente, pressão) para adaptar o atleta ao cenário real.  
+4. Recuperação Ativa: Atividades leves</pre>
+      <p class="note">O item 4 parou em "Atividades leves": a célula usa max_completion_tokens=200.</p>
+    </div>
+    <div>
+      <div class="lbl"><b>célula 9 · hierárquica</b></div>
+      <pre class="code s">system_prompt_hierarquica = """
+Você organiza informações em listas hierárquicas no formato:
+• Categoria Principal
+  - Subcategoria 1
+  - Subcategoria 2
+"""
+user_prompt_hierarquica = "Organize áreas da ciência em categorias: Física, Biologia, Química."
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:6px">Saída gravada (início)</div>
+      <pre class="out w">• Física  
+  - Mecânica Clássica  
+  - Termodinâmica  
+  - Eletromagnetismo  
+  - Física Quântica  
+  - Relatividade  
+…</pre>
+      <p class="note">Seguiu os marcadores • e -, mas fez 8 subitens por área: o molde não dizia quantos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Seções fixas</span><span class="n">04</span></div>
+  <h2>Introdução, desenvolvimento <em>e conclusão</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 11</b></div>
+      <pre class="code">system_prompt = """
+Você escreve textos estruturados no formato:
+
+INTRODUÇÃO: [1-2 frases de contexto]
+DESENVOLVIMENTO: [Explicação detalhada]
+CONCLUSÃO: [Síntese final]
+"""
+
+user_prompt = "Explique a importância da moda como expressão cultural."
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Cada seção tem nome fixo e uma instrução entre colchetes</li>
+        <li>Ótimo para textos que alguém vai ler ou para separar as partes depois com código</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">**INTRODUÇÃO:** A moda transcende o simples ato de vestir, funcionando como um reflexo visível das identidades, valores e histórias de uma sociedade. Ao observar roupas e estilos, podemos ler narrativas culturais que revelam quem somos e como nos posicionamos no mundo.
+
+**DESENVOLVIMENTO:**  
+- **Identidade e pertencimento:** As escolhas de vestuário permitem que indivíduos expressem sua origem étnica, classe social, gênero e orientação sexual. Trajes tradicionais, como o kimono japonês ou o traje afro‑brasileiro, reforçam laços com a comunidade e preservam memórias coletivas.  
+…</pre>
+      <p class="note">O modelo acrescentou negrito nos rótulos (**INTRODUÇÃO:**). Se o código for procurar o texto exato, peça "sem formatação Markdown".</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Formatos criativos</span><span class="n">05</span></div>
+  <h2>Card e <em>checklist</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 13 · card</b></div>
+      <pre class="code s">system_prompt_card = """
+Você cria cards informativos sobre missões espaciais no formato:
+
+🚀 MISSÃO: [Nome]
+📅 ANO: [Ano]
+🌌 OBJETIVO: [Resumo em 1 frase]
+🔭 RESULTADO: [Principais descobertas]
+"""
+user_prompt_card = "Crie um card sobre a missão Voyager 1."
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:6px">Saída gravada (completa)</div>
+      <pre class="out w">🚀 **MISSÃO:** Voyager 1  
+📅 **ANO:** 1977  
+🌌 **OBJETIVO:** Explorar os planetas externos (Júpiter e Saturno) e, posteriormente, deixar o Sistema Solar para estudar o espaço interestelar.  
+🔭 **RESULTADO:** Primeira sonda a sobrevoar Júpiter (1979) e Saturno (1980), enviando imagens e dados detalhados de suas atmosferas, luas e anéis; em 2012 tornou‑se o primeiro objeto humano a entrar no espaço interestelar, fornecendo medições inéditas de partículas, campos magnéticos e radiação além da heliosfera.</pre>
+    </div>
+    <div>
+      <div class="lbl"><b>célula 15 · checklist</b></div>
+      <pre class="code s">system_prompt_checklist = """
+Você cria checklists no formato:
+
+✅ [Tarefa 1]
+✅ [Tarefa 2]
+✅ [Tarefa 3]
+"""
+user_prompt_checklist = "Monte um checklist para organizar um festival de música ao ar livre."
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:6px">Saída gravada (início)</div>
+      <pre class="out w">✅ Definir objetivo, tema e data do festival  
+✅ Escolher e reservar o local ao ar livre (considerar capacidade, acesso, infraestrutura)  
+✅ Obter licenças e autorizações necessárias (alvará municipal, licença ambiental, direitos autorais)  
+✅ Contratar seguro de responsabilidade civil e cobertura de eventos  
+…</pre>
+      <p class="note">A última linha gravada é só "✅": o limite de 400 tokens cortou o item.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Unindo tudo</span><span class="n">06</span></div>
+  <h2>Um <em>relatório executivo</em> com molde completo</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 17</b></div>
+      <pre class="code s">system_prompt = """
+Você cria relatórios executivos no formato:
+
+📊 RESUMO
+[Resumo em 2-3 frases]
+
+🚀 DESTAQUES
+1. [Ponto-chave 1]
+2. [Ponto-chave 2]
+3. [Ponto-chave 3]
+
+💡 RECOMENDAÇÕES
+• Curto prazo: [Ação imediata]
+• Médio prazo: [Ação estratégica]
+• Longo prazo: [Visão futura]
+"""
+
+user_prompt = """
+Crie um relatório executivo sobre os impactos da exploração de Marte para a economia global.
+<span class="c">…</span></pre>
+      <p class="note">No notebook, DESTAQUES usa o emoji de gráfico subindo; aqui aparece 🚀 porque aquele emoji não é exibido corretamente neste PDF.</p>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">📊 **RESUMO**  
+A exploração de Marte está acelerando a inovação tecnológica, gerando novos mercados e estimulando investimentos em setores estratégicos. Esses desenvolvimentos têm o potencial de impulsionar o crescimento econômico global, embora exijam políticas coordenadas para maximizar benefícios e mitigar riscos.
+
+🚀 **DESTAQUES**  
+1. **Multiplicação de cadeias de suprimentos de alta tecnologia** – a demanda por sistemas de propulsão, robótica avançada e materiais leves está ampliando indústrias aeroespaciais, de semicondutores e de manufatura aditiva.  
+2. **Novas oportunidades de investimento e financiamento** – fundos de capital de risco, parcerias público‑privadas e programas de crédito governamentais estão surgindo para apoiar startups e projetos de infraestrutura espacial.  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Três blocos com emoji de abertura: fáceis de achar numa tela</li>
+        <li>Quantidades no molde ("2-3 frases", 3 destaques, 3 prazos) limitam o tamanho</li>
+        <li>Terminou inteiro dentro de 700 tokens</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Para programas</span><span class="n">07</span></div>
+  <h2>Quando a saída vai para <em>outro programa</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Os formatos desta aula são ótimos para <strong>pessoas</strong> lerem</li>
+        <li>Para um programa ler, o formato precisa ser garantido: um campo fora do lugar quebra o código</li>
+        <li>A API do Groq tem o parâmetro <code>response_format</code>:
+          <br><code>{"type": "json_object"}</code> garante JSON válido;
+          <br><code>{"type": "json_schema", ...}</code> (Structured Outputs) segue um esquema que você define</li>
+        <li>A documentação prefere <code>json_schema</code> nos modelos que o suportam</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl"><b>Formato do parâmetro (não está no notebook)</b></div>
+      <pre class="code">resp = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[...],
+    response_format={"type": "json_object"},
+)
+dados = json.loads(resp.choices[0].message.content)</pre>
+      <div class="callout" style="margin-top:10px">Confira em console.groq.com/docs/structured-outputs quais modelos aceitam <code>json_schema</code> antes de usar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Resumo</span><span class="n">08</span></div>
+  <h2>Molde bom × <em>molde vago</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Célula</th><th>Molde no system</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>Tabela</td><td>Cabeçalho exato com 4 colunas</td><td>Seguiu à risca</td></tr>
+      <tr><td>Lista simples</td><td>"listas claras" (sem exemplo)</td><td>Virou tabela</td></tr>
+      <tr><td>Numerada</td><td><code>1. [Título]: [Descrição curta]</code></td><td>Seguiu; o último item foi cortado pelo limite de 200 tokens</td></tr>
+      <tr><td>Hierárquica</td><td>Marcadores • e -, sem quantidade</td><td>Seguiu, com 8 subitens cada</td></tr>
+      <tr><td>Card / Relatório</td><td>Rótulos e quantidades fixos</td><td>Seguiu e terminou inteiro</td></tr>
+      <tr><td>Checklist</td><td>✅ por linha, sem quantidade</td><td>Lista longa, cortada em 400 tokens</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout good" style="margin-top:12px">Molde que funciona = <strong>exemplo do formato</strong> + <strong>quantidade</strong> de itens + limite de tokens com folga.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Por que o pedido de "listas claras" virou tabela?</p>
+        <div class="opts"><div>A) Erro da API</div><div>B) O molde não mostrava a forma da lista</div><div>C) Temperatura alta</div><div>D) Falta de chave</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para a hierárquica não vir com 8 subitens, acrescente:</p>
+        <div class="opts"><div>A) Mais emojis</div><div>B) A quantidade desejada</div><div>C) top_p=0.1</div><div>D) Outro modelo</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Para garantir JSON válido para um programa, use:</p>
+        <div class="opts"><div>A) temperature=0</div><div>B) response_format</div><div>C) max_completion_tokens</div><div>D) Um card com emojis</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Onde é melhor colocar o molde da resposta?</p>
+        <div class="opts"><div>A) No system</div><div>B) No nome do modelo</div><div>C) No .env</div><div>D) Em lugar nenhum</div></div>
+        <div class="answer"><b>A.</b> Vale para a conversa toda.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Mostre o molde,<br><em>receba o formato</em></h1>
+    <p class="lead">Um molde no <code>system</code>, com rótulos, marcadores e quantidade de itens, faz o modelo devolver sempre a mesma estrutura. Molde vago deixa o formato por conta do modelo. Para programas, garanta a estrutura com <code>response_format</code>.</p>
+    <div class="chips"><span>Molde no system</span><span>Quantidades</span><span>Rótulos fixos</span><span>response_format</span></div>
+    <div class="next">Próxima aula → 08 · Usando Condições</div>
+    <div class="source">Fontes: console.groq.com/docs/api-reference (response_format: json_object e json_schema); console.groq.com/docs/structured-outputs; Guia de Engenharia de Prompt (aula 16), seções 4 e 15, consultados em outubro de 2026. Código e saídas: notebook <code>04-output_estruturado.ipynb</code> desta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
