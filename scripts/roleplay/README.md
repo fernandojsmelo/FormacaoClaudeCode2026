@@ -109,3 +109,13 @@ Lições destes role plays:
 - Resumos que começam no meio de uma lista de links: abra a seção com a pergunta do cabeçalho da página 1, liste só os links visíveis e registre isso no `foot` (ver `exemplos/meta50.json`).
 - Os exemplos `fix48`–`fix54`, `fix_res48`–`fix_res54` e `meta48`–`meta54` estão em `exemplos/`.
 - Prompts colados na conversa saem quebrados pela largura da página: no XML, a linha quebrada chega à margem (largura ≥ 740). `exemplos/fix53.py` junta só essas, sem grudar itens numerados ou com marcador; confira com o resumo, que mostra cada linha original numa linha só.
+
+## Role plays 55 a 59
+
+- **`codigo_xml.py`** refaz sozinho os blocos de código da transcrição (recuo e comentários `#`/`//` que viravam título). Quando o rótulo da linguagem (`python`) não aparece no markup, insira uma linha `p| python` antes do bloco e rode de novo (ver o Role play 55).
+- **`falta_linhas.py original.pdf markup.txt`** compara o `pdftotext` do PDF original com o markup e lista linhas perdidas pelo parser, como a primeira linha de uma página (no Role play 56 sumiu um item de lista inteiro). Ignore cards de links e rodapés.
+- Tabelas do resumo e da transcrição saem coladas ("MecanismoO que faz..."): reescreva com `th|`/`tr|`, usando `⏎` para quebras dentro da célula (ver `exemplos/fix57.py`). Ao trocar um trecho do markup entre dois marcadores, confira se não há conteúdo entre eles (o Role play 57 perdeu um parágrafo assim).
+- Diagramas em texto (`┌─┐`) cortados à direita no resumo: refaça a caixa à mão e complete com o texto da transcrição (ver `exemplos/fix_res55.py`); registre isso no `foot`.
+- Emojis de texto sem seletor de variação (🗄 🛠 🗺 🛡 ⚖ ✈ ⚙ ⚠ ✉ 🕵) aparecem como quadrado no Chrome deste ambiente: acrescente `U+FE0F` depois deles no HTML antes de gerar o PDF.
+- O `%` e o `+` de uma linha (`t| %`, `t| +`) voltam ao lugar com `Fix.pct()` ou à mão (`Python + PostgreSQL`).
+- Os exemplos `fix55`–`fix59`, `fix_res55`–`fix_res59` e `meta55`–`meta59` estão em `exemplos/`.

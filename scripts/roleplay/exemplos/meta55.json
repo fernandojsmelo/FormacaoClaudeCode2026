@@ -1,0 +1,24 @@
+{
+ "rp": "55",
+ "h1": "Modelos abertos × fechados: escolhendo o modelo e montando um chatbot",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Modelos de IA e o Fundador Perdido no 'Mar de Modelos'\": o mapa dos modelos de fronteira e de peso aberto, a rota via API (Groq, Together AI), o fluxo com Python e PostgreSQL, o painel em React com Material UI, o backend em FastAPI com streaming, a janela deslizante do histórico e a segurança de rotas com JWT.",
+ "byline": "Fernando Melo · 6 de outubro de 2026 · Pesquisa no Modo IA do Google, 14:49",
+ "secs": [
+  "O mapa dos modelos",
+  "Exemplos de modelos e trade-offs",
+  "Qual é o melhor modelo?",
+  "Open source via API",
+  "Provedores, API e histórico do cliente",
+  "Python e PostgreSQL",
+  "O script do chatbot",
+  "Painel e interface",
+  "Arquitetura com streaming",
+  "Backend FastAPI e banco",
+  "Componente React",
+  "Janela deslizante",
+  "Segurança de rotas com JWT",
+  "Fechamento"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e cards de links) foram omitidos. Os diagramas em texto e os blocos de código, cortados à direita na página impressa, foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:10.4pt;1.6}\ntable{break-inside:avoid}"
+}

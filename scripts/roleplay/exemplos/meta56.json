@@ -1,0 +1,23 @@
+{
+ "rp": "56",
+ "h1": "Treinamento × uso do modelo: a IA não aprende no chat",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em IA e a Gerente que Acha que 'a IA Aprende no Chat'\": a diferença entre treinar e usar um modelo, a analogia do médico, o RAG como \"livro aberto\", os caminhos para implementar com o Copilot Studio, o pedido à equipe de TI e o roteiro de 10 perguntas de teste.",
+ "byline": "Fernando Melo · 6 de outubro de 2026 · Pesquisa no Modo IA do Google, 15:07",
+ "secs": [
+  "A IA aprende no chat?",
+  "Simplificando: treinar x usar",
+  "Confirmando o entendimento",
+  "O livro aberto na empresa",
+  "Quais caminhos existem",
+  "Microsoft 365 e 50 pessoas",
+  "O que pedir para a TI",
+  "Mensagem pronta para a TI",
+  "Preparando os PDFs",
+  "Treinamento x inferência",
+  "As três consequências",
+  "Próximos passos com a TI",
+  "Roteiro de 10 perguntas de teste"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e cards de links) foram omitidos.",
+ "body_css": "body{font-size:10.8pt;1.65}\ntable{break-inside:avoid}"
+}

@@ -1,0 +1,21 @@
+{
+ "rp": "58",
+ "h1": "Agentes de IA × workflows: quando usar cada um",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Arquitetura de IA e o Dev que Quer Agentificar Tudo\": a diferença entre workflow e agente, por que começar pelo workflow inteligente, o custo oculto dos tokens, um system prompt de triagem e o fluxo completo de suporte no n8n com Zendesk e Slack.",
+ "byline": "Fernando Melo · 6 de outubro de 2026 · Pesquisa no Modo IA do Google, 15:32",
+ "secs": [
+  "Workflow ou agente: a diferença central",
+  "Começar pelo workflow",
+  "O workflow inteligente em quatro etapas",
+  "Zendesk, n8n e saída estruturada",
+  "O modelo mental: previsível x imprevisível",
+  "Casos de uso de cada um",
+  "A regra de ouro e os custos honestos",
+  "Implementação progressiva",
+  "O system prompt de triagem",
+  "A expressão de segurança e o Switch",
+  "Zendesk, Slack e o fluxo completo"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e cards de links) foram omitidos.",
+ "body_css": "body{font-size:10.8pt;1.65}\ntable{break-inside:avoid}"
+}
