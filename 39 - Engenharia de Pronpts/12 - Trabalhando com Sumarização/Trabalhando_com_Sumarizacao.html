@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Trabalhando com Sumarização</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+.card .v{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 12</div>
+    <h1>Trabalhando com<br><em>sumarização</em></h1>
+    <p class="lead">Resumir é uma das tarefas mais úteis de um LLM e uma das mais traiçoeiras: o resumo precisa <strong>encurtar sem inventar</strong>. Nesta aula, com o notebook <code>09-sumarizacao.ipynb</code>: resumo proporcional, resumo em tópicos, resumo executivo, o mesmo texto em dois estilos e um resumo em JSON, conferindo cada resposta com o texto original.</p>
+    <div class="chips"><span>Tamanho-alvo</span><span>Bullet points</span><span>Resumo executivo</span><span>Técnico × redes sociais</span><span>JSON</span><span>Fidelidade</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/api-reference (response_format), console.groq.com/docs/structured-outputs e no Guia de Engenharia de Prompt da aula 16, consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>09-sumarizacao.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Básica</span><span class="n">01</span></div>
+  <h2>Resumo com <em>tamanho-alvo</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>09-sumarizacao.ipynb · célula 3 (system e início do texto)</b></div>
+      <pre class="code s">system_prompt = """
+Você é um editor técnico especializado em jogos independentes.
+Crie um resumo objetivo com aproximadamente 1/3 do tamanho do texto original,
+preservando os pontos centrais e o tom informativo.
+"""
+
+user_prompt = """
+A cena de jogos independentes segue em crescimento, com ferramentas como engines gratuitas,
+marketplaces digitais e financiamento coletivo tornando possível a criação por equipes pequenas.
+Desafios frequentes incluem descoberta (getting discovered) em lojas saturadas, financiamento
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O tamanho vem como proporção: "aproximadamente 1/3 do tamanho do texto original"</li>
+        <li>Temperatura 0.2: resumo é tarefa de fidelidade, não de criatividade</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (completa)</div>
+      <pre class="out w">=== Sumarização Básica ===
+A cena indie cresce com engines gratuitas, marketplaces e crowdfunding, permitindo equipes pequenas. Desafios principais são descoberta em lojas saturadas, financiamento pós‑lançamento e equilibrar inovação e usabilidade. Estúdios criam comunidades via early access/betas. Tendências: narrativas curtas, jogos‑como‑serviço leves e áudio procedural. O sucesso depende de qualidade, comunidade engajada e estratégia de lançamento.</pre>
+      <p class="note">Contagem: o texto original tem 136 palavras; o resumo, 52 (38%). Perto do 1/3 pedido, e todos os pontos vêm do original.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Em tópicos</span><span class="n">02</span></div>
+  <h2>Bullet points <em>e um número inventado</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 5</b></div>
+      <pre class="code s">system_prompt = """
+Você é um analista de políticas públicas. Gerei um resumo em bullet points claros e hierárquicos:
+- Destaque resultados (métricas)
+- Liste problemas prioritários
+- Sugira 3 ações imediatas e 2 ações estruturais
+Mantenha frases curtas.
+"""
+
+user_prompt = """
+Relatório Piloto: Nova rota de ciclovia e corredores de ônibus rápidos implementada por 12 semanas.
+Resultados preliminares: aumento no uso de bicicleta em 22% nas rotas testadas; redução de tempo médio de deslocamento em ônibus local em 8%; aumento de reclamações de comerciantes sobre estacionamento; registro de 3 incidentes leves envolvendo ciclistas.
+Observações: infraestrutura temporária com sinalização provisória; campanhas educativas em 4 bairros; orçamento limitado para fiscalização.
+"""
+<span class="c">…</span></pre>
+      <p class="note">"Gerei um resumo" no system é um erro de digitação do notebook (o pretendido é "Gere"); o modelo entendeu mesmo assim.</p>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== Bullet Points (Mobilidade Urbana) ===
+**Resultados (métricas)**  
+- Uso de bicicleta ↑ 22 % nas rotas testadas.  
+- Tempo médio de deslocamento de ônibus ↓ 8 %.  
+- Reclamações de comerciantes sobre estacionamento ↑ 15 % (estimado).  
+…</pre>
+      <div class="callout danger" style="margin-top:10px">O relatório diz só "aumento de reclamações de comerciantes". O <strong>"↑ 15% (estimado)"</strong> foi criado pelo modelo. O prompt pedia "destaque resultados (métricas)", e ele preencheu o que faltava.</div>
+      <p class="note">Correção no prompt: "use apenas números presentes no texto; se não houver, escreva 'sem dado'".</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Executivo</span><span class="n">03</span></div>
+  <h2>Resumo <em>para quem decide</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 7</b></div>
+      <pre class="code s">system_prompt = """
+Você é um consultor executivo. Construa um resumo executivo com:
+1) Síntese em 2-3 frases
+2) Principais métricas (visitantes, receita direta, parcerias)
+3) 3 recomendações acionáveis para o próximo ano (priorizadas)
+Seja conciso e orientado para decisão.
+"""
+
+user_prompt = """
+Relatório: Festival "Olhar Curto" (3 dias).
+Métricas: 4.200 visitantes (inclui sessões pagas e gratuitas), receita direta: R$ 180.000 (ingressos + barra),
+patrocínios: R$ 70.000, custos operacionais: R$ 150.000.
+Impacto local: aumento de 18% no movimento de bares e cafés próximos durante o evento;
+envolvimento de 6 escolas técnicas; 25 curtas exibidos, 8 produções locais.
+Desafios: logística de exibição ao ar livre (chuva reprogramou 2 sessões), bilheteria online com alta taxa de desistência.
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (síntese)</div>
+      <pre class="out w">**Resumo Executivo – Festival “Olhar Curto” (3 dias)**  
+
+1. **Síntese**  
+O festival atraiu 4.200 visitantes, gerou R$ 180 mil em receita direta e R$ 70 mil em patrocínios, resultando em lucro líquido de aproximadamente R$ 100 mil após custos operacionais de R$ 150 mil. O evento impulsionou o comércio local (+18% de movimento em bares e cafés) e envolveu 6 escolas técnicas, mas enfrentou perdas de sessões por chuva e alta taxa de desistência na bilheteria online.
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Conta conferida: 180 mil + 70 mil − 150 mil = <strong>R$ 100 mil</strong></li>
+        <li>As três partes pedidas vieram: síntese, tabela de métricas e 3 recomendações priorizadas</li>
+        <li>As recomendações trazem estimativas (+R$ 30 mil…) que não estão no relatório: são projeções do modelo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Dois estilos</span><span class="n">04</span></div>
+  <h2>O mesmo texto, <em>dois públicos</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 9 · os dois system prompts</b></div>
+      <pre class="code s">system_prompt_tech = """
+Você é um redator técnico-científico. Produza um resumo formal técnico (3-4 frases),
+destacando metodologia, resultados quantitativos e limitações.
+"""
+<span class="c">…</span>
+
+system_prompt_social = """
+Você é um comunicador digital. Faça uma versão curta e chamativa (1-2 frases) adequada para Instagram,
+mantendo precisão mas com tom acessível e motivador.
+"""
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:8px">célula 11 · redes sociais (saída gravada)</div>
+      <pre class="out w">=== Resumo para Redes Sociais ===
+Graças a sensores acústicos e à foto‑identificação de tartarugas, nossa costa viu a vida marinha crescer 12 % em 2 anos e, com pescadores parceiros, os emalhes caíram 35 % – mas o plástico ainda ameaça e o aquecimento traz branqueamento. Apoie a expansão das estações e as campanhas de educação para proteger nosso futuro azul! 🌊🐢💙</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 10 · técnico (saída gravada)</div>
+      <pre class="out w">=== Resumo Técnico ===
+O projeto utilizou monitoramento trimestral de recifes por meio de sensores acústicos acoplados a redes de hidrofones e foto‑identificação de tartarugas marinhas, integrando dados de abundância e comportamento. Os resultados indicam uma recuperação populacional de +12 % nas duas primeiras temporadas, bem como uma diminuição de 35 % nos incidentes de emalhe graças à parceria com pescadores locais, embora a carga de resíduos plásticos nas áreas de alimentação tenha aumentado simultaneamente. As principais limitações são a insuficiência de estações de monitoramento, a dependência de financiamento externo para expansão da rede e a vulnerabilidade a eventos de branqueamento associados ao aumento da temperatura da água.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Redes sociais: 2 frases, tom motivador, números corretos (12% em 2 anos, 35%)</li>
+        <li>Técnico: o "resumo" tem <strong>104 palavras</strong>, mais que o texto original (74)</li>
+        <li>Acrescentou "redes de hidrofones" e trocou "em 2 anos" por "nas duas primeiras temporadas"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>JSON</span><span class="n">05</span></div>
+  <h2>Resumo em <em>JSON</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 13</b></div>
+      <pre class="code s">json_prompt = f"""
+Resuma o seguinte texto em JSON.
+O JSON deve conter as chaves:
+- "setores" (lista com os setores impactados)
+- "beneficios" (lista com os principais benefícios citados)
+- "desafios" (lista com os riscos ou preocupações levantadas)
+
+Texto:
+{texto}
+"""
+<span class="c">…</span></pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>As chaves são definidas no prompt: <code>setores</code>, <code>beneficios</code>, <code>desafios</code></li>
+        <li>O texto entra pela f-string <code>{texto}</code></li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== RESUMO EM JSON ===
+```json
+{
+  "setores": [
+    "saúde",
+    "finanças",
+    "educação"
+  ],
+…</pre>
+      <p class="note">O conteúdo está fiel ao texto: três setores, quatro benefícios, três desafios.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Armadilha</span><span class="n">06</span></div>
+  <h2>Parece JSON, <em>mas o Python não lê</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>A resposta começa com <code>```json</code> e termina com <code>```</code>: as cercas de bloco de código do Markdown</li>
+        <li>O notebook só imprime o texto, então ninguém percebe</li>
+        <li>Mas, se o próximo passo for <code>json.loads(resposta_json)</code>, o programa quebra</li>
+      </ul>
+      <div class="lbl s" style="margin-top:10px">json.loads numa resposta com cercas · saída real</div>
+      <pre class="out w">json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)</pre>
+      <p class="note">Gerado com o mesmo formato de resposta, cercas incluídas.</p>
+    </div>
+    <div>
+      <div class="lbl"><b>Duas correções</b></div>
+      <pre class="code">response = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "user", "content": json_prompt}],
+    response_format={"type": "json_object"},  <span class="c"># JSON válido</span>
+)
+dados = json.loads(response.choices[0].message.content)</pre>
+      <div class="callout" style="margin-top:10px">Ou peça no prompt "responda só com o JSON, sem crases" e remova as cercas no código antes do <code>json.loads</code>. O <code>response_format</code> (aula 07) é a forma garantida.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Fidelidade</span><span class="n">07</span></div>
+  <h2>Como pedir um resumo <em>que não invente</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Diga o tamanho</h3><p>Proporção (1/3), frases (2-3) ou palavras (até 60). Confira contando.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Proíba acréscimos</h3><p>"Use só informações do texto; não acrescente números nem fatos."</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Trate o que falta</h3><p>"Se uma métrica pedida não existir, escreva 'sem dado'."</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Temperatura baixa</h3><p>O notebook usa 0.15 a 0.25 para os resumos factuais.</p></div></div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Célula</th><th>Fiel ao texto?</th></tr></thead>
+        <tbody>
+          <tr><td>3 · básica (1/3)</td><td>Sim</td></tr>
+          <tr><td>5 · tópicos</td><td>Inventou uma métrica (+15%)</td></tr>
+          <tr><td>7 · executivo</td><td>Sim; recomendações com projeções próprias</td></tr>
+          <tr><td>10 · técnico</td><td>Acrescentou detalhes e ficou maior que o original</td></tr>
+          <tr><td>11 · redes sociais</td><td>Sim</td></tr>
+          <tr><td>13 · JSON</td><td>Sim, mas com cercas de Markdown</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">08</span></div>
+  <h2>Resuma <em>e confira</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> escolha uma notícia ou um e-mail longo seu e peça três resumos: em 1 frase, em 3 tópicos e em JSON (<code>assunto</code>, <code>decisoes</code>, <code>prazos</code>).</p>
+      <pre class="code">system_prompt = """
+Você resume textos com fidelidade.
+Regras:
+- Use apenas informações do texto
+- Não acrescente números nem fatos
+- Se algo pedido não existir, escreva "sem dado"
+"""</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Marque no texto original de onde saiu cada informação do resumo</li>
+        <li>Conte as palavras: o tamanho pedido foi respeitado?</li>
+        <li>No JSON, use <code>response_format</code> e leia com <code>json.loads</code></li>
+        <li>Repita sem as regras do system e compare</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O resumo em tópicos trouxe "↑ 15%" que não estava no texto. Isso é:</p>
+        <div class="opts"><div>A) Um arredondamento</div><div>B) Uma informação inventada</div><div>C) Erro da API</div><div>D) Efeito do JSON</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Melhor temperatura para resumos factuais:</p>
+        <div class="opts"><div>A) Baixa (≈ 0.2)</div><div>B) 1.0</div><div>C) 1.5</div><div>D) 2.0</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Por que o json.loads falharia na resposta da célula 13?</p>
+        <div class="opts"><div>A) Chave errada</div><div>B) As cercas ```json antes do JSON</div><div>C) Acentos</div><div>D) Texto curto</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para garantir JSON válido, use:</p>
+        <div class="opts"><div>A) max_completion_tokens</div><div>B) response_format</div><div>C) top_p</div><div>D) Mais exemplos</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Menor,<br><em>mas verdadeiro</em></h1>
+    <p class="lead">Um bom resumo tem tamanho definido, público definido e nenhuma informação nova. Diga o tamanho, proíba acréscimos, trate o que falta e use temperatura baixa. Para resumos que vão para outro programa, garanta o JSON com <code>response_format</code>.</p>
+    <div class="chips"><span>1/3 · 2 frases · 60 palavras</span><span>Só o que está no texto</span><span>"sem dado"</span><span>response_format</span></div>
+    <div class="next">Próxima aula → 13 · Complementando Textos</div>
+    <div class="source">Fontes: console.groq.com/docs/api-reference (response_format); console.groq.com/docs/structured-outputs; Guia de Engenharia de Prompt (aula 16), seções 15 e 19, consultados em outubro de 2026. Código e saídas: notebook <code>09-sumarizacao.ipynb</code> desta aula; contagens de palavras e contas conferidas à mão; JSONDecodeError gerado com Python 3.12.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
