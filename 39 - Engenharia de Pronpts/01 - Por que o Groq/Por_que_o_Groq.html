@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Por que o Groq</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+.card .v{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 01</div>
+    <h1>Por que<br>o <em>Groq</em>?</h1>
+    <p class="lead">Engenharia de prompt se aprende <strong>testando</strong>: escrever, rodar, comparar e ajustar, muitas vezes. Para isso, o módulo usa a API do <strong>Groq</strong>, uma nuvem de inferência rápida, com plano gratuito para começar e modelos de pesos abertos, como o <code>openai/gpt-oss-120b</code>, usado em todos os notebooks. Nesta aula: o que é o Groq, o que o torna rápido, os modelos, os limites de uso e como ele se encaixa no resto do módulo.</p>
+    <div class="chips"><span>GroqCloud</span><span>LPU</span><span>gpt-oss-120b</span><span>Limites de uso</span><span>Compatível com OpenAI</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs (Quickstart, Models, Rate Limits, OpenAI Compatibility, Reasoning) e groq.com, consultados em outubro de 2026 · Números de velocidade e limites mudam com o tempo: confira no console</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O que é</span><span class="n">01</span></div>
+  <h2>Groq: uma nuvem feita <em>para rodar modelos</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O Groq não cria os modelos: ele <strong>hospeda</strong> modelos de terceiros (OpenAI gpt-oss, Llama, Qwen, Whisper…) e os executa para você</li>
+        <li>Você acessa pela <strong>GroqCloud</strong>: console em <code>console.groq.com</code>, chave de API e biblioteca Python <code>groq</code></li>
+        <li>Rodar um modelo já treinado para responder a pedidos se chama <strong>inferência</strong>, e é nisso que o Groq se especializou</li>
+      </ul>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>Seu notebook</b>monta as mensagens</div>
+        <div class="n key"><b>API do Groq</b>roda o modelo</div>
+        <div class="n"><b>Resposta</b>volta em segundos</div>
+      </div>
+      <div class="callout" style="margin-top:12px"><strong>Treino × inferência:</strong> treinar um modelo leva semanas em milhares de chips; a inferência acontece a cada pergunta e precisa ser rápida e barata.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Velocidade</span><span class="n">02</span></div>
+  <h2>O <em>LPU</em>: um chip só para inferência</h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>LPU (<em>Language Processing Unit</em>) é o processador que o Groq desenvolveu para executar modelos de linguagem</li>
+        <li>A ideia central: guardar os dados em <strong>memória SRAM dentro do próprio chip</strong>, em vez de buscá-los numa memória separada a cada passo</li>
+        <li>Resultado: muitos <strong>tokens por segundo</strong> e pouca espera, o que o Groq chama de baixa latência</li>
+      </ul>
+    </div>
+    <div>
+      <div class="grid g2">
+        <div class="stat card"><div class="k">gpt-oss-120b</div><div class="v">~500</div><p>tokens/s</p></div>
+        <div class="stat card"><div class="k">gpt-oss-20b</div><div class="v">~1000</div><p>tokens/s</p></div>
+      </div>
+      <p class="note">Velocidades informadas na página de modelos do Groq em outubro de 2026. Na prática, uma resposta de 500 tokens chega em cerca de 1 segundo.</p>
+      <div class="callout good" style="margin-top:10px">Para quem está aprendendo prompts, velocidade significa <strong>mais testes por minuto</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Modelos</span><span class="n">03</span></div>
+  <h2>Os modelos <em>de produção</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>ID do modelo</th><th>Velocidade (tokens/s)</th><th>Contexto (tokens)</th><th>Máx. de saída</th></tr></thead>
+    <tbody>
+      <tr><td><code>openai/gpt-oss-120b</code> <b>(usado no módulo)</b></td><td>500</td><td>131.072</td><td>65.536</td></tr>
+      <tr><td><code>openai/gpt-oss-20b</code></td><td>1000</td><td>131.072</td><td>65.536</td></tr>
+      <tr><td><code>llama-3.3-70b-versatile</code></td><td>280</td><td>131.072</td><td>32.768</td></tr>
+      <tr><td><code>llama-3.1-8b-instant</code></td><td>560</td><td>131.072</td><td>131.072</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout">A lista completa e sempre atualizada está em <code>console.groq.com/docs/models</code>. Modelos <strong>preview</strong> servem para testes e podem sair do ar sem muito aviso.</div>
+    <div class="callout warn">O nome que vai no código é o <strong>ID</strong> exato, por exemplo <code>model="openai/gpt-oss-120b"</code>. Um ID errado devolve erro.</div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>O modelo do módulo</span><span class="n">04</span></div>
+  <h2>gpt-oss-120b: <em>pesos abertos</em> e raciocínio</h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Modelo de <strong>pesos abertos</strong> da OpenAI, com 120 bilhões de parâmetros</li>
+        <li>É um modelo de <strong>raciocínio</strong>: pensa antes de responder, e esse raciocínio também conta como tokens de saída</li>
+        <li>O parâmetro <code>reasoning_effort</code> aceita <code>low</code>, <code>medium</code> (padrão) e <code>high</code></li>
+        <li>Janela de 131.072 tokens: cabem textos longos no prompt</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl"><b>A chamada que se repete em todo o módulo</b></div>
+      <pre class="code">chat_completion = client.chat.completions.create(
+    messages=[
+        {"role": "user",
+         "content": "Me explique de forma reduzida o que são as LLMs"},
+    ],
+    model="openai/gpt-oss-120b",
+)
+print(chat_completion.choices[0].message.content)</pre>
+      <p class="note">Trecho do notebook da aula 04 (01-roles.ipynb).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Limites de uso</span><span class="n">05</span></div>
+  <h2>Plano gratuito <em>e seus limites</em></h2>
+  <div class="par e">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Sigla</th><th>Significa</th><th>gpt-oss-120b*</th></tr></thead>
+        <tbody>
+          <tr><td>RPM</td><td>Requisições por minuto</td><td>30</td></tr>
+          <tr><td>RPD</td><td>Requisições por dia</td><td>1.000</td></tr>
+          <tr><td>TPM</td><td>Tokens por minuto</td><td>8.000</td></tr>
+          <tr><td>TPD</td><td>Tokens por dia</td><td>200.000</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">* Tabela de limites de base da página Rate Limits, em outubro de 2026. Os da sua conta aparecem em console.groq.com/settings/limits.</p>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Os limites valem para a <strong>organização</strong>, não por pessoa</li>
+        <li>Vale o que estourar primeiro: 30 pedidos pequenos em um minuto já batem no RPM</li>
+        <li>Ao estourar, a API responde <strong>429 Too Many Requests</strong> e o cabeçalho <code>retry-after</code> diz quantos segundos esperar</li>
+        <li>Planos pagos (Developer) liberam limites maiores</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Para os notebooks do módulo, o plano gratuito sobra, desde que você não rode as células em laço.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Compatível</span><span class="n">06</span></div>
+  <h2>A mesma API <em>de todo mundo</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>SDK do Groq (o que o módulo usa)</b></div>
+      <pre class="code">from groq import Groq
+client = Groq(api_key=...)</pre>
+      <div class="lbl" style="margin-top:10px"><b>SDK da OpenAI apontando para o Groq</b></div>
+      <pre class="code">import openai
+client = openai.OpenAI(
+    base_url="https://api.groq.com/openai/v1",
+    api_key=...,
+)</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A API do Groq é "quase toda" compatível com a da OpenAI: mesma estrutura de <code>messages</code>, <code>choices</code> e parâmetros</li>
+        <li>O que você aprender aqui (roles, temperatura, few shot…) vale para outras APIs de chat</li>
+        <li>Diferenças documentadas: só <code>n=1</code>; <code>logprobs</code> e <code>logit_bias</code> não são aceitos; <code>temperature=0</code> vira <code>1e-8</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Por que aqui</span><span class="n">07</span></div>
+  <h2>Por que o Groq <em>neste módulo</em></h2>
+  <div class="grid g2">
+    <div class="card"><div class="k">Rápido</div><p>Respostas em segundos deixam o ciclo escrever → rodar → comparar curto. É assim que se aprende prompt.</p></div>
+    <div class="card"><div class="k">Gratuito para começar</div><p>Os limites do plano gratuito cobrem os exercícios do módulo.</p></div>
+    <div class="card"><div class="k">Modelos abertos</div><p>gpt-oss, Llama e Qwen: técnicas testadas aqui funcionam com modelos que você também pode rodar em outros lugares.</p></div>
+    <div class="card"><div class="k">API padrão</div><p>Formato compatível com o da OpenAI: o código muda pouco se você trocar de provedor depois.</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">O foco do módulo é a <strong>engenharia de prompt</strong>. O Groq é o laboratório; as técnicas valem para qualquer LLM.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>O caminho</span><span class="n">08</span></div>
+  <h2>O que vem <em>no módulo</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">02</div><div><h3>Configuração do Ambiente</h3><p>Chave da API, pasta, venv, bibliotecas e <code>.env</code>.</p></div></div>
+      <div class="step"><div class="b">03</div><div><h3>Introdução ao JupyterLab</h3><p>Células, atalhos e kernel.</p></div></div>
+      <div class="step"><div class="b">04</div><div><h3>Roles · 05 Parâmetros · 06 Boas práticas</h3><p>A base de toda chamada.</p></div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="b">07</div><div><h3>Output estruturado · 08 Condições</h3><p>Controlar formato e comportamento.</p></div></div>
+      <div class="step"><div class="b">09</div><div><h3>Few shot · 10 Múltiplos passos · 11 CoT</h3><p>Técnicas para tarefas difíceis.</p></div></div>
+      <div class="step"><div class="b">12</div><div><h3>Sumarização, complemento, transformação e análise de textos</h3><p>Aplicações práticas (aulas 12 a 15) e o Guia da aula 16.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O que o Groq oferece?</p>
+        <div class="opts"><div>A) Treina modelos próprios</div><div>B) Executa (inferência) modelos de terceiros</div><div>C) Um editor de código</div><div>D) Um navegador</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. A sigla RPM nos limites significa:</p>
+        <div class="opts"><div>A) Rotações por minuto</div><div>B) Requisições por minuto</div><div>C) Respostas por modelo</div><div>D) Tokens por minuto</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Estourou o limite. A API devolve:</p>
+        <div class="opts"><div>A) 200</div><div>B) 401</div><div>C) 404</div><div>D) 429</div></div>
+        <div class="answer"><b>D.</b> Too Many Requests.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Qual modelo os notebooks usam?</p>
+        <div class="opts"><div>A) openai/gpt-oss-120b</div><div>B) gpt-4o</div><div>C) whisper-large-v3</div><div>D) claude</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Um laboratório<br><em>rápido e gratuito</em></h1>
+    <p class="lead">O Groq executa modelos abertos em chips próprios (LPU) com muitos tokens por segundo, tem plano gratuito com limites por minuto e por dia, e fala o mesmo formato de API da OpenAI. É o lugar ideal para testar prompts muitas vezes, com o <code>openai/gpt-oss-120b</code>.</p>
+    <div class="chips"><span>Inferência</span><span>LPU</span><span>gpt-oss-120b</span><span>RPM · TPM · 429</span><span>API compatível</span></div>
+    <div class="next">Próxima aula → 02 · Configuração do Ambiente</div>
+    <div class="source">Fontes: console.groq.com/docs/quickstart; console.groq.com/docs/models; console.groq.com/docs/rate-limits; console.groq.com/docs/openai; console.groq.com/docs/api-reference (reasoning_effort); console.groq.com/docs/reasoning; groq.com (plataforma e LPU), consultados em outubro de 2026.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
