@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Usando Condições</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 08</div>
+    <h1>Usando<br><em>condições</em></h1>
+    <p class="lead">Um único <code>system</code> pode trazer regras do tipo <strong>SE… ENTÃO…</strong>: o modelo identifica o caso e segue o bloco certo. Nesta aula, com o notebook <code>05-condicoes.ipynb</code>: condições pelo tipo de pergunta, adaptação ao nível de quem pergunta, várias condições ao mesmo tempo e uma regra de <em>fallback</em> para tudo o que não se encaixa.</p>
+    <div class="chips"><span>SE / ENTÃO</span><span>Nível do usuário</span><span>Múltiplas condições</span><span>Fallback</span><span>Conferir a resposta</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/prompting e no Guia de Engenharia de Prompt da aula 16, consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>05-condicoes.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Condicionais básicos</span><span class="n">01</span></div>
+  <h2>Três casos, <em>três comportamentos</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>05-condicoes.ipynb · célula 3</b></div>
+      <pre class="code s">system_prompt = """
+Você é um nutricionista virtual adaptativo. Siga estas condições:
+
+SE a pergunta for BÁSICA:
+- Explique de forma simples
+- Use exemplos do dia a dia
+- Evite termos técnicos
+
+SE a pergunta for AVANÇADA:
+- Use linguagem científica
+- Cite termos nutricionais
+- Sugira leituras adicionais
+
+SE a pergunta for AMBÍGUA:
+- Peça esclarecimentos
+- Ofereça opções de interpretação
+"""
+
+user_prompt = "O que é proteína?"
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== Exemplo 1: Básico ===
+**Proteína** é um nutriente que o corpo usa como “bloco de construção” para fazer e reparar tecidos, como músculos, pele, cabelo e unhas. Pense nela como as peças de LEGO que, juntinhas, formam tudo o que o seu corpo precisa para funcionar bem.
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>"O que é proteína?" foi tratada como <strong>BÁSICA</strong>: analogia com LEGO, sem termos técnicos</li>
+        <li>Quem decide se a pergunta é básica é o <strong>modelo</strong>, não o seu código</li>
+        <li>O caso AMBÍGUO dá ao modelo uma saída honesta: pedir esclarecimento</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Nível do usuário</span><span class="n">02</span></div>
+  <h2>Palavras-chave que <em>escolhem o nível</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 5</b></div>
+      <pre class="code s">system_prompt = """
+Você é um coach de saúde que adapta explicações conforme o nível:
+
+INICIANTE (palavras: "novo", "começando", "não sei nada"):
+- Explicações muito simples
+- Exemplos cotidianos
+- Passo a passo claro
+
+INTERMEDIÁRIO (palavras: "já sei", "tenho alguma experiência"):
+- Respostas diretas
+- Pequenos detalhes técnicos
+- Sugestões práticas
+
+AVANÇADO (palavras: "experiente", "profissional", "avançado"):
+- Respostas técnicas
+- Citações científicas
+- Estratégias avançadas
+"""
+
+user_prompt_iniciante = "Sou novo em dieta, como começo a comer melhor?"
+user_prompt_avancado = "Sou nutricionista, explique estratégias de periodização alimentar."</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Cada nível lista palavras que o identificam: "novo", "experiente", "profissional"…</li>
+        <li>"Sou <strong>novo</strong> em dieta" cai em INICIANTE</li>
+        <li>"Sou <strong>nutricionista</strong>" não está na lista, mas o modelo entendeu como AVANÇADO</li>
+        <li>As duas chamadas usam o mesmo <code>system</code>: muda só o <code>user</code></li>
+      </ul>
+      <div class="callout" style="margin-top:10px">As palavras-chave ajudam, mas o modelo interpreta o sentido. Isso é bom (entende sinônimos) e ruim (pode classificar diferente do que você esperava).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Iniciante × avançado</span><span class="n">03</span></div>
+  <h2>A mesma regra, <em>dois públicos</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl s">célula 7 · iniciante · saída gravada (início)</div>
+      <pre class="out w">=== Exemplo 2: Iniciante ===
+### Como começar a comer melhor – Guia passo a passo para quem está **começando**  
+
+1️⃣ **Observe o que você come hoje**  
+- Por 5 dias, anote tudo que entra no prato (inclua lanches, bebidas e “petiscos”).  
+- Não se preocupe em mudar nada ainda; só registre.  
+- Use um caderno ou um aplicativo simples (ex.: MyFitnessPal, Google Keep).
+
+2️⃣ **Defina metas bem pequenas**  
+- Em vez de “vou virar vegano”, pense “vou comer 1 fruta a mais por dia”.  
+- Metas curtas são mais fáceis de manter e dão confiança.
+…</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 8 · avançado · saída gravada (início)</div>
+      <pre class="out w">=== Exemplo 2: Avançado ===
+### Periodização Alimentar – Estratégias Avançadas para Nutricionistas
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Iniciante: passos numerados, metas pequenas, trocas simples</li>
+        <li>Avançado: macro/meso/microciclos, tabelas técnicas e referências científicas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Confira sempre</span><span class="n">04</span></div>
+  <h2>Pediu citações? <em>Verifique cada uma</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl s">célula 8 · referências que o modelo escreveu (saída gravada)</div>
+      <pre class="out w">&gt; **Referência:** Helms, E. R., &amp; Zourdos, M. C. (2019). *Nutrient timing: A comprehensive review of the role of timing and distribution of macronutrients in sport.* Sports Medicine, 49(2), 239‑254.
+…
+&gt; **Referência:** Mettler, S., et al. (2019). *Carbohydrate periodization and its effect on body composition and performance.* Journal of the International Society of Sports Nutrition, 16(1), 42.
+…</pre>
+      <div class="lbl s" style="margin-top:10px">célula 7 · uma conta que não fecha</div>
+      <pre class="out w">8️⃣ **Beba água suficiente**  
+- Metade do seu peso (em kg) em **ml de água** por dia é um bom ponto de partida.  
+  - Ex.: 70 kg → 35 dl → 3,5 litros.  
+…</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O nível AVANÇADO pede "citações científicas", e o modelo obedece. Mas obedecer ao formato não garante que a referência exista ou diga aquilo</li>
+        <li>Modelos de linguagem podem inventar títulos, autores e números de páginas com aparência real</li>
+        <li>Na resposta para iniciantes, a regra fala em "metade do peso em <strong>ml</strong>", mas o exemplo faz 70 kg → 35 <strong>dl</strong> → 3,5 litros: as unidades não batem</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Saúde, finanças e direito pedem conferência humana. Trate referências geradas como pistas para pesquisar, não como fontes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Múltiplas condições</span><span class="n">05</span></div>
+  <h2>Objetivo <em>e</em> orçamento ao mesmo tempo</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 10</b></div>
+      <pre class="code s">system_prompt = """
+Você é um orientador de dieta. Adapte recomendações com base nas condições:
+
+OBJETIVO EMAGRECIMENTO:
+- Foque em déficit calórico
+- Sugira exercícios leves
+- Indique alimentos pouco calóricos
+
+OBJETIVO GANHO DE MASSA:
+- Foque em superávit calórico
+- Sugira treino de força
+- Recomende proteínas
+
+VALOR BAIXO (&lt; R$ 500/mês):
+- Sugira alimentos acessíveis
+- Foque em custo-benefício
+
+VALOR ALTO (&gt; R$ 2000/mês):
+- Sugira alimentos premium
+- Inclua suplementos importados
+"""
+
+user_prompt = "Tenho R$ 400 por mês e quero emagrecer comendo bem."</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 11 · saída gravada (início)</div>
+      <pre class="out w">=== Exemplo 3: Múltiplas Condições ===
+**Objetivo:** Emagrecimento  
+**Orçamento:** R$ 400 / mês (valor baixo)  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Dois grupos independentes: <strong>objetivo</strong> (emagrecer/ganhar massa) e <strong>valor</strong> (baixo/alto)</li>
+        <li>"R$ 400 por mês e quero emagrecer" ativa EMAGRECIMENTO + VALOR BAIXO</li>
+        <li>A resposta abre declarando as duas condições: fica fácil conferir</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Note a lacuna: entre R$ 500 e R$ 2000 nenhuma regra de valor se aplica. Cubra todos os intervalos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Fallback</span><span class="n">06</span></div>
+  <h2>E quando <em>nada se encaixa</em>?</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 13</b></div>
+      <pre class="code s">system_prompt = """
+Você é um chatbot de nutrição. Regras:
+
+SE a pergunta for sobre RECEITAS:
+- Sugira 3 opções rápidas
+
+SE for sobre EXERCÍCIOS:
+- Recomende treinos simples
+
+SE for sobre SUPLEMENTOS:
+- Explique benefícios e riscos
+
+CASO CONTRÁRIO (fallback):
+- Peça mais detalhes
+- Sugira opções de tema
+- Sempre responda com simpatia
+"""
+
+user_prompt = "Vocês podem me ajudar a correr mais rápido na lua?"</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 14 · saída gravada (completa)</div>
+      <pre class="out w">=== Exemplo 5: Fallback ===
+Oi! 😊 Entendo que você está curioso(a) sobre como correr mais rápido na Lua – parece uma aventura bem interessante! Para que eu possa te ajudar da melhor forma, poderia me contar um pouquinho mais sobre o que você tem em mente? Por exemplo:
+
+- Está pensando em treinamento físico para melhorar sua velocidade em ambientes de gravidade reduzida?
+- Quer saber como adaptar exercícios de corrida para situações diferentes?
+- Ou talvez esteja interessado em algum outro assunto, como receitas energéticas, treinos simples ou suplementos?
+
+Fico à disposição para conversar sobre **receitas rápidas**, **exercícios simples**, **suplementos** ou qualquer outro tema que você quiser explorar. 🚀✨</pre>
+      <p class="note">Correr na Lua não é receita, exercício nem suplemento: caiu no fallback, pediu detalhes e sugeriu temas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Padrão</span><span class="n">07</span></div>
+  <h2>Como escrever <em>boas condições</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Nomeie cada caso em maiúsculas</h3><p>BÁSICA, AVANÇADA, EMAGRECIMENTO… destacam o rótulo no meio do texto.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Diga como reconhecer o caso</h3><p>Palavras-chave ou faixas de valor (&lt; R$ 500/mês).</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Liste as ações de cada caso</h3><p>Itens curtos, um comportamento por linha.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Sempre termine com um fallback</h3><p>CASO CONTRÁRIO: pedir detalhes, oferecer opções.</p></div></div>
+    </div>
+    <div>
+      <div class="callout good">Peça que a resposta comece dizendo <strong>qual condição foi aplicada</strong>, como fez a célula 11 ("Objetivo: Emagrecimento · Orçamento: valor baixo"). Assim você vê na hora se o modelo classificou certo.</div>
+      <div class="callout" style="margin-top:10px">Com muitas regras, a chance de o modelo misturar casos aumenta. Se a classificação for crítica, faça-a no código (ou numa chamada separada) e envie só as regras do caso escolhido.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">08</span></div>
+  <h2>Um atendente <em>com regras</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> escreva o <code>system</code> de um atendente de loja on-line com as condições abaixo e teste quatro perguntas, uma para cada caso.</p>
+      <pre class="code">SE for sobre ENTREGA:
+- ...
+SE for sobre TROCA ou DEVOLUÇÃO:
+- ...
+SE o cliente estiver IRRITADO:
+- ...
+CASO CONTRÁRIO (fallback):
+- ...</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Inclua uma pergunta que se encaixe em dois casos ("o pedido atrasou e quero devolver!")</li>
+        <li>Peça que a resposta comece com "[Caso: …]"</li>
+        <li>Veja se o fallback dispara com "qual a previsão do tempo?"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Quem decide qual condição se aplica?</p>
+        <div class="opts"><div>A) O seu código, com if</div><div>B) O modelo, lendo o prompt</div><div>C) A API do Groq</div><div>D) O .env</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para que serve o fallback?</p>
+        <div class="opts"><div>A) Acelerar a resposta</div><div>B) Tratar o que não se encaixa em nenhum caso</div><div>C) Reduzir tokens</div><div>D) Trocar de modelo</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O modelo citou um artigo científico. Você deve:</p>
+        <div class="opts"><div>A) Confiar, ele pediu citação</div><div>B) Conferir se o artigo existe e diz isso</div><div>C) Aumentar a temperatura</div><div>D) Apagar a resposta</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. "Até R$ 500" e "acima de R$ 2000". Quem gasta R$ 1000:</p>
+        <div class="opts"><div>A) Cai em valor baixo</div><div>B) Cai em valor alto</div><div>C) Não tem regra: há uma lacuna</div><div>D) Gera erro</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Um system,<br><em>vários comportamentos</em></h1>
+    <p class="lead">Condições SE/ENTÃO no <code>system</code> deixam o modelo adaptar a resposta ao tipo de pergunta, ao nível de quem pergunta e a várias variáveis ao mesmo tempo. Cubra todos os casos, termine com um fallback, peça que a resposta diga a condição aplicada e confira o conteúdo.</p>
+    <div class="chips"><span>SE / ENTÃO</span><span>Palavras-chave</span><span>Sem lacunas</span><span>Fallback</span><span>Conferir</span></div>
+    <div class="next">Próxima aula → 09 · Few Shot</div>
+    <div class="source">Fontes: console.groq.com/docs/prompting (Prompt Basics); Guia de Engenharia de Prompt (aula 16), seções 3 e 16, consultados em outubro de 2026. Código e saídas: notebook <code>05-condicoes.ipynb</code> desta aula. As referências citadas na saída da célula 8 foram geradas pelo modelo e não foram verificadas.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
