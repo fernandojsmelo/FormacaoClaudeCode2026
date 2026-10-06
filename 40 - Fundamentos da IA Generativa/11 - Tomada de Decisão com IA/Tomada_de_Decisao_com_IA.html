@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Tomada de decisão com IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 11</div>
+    <h1>Tomada de decisão<br><em>com IA</em></h1>
+    <p class="lead">Usar IA para decidir não é entregar a decisão ao modelo: é desenhar <strong>quem faz o quê</strong>. Esta aula mostra os níveis de autonomia, como escolher quais decisões delegar, o papel da pessoa no processo, o <strong>viés de automação</strong>, por que as explicações de um modelo podem enganar, como usar o <strong>limiar de confiança</strong> para dividir o trabalho entre IA e pessoas e o que registrar para poder contestar e auditar.</p>
+    <div class="chips"><span>Níveis de autonomia</span><span>Humano no ciclo</span><span>Viés de automação</span><span>Explicações que enganam</span><span>Limiar de confiança</span><span>Registro</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em Turpin et al. (arXiv:2305.04388), Kadavath et al. (arXiv:2207.05221), no NIST AI RMF 1.0 (Govern 3.2) e na LGPD (art. 20), consultados em outubro de 2026 · Simulação executada em <code>exemplos/</code></div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Autonomia</span><span class="n">01</span></div>
+  <h2>Quatro níveis <em>de delegação</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Nível</th><th>O que a IA faz</th><th>Quem decide</th><th>Exemplo</th></tr></thead>
+    <tbody>
+      <tr><td><b>1 · Informar</b></td><td>Resume, organiza, busca</td><td>A pessoa</td><td>Resumo do histórico do cliente antes do atendimento</td></tr>
+      <tr><td><b>2 · Recomendar</b></td><td>Sugere uma ação, com as razões</td><td>A pessoa</td><td>Sugere resposta; o atendente edita e envia</td></tr>
+      <tr><td><b>3 · Decidir com aprovação</b></td><td>Prepara a decisão completa</td><td>A pessoa aprova, caso a caso</td><td>Monta o reembolso; o analista confirma</td></tr>
+      <tr><td><b>4 · Decidir sozinha</b></td><td>Decide e executa</td><td>A IA, com auditoria depois</td><td>Classificar um e-mail como spam</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout" style="margin-top:12px">A maior parte dos casos úteis fica nos níveis <strong>1 a 3</strong>. O nível 4 só cabe em decisões de baixo impacto, fáceis de desfazer e bem avaliadas.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>O que delegar</span><span class="n">02</span></div>
+  <h2>Quais decisões <em>entregar à IA</em></h2>
+  <div class="par e">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Característica</th><th>Mais seguro delegar</th><th>Manter com pessoas</th></tr></thead>
+        <tbody>
+          <tr><td>Impacto de um erro</td><td>Baixo</td><td>Alto (saúde, crédito, emprego)</td></tr>
+          <tr><td>Reversibilidade</td><td>Fácil de desfazer</td><td>Irreversível</td></tr>
+          <tr><td>Volume</td><td>Muito alto</td><td>Poucos casos</td></tr>
+          <tr><td>Critério</td><td>Regra clara e verificável</td><td>Julgamento, valores, exceções</td></tr>
+          <tr><td>Qualidade medida</td><td>Testada com dados reais (aula 03)</td><td>Sem avaliação</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Quanto mais as colunas da esquerda dominam, mais alto o nível de autonomia que se justifica</li>
+        <li>Decisões que afetam pessoas (crédito, contratação, perfil) pedem cuidado legal: pela <strong>LGPD, art. 20</strong>, o titular pode pedir <strong>revisão por pessoa natural</strong> de decisões tomadas unicamente por tratamento automatizado que afetem seus interesses</li>
+      </ul>
+      <p class="note">Quadro de apoio elaborado para esta aula. Fonte do art. 20: planalto.gov.br (Lei 13.709/2018).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Pessoas</span><span class="n">03</span></div>
+  <h2>O papel da pessoa <em>precisa ser definido</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">No ciclo (in the loop)</div><p>A pessoa aprova cada decisão antes de ela valer. Mais seguro, mais lento.</p></div>
+    <div class="card"><div class="k">Sobre o ciclo (on the loop)</div><p>A IA decide; a pessoa monitora, amostra e intervém quando preciso. Escala melhor.</p></div>
+    <div class="card"><div class="k">Fora do ciclo</div><p>Nenhuma supervisão em tempo real, só auditoria posterior. Reserve para o de menor risco.</p></div>
+  </div>
+  <div class="par e" style="margin-top:12px">
+    <div>
+      <div class="callout good">O NIST AI RMF pede políticas e procedimentos que <strong>definam e diferenciem papéis e responsabilidades</strong> nas configurações humano–IA e na supervisão dos sistemas (Govern 3.2).</div>
+    </div>
+    <div>
+      <div class="callout warn">"Tem um humano revisando" só protege se a pessoa <strong>tem tempo, informação e autoridade</strong> para discordar. Revisão de fachada é risco, não controle.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Viés de automação</span><span class="n">04</span></div>
+  <h2>Confiar <em>demais</em> na máquina</h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O <strong>viés de automação</strong> é a tendência de aceitar o que a ferramenta indica sem conferir; tende a acontecer quando a pessoa fica num papel de observação, com poder de decidir mas apoiada em um auxílio automático</li>
+        <li>Vai de situações graves (piloto automático) a banais (aceitar toda correção do corretor ortográfico)</li>
+        <li>Uma IA que escreve com fluência e confiança <strong>reforça</strong> esse efeito</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Contramedida</th><th>Como</th></tr></thead>
+        <tbody>
+          <tr><td>Mostrar a evidência</td><td>Junto da sugestão, as fontes e os trechos que a sustentam (RAG, aula 09)</td></tr>
+          <tr><td>Pedir uma decisão ativa</td><td>A pessoa escolhe e justifica, em vez de só clicar em "aceitar"</td></tr>
+          <tr><td>Medir o override</td><td>Se ninguém nunca discorda da IA, algo está errado</td></tr>
+          <tr><td>Treinar</td><td>Mostrar casos em que a IA erra com confiança (aula 08)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Conceito descrito na literatura de fatores humanos; resumo conforme a página "Automation bias" da Wikipédia. Contramedidas: síntese desta aula.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Explicações</span><span class="n">05</span></div>
+  <h2>A justificativa do modelo <em>pode não ser a razão</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>É tentador ler o raciocínio passo a passo (CoT, aula 11 do módulo 39) como o processo real do modelo, o que daria transparência</li>
+        <li>Turpin et al. mostram que as explicações em CoT <strong>podem deturpar a verdadeira razão</strong> da resposta</li>
+        <li>Ao inserir um viés na entrada (ex.: reordenar as opções para a resposta ser sempre "(A)"), os modelos mudavam de resposta <strong>sem mencionar</strong> o viés e, quando levados a respostas erradas, <strong>racionalizavam</strong> o erro</li>
+        <li>A acurácia caiu até <strong>36%</strong> em 13 tarefas do BIG-Bench Hard (GPT-3.5 e Claude 1.0)</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout danger"><strong>Consequência para decisões:</strong> uma explicação fluente <em>não prova</em> que a recomendação está certa. É plausível, e pode ser enganosa.</div>
+      <div class="callout" style="margin-top:10px">Trate a explicação como <strong>hipótese a verificar</strong>: confira os fatos citados e se as razões batem com os dados, não só se "soam bem".</div>
+      <p class="note" style="margin-top:8px">Fonte: arxiv.org/abs/2305.04388. Modelos testados na época do estudo; o princípio de verificar vale para os atuais.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Confiança</span><span class="n">06</span></div>
+  <h2>O modelo sabe <em>o quanto confia</em> na resposta?</h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Kadavath et al. (2022) estudaram se modelos conseguem avaliar a validade das próprias afirmações</li>
+        <li>Mostraram que modelos maiores são <strong>bem calibrados</strong> em perguntas de múltipla escolha e de verdadeiro/falso quando apresentadas no formato certo</li>
+        <li>Calibrado quer dizer: quando diz ter 80% de confiança, acerta cerca de 80% das vezes</li>
+        <li>Propuseram pedir que o modelo proponha uma resposta e depois estime a probabilidade <strong>P(True)</strong> de ela estar correta</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>Não dá para supor calibração.</strong> Ela depende do modelo, do formato e da tarefa. Antes de usar a "confiança" para decidir, <strong>meça</strong> com os seus dados: a taxa de acerto de cada faixa de confiança bate com o valor declarado?</div>
+      <p class="note" style="margin-top:8px">Fonte: arxiv.org/abs/2207.05221 ("Language Models (Mostly) Know What They Know").</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Na prática</span><span class="n">07</span></div>
+  <h2>Um limiar que divide <em>o trabalho</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>limiar_de_confianca.py · simulação</b></div>
+      <pre class="code">rnd = random.Random(7)
+casos = []
+for _ in range(1000):
+    confianca = rnd.choice([0.55, 0.65, 0.75, 0.85, 0.95, 0.98])
+    acertou = rnd.random() &lt; confianca   <span class="c"># suposicao: confianca calibrada</span>
+    casos.append((confianca, acertou))
+
+print("limiar | decide sozinha | erros nesses | vai para pessoa")
+for limiar in (0.5, 0.8, 0.9, 0.97):
+    auto = [c for c in casos if c[0] &gt;= limiar]
+    erros = sum(1 for _, ok in auto if not ok)
+    print(f"{limiar:&gt;6.2f} | {len(auto) / len(casos):&gt;13.0%} | "
+          f"{erros / len(auto):&gt;11.1%} | {1 - len(auto) / len(casos):&gt;14.0%}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">limiar | decide sozinha | erros nesses | vai para pessoa
+  0.50 |          100% |       20.1% |             0%
+  0.80 |           51% |        8.0% |            49%
+  0.90 |           33% |        4.6% |            67%
+  0.97 |           18% |        1.7% |            82%</pre>
+      <p class="note">Simulação com 1.000 casos fictícios; supõe confiança calibrada (a verificar na vida real).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Lendo o resultado</span><span class="n">08</span></div>
+  <h2>Autonomia <em>contra</em> erro</h2>
+  <div class="par e">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Limiar</th><th>IA decide</th><th>Erro nesses</th><th>Vai para pessoas</th></tr></thead>
+        <tbody>
+          <tr><td>0,50</td><td>100%</td><td>20,1%</td><td>0%</td></tr>
+          <tr><td>0,80</td><td>51%</td><td>8,0%</td><td>49%</td></tr>
+          <tr><td>0,90</td><td>33%</td><td>4,6%</td><td>67%</td></tr>
+          <tr><td>0,97</td><td>18%</td><td>1,7%</td><td>82%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Subir o limiar <strong>reduz o erro</strong> das decisões automáticas, mas <strong>manda mais trabalho para pessoas</strong></li>
+        <li>Não existe limiar "certo": ele depende do <strong>custo de um erro</strong> e da <strong>capacidade de revisão</strong> da equipe</li>
+        <li>Mesmo com 0,97, ainda restam 1,7% de erros nas decisões automáticas: auditoria por amostragem continua necessária</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>O processo</span><span class="n">09</span></div>
+  <h2>Desenhe a decisão <em>de ponta a ponta</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(5,1fr)">
+    <div class="n"><b>Entrada</b>caso e dados</div>
+    <div class="n key"><b>IA</b>sugere, com evidência e confiança</div>
+    <div class="n"><b>Roteamento</b>por limiar e risco</div>
+    <div class="n key"><b>Pessoa</b>decide quando preciso</div>
+    <div class="n"><b>Registro</b>tudo é guardado</div>
+  </div>
+  <div class="par e" style="margin-top:12px">
+    <div>
+      <ul class="checklist">
+        <li>Casos de <strong>baixa confiança</strong> ou de <strong>alto risco</strong> vão para pessoas, sempre</li>
+        <li>A pessoa vê a sugestão <strong>e</strong> a evidência</li>
+      </ul>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O que a pessoa decide <strong>volta</strong> como dado: serve para avaliar e melhorar</li>
+        <li>Há um caminho para o <strong>afetado contestar</strong> a decisão</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Registro e métricas</span><span class="n">10</span></div>
+  <h2>O que guardar <em>e o que medir</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>Registro de cada decisão</b></div>
+      <ul class="checklist">
+        <li>Dados usados (ou referência a eles) e versão do modelo e do prompt</li>
+        <li>Sugestão da IA, confiança e evidência mostrada</li>
+        <li>Decisão final, quem decidiu e quando</li>
+        <li>Se a pessoa discordou da IA, e por quê</li>
+      </ul>
+      <p class="note">Cuidado com a privacidade dos registros: minimize dados pessoais e defina prazo de guarda (aula 08).</p>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Métrica</th><th>Mostra</th></tr></thead>
+        <tbody>
+          <tr><td>Taxa de acerto por faixa de confiança</td><td>Se a confiança é confiável</td></tr>
+          <tr><td>Cobertura automática</td><td>Quanto a IA decide sem pessoas</td></tr>
+          <tr><td>Taxa de override</td><td>Quanto as pessoas discordam (e se acertam)</td></tr>
+          <tr><td>Erros por tipo de caso</td><td>Onde a IA falha mais</td></tr>
+          <tr><td>Tempo até a decisão</td><td>Ganho de velocidade</td></tr>
+          <tr><td>Contestações</td><td>Impacto percebido pelos afetados</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">11</span></div>
+  <h2>Escolha o <em>nível de autonomia</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> para cada decisão, indique o nível (1 a 4) e justifique com as características da seção 02.</p>
+      <ul class="checklist">
+        <li>Classificar a prioridade de um chamado de suporte</li>
+        <li>Aprovar um desconto de até 5% a um cliente</li>
+        <li>Selecionar candidatos para uma entrevista</li>
+        <li>Sugerir o texto de uma resposta a uma reclamação</li>
+        <li>Bloquear uma transação suspeita de fraude</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good">Pista: onde o erro é caro, difícil de desfazer ou afeta pessoas (candidatos, fraude), a autonomia deve ser <strong>menor</strong> (mais supervisão). Onde é barato e reversível, pode ser maior.</div>
+      <div class="callout" style="margin-top:10px">Para cada caso, defina também a <strong>métrica</strong> que mostrará, depois de rodar, se o nível escolhido foi adequado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">12</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Subir o limiar de confiança faz:</p>
+        <div class="opts"><div>A) Mais casos irem para pessoas e menos erro nos automáticos</div><div>B) Mais erro</div><div>C) Nenhum efeito</div><div>D) Acabar com a revisão</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Viés de automação é:</p>
+        <div class="opts"><div>A) Aceitar a indicação da ferramenta sem conferir</div><div>B) Um erro de rede</div><div>C) Um tipo de prompt</div><div>D) Um limite de tokens</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. A explicação passo a passo do modelo:</p>
+        <div class="opts"><div>A) É sempre a razão real</div><div>B) Pode ser plausível e enganosa: verifique os fatos</div><div>C) Dispensa conferência</div><div>D) É proibida</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Pela LGPD (art. 20), o titular pode pedir:</p>
+        <div class="opts"><div>A) Revisão por pessoa natural de decisão só automatizada</div><div>B) Que a IA seja desligada</div><div>C) O código do modelo</div><div>D) Nada</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">A IA recomenda,<br><em>o processo decide</em></h1>
+    <p class="lead">Defina o nível de autonomia pelo impacto e pela reversibilidade de cada decisão, desenhe o papel da pessoa para que ela possa realmente discordar, combata o viés de automação com evidência, trate explicações como hipóteses, ajuste o limiar de confiança medindo a calibração e registre tudo para auditar e permitir contestação.</p>
+    <div class="chips"><span>4 níveis</span><span>Humano no ciclo</span><span>Viés de automação</span><span>Explicação ≠ prova</span><span>Limiar</span><span>Registro</span></div>
+    <div class="next">Próxima aula → 12 · Ideias em Projetos de IA</div>
+    <div class="source">Fontes: arxiv.org/abs/2305.04388; arxiv.org/abs/2207.05221; airc.nist.gov/airmf-resources/airmf/5-sec-core (Govern 3.2); planalto.gov.br (Lei 13.709/2018, art. 20); en.wikipedia.org/wiki/Automation_bias, consultados em outubro de 2026. A simulação <code>limiar_de_confianca.py</code> usa dados fictícios e foi executada para esta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
