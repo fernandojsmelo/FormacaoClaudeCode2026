@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Transformação Textual</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+.card .v{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 14</div>
+    <h1>Transformação<br><em>textual</em></h1>
+    <p class="lead">Transformar é reescrever <strong>sem mudar o conteúdo</strong>: o mesmo texto em outro formato, outro tom, outro ponto de vista ou para outro público. Nesta aula, com o notebook <code>11-transformacao_texto.ipynb</code>: um parágrafo que vira receita, uma notícia que vira post, uma frase em primeira pessoa que vai para a terceira e um texto adaptado para empresários, conferindo o que mudou além do pedido.</p>
+    <div class="chips"><span>Formato</span><span>Tom</span><span>Ponto de vista</span><span>Público</span><span>Preservar o conteúdo</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/prompting e no Guia de Engenharia de Prompt da aula 16 (seção 17), consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>11-transformacao_texto.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Os tipos</span><span class="n">01</span></div>
+  <h2>Quatro jeitos de <em>reescrever</em></h2>
+  <div class="grid g2">
+    <div class="card"><div class="k">Formato</div><p>Muda a <strong>estrutura</strong>: parágrafo → lista, receita, tabela, e-mail.</p></div>
+    <div class="card"><div class="k">Tom</div><p>Muda o <strong>estilo</strong>: jornalístico → descontraído, formal → informal.</p></div>
+    <div class="card"><div class="k">Ponto de vista</div><p>Muda <strong>quem narra</strong>: primeira pessoa → terceira, cliente → empresa.</p></div>
+    <div class="card"><div class="k">Público</div><p>Muda o <strong>leitor</strong>: vocabulário e argumentos de quem vai ler.</p></div>
+  </div>
+  <div class="callout good" style="margin-top:12px">A regra que vale para todos: os <strong>fatos</strong> do texto original devem continuar os mesmos. O que muda é a forma.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Formato</span><span class="n">02</span></div>
+  <h2>De parágrafo <em>a receita</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>11-transformacao_texto.ipynb · célula 4</b></div>
+      <pre class="code s">system_prompt = """
+Você é um especialista em formatação de conteúdo.
+Transforme textos entre diferentes estruturas garantindo:
+1) Clareza
+2) Preservação das informações originais
+3) Boa organização
+"""
+
+user_prompt = """
+Transforme este parágrafo em uma receita passo a passo:
+
+"Para preparar um bom café gelado, você deve moer grãos de café fresco, preparar um café forte,
+deixar esfriar, adicionar gelo em um copo alto e completar com leite ou creme a gosto.
+Finalize com um toque de açúcar ou xarope de baunilha."
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (ingredientes e passo 2)</div>
+      <pre class="out w">**Receita de Café Gelado**
+
+---
+
+### Ingredientes
+- 2 colheres (sopa) de grãos de café fresco
+- 200 ml de água quente
+- Gelo (cerca de 1 a 2 xícaras, conforme o tamanho do copo)
+- Leite ou creme a gosto (aprox. 50‑100 ml)
+- Açúcar ou xarope de baunilha (opcional, a gosto)
+…
+2. **Preparar um café forte**  
+   - Coloque o café moído em um filtro ou prensa francesa.  
+   - Despeje 200 ml de água quente (aprox. 90 °C) sobre o café.  
+   - Deixe extrair por 3‑4 minutos (ou siga o tempo recomendado do seu método).  
+   - Coe e reserve o café concentrado.
+…</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Conferindo</span><span class="n">03</span></div>
+  <h2>A receita <em>ganhou dados</em></h2>
+  <div class="par e">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Na receita</th><th>No texto original?</th></tr></thead>
+        <tbody>
+          <tr><td>Moer, preparar forte, esfriar, gelo, leite, açúcar/baunilha</td><td>Sim</td></tr>
+          <tr><td>2 colheres (sopa) de grãos</td><td>Não</td></tr>
+          <tr><td>200 ml de água a 90 °C, 3 a 4 minutos</td><td>Não</td></tr>
+          <tr><td>Copo de 300 a 350 ml, 50 a 100 ml de leite</td><td>Não</td></tr>
+          <tr><td>Moagem média-grossa, prensa francesa</td><td>Não</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O system pedia "preservação das informações originais"; o modelo preservou, <strong>e acrescentou</strong> quantidades, tempos e utensílios</li>
+        <li>O formato "receita" tem lacunas típicas (quantidades) e o modelo as preencheu com valores plausíveis</li>
+        <li>Às vezes isso ajuda; num manual técnico ou num documento oficial, é um erro</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Se não quer acréscimos, diga: "não acrescente quantidades, tempos ou ingredientes que não estejam no texto; use [a definir] onde faltar".</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Tom</span><span class="n">04</span></div>
+  <h2>Da notícia <em>para o post</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 6</b></div>
+      <pre class="code s">system_prompt = """
+Você é um especialista em adaptação de estilo.
+Transforme textos mudando o tom sem perder o sentido.
+"""
+
+user_prompt = """
+Transforme este texto jornalístico em um post leve para redes sociais:
+
+"A cidade de Lisboa recebeu mais de 4 milhões de turistas em 2024,
+consolidando-se como um dos destinos mais procurados da Europa."
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (completa)</div>
+      <pre class="out w">=== RESULTADO (Tom) ===
+🌍✨ Lisboa bombou em 2024! Mais de 4 MILHÕES de viajantes passaram pela cidade, confirmando que ela é um dos destinos mais desejados da Europa. 🎉✈️ #Lisboa #TravelGoals #Turismo #Europa #VemPraLisboa 🚀💙</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Os fatos ficaram: Lisboa, mais de 4 milhões de turistas, 2024, um dos destinos mais procurados da Europa</li>
+        <li>Mudou só o estilo: emojis, MAIÚSCULAS, exclamação e hashtags</li>
+        <li>Temperatura 0.6: um pouco de variedade ajuda num texto de redes sociais</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Ponto de vista</span><span class="n">05</span></div>
+  <h2>Da primeira <em>para a terceira pessoa</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 8</b></div>
+      <pre class="code s">system_prompt = """
+Você é um especialista em narrativa.
+Reescreva o texto mudando o ponto de vista.
+"""
+
+user_prompt = """
+Transforme de primeira para terceira pessoa:
+
+"Eu viajei para o Japão pela primeira vez em 2023 e fiquei impressionado
+com a mistura de tradição e tecnologia em Tóquio."
+"""
+<span class="c">…</span></pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (completa)</div>
+      <pre class="out w">=== RESULTADO (Perspectiva) ===
+Ele viajou para o Japão pela primeira vez em 2023 e ficou impressionado com a mistura de tradição e tecnologia em Tóquio.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Transformação mínima e exata: só pronome e verbos mudaram</li>
+        <li>"Ele" veio do adjetivo masculino "impressionado" do original</li>
+        <li>Prompt curto funciona quando a tarefa é bem delimitada</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Público</span><span class="n">06</span></div>
+  <h2>O mesmo restaurante, <em>para empresários</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 10</b></div>
+      <pre class="code s">texto_original = """
+"O restaurante Verde Sabor lançou um cardápio 100% sustentável,
+com ingredientes locais, redução de plástico e incentivo a fornecedores regionais.
+A proposta busca unir gastronomia, saúde e responsabilidade ambiental."
+"""
+
+print("=== TEXTO ORIGINAL ===")
+print(texto_original)
+
+<span class="c"># %%</span>
+<span class="c"># Versão para negócios</span>
+business_prompt = f"""
+Reescreva este texto para empresários do setor de alimentação, 
+focando em inovação e competitividade:\n\n{texto_original}"""
+
+response_business = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "user", "content": business_prompt}],
+    temperature=0.5
+)
+<span class="c">…</span></pre>
+      <p class="note">O <code># %%</code> é um marcador de célula de outros editores (ex.: VS Code); no Jupyter, é só um comentário.</p>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (trechos)</div>
+      <pre class="out w">**Inovação e Competitividade no Setor de Alimentação**
+…
+**Por que isso importa para o seu negócio?**  
+1. **Diferenciação de mercado:** um cardápio sustentável posiciona a marca como líder em inovação, atraindo consumidores conscientes e dispostos a pagar mais por experiências responsáveis.  
+2. **Eficiência operacional:** a proximidade dos produtores reduz perdas, otimiza o estoque e diminui despesas de transporte.  
+3. **Reputação e compliance:** alinhamento com normas ambientais e tendências regulatórias, mitigando riscos e reforçando a imagem institucional.  
+4. **Crescimento de receita:** estudos de mercado apontam que 70 % dos consumidores preferem estabelecimentos que adotam práticas sustentáveis, ampliando a base de clientes e a fidelização.  
+…</pre>
+      <div class="callout warn" style="margin-top:10px">Para convencer empresários, o modelo trouxe "70% dos consumidores preferem…" sem fonte. Ao mudar o público, ele mudou também os argumentos e acrescentou dados.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Múltiplas versões</span><span class="n">07</span></div>
+  <h2>Um texto, <em>várias saídas</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>A seção do notebook se chama "Múltiplas Transformações", mas gera só a versão para negócios</li>
+        <li>Com um laço, o mesmo texto vira várias versões, cada uma com o seu público</li>
+        <li>Cada versão é uma chamada à API: 3 públicos = 3 requisições</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Mantenha o texto original fora do pedido, entre delimitadores, para o modelo não confundir o que é conteúdo e o que é instrução (aula 06).</div>
+    </div>
+    <div>
+      <div class="lbl"><b>Completando a ideia do notebook (não está nele)</b></div>
+      <pre class="code">publicos = {
+    "negócios": "empresários do setor de alimentação",
+    "crianças": "crianças de 8 a 10 anos",
+    "imprensa": "uma nota oficial para jornalistas",
+}
+for nome, publico in publicos.items():
+    prompt = f"""Reescreva para {publico}.
+Não acrescente dados que não estejam no texto.
+--- TEXTO ---
+{texto_original}
+--- FIM ---"""
+    r = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[{"role": "user", "content": prompt}],
+    )
+    print(f"=== {nome} ===")
+    print(r.choices[0].message.content)</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">08</span></div>
+  <h2>Transforme <em>e compare</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> pegue um aviso curto (ex.: "A reunião de segunda foi adiada para quarta às 14h, na sala 3") e transforme em:</p>
+      <ul class="checklist">
+        <li>Tópicos para o Slack</li>
+        <li>E-mail formal para a diretoria</li>
+        <li>Mensagem descontraída para o time</li>
+        <li>Terceira pessoa, como numa ata</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good"><strong>Teste de fidelidade:</strong> em todas as versões, os fatos são os mesmos? Dia, hora e sala precisam aparecer iguais, e nada novo pode surgir.</div>
+      <div class="callout" style="margin-top:10px">Rode com e sem a frase "não acrescente informações" e compare o que surgiu de novo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Notícia → post leve é uma transformação de:</p>
+        <div class="opts"><div>A) Formato</div><div>B) Tom</div><div>C) Ponto de vista</div><div>D) Tamanho</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. O que deve ficar igual numa transformação?</p>
+        <div class="opts"><div>A) As palavras</div><div>B) Os fatos</div><div>C) O tamanho</div><div>D) A pontuação</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. A receita ganhou "200 ml a 90 °C". Isso:</p>
+        <div class="opts"><div>A) Estava no texto</div><div>B) Foi acrescentado pelo modelo</div><div>C) Veio do system</div><div>D) É erro da API</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para gerar 3 versões para 3 públicos, você faz:</p>
+        <div class="opts"><div>A) 1 chamada</div><div>B) 3 chamadas (uma por público)</div><div>C) Nenhuma</div><div>D) 3 modelos</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Muda a forma,<br><em>ficam os fatos</em></h1>
+    <p class="lead">Formato, tom, ponto de vista e público são as quatro alavancas da transformação. Diga qual delas mexer, peça para não acrescentar informações e confira a nova versão contra o original, especialmente quando o novo formato tem lacunas que o modelo gosta de preencher.</p>
+    <div class="chips"><span>Formato</span><span>Tom</span><span>Ponto de vista</span><span>Público</span><span>Sem acréscimos</span></div>
+    <div class="next">Próxima aula → 15 · Análise Textual</div>
+    <div class="source">Fontes: console.groq.com/docs/prompting; Guia de Engenharia de Prompt (aula 16), seção 17, consultados em outubro de 2026. Código e saídas: notebook <code>11-transformacao_texto.ipynb</code> desta aula; comparação da seção 03 feita à mão contra o texto original.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
