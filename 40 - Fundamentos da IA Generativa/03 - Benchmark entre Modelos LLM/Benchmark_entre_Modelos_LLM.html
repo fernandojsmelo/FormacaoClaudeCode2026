@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Benchmark entre Modelos LLM</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 03</div>
+    <h1>Benchmark entre<br><em>modelos LLM</em></h1>
+    <p class="lead">Todo lançamento de modelo vem com uma tabela de benchmarks. Saber ler essa tabela, e saber o que ela <strong>não</strong> diz, evita escolher o modelo errado. Nesta aula: o que é um benchmark, os mais conhecidos (MMLU, SWE-bench, Chatbot Arena), por que os números enganam (contaminação, amostra pequena) e como montar um teste com os dados da sua empresa.</p>
+    <div class="chips"><span>MMLU</span><span>SWE-bench</span><span>Chatbot Arena</span><span>Contaminação</span><span>Intervalo de confiança</span><span>Benchmark próprio</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em arxiv.org (MMLU, Chatbot Arena, estudo de contaminação), swebench.com e no AI Index 2025 da Stanford, consultados em outubro de 2026 · Exemplo estatístico executado em <code>exemplos/</code></div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O que é</span><span class="n">01</span></div>
+  <h2>Um benchmark é <em>uma prova padronizada</em></h2>
+  <div class="par e">
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>Conjunto de tarefas</b>perguntas, problemas, issues</div>
+        <div class="n"><b>Regra de correção</b>gabarito, testes ou votos</div>
+        <div class="n key"><b>Métrica</b>% de acerto ou nota</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Todos os modelos fazem a <strong>mesma prova</strong>, o que permite comparar</li>
+        <li>O resultado é um número (ex.: 82% de acerto), fácil de pôr numa tabela, mas fácil de ler errado</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>O que o benchmark mede</strong> é o desempenho naquela prova, naquelas condições (prompt, temperatura, número de tentativas). Não é o desempenho na <em>sua</em> tarefa.</div>
+      <div class="callout" style="margin-top:10px">Por isso a tabela do fabricante é ponto de partida para escolher quem testar, e não o resultado da escolha.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Os conhecidos</span><span class="n">02</span></div>
+  <h2>Quatro benchmarks <em>que você vai encontrar</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Benchmark</th><th>O que mede</th><th>Como pontua</th></tr></thead>
+    <tbody>
+      <tr><td><b>MMLU</b></td><td>Conhecimento geral e resolução de problemas em <strong>57 tarefas</strong> (matemática básica, história dos EUA, ciência da computação, direito…)</td><td>% de respostas de múltipla escolha corretas</td></tr>
+      <tr><td><b>GPQA</b> e <b>MMMU</b></td><td>Perguntas de nível avançado de ciência e perguntas multimodais (texto e imagem); o AI Index 2025 os cita entre os benchmarks exigentes de 2023</td><td>% de acerto</td></tr>
+      <tr><td><b>SWE-bench</b></td><td>Resolver <strong>issues reais do GitHub</strong> de 12 repositórios Python, editando o código</td><td>% de issues resolvidas (testes passam)</td></tr>
+      <tr><td><b>Chatbot Arena</b></td><td>Preferência humana: duas respostas anônimas, a pessoa escolhe a melhor</td><td>Ranking a partir dos votos</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Fontes: Hendrycks et al. (arXiv:2009.03300); swebench.com; Chiang et al. (arXiv:2403.04132); AI Index Report 2025 (Stanford HAI).</p>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Tipos</span><span class="n">03</span></div>
+  <h2>O que cada tipo <em>revela</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Conhecimento e raciocínio</div><p>Múltipla escolha com gabarito (MMLU, GPQA). Barato de rodar e comparar; mede o que o modelo <em>sabe</em>, não o que ele <em>entrega</em> num fluxo real.</p></div>
+    <div class="card"><div class="k">Código e tarefas completas</div><p>SWE-bench: o modelo precisa entender um repositório e produzir uma correção que passe nos testes. Mais próximo do trabalho real.</p></div>
+    <div class="card"><div class="k">Preferência humana</div><p>Chatbot Arena: reflete o que as pessoas <em>gostam</em> de ler (clareza, tom, formatação), que nem sempre é o mais correto.</p></div>
+    <div class="card"><div class="k">Os seus dados</div><p>Um conjunto de exemplos da <strong>sua</strong> tarefa, com a resposta esperada. É o único que mede o que importa para você (seção 08).</p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Preferência humana</span><span class="n">04</span></div>
+  <h2>Como funciona <em>o Chatbot Arena</em></h2>
+  <div class="par e">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="b">1</div><div><h3>Uma pergunta, dois modelos anônimos</h3><p>A pessoa escreve o que quiser e recebe duas respostas, sem saber qual modelo gerou cada uma.</p></div></div>
+        <div class="step"><div class="b">2</div><div><h3>Voto</h3><p>Ela escolhe a melhor. Só depois os nomes aparecem.</p></div></div>
+        <div class="step"><div class="b">3</div><div><h3>Ranking estatístico</h3><p>Milhares de comparações aos pares viram uma pontuação por modelo.</p></div></div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>No artigo de apresentação (março de 2024), a plataforma já tinha mais de <strong>240 mil votos</strong></li>
+        <li>Vantagem: perguntas variadas, feitas por usuários reais, e sem gabarito decorável</li>
+        <li>Limite: quem vota é quem usa o site, e as perguntas não são as da sua empresa</li>
+      </ul>
+      <p class="note">Fonte: Chiang et al., "Chatbot Arena: An Open Platform for Evaluating LLMs by Human Preference" (arXiv:2403.04132). A tabela atual fica em lmarena.ai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Código</span><span class="n">05</span></div>
+  <h2>SWE-bench: <em>problemas de verdade</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>As tarefas vêm de <strong>issues do GitHub</strong> de 12 repositórios Python</li>
+        <li>Há versões: <strong>Verified</strong> (500 instâncias filtradas por humanos), <strong>Lite</strong> (300, mais barata de rodar), <strong>Multilingual</strong> (300 tarefas de 42 repositórios em 9 linguagens) e outras</li>
+        <li>No site, o padrão de comparação roda todos os modelos no mesmo ambiente (mini-SWE-agent), para o resultado depender do modelo e não da ferramenta</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good">A lição do SWE-bench vale para qualquer benchmark: <strong>o ambiente conta</strong>. O mesmo modelo, com outra ferramenta ao redor (agente, número de tentativas, ferramentas), dá outro resultado.</div>
+      <p class="note" style="margin-top:8px">Fonte: swebench.com, outubro de 2026.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Limitações</span><span class="n">06</span></div>
+  <h2>Por que o número <em>pode enganar</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Contaminação</div><p>Se as perguntas da prova apareceram no treino, o modelo "decorou" parte dela. Um estudo (arXiv:2311.09783) destaca que o problema é crítico em modelos fechados e em alguns abertos, onde faltam dados sobre o treino.</p></div>
+    <div class="card"><div class="k">Saturação</div><p>Quando os melhores modelos já acertam quase tudo, o benchmark deixa de separar os bons dos ótimos. Por isso surgem provas mais difíceis, como as de 2023 citadas no AI Index.</p></div>
+    <div class="card"><div class="k">Sensível ao prompt</div><p>Mudar a redação, a ordem das opções ou o número de exemplos pode alterar o resultado. Compare só resultados obtidos com o <strong>mesmo</strong> método.</p></div>
+    <div class="card"><div class="k">Amostra pequena</div><p>Com poucas perguntas, uma diferença de alguns pontos pode ser sorte. A próxima seção mostra isso com números.</p></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Incerteza</span><span class="n">07</span></div>
+  <h2>Quantas perguntas <em>bastam</em> para comparar?</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>avaliar.py · intervalo de confiança</b></div>
+      <pre class="code">def wilson(acertos, n, z=1.96):
+    """Intervalo de confiança de 95% para uma proporção."""
+    p = acertos / n
+    d = 1 + z * z / n
+    centro = (p + z * z / (2 * n)) / d
+    folga = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
+    return centro - folga, centro + folga
+
+
+def simular(taxa_real, n, semente):
+    rnd = random.Random(semente)
+    return sum(rnd.random() &lt; taxa_real for _ in range(n))</pre>
+      <div class="lbl" style="margin-top:8px"><b>A comparação</b></div>
+      <pre class="code"><span class="c"># Dois modelos fictícios: A acerta 70% e B acerta 75% de verdade</span>
+for n in (40, 1000):
+    a = simular(0.70, n, 1)
+    b = simular(0.75, n, 2)
+    print(f"--- benchmark com {n} perguntas ---")
+    for nome, ac in (("A", a), ("B", b)):
+        lo, hi = wilson(ac, n)
+        print(f"modelo {nome}: {ac / n:.1%}  (IC 95%: {lo:.1%} a {hi:.1%})")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">--- benchmark com 40 perguntas ---
+modelo A: 75.0%  (IC 95%: 59.8% a 85.8%)
+modelo B: 75.0%  (IC 95%: 59.8% a 85.8%)
+--- benchmark com 1000 perguntas ---
+modelo A: 67.4%  (IC 95%: 64.4% a 70.2%)
+modelo B: 75.1%  (IC 95%: 72.3% a 77.7%)</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><strong>Simulação:</strong> A acerta de verdade 70% e B, 75%</li>
+        <li>Com <strong>40</strong> perguntas, os dois deram 75% e o intervalo vai de 60% a 86%: não dá para distinguir</li>
+        <li>Com <strong>1.000</strong>, os intervalos se separam (A: 64 a 70%; B: 72 a 78%)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>O seu benchmark</span><span class="n">08</span></div>
+  <h2>Monte um teste <em>com os seus dados</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Colete casos reais</h3><p>30 a 100 exemplos da tarefa, incluindo os difíceis e os casos de borda.</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Defina a resposta certa</h3><p>Gabarito, regra automática ou nota de um revisor, com critérios escritos.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Rode todos do mesmo jeito</h3><p>Mesmo prompt, mesma temperatura, mais de uma execução.</p></div></div>
+      <div class="step"><div class="b">4</div><div><h3>Meça além do acerto</h3><p>Custo por tarefa, latência, formato válido, taxa de recusa.</p></div></div>
+    </div>
+    <div>
+      <div class="callout good"><strong>Guarde o conjunto de teste.</strong> Ele serve para decidir hoje e para reavaliar quando sair um modelo novo, ou quando o atual for retirado (aula 02).</div>
+      <div class="callout" style="margin-top:10px">Revise as respostas erradas à mão: muitas vezes o "erro" revela um prompt ruim ou um gabarito mal escrito, não um modelo fraco.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Checklist</span><span class="n">09</span></div>
+  <h2>Antes de acreditar <em>numa tabela de benchmark</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Pergunta</th><th>Por que importa</th></tr></thead>
+    <tbody>
+      <tr><td>Quem mediu: o fabricante ou um terceiro?</td><td>Resultados do próprio fabricante usam as condições mais favoráveis</td></tr>
+      <tr><td>Com qual prompt, quantos exemplos e quantas tentativas?</td><td>Os resultados só são comparáveis com o mesmo método</td></tr>
+      <tr><td>Quantas perguntas tem a prova?</td><td>Poucas perguntas = diferença que pode ser ruído</td></tr>
+      <tr><td>A prova pode ter vazado para o treino?</td><td>Contaminação infla o resultado</td></tr>
+      <tr><td>Mede o tipo de tarefa que eu faço?</td><td>Conhecimento geral não prevê desempenho em atendimento, jurídico ou código</td></tr>
+      <tr><td>E custo e latência?</td><td>O "melhor" modelo pode ser lento e caro demais para o seu caso</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">10</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O SWE-bench avalia modelos em:</p>
+        <div class="opts"><div>A) Perguntas de múltipla escolha</div><div>B) Issues reais do GitHub</div><div>C) Traduções</div><div>D) Preferência de leitores</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Contaminação de um benchmark acontece quando:</p>
+        <div class="opts"><div>A) A prova foi vista no treino</div><div>B) O modelo é lento</div><div>C) O prompt é longo</div><div>D) Há erro de rede</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Dois modelos empatam em 75% numa prova de 40 perguntas. Você conclui:</p>
+        <div class="opts"><div>A) São idênticos</div><div>B) Não dá para distinguir: o intervalo é largo</div><div>C) O primeiro é melhor</div><div>D) O segundo é melhor</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O melhor critério para escolher um modelo é:</p>
+        <div class="opts"><div>A) A tabela do fabricante</div><div>B) O teste com os seus próprios dados</div><div>C) O modelo mais novo</div><div>D) O mais caro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Meça o que<br><em>importa para você</em></h1>
+    <p class="lead">Benchmarks públicos ajudam a escolher quem testar, mas sofrem de contaminação, saturação, sensibilidade ao prompt e amostras pequenas. O teste decisivo é o seu: casos reais, mesma condição para todos, mais de uma execução e métricas de custo e latência, com um intervalo de confiança antes de declarar um vencedor.</p>
+    <div class="chips"><span>MMLU</span><span>SWE-bench</span><span>Chatbot Arena</span><span>Contaminação</span><span>IC 95%</span><span>Teste próprio</span></div>
+    <div class="next">Próxima aula → 04 · Treinamento × Inferência</div>
+    <div class="source">Fontes: arxiv.org/abs/2009.03300 (MMLU); arxiv.org/abs/2403.04132 (Chatbot Arena); arxiv.org/abs/2311.09783 (contaminação); swebench.com; hai.stanford.edu/ai-index/2025-ai-index-report, consultados em outubro de 2026. O exemplo <code>avaliar.py</code> é uma simulação com taxas de acerto escolhidas por nós.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
