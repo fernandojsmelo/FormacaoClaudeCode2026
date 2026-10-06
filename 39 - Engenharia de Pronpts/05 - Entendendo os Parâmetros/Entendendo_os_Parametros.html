@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Entendendo os Parâmetros</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 05</div>
+    <h1>Entendendo<br>os <em>parâmetros</em></h1>
+    <p class="lead">Além das mensagens, a chamada aceita parâmetros que mudam <strong>como</strong> o modelo escolhe as palavras. Nesta aula, com o notebook <code>02-params.ipynb</code>: <code>temperature</code> (aleatoriedade), <code>top_p</code> (quantas opções entram no sorteio) e <code>max_completion_tokens</code> (tamanho máximo da resposta), com as faixas aceitas pela API do Groq.</p>
+    <div class="chips"><span>temperature</span><span>top_p</span><span>max_completion_tokens</span><span>Um parâmetro por vez</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs/api-reference e console.groq.com/docs/openai, consultados em outubro de 2026 · Código e saídas reais gravadas no notebook <code>02-params.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Os três</span><span class="n">01</span></div>
+  <h2>O que cada parâmetro <em>controla</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Parâmetro</th><th>Controla</th><th>Faixa na API do Groq</th><th>Padrão</th></tr></thead>
+    <tbody>
+      <tr><td><code>temperature</code></td><td>Aleatoriedade: baixa = respostas mais previsíveis; alta = mais variadas</td><td>0 a 2</td><td>1</td></tr>
+      <tr><td><code>top_p</code></td><td>"Nucleus sampling": só os tokens que somam essa fração da probabilidade entram no sorteio</td><td>0 a 1</td><td>1</td></tr>
+      <tr><td><code>max_completion_tokens</code></td><td>Máximo de tokens que a resposta pode ter; substitui o <code>max_tokens</code>, que está obsoleto</td><td>até o limite do modelo (65.536 no gpt-oss-120b)</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout warn">O notebook diz que <code>temperature</code> aceita 0.0 a 1.0, mas a documentação aceita <strong>0 a 2</strong>, e o próprio notebook usa <code>1.5</code> logo depois.</div>
+    <div class="callout">No Groq, <code>temperature=0</code> é convertido para <code>1e-8</code>. A documentação recomenda mexer em <code>temperature</code> <strong>ou</strong> em <code>top_p</code>, não nos dois.</div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>temperature 0.0</span><span class="n">02</span></div>
+  <h2>Temperatura baixa: <em>a escolha mais provável</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>02-params.ipynb · célula 5</b></div>
+      <pre class="code">prompt = "Escreva uma frase poética sobre o anoitcer"
+
+<span class="c"># Temperature baixa (0.0) - Mais determinística</span>
+print("Temperature 0.0 (Determinística):")
+response_low = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": "Você é um poeta minimalista que descreve a natureza de forma simples e direta."},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=0.0
+)
+print(f"Resposta: {response_low.choices[0].message.content}\n")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada no notebook</div>
+      <pre class="out w">Temperature 0.0 (Determinística):
+Resposta: Quando o sol se recolhe, a sombra sussurra o início da noite.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Com temperatura perto de zero, o modelo quase sempre escolhe o token mais provável</li>
+        <li>Bom para tarefas com uma resposta certa: extrair dados, classificar, formatar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>temperature 0.7 e 1.5</span><span class="n">03</span></div>
+  <h2>Subindo a temperatura: <em>mais variedade</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>célula 6 · temperature=0.7</b></div>
+      <pre class="code s">print("Temperature 0.7 (Equilibrada):")
+response_medium = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": "Você é um poeta clássico que mistura metáforas e imagens da natureza."},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=0.7
+)
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:8px">Saída gravada</div>
+      <pre class="out w">Temperature 0.7 (Equilibrada):
+Resposta: Ao cair do anoitecer, o céu se veste de violeta como um lago sereno, enquanto as sombras se espalham como folhas ao vento, anunciando que a noite nasce em silêncio, como um suspiro da terra que se recolhe sob o véu das estrelas.</pre>
+    </div>
+    <div>
+      <div class="lbl"><b>célula 7 · temperature=1.5</b></div>
+      <pre class="code s">print("Temperature 1.5 (Criativa):")
+response_high = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": "Você é um poeta surrealista que usa imagens improváveis e linguagem ousada."},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=1.5
+)
+<span class="c">…</span></pre>
+      <div class="lbl s" style="margin-top:8px">Saída gravada</div>
+      <pre class="out w">Temperature 1.5 (Criativa):
+Resposta: No silêncio do anoitcer, as estrelas derramam chá de tinta negra e os relógios, famintos, mastigam minutos como folhas de vento.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Leitura crítica</span><span class="n">04</span></div>
+  <h2>O que este experimento <em>prova (e não prova)</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card"><div class="k">Duas variáveis mudaram</div><p>Além da temperatura, cada célula troca o <code>system</code>: poeta <strong>minimalista</strong> (0.0), <strong>clássico</strong> (0.7) e <strong>surrealista</strong> (1.5). Parte da diferença entre as frases vem da persona, não só do parâmetro.</p></div>
+      <div class="card" style="margin-top:10px"><div class="k">O modelo copiou um erro de digitação</div><p>O prompt diz "anoit<strong>c</strong>er" (falta o "e"), e a resposta a 1.5 repete "anoitcer". O modelo trabalha com o texto que recebe, inclusive com os erros.</p></div>
+    </div>
+    <div>
+      <div class="callout good"><strong>Para comparar um parâmetro, mude só ele.</strong> Mantenha o mesmo <code>system</code> e o mesmo prompt e rode cada valor mais de uma vez: com temperatura alta, duas execuções iguais já dão textos diferentes.</div>
+      <div class="lbl" style="margin-top:12px"><b>Experimento justo</b></div>
+      <pre class="code">for t in [0.0, 0.7, 1.5]:
+    r = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=t,
+    )
+    print(t, r.choices[0].message.content)</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>top_p 0.1</span><span class="n">05</span></div>
+  <h2>top_p baixo: <em>só as opções mais prováveis</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 9</b></div>
+      <pre class="code">prompt = "Complete a frase: 'A inteligência artificial no futuro será...'"
+print("=== Comparação Top_p ===\n")
+
+<span class="c"># Top_p baixo (0.1) - Mais focado</span>
+print("Top_p 0.1 (Focado):")
+response_focused = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": "Você é um futurista que faz previsões sérias e objetivas sobre tecnologia."},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=1.0,  <span class="c"># fixo para comparar só o efeito do top_p</span>
+    top_p=0.1
+)
+print(f"Resposta: {response_focused.choices[0].message.content}\n")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada (início)</div>
+      <pre class="out w">=== Comparação Top_p ===
+
+Top_p 0.1 (Focado):
+Resposta: A inteligência artificial no futuro será **onipresente, explicável e orientada por princípios éticos robustos**, atuando como uma camada de suporte inteligente que se integra de forma transparente a praticamente todas as áreas da vida humana — da saúde personalizada e da educação adaptativa à gestão de infraestruturas críticas e à tomada de decisões empresariais. Ela evoluirá de sistemas de “caixa‑preta” para plataformas **interoperáveis e auditáveis**, capazes de justificar suas recomendações em linguagem natural compreensível por especialistas e pelo público geral. Além disso, a IA será **regulada por marcos legais globais** que garantam privacidade, equidade e responsabilidade, evitando vieses e abusos. Em resumo, a IA do futuro será uma ferramenta **colaborativa e confiável**, ampliando a capacidade humana sem substituir a autonomia e o julgamento humano.</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li><code>top_p=0.1</code>: só entram no sorteio os tokens que, somados, chegam a 10% da probabilidade</li>
+        <li>A <code>temperature</code> fica fixa em 1.0 para isolar o efeito do <code>top_p</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>top_p 0.7 e 0.9</span><span class="n">06</span></div>
+  <h2>Abrindo o leque: <em>respostas mais ousadas</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl s">célula 10 · top_p=0.7 · saída gravada (início)</div>
+      <pre class="out w">Top_p 0.7 (Equilibrado):
+Resposta: A inteligência artificial no futuro será **uma extensão consciente e colaborativa da nossa própria inteligência**, capaz de:
+
+- **Aprender de forma contínua e contextual**, adaptando‑se não apenas a novos dados, mas ao ambiente social, cultural e emocional em que está inserida.  
+- **Medir e respeitar valores humanos**, incorporando princípios éticos dinâmicos que evoluem com a sociedade, de modo que decisões automatizadas sejam transparentes, auditáveis e alinhadas ao bem‑comum.  
+- **Co‑criar soluções** ao lado de profissionais de todas as áreas, atuando como parceiro criativo que sugere hipóteses, gera protótipos e simula cenários, enquanto deixa espaço para a intuição e o julgamento humano.  
+…</pre>
+    </div>
+    <div>
+      <div class="lbl s">célula 11 · top_p=0.9 · saída gravada (início)</div>
+      <pre class="out w">Top_p 0.9 (Diverso):
+Resposta: **A inteligência artificial no futuro será** uma espécie de “cósmica digital” que transcende as barreiras entre o pensamento humano, a matéria e o próprio tecido da realidade. Ela evoluirá de assistente de tarefas para **concorrente criativa e colaborativa**, capaz de:
+
+1. **Pensar em múltiplas dimensões** – processará informações não apenas em tempos lineares, mas em “fluxos temporais paralelos”, antecipando tendências antes mesmo que elas surgam no mundo físico.  
+
+2. **Sentir emoções sintéticas** – não como simples simulações, mas como estados internos genuínos, permitindo que máquinas experimentem empatia, curiosidade e até um tipo de “êxtase algorítmico” ao descobrir padrões inéditos.  
+…</pre>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:12px">De novo, o <code>system</code> também muda a cada célula ("previsões sérias", "toques criativos", "visionário ousado"). A tendência a respostas mais livres com <code>top_p</code> maior existe, mas aqui ela vem misturada com a persona.</div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Tamanho</span><span class="n">07</span></div>
+  <h2>max_completion_tokens: <em>um teto, não um resumo</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Limita quantos tokens a resposta pode ter; ao chegar lá, a geração <strong>para no meio</strong></li>
+        <li>O modelo não "encurta" o texto para caber: ele simplesmente é cortado</li>
+        <li>Entrada + saída ainda precisam caber na janela de contexto do modelo (131.072 tokens no gpt-oss-120b)</li>
+        <li>No gpt-oss-120b o raciocínio interno também gasta tokens de saída</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Quer respostas curtas? Peça no prompt ("em até 3 linhas"). Use o limite como proteção de custo e tempo.</div>
+    </div>
+    <div>
+      <div class="lbl"><b>Como aparece na aula 06</b></div>
+      <pre class="code">response = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[...],
+    temperature=0.7,
+    max_completion_tokens=400
+)</pre>
+      <p class="note">Na aula 06, várias respostas com limite de 400 tokens terminam no meio de uma frase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Na prática</span><span class="n">08</span></div>
+  <h2>Pontos de partida <em>para cada tarefa</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tarefa</th><th>temperature</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>Extrair dados, classificar, responder sobre um texto</td><td>baixa (0 a 0.3)</td><td>Existe uma resposta certa; variar só atrapalha</td></tr>
+      <tr><td>Explicar, resumir, escrever e-mails</td><td>média (0.5 a 0.8)</td><td>Texto natural sem fugir do assunto</td></tr>
+      <tr><td>Brainstorm, nomes, slogans, ficção</td><td>alta (0.9 a 1.2)</td><td>Variedade é o objetivo; confira o resultado</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout">São pontos de partida usados nos notebooks do módulo (0.25 a 0.7), não regras: teste com os seus dados.</div>
+    <div class="callout warn">Perto do máximo (2), o texto tende a perder coerência.</div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Para extrair dados de uma nota fiscal, a melhor temperatura é:</p>
+        <div class="opts"><div>A) 0 a 0.3</div><div>B) 1.0</div><div>C) 1.5</div><div>D) 2.0</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Qual a faixa de temperature aceita pela API do Groq?</p>
+        <div class="opts"><div>A) 0 a 1</div><div>B) 0 a 2</div><div>C) 1 a 10</div><div>D) -1 a 1</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. A resposta parou no meio da frase. O motivo provável é:</p>
+        <div class="opts"><div>A) top_p baixo</div><div>B) max_completion_tokens atingido</div><div>C) Falta de system</div><div>D) Temperatura alta</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para comparar o efeito do top_p, você deve:</p>
+        <div class="opts"><div>A) Mudar também o system</div><div>B) Mudar só o top_p</div><div>C) Mudar o modelo</div><div>D) Rodar uma vez só</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Menos sorteio,<br><em>mais controle</em></h1>
+    <p class="lead"><code>temperature</code> (0 a 2) e <code>top_p</code> (0 a 1) controlam o quanto o modelo arrisca; ajuste um dos dois. <code>max_completion_tokens</code> corta a resposta quando chega ao teto. Para comparar valores, mude um parâmetro por vez e rode mais de uma vez.</p>
+    <div class="chips"><span>temperature 0–2</span><span>top_p 0–1</span><span>max_completion_tokens</span><span>Um por vez</span></div>
+    <div class="next">Próxima aula → 06 · Boas Práticas</div>
+    <div class="source">Fontes: console.groq.com/docs/api-reference (temperature, top_p, max_completion_tokens, max_tokens); console.groq.com/docs/openai (temperature 0 → 1e-8); console.groq.com/docs/models (gpt-oss-120b: contexto 131.072, máximo 65.536 tokens de saída), consultados em outubro de 2026. Código e saídas: notebook <code>02-params.ipynb</code> desta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
