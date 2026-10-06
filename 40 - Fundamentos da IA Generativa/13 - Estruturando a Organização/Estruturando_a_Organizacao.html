@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Estruturando a Organização</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 13</div>
+    <h1>Estruturando<br><em>a organização</em></h1>
+    <p class="lead">Tecnologia sozinha não adota IA: quem decide, quem constrói, quem opera e quem responde pelos riscos precisa estar definido. Esta aula mostra como <strong>organizar papéis, responsabilidades e governança</strong> para a IA generativa, desde a liderança executiva até as equipes que usam as ferramentas no dia a dia, com base nas funções <strong>Govern 2 e 3</strong> do NIST AI RMF.</p>
+    <div class="chips"><span>Papéis</span><span>Liderança</span><span>Comitê de IA</span><span>Equipes diversas</span><span>Treinamento</span><span>Cultura</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado no NIST AI Risk Management Framework 1.0 (função Govern, categorias 2, 3 e 4) e no Cloud Adoption Framework da Microsoft, consultados em outubro de 2026</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Por que estruturar</span><span class="n">01</span></div>
+  <h2>Sem dono, <em>ninguém responde</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Sem estrutura, a IA entra pela porta dos fundos: cada área contrata uma ferramenta, ninguém sabe quais dados foram enviados e ninguém responde por um erro</li>
+        <li>O NIST AI RMF coloca a função <strong>Govern</strong> como base de tudo: ela atravessa as outras três (Map, Measure, Manage) e cria a cultura e as responsabilidades que permitem gerir o risco</li>
+        <li>Estruturar não é burocratizar: é <strong>definir quem decide o quê</strong> para que os projetos andem com segurança</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>Sintoma típico:</strong> várias ferramentas de IA em uso, nenhum inventário, nenhuma regra sobre dados e ninguém que possa dizer "pare" ou "pode seguir".</div>
+      <div class="callout" style="margin-top:10px">Esta aula completa a aula 06 (como aplicar) e a aula 08 (riscos): aqui é <em>quem</em> faz cada parte.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Govern 2</span><span class="n">02</span></div>
+  <h2>Papéis e responsabilidades <em>documentados</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Subcategoria do NIST</th><th>Em palavras simples</th></tr></thead>
+    <tbody>
+      <tr><td><b>Govern 2.1</b></td><td>Papéis, responsabilidades e linhas de comunicação sobre os riscos de IA estão <strong>documentados</strong> e são claros para as pessoas e equipes envolvidas</td></tr>
+      <tr><td><b>Govern 2.2</b></td><td>Pessoas e parceiros recebem <strong>treinamento</strong> em gestão de risco de IA, de acordo com suas funções</td></tr>
+      <tr><td><b>Govern 2.3</b></td><td>A <strong>liderança executiva</strong> assume a responsabilidade pelas decisões sobre os riscos de sistemas de IA</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout" style="margin-top:12px">Paráfrase em português das subcategorias do NIST AI RMF 1.0; o texto original está em inglês.</div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Govern 3 e 4</span><span class="n">03</span></div>
+  <h2>Quem participa <em>das decisões</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li><strong>Govern 3.1:</strong> as decisões sobre riscos e impactos da IA são informadas por uma <strong>equipe diversa</strong> (áreas, formações, experiências e perfis demográficos)</li>
+        <li><strong>Govern 4:</strong> a organização cultiva uma <strong>cultura que considera e comunica o risco</strong> de IA</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good"><strong>Na prática:</strong> o jurídico, a segurança, o negócio e quem usa o sistema opinam <em>antes</em> do lançamento, não depois do problema.</div>
+      <p class="note" style="margin-top:10px">Equipes homogêneas tendem a deixar passar riscos que afetam pessoas diferentes delas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Papéis</span><span class="n">04</span></div>
+  <h2>Quem faz o quê <em>numa organização</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Patrocinador executivo</div><p>Responde pelos riscos e pelo orçamento; remove obstáculos; decide as prioridades (Govern 2.3).</p></div>
+    <div class="card"><div class="k">Dono do caso de uso</div><p>Área de negócio que pediu a solução; define o problema, a métrica e aceita o resultado.</p></div>
+    <div class="card"><div class="k">Equipe técnica</div><p>Constrói e opera: integração, prompts, RAG, monitoramento e custos.</p></div>
+    <div class="card"><div class="k">Dados e privacidade</div><p>Classifica os dados, aplica a LGPD e decide o que pode ou não ir ao modelo (aula 08).</p></div>
+    <div class="card"><div class="k">Segurança</div><p>Avalia ameaças como injeção de prompt, controla acessos e responde a incidentes.</p></div>
+    <div class="card"><div class="k">Jurídico e conformidade</div><p>Contratos com fornecedores, propriedade intelectual e requisitos regulatórios.</p></div>
+  </div>
+  <p class="note" style="margin-top:10px">Divisão de papéis proposta para esta aula; em organizações pequenas, uma pessoa pode acumular vários.</p>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Modelos</span><span class="n">05</span></div>
+  <h2>Centralizado, distribuído <em>ou híbrido</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Como funciona</th><th>Vantagem</th><th>Risco</th></tr></thead>
+    <tbody>
+      <tr><td><b>Centralizado</b></td><td>Uma equipe central de IA atende toda a empresa</td><td>Padrão, economia de escala</td><td>Fila, distância do negócio</td></tr>
+      <tr><td><b>Distribuído</b></td><td>Cada área tem sua própria equipe</td><td>Proximidade, velocidade</td><td>Duplicação, falta de padrão</td></tr>
+      <tr><td><b>Híbrido</b></td><td>Núcleo define regras e plataforma; áreas constroem seus casos</td><td>Equilíbrio</td><td>Exige clareza de papéis</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout good" style="margin-top:12px">Para a maioria das organizações, o <strong>híbrido</strong> é um bom ponto de chegada: começa centralizado (para aprender) e distribui à medida que a maturidade cresce.</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Comitê de IA</span><span class="n">06</span></div>
+  <h2>Um fórum pequeno <em>que decide rápido</em></h2>
+  <div class="par e">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="b">1</div><div><h3>Composição</h3><p>Negócio, tecnologia, dados, segurança e jurídico; diverso, como pede o Govern 3.1.</p></div></div>
+        <div class="step"><div class="b">2</div><div><h3>Reunião regular</h3><p>Quinzenal ou mensal, com pauta curta e decisões registradas.</p></div></div>
+        <div class="step"><div class="b">3</div><div><h3>Critérios claros</h3><p>Casos de baixo risco seguem uma via rápida; os de alto risco passam por revisão completa.</p></div></div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Mantém o <strong>inventário</strong> de sistemas e ferramentas de IA em uso</li>
+        <li>Aprova casos de uso e acompanha os pilotos (aula 06)</li>
+        <li>Recebe incidentes e decide as correções</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px"><strong>Cuidado:</strong> um comitê que demora meses vira gargalo e empurra as pessoas para o uso escondido (shadow AI).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Políticas</span><span class="n">07</span></div>
+  <h2>Regras <em>curtas e claras</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Política</th><th>Deve responder</th></tr></thead>
+    <tbody>
+      <tr><td><b>Uso aceitável</b></td><td>Para que a IA pode e não pode ser usada? Quais ferramentas são aprovadas?</td></tr>
+      <tr><td><b>Dados</b></td><td>Que dados nunca podem ir a um modelo externo? Como anonimizar? (aula 08)</td></tr>
+      <tr><td><b>Revisão humana</b></td><td>Em quais decisões uma pessoa deve revisar antes de agir? (aula 11)</td></tr>
+      <tr><td><b>Fornecedores</b></td><td>Que garantias contratuais sobre privacidade, retenção e treinamento com dados?</td></tr>
+      <tr><td><b>Incidentes</b></td><td>Quem aciona quem, em quanto tempo, e como se comunica?</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Lista elaborada para esta aula a partir dos riscos da aula 08 e das funções do NIST AI RMF.</p>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Treinamento</span><span class="n">08</span></div>
+  <h2>Cada função <em>precisa do seu treinamento</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Todos</div><p>Noções de IA generativa (aula 01), limites, alucinação, o que não pode ser compartilhado e como verificar respostas.</p></div>
+    <div class="card"><div class="k">Quem usa no trabalho</div><p>Prompts eficazes (módulo 39), revisão do resultado e uso das ferramentas aprovadas.</p></div>
+    <div class="card"><div class="k">Quem constrói e decide</div><p>Avaliação e benchmarks (aula 03), RAG e agentes (aulas 09 e 10), gestão de riscos e requisitos legais.</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Isto é o Govern 2.2 aplicado: o treinamento é <strong>proporcional ao papel</strong>, e não um curso único para todos.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Campeões</span><span class="n">09</span></div>
+  <h2>Pessoas que levam a IA <em>para dentro das áreas</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Um <strong>campeão</strong> por área: alguém curioso e respeitado, que testa, ajuda os colegas e leva os problemas reais ao núcleo</li>
+        <li>Rede de campeões com encontros periódicos para trocar prompts, casos e erros</li>
+        <li>Reconhecimento formal do papel e tempo reservado na agenda</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good"><strong>Por que funciona:</strong> a adoção depende de confiança, e as pessoas confiam mais em um colega que usa a ferramenta no mesmo trabalho do que num comunicado da diretoria.</div>
+      <p class="note" style="margin-top:10px">Prática comum de gestão da mudança; aparece com mais detalhe na aula 15.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Cultura</span><span class="n">10</span></div>
+  <h2>Uma cultura <em>que fala de risco</em></h2>
+  <ul class="checklist">
+    <li>Segundo o Govern 4, a organização cultiva uma cultura que <strong>considera e comunica</strong> o risco de IA</li>
+    <li>Errar com a IA faz parte do aprendizado: incentive a <strong>comunicação de incidentes e quase-acidentes</strong>, sem punir quem reporta</li>
+    <li>Dê à liderança o exemplo: se os executivos usam e discutem a IA abertamente, os demais seguem</li>
+    <li>Torne fácil fazer a coisa certa: ferramentas aprovadas, rápidas de obter e melhores do que as alternativas escondidas</li>
+  </ul>
+  <div class="callout warn" style="margin-top:12px">Proibir sem oferecer alternativa quase sempre aumenta o uso escondido.</div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Checklist</span><span class="n">11</span></div>
+  <h2>Sua organização <em>está estruturada?</em></h2>
+  <ul class="checklist">
+    <li>Existe um <strong>patrocinador executivo</strong> que responde pelos riscos de IA?</li>
+    <li>Os <strong>papéis e responsabilidades</strong> estão documentados e conhecidos?</li>
+    <li>Há um <strong>inventário</strong> das ferramentas e sistemas de IA em uso?</li>
+    <li>Existe um <strong>fórum de decisão</strong> com representantes de várias áreas e uma via rápida para os casos simples?</li>
+    <li>As <strong>políticas</strong> de uso, dados, revisão humana, fornecedores e incidentes estão escritas e curtas?</li>
+    <li>Cada função recebeu o <strong>treinamento</strong> adequado?</li>
+    <li>Existe uma rede de <strong>campeões</strong> e um canal para reportar problemas?</li>
+  </ul>
+</section>
+
+<!-- 12 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">12</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Segundo o NIST AI RMF, quem assume a responsabilidade pelas decisões sobre os riscos?</p>
+        <div class="opts"><div>A) A equipe técnica apenas</div><div>B) A liderança executiva</div><div>C) O fornecedor</div><div>D) Ninguém</div></div>
+        <div class="answer"><b>B.</b> (Govern 2.3)</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Por que decisões devem ser informadas por equipes diversas?</p>
+        <div class="opts"><div>A) Para ter reuniões maiores</div><div>B) Para perceber riscos que afetam pessoas diferentes</div><div>C) Para evitar o treinamento</div><div>D) Para eliminar políticas</div></div>
+        <div class="answer"><b>B.</b> (Govern 3.1)</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Um bom ponto de chegada para muitas organizações é o modelo:</p>
+        <div class="opts"><div>A) Totalmente centralizado</div><div>B) Híbrido</div><div>C) Sem governança</div><div>D) Só terceirizado</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Um comitê de IA muito lento tende a:</p>
+        <div class="opts"><div>A) Aumentar a segurança sempre</div><div>B) Empurrar as pessoas para o uso escondido</div><div>C) Reduzir o risco a zero</div><div>D) Substituir as políticas</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Quem decide,<br><em>quem responde</em></h1>
+    <p class="lead">Estruturar a organização é definir papéis documentados, uma liderança que responde pelos riscos, decisões informadas por equipes diversas, treinamento por função, políticas curtas e uma cultura que fala de risco abertamente.</p>
+    <div class="chips"><span>Papéis</span><span>Liderança</span><span>Comitê</span><span>Políticas</span><span>Treinamento</span><span>Campeões</span></div>
+    <div class="next">Próxima aula → 14 · Roadmap IA</div>
+    <div class="source">Fontes: NIST AI Risk Management Framework 1.0 (AI RMF Core, função Govern, categorias 2, 3 e 4), nist.gov; Cloud Adoption Framework da Microsoft (AI adoption), learn.microsoft.com, consultados em outubro de 2026. Os papéis, modelos organizacionais, políticas e o checklist são síntese didática desta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
