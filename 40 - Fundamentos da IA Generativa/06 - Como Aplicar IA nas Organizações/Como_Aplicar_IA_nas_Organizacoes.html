@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Como aplicar IA nas organizações</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 06</div>
+    <h1>Como aplicar IA<br><em>nas organizações</em></h1>
+    <p class="lead">Aplicar IA bem é mais uma questão de <strong>método</strong> do que de tecnologia: escolher os problemas certos, decidir se compra, adapta ou constrói, preparar os dados, rodar um piloto com métrica, criar uma governança mínima e cuidar das pessoas. Esta aula monta esse caminho em passos, usando como referência o guia de adoção de IA da Microsoft e o AI RMF do NIST.</p>
+    <div class="chips"><span>Começar pelo problema</span><span>Priorização</span><span>Comprar × construir</span><span>Dados</span><span>Piloto</span><span>Governança</span><span>Pessoas</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado no Cloud Adoption Framework (Microsoft Learn, "AI strategy") e no NIST AI Risk Management Framework 1.0, consultados em outubro de 2026 · A matriz de priorização e a tabela de governança são ferramentas didáticas desta aula</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O ponto de partida</span><span class="n">01</span></div>
+  <h2>Comece pelo problema, <em>não pela tecnologia</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O guia de estratégia de IA da Microsoft manda <strong>começar pelos problemas de negócio</strong>: ver onde a organização precisa de resultados melhores antes mesmo de considerar IA</li>
+        <li>Os sinais mais claros aparecem na forma como as pessoas trabalham: tarefas repetitivas, gargalos, retrabalho, esperas</li>
+        <li>O objetivo da lista de oportunidades é dar a todos uma <strong>visão comum</strong> do que importa para o negócio, e não ser exaustiva</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>O que dá errado sem método</strong> (descrito no mesmo guia): equipes experimentam muito e veem pouco retorno; áreas constroem soluções conflitantes; e preocupações de segurança e baixa confiança limitam o que as pessoas podem usar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Passo 1</span><span class="n">02</span></div>
+  <h2>Levante os casos de uso <em>com quem faz o trabalho</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="steps">
+      <div class="step"><div class="b">1</div><div><h3>Converse com as áreas</h3><p>Pergunte "o que toma mais tempo e é repetitivo?", não "onde usar IA?".</p></div></div>
+      <div class="step"><div class="b">2</div><div><h3>Descreva a tarefa</h3><p>Quem faz, quantas vezes por mês, quanto tempo leva, o que acontece se errar.</p></div></div>
+      <div class="step"><div class="b">3</div><div><h3>Una tudo numa lista só</h3><p>O mapa de oportunidades da aula 05, com um dono para cada item.</p></div></div>
+    </div>
+    <div>
+      <div class="callout good">Cada caso de uso precisa <strong>voltar a um valor real</strong>: tempo, custo, receita, qualidade ou risco evitado. Se não dá para dizer qual, não entra na lista.</div>
+      <div class="callout" style="margin-top:10px">Muitos casos da lista podem não precisar de IA generativa: uma regra, uma automação ou um relatório resolvem. Descobrir isso cedo evita gastar à toa.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Passo 2</span><span class="n">03</span></div>
+  <h2>Priorize: <em>valor × viabilidade</em>, com o risco como veto</h2>
+  <div class="par e">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Caso de uso (hipotético)</th><th>Valor</th><th>Viab.</th><th>Risco</th><th>Valor × viab.</th></tr></thead>
+        <tbody>
+          <tr><td>Triagem de chamados de suporte</td><td>5</td><td>4</td><td>2</td><td><b>20</b></td></tr>
+          <tr><td>Resumo de reuniões</td><td>3</td><td>5</td><td>1</td><td><b>15</b></td></tr>
+          <tr><td>Análise de contratos</td><td>5</td><td>2</td><td>5</td><td><b>10</b></td></tr>
+          <tr><td>Agente que aprova reembolsos</td><td>4</td><td>2</td><td>5</td><td><b>8</b></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><strong>Valor</strong> e <strong>viabilidade</strong> de 1 a 5; a nota é o produto dos dois</li>
+        <li><strong>Viabilidade</strong> junta: dados disponíveis, qualidade esperada da IA e esforço de integração</li>
+        <li><strong>Risco</strong> 4 ou 5 funciona como <strong>veto</strong>: o caso só avança com revisão humana e governança reforçada</li>
+        <li>Comece pelo topo da lista com risco baixo; deixe os de risco alto para depois de aprender com os primeiros</li>
+      </ul>
+      <p class="note">As notas do exemplo são fictícias; atribua as suas com as áreas envolvidas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Passo 3</span><span class="n">04</span></div>
+  <h2>Comprar, adaptar <em>ou construir</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Caminho</th><th>Exemplo</th><th>Ganha-se</th><th>Perde-se</th></tr></thead>
+    <tbody>
+      <tr><td><b>Pronto (copiloto, SaaS)</b></td><td>Assistente embutido nas ferramentas de escritório</td><td>Velocidade, nenhuma engenharia</td><td>Controle e personalização</td></tr>
+      <tr><td><b>Configurar (low-code)</b></td><td>Fluxos e assistentes montados em plataforma visual</td><td>Rapidez com algum ajuste</td><td>Limites da plataforma</td></tr>
+      <tr><td><b>Construir sobre API (PaaS)</b></td><td>Sistema próprio com RAG, ferramentas e prompts (aulas 09 e 10)</td><td>Controle do fluxo e da experiência</td><td>Tempo e equipe de engenharia</td></tr>
+      <tr><td><b>Infraestrutura própria</b></td><td>Modelo aberto rodando em servidores seus (aula 02)</td><td>Controle máximo dos dados</td><td>Custo e esforço de operação</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout">O guia da Microsoft descreve quatro modelos de adoção desse tipo e resume: <strong>ao ir do primeiro ao último, você ganha controle e perde velocidade</strong>.</div>
+    <div class="callout good">Quatro fatores para decidir cada caso: <strong>capacidades</strong> da solução, <strong>dados</strong> necessários, <strong>habilidades</strong> da equipe e <strong>custo</strong>.</div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Dados</span><span class="n">05</span></div>
+  <h2>Os dados <em>antes do modelo</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O guia da Microsoft pede dados <strong>governados e de boa qualidade</strong>: fontes identificadas, classificadas e em conformidade, à medida que a IA se espalha</li>
+        <li>Se o caso de uso depende de documentos internos (aula 09), eles precisam existir, estar acessíveis e poder ser usados</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Pergunta</th><th>Se a resposta for "não"</th></tr></thead>
+        <tbody>
+          <tr><td>Sabemos onde estão os dados?</td><td>Mapear antes de começar</td></tr>
+          <tr><td>Há um dono responsável?</td><td>Definir o dono</td></tr>
+          <tr><td>Estão atualizados e consistentes?</td><td>Limpar ou limitar o escopo</td></tr>
+          <tr><td>Há dados pessoais ou sigilosos?</td><td>Aplicar a aula 08 (LGPD, anonimização)</td></tr>
+          <tr><td>Temos permissão para usá-los?</td><td>Rever base legal e contratos</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Piloto</span><span class="n">06</span></div>
+  <h2>Um piloto <em>que ensina de verdade</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div><h3>Escopo pequeno e prazo curto</h3><p>Uma tarefa, um grupo de usuários, uma data para decidir.</p></div></div>
+    <div class="step"><div class="b">2</div><div><h3>Métrica definida antes</h3><p>Tempo por tarefa, taxa de erro, satisfação, custo por tarefa. Registre o "antes" (linha de base).</p></div></div>
+    <div class="step"><div class="b">3</div><div><h3>Comparação justa</h3><p>Um grupo usa a IA e outro não, ou o mesmo grupo é medido antes e depois.</p></div></div>
+    <div class="step"><div class="b">4</div><div><h3>Critério de decisão escrito</h3><p>"Se o tempo cair pelo menos X% e o erro não subir, escalamos." Quem decide e quando.</p></div></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Um piloto sem métrica vira demonstração. O resultado da avaliação (aula 03) e o cálculo de retorno (aula 07) devem estar prontos <strong>antes</strong> de o piloto começar.</div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Governança</span><span class="n">07</span></div>
+  <h2>Governança mínima, <em>em quatro funções</em></h2>
+  <div class="par e">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Função (NIST AI RMF)</th><th>Na prática</th></tr></thead>
+        <tbody>
+          <tr><td><b>Govern</b></td><td>Políticas, processos e responsáveis para mapear, medir e gerir riscos de IA, aplicados de verdade</td></tr>
+          <tr><td><b>Map</b></td><td>Entender o contexto: finalidade, usos previstos, leis e expectativas do cenário</td></tr>
+          <tr><td><b>Measure</b></td><td>Escolher e aplicar métodos e métricas, começando pelos riscos mais relevantes</td></tr>
+          <tr><td><b>Manage</b></td><td>Priorizar e tratar os riscos, e decidir se o sistema atinge seus objetivos</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>O AI RMF é <strong>voluntário</strong>, não setorial e serve a organizações de qualquer porte</li>
+        <li>Mínimo para qualquer projeto: <strong>dono</strong>, <strong>finalidade escrita</strong>, <strong>regra de dados</strong>, <strong>revisão humana</strong> onde o risco é alto e <strong>registro</strong> do que o sistema fez</li>
+        <li>Os riscos específicos de IA generativa estão na aula 08</li>
+      </ul>
+      <p class="note">Fonte: NIST AI RMF 1.0, seção "Core" (airc.nist.gov).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pessoas</span><span class="n">08</span></div>
+  <h2>Quem usa <em>decide se funciona</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Treinamento</div><p>Ensine a escrever prompts, a conferir respostas e a reconhecer o que não se deve enviar à IA. É o investimento de menor custo e maior efeito.</p></div>
+    <div class="card"><div class="k">Defensores internos</div><p>Pessoas de cada área que testam primeiro, compartilham exemplos e ajudam as outras.</p></div>
+    <div class="card"><div class="k">Mudança de processo</div><p>Colocar IA numa tarefa sem mudar o fluxo ao redor costuma dar pouco resultado. Redesenhe o processo.</p></div>
+    <div class="card"><div class="k">Política de uso clara</div><p>O que pode e o que não pode ser enviado, quais ferramentas são aprovadas, quem pergunta em caso de dúvida.</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Desconfiança excessiva também trava: o guia da Microsoft lista "baixa confiança" como causa de uso restrito demais. Mostre os limites e os resultados medidos.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Caminho</span><span class="n">09</span></div>
+  <h2>Um roteiro <em>em três fases</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+    <div class="n"><b>1 · Preparar</b>problemas, dados, política, treinamento básico</div>
+    <div class="n key"><b>2 · Provar</b>1 a 3 pilotos com métrica e decisão</div>
+    <div class="n"><b>3 · Escalar</b>produção, plataforma comum, governança contínua</div>
+  </div>
+  <div class="par e" style="margin-top:14px">
+    <div>
+      <ul class="checklist">
+        <li>Em cada fase, a pergunta é "o que aprendemos e o que muda?"</li>
+        <li>Não escale o que ainda não foi medido</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout">A aula 14 (Roadmap de IA) detalha esse roteiro com prazos, responsáveis e marcos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Armadilhas</span><span class="n">10</span></div>
+  <h2>Erros que se repetem</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Erro</th><th>Consequência</th><th>Remédio</th></tr></thead>
+    <tbody>
+      <tr><td>Começar pela ferramenta</td><td>Solução procurando problema</td><td>Passos 1 e 2: problema e valor primeiro</td></tr>
+      <tr><td>Pilotos sem métrica</td><td>Demonstrações que nunca viram decisão</td><td>Linha de base e critério escrito</td></tr>
+      <tr><td>Soluções isoladas em cada área</td><td>Duplicação e ferramentas conflitantes</td><td>Padrões e plataforma comuns</td></tr>
+      <tr><td>Ignorar dados e permissões</td><td>Atraso e risco legal</td><td>Seção 05 e aula 08</td></tr>
+      <tr><td>Proibir tudo ou liberar tudo</td><td>Uso escondido ou vazamento</td><td>Política, ferramentas aprovadas e treino</td></tr>
+      <tr><td>Esperar perfeição</td><td>Nada sai do piloto</td><td>Humano na revisão onde o risco é alto</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">11</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. O primeiro passo de uma estratégia de IA é:</p>
+        <div class="opts"><div>A) Escolher o modelo</div><div>B) Identificar problemas de negócio e casos de uso</div><div>C) Comprar GPUs</div><div>D) Treinar um modelo</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Na matriz da seção 03, um caso de risco 5 deve:</p>
+        <div class="opts"><div>A) Ser feito primeiro</div><div>B) Avançar só com revisão humana e governança reforçada</div><div>C) Ser descartado sempre</div><div>D) Ignorar a avaliação</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Ao ir de "pronto" para "infraestrutura própria", você:</p>
+        <div class="opts"><div>A) Ganha controle e perde velocidade</div><div>B) Ganha velocidade e perde controle</div><div>C) Perde os dois</div><div>D) Ganha os dois</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O que um piloto precisa ter <em>antes</em> de começar?</p>
+        <div class="opts"><div>A) Uma demonstração bonita</div><div>B) Métrica, linha de base e critério de decisão</div><div>C) Um agente</div><div>D) Um modelo maior</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Método primeiro,<br><em>tecnologia depois</em></h1>
+    <p class="lead">Levante problemas com quem faz o trabalho, priorize por valor, viabilidade e risco, escolha entre comprar, configurar ou construir, prepare os dados, prove em um piloto com métrica, mantenha uma governança mínima e invista nas pessoas. É esse caminho, repetido, que transforma experimentos em resultado.</p>
+    <div class="chips"><span>Problema → valor</span><span>Valor × viabilidade</span><span>Comprar / construir</span><span>Piloto com métrica</span><span>Govern · Map · Measure · Manage</span></div>
+    <div class="next">Próxima aula → 07 · Benefícios da Adoção</div>
+    <div class="source">Fontes: learn.microsoft.com/azure/cloud-adoption-framework/scenarios/ai (AI strategy); nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10 e airc.nist.gov (Core: Govern, Map, Measure, Manage), consultados em outubro de 2026. A matriz de priorização (seção 03) e o roteiro em três fases são adaptações didáticas.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
