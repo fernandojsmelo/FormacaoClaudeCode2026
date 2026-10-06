@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Roadmap de IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 14</div>
+    <h1>Roadmap<br><em>de IA</em></h1>
+    <p class="lead">Um roadmap transforma a intenção de "adotar IA" em uma sequência de passos com prazo, dono e critério de decisão. Esta aula organiza a jornada nas fases do <strong>Cloud Adoption Framework</strong> da Microsoft (Plan, Ready, Govern, Secure, Manage), mostra como montar horizontes de 90 dias, 6 meses e 12 meses e usa um cálculo para explicar por que o retorno costuma ter a <strong>forma de uma curva J</strong>.</p>
+    <div class="chips"><span>Fases</span><span>Horizontes</span><span>Casos de uso</span><span>Prova de conceito</span><span>Curva J</span><span>Marcos</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado nos checklists de adoção de IA do Cloud Adoption Framework (Microsoft), consultados em outubro de 2026 · Cálculo executado em <code>exemplos/</code></div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Por que um roadmap</span><span class="n">01</span></div>
+  <h2>Da intenção <em>ao plano</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>As aulas anteriores deram os ingredientes: casos de uso (12), organização (13), riscos (08), benefícios (07)</li>
+        <li>O roadmap os coloca <strong>numa linha do tempo</strong>, com ordem, dependências e pontos de decisão</li>
+        <li>É um <strong>plano vivo</strong>: revisado a cada trimestre com o que os pilotos ensinaram</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>Evite:</strong> um roadmap que só lista ferramentas a comprar. Ele deve listar <em>resultados</em> esperados e <em>decisões</em>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>As fases</span><span class="n">02</span></div>
+  <h2>Cinco fases <em>do Cloud Adoption Framework</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(5,1fr)">
+    <div class="n"><b>Plan</b>estratégia e casos de uso</div>
+    <div class="n"><b>Ready</b>preparar plataforma e dados</div>
+    <div class="n"><b>Govern</b>IA responsável</div>
+    <div class="n"><b>Secure</b>proteger</div>
+    <div class="n"><b>Manage</b>operar e melhorar</div>
+  </div>
+  <div class="callout" style="margin-top:12px">As fases não são estritamente sequenciais: governança e segurança <strong>começam cedo</strong> e continuam depois do lançamento.</div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Plan</span><span class="n">03</span></div>
+  <h2>Planejar: <em>escolher onde começar</em></h2>
+  <ul class="checklist">
+    <li>O CAF inclui entre os itens do planejamento: <strong>priorizar casos de uso de IA</strong> e <strong>criar uma prova de conceito de IA</strong></li>
+    <li>Use a ficha e o ranking da aula 12, com pesos definidos antes</li>
+    <li>Escolha <strong>um ou dois casos</strong> de baixo risco e valor visível para começar</li>
+    <li>Defina a <strong>linha de base</strong> e a métrica de cada caso (aula 06)</li>
+    <li>Registre as premissas: horas gastas, volume, custo atual</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Ready, Govern, Secure</span><span class="n">04</span></div>
+  <h2>Preparar, governar <em>e proteger</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Ready</div><p>Plataforma e modelos escolhidos (aula 02), dados acessíveis e organizados (aula 09), pessoas treinadas (aula 13).</p></div>
+    <div class="card"><div class="k">Govern</div><p>O CAF cita implementar <strong>IA responsável</strong>: políticas, revisão humana (aula 11), papéis (aula 13).</p></div>
+    <div class="card"><div class="k">Secure</div><p>Controle de acessos, proteção de dados e defesa contra injeção de prompt (aula 08).</p></div>
+  </div>
+  <p class="note" style="margin-top:10px">Os rótulos das fases e os itens citados vêm dos checklists do CAF; o mapeamento para as aulas deste módulo é desta aula.</p>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Manage</span><span class="n">05</span></div>
+  <h2>Operar <em>e melhorar sempre</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li><strong>Monitorar</strong> qualidade, custo e uso depois do lançamento</li>
+        <li>Reavaliar com um conjunto de testes fixo quando o modelo mudar (aula 03)</li>
+        <li>Revisar custos de tokens e de inferência (aula 04)</li>
+        <li>Coletar o retorno dos usuários e tratar incidentes</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good"><strong>Um sistema de IA nunca está "pronto":</strong> modelos, dados e necessidades mudam, e o que funcionava hoje pode piorar sem aviso.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Horizontes</span><span class="n">06</span></div>
+  <h2>90 dias, 6 meses, <em>12 meses</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Horizonte</th><th>Foco</th><th>Entregas típicas</th><th>Decisão</th></tr></thead>
+    <tbody>
+      <tr><td><b>0–90 dias</b></td><td>Aprender e provar</td><td>Governança mínima; 1–2 provas de conceito; linha de base; treinamento geral</td><td>Quais pilotos seguem?</td></tr>
+      <tr><td><b>3–6 meses</b></td><td>Pilotar</td><td>Pilotos com métrica; integração com dados; campeões; políticas</td><td>Escalar, ajustar ou parar?</td></tr>
+      <tr><td><b>6–12 meses</b></td><td>Escalar</td><td>Casos aprovados em produção; monitoramento; novas ideias priorizadas</td><td>Onde investir mais?</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Prazos ilustrativos propostos para esta aula; ajuste ao porte e à maturidade da organização.</p>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Curva J</span><span class="n">07</span></div>
+  <h2>O retorno <em>demora a aparecer</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>curva_j.py</b></div>
+      <pre class="code"><span class="c"># Todos os numeros sao hipoteticos</span>
+investimento_inicial = 60000.0   <span class="c"># integracao, dados, treinamento</span>
+custo_mensal = 4000.0            <span class="c"># licencas, tokens, manutencao</span>
+ganho_pleno_mensal = 18000.0     <span class="c"># quando todos usam</span>
+meses_ate_adocao_plena = 6
+
+acumulado = -investimento_inicial
+virada = None
+print("mes | adocao | resultado do mes | acumulado")
+for mes in range(1, 13):
+    adocao = min(mes / meses_ate_adocao_plena, 1.0)
+    resultado = ganho_pleno_mensal * adocao - custo_mensal
+    acumulado += resultado
+    if virada is None and acumulado &gt;= 0:
+        virada = mes
+    print(f"{mes:&gt;3} | {adocao:&gt;6.0%} | R$ {resultado:&gt;11,.0f} | R$ {acumulado:&gt;9,.0f}")
+print("acumulado positivo a partir do mes:", virada)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out w">mes | adocao | resultado do mes | acumulado
+  1 |    17% | R$      -1,000 | R$   -61,000
+  2 |    33% | R$       2,000 | R$   -59,000
+  3 |    50% | R$       5,000 | R$   -54,000
+  4 |    67% | R$       8,000 | R$   -46,000
+  5 |    83% | R$      11,000 | R$   -35,000
+  6 |   100% | R$      14,000 | R$   -21,000
+  7 |   100% | R$      14,000 | R$    -7,000
+  8 |   100% | R$      14,000 | R$     7,000
+  9 |   100% | R$      14,000 | R$    21,000
+ 10 |   100% | R$      14,000 | R$    35,000
+ 11 |   100% | R$      14,000 | R$    49,000
+ 12 |   100% | R$      14,000 | R$    63,000
+acumulado positivo a partir do mes: 8</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Lendo a curva</span><span class="n">08</span></div>
+  <h2>Primeiro afunda, <em>depois sobe</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Investimento inicial de <strong>R$ 60.000</strong>, custo mensal de <strong>R$ 4.000</strong> e ganho pleno de <strong>R$ 18.000</strong> por mês, tudo hipotético</li>
+        <li>A adoção cresce ao longo de <strong>6 meses</strong>; até lá o ganho é parcial</li>
+        <li>O acumulado fica negativo até o mês 7 (−R$ 7.000) e vira <strong>positivo no mês 8</strong>, chegando a +R$ 63.000 no mês 12</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn"><strong>Lição:</strong> se a adoção for mais lenta (aula 15), a virada atrasa. Cobrar retorno no mês 3 mata projetos que dariam certo; não cobrar nunca mata o orçamento.</div>
+      <div class="callout" style="margin-top:10px">Defina <strong>marcos intermediários</strong> (adoção, qualidade) para acompanhar enquanto o retorno financeiro não chega.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Marcos e métricas</span><span class="n">09</span></div>
+  <h2>Como saber que <em>está no rumo</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Exemplos</th><th>Quando olhar</th></tr></thead>
+    <tbody>
+      <tr><td><b>Adoção</b></td><td>% de pessoas que usam toda semana (aula 15)</td><td>Mensal</td></tr>
+      <tr><td><b>Qualidade</b></td><td>Acerto em casos de teste; reclamações; retrabalho</td><td>A cada mudança</td></tr>
+      <tr><td><b>Valor</b></td><td>Horas poupadas, custo por tarefa, receita</td><td>Trimestral</td></tr>
+      <tr><td><b>Risco</b></td><td>Incidentes, vazamentos evitados, conformidade</td><td>Contínuo</td></tr>
+      <tr><td><b>Custo</b></td><td>Gasto com licenças e tokens por caso de uso</td><td>Mensal</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Decisões de parada</span><span class="n">10</span></div>
+  <h2>Escalar, ajustar <em>ou parar</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Escalar</div><p>Métrica atingida, risco controlado, usuários satisfeitos e custo previsível.</p></div>
+    <div class="card"><div class="k">Ajustar</div><p>Há valor, mas faltam qualidade, adoção ou dados; repita o piloto com a correção.</p></div>
+    <div class="card"><div class="k">Parar</div><p>Sem valor após o ajuste ou com risco inaceitável. Registre o que se aprendeu.</p></div>
+  </div>
+  <div class="callout good" style="margin-top:12px">Defina os critérios <strong>antes</strong> do piloto, para que a decisão não dependa de entusiasmo ou de política interna.</div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Checklist</span><span class="n">11</span></div>
+  <h2>Seu roadmap <em>está completo?</em></h2>
+  <ul class="checklist">
+    <li>Há <strong>casos de uso priorizados</strong> com critério explícito?</li>
+    <li>Cada caso tem <strong>dono, linha de base e métrica</strong>?</li>
+    <li>Existe pelo menos uma <strong>prova de conceito</strong> nos primeiros 90 dias?</li>
+    <li>A <strong>governança e a segurança</strong> começam junto com o primeiro piloto?</li>
+    <li>Há <strong>marcos de adoção e qualidade</strong>, além do retorno financeiro?</li>
+    <li>As <strong>decisões de escalar, ajustar ou parar</strong> têm critérios escritos?</li>
+    <li>O plano é <strong>revisto a cada trimestre</strong>?</li>
+  </ul>
+</section>
+
+<!-- 12 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">12</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Quais são as cinco fases do CAF para IA citadas na aula?</p>
+        <div class="opts"><div>A) Plan, Ready, Govern, Secure, Manage</div><div>B) Buy, Build, Sell</div><div>C) Test, Ship, Forget</div><div>D) Plan, Do, Check</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. No exemplo, o acumulado fica positivo a partir do mês:</p>
+        <div class="opts"><div>A) 1</div><div>B) 3</div><div>C) 8</div><div>D) 12</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Governança e segurança devem começar:</p>
+        <div class="opts"><div>A) Só depois do lançamento</div><div>B) Cedo, junto com o primeiro piloto</div><div>C) Nunca</div><div>D) Só em casos grandes</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Os critérios de escalar, ajustar ou parar devem ser definidos:</p>
+        <div class="opts"><div>A) Depois do piloto</div><div>B) Antes do piloto</div><div>C) Pelo fornecedor</div><div>D) Sem registro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Um plano vivo,<br><em>com decisões</em></h1>
+    <p class="lead">O roadmap de IA organiza casos priorizados em fases e horizontes, começa a governança e a segurança cedo, acompanha adoção e qualidade enquanto o retorno não chega e define de antemão quando escalar, ajustar ou parar.</p>
+    <div class="chips"><span>Plan–Manage</span><span>Horizontes</span><span>Curva J</span><span>Marcos</span><span>Escalar, ajustar, parar</span></div>
+    <div class="next">Próxima aula → 15 · Desafios e Implementação na Adoção</div>
+    <div class="source">Fontes: Cloud Adoption Framework da Microsoft, checklists de adoção de IA (Plan, Ready, Govern, Secure, Manage), learn.microsoft.com, consultado em outubro de 2026. Os horizontes de tempo e os marcos são síntese didática; <code>curva_j.py</code> usa números hipotéticos e foi executado para esta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
