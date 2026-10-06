@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>RAG: dar ao modelo o material certo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 09</div>
+    <h1>RAG: dar ao modelo<br><em>o material certo</em></h1>
+    <p class="lead">Um modelo não conhece os documentos da sua empresa, tem data de corte e pode inventar. A técnica <strong>RAG</strong> (<em>retrieval augmented generation</em>) resolve isso entregando a ele, a cada pergunta, os trechos relevantes de uma base de conhecimento. Esta aula mostra o pipeline, um RAG mínimo em Python (com o erro que ele comete e a correção), o que a Anthropic mediu com a recuperação contextual e quando <strong>não</strong> vale a pena usar RAG.</p>
+    <div class="chips"><span>Pipeline</span><span>Embeddings</span><span>Busca</span><span>Limiar de relevância</span><span>Recuperação contextual</span><span>Avaliação</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em Lewis et al. (arXiv:2005.11401), no glossário e no artigo "Introducing Contextual Retrieval" da Anthropic e no OWASP LLM Top 10 2025, consultados em outubro de 2026 · Exemplo executado em <code>exemplos/</code></div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O problema</span><span class="n">01</span></div>
+  <h2>O que o modelo <em>não sabe</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Não conhece a sua empresa</div><p>Política de reembolso, manual do produto, contratos: nada disso estava no treino (aula 04).</p></div>
+    <div class="card"><div class="k">Tem data de corte</div><p>O que mudou depois do treino, ele não sabe, e pode responder com informação desatualizada.</p></div>
+    <div class="card"><div class="k">Preenche lacunas</div><p>Quando não sabe, tende a produzir algo plausível: a alucinação da aula 08.</p></div>
+  </div>
+  <div class="callout good" style="margin-top:14px"><strong>A saída:</strong> em vez de esperar que o modelo "lembre", buscar a informação certa e <strong>colocá-la no prompt</strong>. É isso que o RAG faz.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>A ideia</span><span class="n">02</span></div>
+  <h2>Memória nos pesos <em>e memória consultável</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O artigo que deu nome à técnica (Lewis et al., 2020) combina dois tipos de memória: a <strong>paramétrica</strong>, guardada nos pesos do modelo, e a <strong>não paramétrica</strong>, um índice de documentos que ele consulta</li>
+        <li>No trabalho original, o índice era um <strong>índice vetorial denso da Wikipedia</strong>, acessado por um recuperador neural</li>
+        <li>Os autores relatam resultados de estado da arte em três tarefas de perguntas e respostas de domínio aberto</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout"><strong>Definição de bolso</strong> (glossário da Anthropic): RAG combina recuperação de informação com geração de texto para melhorar a precisão e a relevância, e para <strong>ancorar a resposta em evidência</strong>; os documentos são passados na janela de contexto.</div>
+      <p class="note" style="margin-top:8px">Fontes: arxiv.org/abs/2005.11401; docs.anthropic.com (glossário).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>O pipeline</span><span class="n">03</span></div>
+  <h2>Seis etapas, <em>duas fases</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(6,1fr)">
+    <div class="n"><b>1 Ingerir</b>coletar documentos</div>
+    <div class="n"><b>2 Dividir</b>em trechos (chunks)</div>
+    <div class="n"><b>3 Indexar</b>embeddings num índice</div>
+    <div class="n key"><b>4 Buscar</b>trechos da pergunta</div>
+    <div class="n key"><b>5 Montar</b>prompt com os trechos</div>
+    <div class="n key"><b>6 Gerar</b>resposta com fontes</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px;align-items:start">
+    <div class="card"><div class="k">Fase offline (1 a 3)</div><p>Roda quando os documentos mudam. Prepara o conhecimento para ser consultado.</p></div>
+    <div class="card"><div class="k">Fase online (4 a 6)</div><p>Roda a cada pergunta. É o que o usuário espera ver rápido.</p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Embeddings</span><span class="n">04</span></div>
+  <h2>Buscar pelo <em>sentido</em>, não só pelas palavras</h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Cada trecho vira um <strong>embedding</strong>: números que codificam o significado (aula 01)</li>
+        <li>Os embeddings ficam num <strong>banco de vetores</strong>, que permite buscar por similaridade semântica</li>
+        <li>Na consulta, a pergunta também vira embedding; os trechos mais próximos são adicionados ao prompt enviado ao modelo</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Pergunta</th><th>Busca por palavras</th><th>Busca por sentido</th></tr></thead>
+        <tbody>
+          <tr><td>"Posso devolver o produto?"</td><td>Só acha trechos com "devolver"</td><td>Acha também "troca" e "reembolso"</td></tr>
+          <tr><td>"Quanto dura o conserto grátis?"</td><td>Não acha "garantia"</td><td>Acha "garantia de 12 meses"</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Fonte do fluxo: anthropic.com/news/contextual-retrieval. Na prática, muitos sistemas combinam as duas buscas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Código</span><span class="n">05</span></div>
+  <h2>Um RAG mínimo, <em>sem bibliotecas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>rag_simples.py · transformar texto em vetor</b></div>
+      <pre class="code">PARADAS = {"a", "o", "os", "as", "e", "de", "da", "do", "dos", "em", "no",
+           "na", "para", "com", "por", "que", "qual", "ate", "apos", "um"}
+
+
+def tokens(texto, limpar):
+    palavras = re.findall(r"[a-z0-9]+", texto.lower())
+    if not limpar:
+        return palavras
+    <span class="c"># sem palavras vazias e com plural removido (reembolsos -&gt; reembolso)</span>
+    return [p.rstrip("s") if len(p) &gt; 3 else p
+            for p in palavras if p not in PARADAS]
+
+
+def vetor(texto, idf, limpar):
+    c = Counter(tokens(texto, limpar))
+    return {t: n * idf.get(t, 0) for t, n in c.items()}</pre>
+    </div>
+    <div>
+      <div class="lbl"><b>A busca</b></div>
+      <pre class="code">def buscar(pergunta, limpar, minimo=0.2):
+    idf, indice = montar_indice(limpar)
+    q = vetor(pergunta, idf, limpar)
+    pontos = sorted(((cosseno(q, v), n) for n, v in indice.items()),
+                    reverse=True)
+    s, nome = pontos[0]
+    return (nome, round(s, 2)) if s &gt;= minimo else (None, round(s, 2))</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Cada trecho vira um vetor de pesos por palavra (TF-IDF); palavras raras valem mais</li>
+        <li>A similaridade é o <strong>cosseno</strong> entre o vetor da pergunta e o de cada trecho</li>
+        <li>Abaixo de um <strong>mínimo</strong>, a busca devolve "nada relevante"</li>
+        <li>É didático: não usa embeddings de rede neural</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>O resultado</span><span class="n">06</span></div>
+  <h2>A recuperação errada <em>estraga a resposta</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out">PERGUNTA: Qual o prazo para pedir reembolso?
+  busca ingenua: ('frete', 0.4)
+  busca limpa:   ('reembolso', 0.25)
+PERGUNTA: Quanto tempo dura a garantia do celular?
+  busca ingenua: ('garantia', 0.32)
+  busca limpa:   ('garantia', 0.32)
+PERGUNTA: Qual a capital da Franca?
+  busca ingenua: ('garantia', 0.32)
+  busca limpa:   (None, 0.0)</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><strong>Pergunta 1:</strong> sobre reembolso. A busca ingênua trouxe <strong>"frete"</strong> (pontuou por casar palavras comuns como "o" e "para"); a busca limpa trouxe <strong>"reembolso"</strong></li>
+        <li><strong>Pergunta 2:</strong> as duas acharam "garantia"</li>
+        <li><strong>Pergunta 3:</strong> fora do assunto. A ingênua devolveu "garantia" com 0,32 (resposta errada com cara de certa); a limpa devolveu <strong>nada</strong></li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">O que corrigiu: tirar palavras vazias ("para", "qual", "de") e o plural ("reembolsos" → "reembolso"). Se a busca erra, o modelo recebe o documento errado e responde com confiança sobre ele.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Montar o prompt</span><span class="n">07</span></div>
+  <h2>Instrução, <em>trechos e pergunta</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>Modelo de prompt (do Guia da aula 16 do módulo 39)</b></div>
+      <pre class="code">System: Você é um assistente que responde
+APENAS com base nos documentos fornecidos.
+Se a informação não estiver nos documentos,
+diga 'Não encontrei essa informação na base.'
+
+Contexto recuperado:
+[Documento 1: Política de reembolso...]
+[Documento 2: FAQ de atendimento...]
+
+Pergunta do usuário: Qual o prazo para
+pedir reembolso?</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A <strong>regra de recusa</strong> ("se não estiver nos documentos, diga que não encontrou") é o que impede a resposta inventada</li>
+        <li>Cada trecho vem <strong>identificado</strong> (nome, versão, página) para a resposta poder citar a fonte</li>
+        <li>Separe os trechos com delimitadores: eles são conteúdo, não ordens (prompt injection, aula 08)</li>
+        <li>Se a busca devolveu "nada relevante", nem chame o modelo: responda que não encontrou</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Qualidade da busca</span><span class="n">08</span></div>
+  <h2>Recuperação contextual: <em>o que a Anthropic mediu</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Ao dividir um documento em trechos, cada trecho perde o contexto ("a receita da empresa cresceu 3%" — qual empresa? qual trimestre?)</li>
+        <li>A <strong>recuperação contextual</strong> acrescenta a cada trecho uma pequena explicação do seu lugar no documento antes de indexar</li>
+        <li>O método usa duas partes: <strong>embeddings contextuais</strong> e <strong>BM25 contextual</strong> (busca por palavras com o contexto acrescentado)</li>
+        <li>A métrica foi a taxa de falha de recuperação nos 20 primeiros trechos (1 − recall@20), média de várias bases: código, ficção e artigos científicos</li>
+      </ul>
+    </div>
+    <div>
+      <div class="grid g3">
+        <div class="card"><div class="k">Embeddings contextuais</div><div class="v">−35%</div><p>5,7% → 3,7% de falhas</p></div>
+        <div class="card"><div class="k">+ BM25 contextual</div><div class="v">−49%</div><p>5,7% → 2,9%</p></div>
+        <div class="card"><div class="k">+ reranking</div><div class="v">−67%</div><p>reordenando os resultados</p></div>
+      </div>
+      <p class="note" style="margin-top:8px">Fonte: anthropic.com/news/contextual-retrieval (setembro de 2024). Resultados dos testes da Anthropic, nas bases deles.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quando não usar</span><span class="n">09</span></div>
+  <h2>Às vezes, <em>basta colocar tudo no prompt</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>A própria Anthropic recomenda: se a sua base tem menos de <strong>200 mil tokens</strong> (cerca de 500 páginas), dá para incluir <strong>tudo no prompt</strong>, sem RAG</li>
+        <li>Com <em>prompt caching</em>, reaproveitar um prompt longo entre chamadas reduz a latência em mais de 2 vezes e o custo em até 90% (segundo o artigo, setembro de 2024)</li>
+        <li>Hoje as janelas são maiores (aula 01), o que amplia essa possibilidade</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Situação</th><th>Caminho</th></tr></thead>
+        <tbody>
+          <tr><td>Base pequena e estável</td><td>Colocar no prompt (com cache)</td></tr>
+          <tr><td>Base grande ou que muda sempre</td><td>RAG</td></tr>
+          <tr><td>Precisa de citação por trecho</td><td>RAG</td></tr>
+          <tr><td>Documentos com permissões diferentes</td><td>RAG com controle de acesso</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Avaliar e proteger</span><span class="n">10</span></div>
+  <h2>Medir a busca <em>e a resposta</em>, separadamente</h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">A busca achou o trecho certo?</div><p>Monte perguntas com o documento correto conhecido e conte quantas vezes ele aparece entre os primeiros resultados.</p></div>
+    <div class="card"><div class="k">A resposta usou o trecho?</div><p>Verifique se cada afirmação está sustentada pelos trechos e se o modelo recusa quando não há resposta.</p></div>
+    <div class="card"><div class="k">Segurança dos vetores</div><p>O OWASP lista fragilidades de vetores e embeddings (LLM08): controle de acesso aos documentos, dados envenenados na base e vazamento entre usuários.</p></div>
+    <div class="card"><div class="k">Documentos como vetor de ataque</div><p>Um documento pode trazer instruções escondidas (prompt injection, aula 08). Trate o conteúdo recuperado como não confiável.</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Quem pergunta só pode receber trechos que <strong>tem direito de ver</strong>: filtre a busca pelas permissões do usuário, não depois da resposta.</div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Boas práticas</span><span class="n">11</span></div>
+  <h2>Antes de colocar <em>em produção</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Comece com um <strong>conjunto de perguntas reais</strong> e a resposta esperada (aula 03)</li>
+        <li>Teste <strong>tamanhos de trecho</strong> e sobreposição: trechos pequenos perdem contexto; grandes diluem a busca</li>
+        <li>Guarde <strong>metadados</strong> (documento, seção, data, versão) para filtrar e citar</li>
+        <li>Defina como os documentos são <strong>atualizados e removidos</strong> do índice</li>
+      </ul>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Use <strong>limiar de relevância</strong> e a regra de recusa</li>
+        <li>Mostre as <strong>fontes</strong> ao usuário, para ele poder conferir</li>
+        <li>Registre pergunta, trechos e resposta para investigar erros</li>
+        <li>Reavalie quando trocar o modelo de embedding ou o modelo gerador</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">12</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Em RAG, o modelo recebe:</p>
+        <div class="opts"><div>A) Todos os documentos da empresa</div><div>B) Os trechos mais relevantes para a pergunta</div><div>C) Só a pergunta</div><div>D) O resultado de um novo treino</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. No exemplo, a busca ingênua trouxe "frete" para uma pergunta de reembolso porque:</p>
+        <div class="opts"><div>A) Casou palavras comuns como "para"</div><div>B) O modelo errou</div><div>C) Faltou internet</div><div>D) A pergunta estava em inglês</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Para a pergunta "Qual a capital da França?" numa base de políticas, o certo é:</p>
+        <div class="opts"><div>A) Devolver o documento mais parecido</div><div>B) Responder que não encontrou na base</div><div>C) Inventar</div><div>D) Mudar a base</div></div>
+        <div class="answer"><b>B.</b> Limiar de relevância e regra de recusa.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Uma base de 150 mil tokens, estável, pode:</p>
+        <div class="opts"><div>A) Ir inteira no prompt, com cache</div><div>B) Nunca usar o modelo</div><div>C) Exigir fine-tuning</div><div>D) Ser ignorada</div></div>
+        <div class="answer"><b>A.</b> Abaixo de 200 mil tokens, a Anthropic sugere considerar essa opção.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">A resposta é<br><em>tão boa quanto a busca</em></h1>
+    <p class="lead">RAG ancora o modelo nos documentos da empresa: dividir, indexar, buscar, montar o prompt e gerar com fontes. A qualidade depende da recuperação, que deve ser medida à parte, com limiar de relevância, regra de recusa e controle de acesso. Se a base é pequena, coloque tudo no prompt; se é grande ou muda sempre, use RAG.</p>
+    <div class="chips"><span>Pipeline de 6 etapas</span><span>Embeddings</span><span>Limiar + recusa</span><span>−35% · −49% · −67%</span><span>&lt; 200 mil tokens</span></div>
+    <div class="next">Próxima aula → 10 · Agentes IA × Workflow</div>
+    <div class="source">Fontes: arxiv.org/abs/2005.11401; docs.anthropic.com/en/docs/about-claude/glossary; anthropic.com/news/contextual-retrieval; genai.owasp.org/llm-top-10 (LLM08), consultados em outubro de 2026. O exemplo <code>rag_simples.py</code> usa TF-IDF e foi executado para esta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
