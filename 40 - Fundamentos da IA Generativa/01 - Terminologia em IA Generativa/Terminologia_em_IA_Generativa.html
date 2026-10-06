@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Terminologia em IA Generativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 01</div>
+    <h1>Terminologia em<br><em>IA Generativa</em></h1>
+    <p class="lead">Antes de decidir como usar IA generativa numa empresa, é preciso falar a mesma língua. Esta aula organiza os termos que aparecem em todo o módulo: <strong>LLM</strong>, <strong>token</strong>, <strong>janela de contexto</strong>, <strong>prompt</strong>, <strong>temperatura</strong>, <strong>embedding</strong>, <strong>RAG</strong>, <strong>alucinação</strong>, <strong>agente</strong> e outros, cada um com uma definição curta e um exemplo.</p>
+    <div class="chips"><span>IA × ML × deep learning</span><span>LLM</span><span>Token</span><span>Contexto</span><span>Embedding</span><span>RAG</span><span>Alucinação</span><span>Agente</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado no glossário da documentação da Anthropic (docs.anthropic.com), na documentação do Groq e na página de modelos da Anthropic, consultados em outubro de 2026 · Exemplo de tokens testado com tiktoken em <code>exemplos/</code></div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>O mapa</span><span class="n">01</span></div>
+  <h2>Do conceito amplo <em>ao específico</em></h2>
+  <div class="flow" style="grid-template-columns:repeat(4,1fr)">
+    <div class="n"><b>Inteligência artificial</b>sistemas que realizam tarefas que exigem inteligência</div>
+    <div class="n"><b>Aprendizado de máquina</b>aprende padrões dos dados, sem regras escritas à mão</div>
+    <div class="n"><b>Deep learning</b>redes neurais com muitas camadas</div>
+    <div class="n key"><b>IA generativa</b>cria texto, imagem, áudio, código</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px;align-items:start">
+    <div class="card"><div class="k">IA tradicional (preditiva)</div><p>Classifica ou prevê: este e-mail é spam? Este cliente vai cancelar? A saída é um rótulo ou um número.</p></div>
+    <div class="card"><div class="k">IA generativa</div><p>Produz algo <strong>novo</strong> a partir de uma instrução: um texto, um resumo, um código, uma imagem. A saída é conteúdo.</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Cada círculo está dentro do anterior. Todo modelo de IA generativa de hoje usa deep learning, mas nem todo deep learning gera conteúdo.</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Modelos</span><span class="n">02</span></div>
+  <h2>LLM e <em>modelo de fundação</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li><strong>LLM</strong> (<em>Large Language Model</em>, modelo de linguagem de grande porte): modelo com muitos parâmetros, treinado em grande volume de texto, que consegue resumir, responder, traduzir e escrever código (definição do glossário da Anthropic)</li>
+        <li><strong>Parâmetros</strong>: os números ajustados no treino; é neles que o "conhecimento" do modelo fica guardado. Um modelo "de 120 bilhões de parâmetros" tem 120 bilhões desses números</li>
+        <li><strong>Modelo de fundação</strong>: um modelo treinado de forma ampla, que serve de base para muitas tarefas, em vez de uma tarefa só</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Exemplo</th><th>Quem faz</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Claude (Fable, Opus, Sonnet, Haiku)</td><td>Anthropic</td><td>Proprietário</td></tr>
+          <tr><td>gpt-oss-120b</td><td>OpenAI</td><td>Pesos abertos</td></tr>
+          <tr><td>Llama 3.3 70B</td><td>Meta</td><td>Pesos abertos</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Modelos citados na documentação do Groq e da Anthropic, consultadas em outubro de 2026. A aula 02 explica a diferença entre os tipos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Token</span><span class="n">03</span></div>
+  <h2>O modelo não lê palavras, <em>lê tokens</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>tokens.py</b></div>
+      <pre class="code"><span class="c"># pip install tiktoken</span>
+import tiktoken
+
+enc = tiktoken.get_encoding("cl100k_base")
+
+frases = [
+    "The cat sat on the mat.",
+    "O gato sentou no tapete.",
+    "Inteligência artificial generativa",
+    "anticonstitucionalissimamente",
+]
+for f in frases:
+    ids = enc.encode(f)
+    pedacos = [enc.decode([i]) for i in ids]
+    print(f"{len(f):&gt;3} caracteres -&gt; {len(ids):&gt;2} tokens")
+    print("   ", pedacos)</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out w"> 23 caracteres -&gt;  7 tokens
+    ['The', ' cat', ' sat', ' on', ' the', ' mat', '.']
+ 24 caracteres -&gt;  9 tokens
+    ['O', ' g', 'ato', ' sent', 'ou', ' no', ' tap', 'ete', '.']
+ 34 caracteres -&gt;  6 tokens
+    ['Int', 'elig', 'ência', ' artificial', ' gener', 'ativa']
+ 29 caracteres -&gt;  8 tokens
+    ['ant', 'icon', 'stit', 'uc', 'ional', 'iss', 'im', 'amente']</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Token é o menor pedaço que o modelo processa: palavra, parte de palavra, caractere ou byte</li>
+        <li>A frase em português usou <strong>9 tokens</strong> contra <strong>7</strong> da equivalente em inglês, neste tokenizador (<code>cl100k_base</code>)</li>
+        <li>Para o Claude, um token vale cerca de 3,5 caracteres em inglês; varia com o idioma (glossário da Anthropic)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Contexto</span><span class="n">04</span></div>
+  <h2>Janela de contexto: a <em>memória de trabalho</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>É o quanto de texto o modelo consegue "ter diante de si" ao responder: prompt, histórico, documentos colados <strong>e</strong> a resposta</li>
+        <li>Não é a base de treino: é uma memória de trabalho, que se esvazia quando a conversa acaba (glossário da Anthropic)</li>
+        <li>A soma de entrada e saída precisa caber na janela (documentação do Groq)</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Contexto grande não é de graça: mais tokens enviados significam mais custo e mais tempo por chamada.</div>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Modelo</th><th>Contexto</th><th>Saída máx.</th></tr></thead>
+        <tbody>
+          <tr><td>gpt-oss-120b (Groq)</td><td>131.072</td><td>65.536</td></tr>
+          <tr><td>Llama 3.3 70B (Groq)</td><td>131.072</td><td>32.768</td></tr>
+          <tr><td>Claude Haiku 4.5</td><td>200 mil</td><td>64 mil</td></tr>
+          <tr><td>Claude Sonnet 5.5, Opus 5.5, Fable 5.1</td><td>1 milhão</td><td>128 mil</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Valores em tokens, das páginas de modelos do Groq e da Anthropic em outubro de 2026.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Como pedir</span><span class="n">05</span></div>
+  <h2>Prompt, system prompt <em>e temperatura</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Prompt</div><p>A instrução enviada ao modelo, mais o contexto e os exemplos que a acompanham. Escrever bem o prompt é a <strong>engenharia de prompt</strong> (módulo 39).</p></div>
+    <div class="card"><div class="k">System prompt</div><p>As regras permanentes da conversa: papel, tom, limites. Fica separado da pergunta do usuário e vale para todas as respostas.</p></div>
+    <div class="card"><div class="k">Temperatura</div><p>Controla a aleatoriedade: baixa deixa as respostas conservadoras; alta, mais variadas (glossário da Anthropic). No Groq vai de 0 a 2.</p></div>
+  </div>
+  <div class="callout good" style="margin-top:14px"><strong>Inferência</strong> é o nome do ato de usar o modelo já treinado para responder a um prompt. Cada chamada à API é uma inferência (aula 04).</div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Treinar e adaptar</span><span class="n">06</span></div>
+  <h2>Pré-treino, fine-tuning <em>e alinhamento</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div><h3>Pré-treino (<em>pretraining</em>)</h3><p>O modelo aprende a prever a próxima palavra em um corpus enorme de texto. Sozinho, ainda não é bom em seguir instruções (glossário da Anthropic).</p></div></div>
+    <div class="step"><div class="b">2</div><div><h3>Fine-tuning</h3><p>Treino adicional com dados específicos, para o modelo imitar os padrões desse conjunto: um estilo, um formato, um domínio.</p></div></div>
+    <div class="step"><div class="b">3</div><div><h3>Alinhamento com feedback humano</h3><p>Pessoas avaliam respostas e o modelo é ajustado para seguir melhor a intenção do usuário. No estudo do InstructGPT, as respostas de um modelo de 1,3 bilhão de parâmetros foram preferidas às do GPT-3 de 175 bilhões.</p></div></div>
+  </div>
+  <p class="note" style="margin-top:8px">Fonte do 3º passo: Ouyang et al., "Training language models to follow instructions with human feedback" (arXiv:2203.02155).</p>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Busca e conhecimento</span><span class="n">07</span></div>
+  <h2>Embedding, busca semântica <em>e RAG</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li><strong>Embedding</strong>: representação de um texto como uma lista de números que codifica o <em>sentido</em>; textos parecidos ficam próximos</li>
+        <li><strong>Busca semântica</strong>: achar trechos pelo significado, não só por palavras iguais</li>
+        <li><strong>RAG</strong> (<em>retrieval augmented generation</em>): combinar busca de informação com geração, passando os trechos achados na janela de contexto para que a resposta se apoie em evidência (glossário da Anthropic)</li>
+      </ul>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>Pergunta</b>do usuário</div>
+        <div class="n"><b>Busca</b>trechos relevantes</div>
+        <div class="n key"><b>Resposta</b>baseada nos trechos</div>
+      </div>
+      <p class="note" style="margin-top:8px">A aula 09 mostra um RAG funcionando, passo a passo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>O risco central</span><span class="n">08</span></div>
+  <h2>Alucinação: <em>plausível, mas falso</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>Alucinação é quando o modelo produz uma afirmação <strong>fluente e convincente que não corresponde à realidade</strong>: um número, uma citação, um fato</li>
+        <li>O modelo foi treinado para gerar texto plausível, não para consultar uma base de fatos: por isso o erro aparece com a mesma confiança do acerto</li>
+        <li>Reduz com: dar o material (RAG), pedir "use apenas o texto fornecido", temperatura baixa e verificação</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout danger"><strong>Já vimos isso no módulo 39.</strong> Num resumo, o modelo escreveu "reclamações ↑ 15%" sem esse número existir no relatório; numa expansão, atribuiu um teste a 2022 que foi divulgado em 2019.</div>
+      <div class="callout" style="margin-top:10px">Regra de empresa: tudo que o modelo afirma e que importa para uma decisão tem <strong>fonte</strong> ou passa por <strong>conferência humana</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Ir além do texto</span><span class="n">09</span></div>
+  <h2>Ferramenta, agente <em>e multimodal</em></h2>
+  <div class="grid g3" style="align-items:start">
+    <div class="card"><div class="k">Ferramenta (tool)</div><p>Uma função que o modelo pode pedir para executar: buscar um pedido, consultar um banco, enviar um e-mail. O modelo decide <em>qual</em> e com <em>quais argumentos</em>.</p></div>
+    <div class="card"><div class="k">Agente</div><p>Sistema em que o LLM usa ferramentas em laço, com base no que observa do ambiente, até concluir a tarefa (definição da Anthropic; aula 10).</p></div>
+    <div class="card"><div class="k">Multimodal</div><p>Modelo que entende ou gera mais de um tipo de dado: texto, imagem, áudio, vídeo. Ex.: transcrever áudio ou descrever uma foto.</p></div>
+  </div>
+  <div class="callout" style="margin-top:14px"><strong>Latência</strong> é o tempo entre enviar o prompt e receber a resposta; <strong>custo</strong> é cobrado por tokens de entrada e de saída. Os dois pesam em qualquer projeto (aulas 02 e 04).</div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Cola</span><span class="n">10</span></div>
+  <h2>Glossário <em>de bolso</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Termo</th><th>Em uma frase</th><th>Aula</th></tr></thead>
+    <tbody>
+      <tr><td>LLM</td><td>Modelo de linguagem de grande porte, treinado em muito texto</td><td>01</td></tr>
+      <tr><td>Token</td><td>Menor unidade de texto que o modelo processa</td><td>01</td></tr>
+      <tr><td>Janela de contexto</td><td>Quanto texto cabe de uma vez (entrada + saída)</td><td>01</td></tr>
+      <tr><td>Inferência</td><td>Usar o modelo treinado para responder</td><td>04</td></tr>
+      <tr><td>Benchmark</td><td>Teste padronizado para comparar modelos</td><td>03</td></tr>
+      <tr><td>Fine-tuning</td><td>Treino extra com dados específicos</td><td>04</td></tr>
+      <tr><td>Embedding</td><td>Números que representam o sentido de um texto</td><td>09</td></tr>
+      <tr><td>RAG</td><td>Buscar trechos e entregá-los ao modelo para responder</td><td>09</td></tr>
+      <tr><td>Alucinação</td><td>Resposta fluente, porém falsa</td><td>08</td></tr>
+      <tr><td>Workflow</td><td>Sequência de passos definida pelo código</td><td>10</td></tr>
+      <tr><td>Agente</td><td>LLM que escolhe os próprios passos e ferramentas</td><td>10</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">11</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Um token é:</p>
+        <div class="opts"><div>A) Sempre uma palavra inteira</div><div>B) O menor pedaço de texto que o modelo processa</div><div>C) Um parâmetro</div><div>D) Uma chave de API</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. A janela de contexto limita:</p>
+        <div class="opts"><div>A) Só o tamanho do prompt</div><div>B) Entrada e saída juntas</div><div>C) Só a resposta</div><div>D) O número de usuários</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. RAG serve para:</p>
+        <div class="opts"><div>A) Treinar um modelo do zero</div><div>B) Entregar ao modelo trechos relevantes para ele responder</div><div>C) Aumentar a temperatura</div><div>D) Trocar de idioma</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Uma resposta fluente, mas falsa, é chamada de:</p>
+        <div class="opts"><div>A) Inferência</div><div>B) Embedding</div><div>C) Alucinação</div><div>D) Benchmark</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">A mesma língua,<br><em>antes de decidir</em></h1>
+    <p class="lead">IA generativa cria conteúdo; LLMs fazem isso com tokens, dentro de uma janela de contexto limitada; o prompt e a temperatura guiam a resposta; RAG e ferramentas ligam o modelo a dados e ações; e a alucinação é o risco que obriga a conferir. Com esse vocabulário, o resto do módulo fica mais fácil.</p>
+    <div class="chips"><span>LLM</span><span>Token</span><span>Contexto</span><span>Inferência</span><span>RAG</span><span>Alucinação</span><span>Agente</span></div>
+    <div class="next">Próxima aula → 02 · Modelos LLM (Open Source, Proprietários)</div>
+    <div class="source">Fontes: docs.anthropic.com/en/docs/about-claude/glossary (LLM, tokens, janela de contexto, temperatura, pré-treino, fine-tuning, RAG); docs.anthropic.com/en/docs/about-claude/models/overview; console.groq.com/docs/models e /api-reference; arxiv.org/abs/2203.02155; anthropic.com/engineering/building-effective-agents, consultados em outubro de 2026. O exemplo <code>tokens.py</code> usa tiktoken (<code>cl100k_base</code>) e foi executado para esta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
