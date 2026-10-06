@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Compreendendo as Roles</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap;font-size:10.4px;line-height:1.5}
+.code.s{font-size:10.2px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.code{white-space:pre-wrap;word-break:break-word}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Engenharia de Prompts · Aula 04</div>
+    <h1>Compreendendo<br>as <em>roles</em></h1>
+    <p class="lead">Toda chamada ao modelo é uma <strong>lista de mensagens</strong>, e cada mensagem tem um papel (<em>role</em>): <code>system</code> dá as regras, <code>user</code> faz o pedido e <code>assistant</code> guarda o que o modelo já respondeu. Nesta aula, com o notebook <code>01-roles.ipynb</code>: a mesma pergunta com e sem <code>system</code>, um histórico de conversa montado à mão e um <code>system</code> prompt refinado.</p>
+    <div class="chips"><span>messages</span><span>system</span><span>user</span><span>assistant</span><span>Histórico</span><span>System prompt refinado</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em console.groq.com/docs (Text Generation, API Reference) consultado em outubro de 2026 · Código e saídas reais gravadas no notebook <code>01-roles.ipynb</code> (modelo <code>openai/gpt-oss-120b</code>)</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Preparação</span><span class="n">01</span></div>
+  <h2>A primeira célula de <em>todo notebook</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>01-roles.ipynb · célula 1</b></div>
+      <pre class="code">from dotenv import load_dotenv
+from groq import Groq
+import os
+load_dotenv()
+
+client = Groq(
+    api_key=os.environ.get("GROQ_API"),  <span class="c"># This is the default and can be omitted</span>
+)</pre>
+      <div class="callout warn" style="margin-top:10px">O comentário em inglês diz que o parâmetro pode ser omitido, mas isso só vale para a variável padrão <code>GROQ_API_KEY</code>. Como o curso usa <code>GROQ_API</code>, mantenha o <code>api_key=</code>.</div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>load_dotenv()</code> lê o arquivo <code>.env</code> da pasta e coloca a chave no ambiente (aula 02)</li>
+        <li><code>os.environ.get("GROQ_API")</code> busca a chave sem escrevê-la no código</li>
+        <li><code>client</code> é o objeto que conversa com a API do Groq; ele é criado uma vez e reaproveitado</li>
+        <li>Rode esta célula <strong>antes</strong> das outras: as demais usam <code>client</code></li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Todos os notebooks do módulo começam com esta mesma célula.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Os papéis</span><span class="n">02</span></div>
+  <h2>Uma conversa é uma <em>lista de mensagens</em></h2>
+  <div class="grid g3" style="margin-bottom:14px">
+    <div class="card"><div class="k">system</div><p><strong>Regras de comportamento</strong>: persona, tom, formato, limites. Vale para a conversa inteira.</p></div>
+    <div class="card"><div class="k">user</div><p><strong>O pedido</strong> de quem usa: a pergunta, os dados, a tarefa.</p></div>
+    <div class="card"><div class="k">assistant</div><p><strong>Respostas do modelo</strong>. Você as envia de volta para o modelo lembrar o que já disse.</p></div>
+  </div>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>Formato de cada mensagem</b></div>
+      <pre class="code">messages=[
+    {"role": "system", "content": "regras..."},
+    {"role": "user", "content": "pergunta..."},
+]</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A ordem importa: o modelo lê a lista de cima para baixo</li>
+        <li>O <code>system</code> costuma vir primeiro e uma vez só</li>
+        <li>Depois, <code>user</code> e <code>assistant</code> se alternam</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Só user</span><span class="n">03</span></div>
+  <h2>Pedido simples, <em>sem regras</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 4</b></div>
+      <pre class="code">chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Me explique de forma reduzida o que são as LLMs",
+        }
+    ],
+    model="openai/gpt-oss-120b",
+)
+print(chat_completion.choices[0].message.content)</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Uma única mensagem <code>user</code></li>
+        <li><code>model</code> escolhe o modelo hospedado no Groq</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada no notebook</div>
+      <pre class="out w">As **LLMs (Large Language Models)** são modelos de inteligência artificial treinados com enormes quantidades de texto para aprender padrões da linguagem humana. Eles usam arquiteturas de redes neurais, geralmente do tipo **Transformer**, que permitem processar e gerar texto de forma coerente e contextualizada. 
+
+- **Escala**: possuem bilhões a trilhões de parâmetros, o que aumenta sua capacidade de capturar nuances linguísticas.  
+- **Treinamento**: aprendem de forma não supervisionada, prevendo a próxima palavra em frases de vastos corpora (livros, artigos, sites, etc.).  
+- **Uso**: são a base de assistentes de texto, chatbots, tradutores automáticos, resumidores, geradores de código, entre outras aplicações.  
+
+Em resumo, LLMs são “cérebro” de IA que, a partir de muito texto, conseguem entender e produzir linguagem natural de forma impressionante.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Com system</span><span class="n">04</span></div>
+  <h2>A mesma pergunta, <em>com um papel definido</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 6</b></div>
+      <pre class="code">chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "system",
+            "content": "Você é um especialista em IA que responde de forma clara e objetiva."
+        },
+        {
+            "role": "user",
+            "content": "Me explique de forma reduzida o que são as LLMs",
+        }
+    ],
+    model="openai/gpt-oss-120b",</pre>
+      <div class="callout" style="margin-top:10px">A pergunta do <code>user</code> é idêntica à da seção anterior. Só entrou a mensagem <code>system</code>.</div>
+    </div>
+    <div>
+      <div class="lbl s">Saída gravada no notebook</div>
+      <pre class="out w">As **LLMs (Large Language Models)** são modelos de inteligência artificial baseados em redes neurais muito grandes, treinados com enormes volumes de texto (bilhões de palavras). Esse treinamento permite que eles:
+
+1. **Aprendam padrões linguísticos** – gramática, vocabulário, estilo e relações semânticas.
+2. **Entendam contexto** – analisam sequências de palavras para captar o sentido de frases e parágrafos.
+3. **Gerem texto** – produzem respostas, resumos, traduções, códigos, entre outros, de forma coerente e fluente.
+
+Em resumo, uma LLM é um modelo de IA que, a partir de vastos dados textuais, consegue compreender e gerar linguagem natural para diversas aplicações.</pre>
+      <p class="note">Respostas de LLM variam a cada execução: compare o estilo, não as palavras.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Histórico</span><span class="n">05</span></div>
+  <h2>O <em>assistant</em> como memória da conversa</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 8</b></div>
+      <pre class="code s">chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "system",
+            "content": "Você é um especialista em IA que responde de forma clara e objetiva."
+        },
+        {
+            "role": "user",
+            "content": "Explique a importância de LLMs com baixa latência."
+        },
+        {
+            "role": "assistant",
+            "content": "LLMs com baixa latência permitem respostas mais rápidas, o que melhora a experiência do usuário."
+        },
+        {
+            "role": "user",
+            "content": "Pode dar exemplos de aplicações práticas?"
+        }
+    ],</pre>
+    </div>
+    <div>
+      <div class="lbl s">Início da saída gravada</div>
+      <pre class="out w">**Exemplos de aplicações práticas que exigem LLMs de baixa latência**
+
+| Área | Aplicação | Por que a latência baixa é crítica |
+|------|-----------|------------------------------------|
+| **Assistentes virtuais** | Chatbots de suporte ao cliente, assistentes de voz (Alexa, Google Assistant) | Respostas quase instantâneas mantêm a conversa fluida e evitam frustração do usuário. |
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>"Pode dar exemplos?" só faz sentido porque a pergunta anterior está na lista</li>
+        <li>A resposta de <code>assistant</code> foi escrita à mão: o modelo a trata como algo que ele mesmo disse</li>
+        <li>A API <strong>não guarda</strong> a conversa: um chatbot reenvia o histórico a cada chamada</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>System refinado</span><span class="n">06</span></div>
+  <h2>Um system prompt <em>com instruções concretas</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>célula 10</b></div>
+      <pre class="code s">chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "system",
+            "content": (
+                "Você é um especialista em Inteligência Artificial focado em explicar conceitos "
+                "de forma clara, estruturada e prática. Sempre inicie suas respostas com um "
+                "resumo em até 3 linhas, depois detalhe com exemplos reais e aplicações no mundo "
+                "dos negócios e tecnologia. Evite termos excessivamente técnicos sem explicação "
+                "e, quando necessário, use analogias simples. "
+                "Se o usuário pedir código, forneça exemplos em Python bem comentados."
+            ),
+        },
+        {
+            "role": "user",
+            "content": "Explique a importância de LLMs com baixa latência."
+        }
+    ],
+    model="openai/gpt-oss-120b",</pre>
+    </div>
+    <div>
+      <div class="lbl s">Início da saída gravada</div>
+      <pre class="out w">**Resumo (até 3 linhas)**  
+LLMs (Large Language Models) com baixa latência respondem rapidamente, o que melhora a experiência do usuário, permite decisões em tempo real e reduz custos operacionais. Em ambientes críticos, como atendimento ao cliente ou sistemas de controle, a rapidez é tão importante quanto a precisão.  
+…</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>Pediu "resumo em até 3 linhas" primeiro: a resposta abre com <strong>Resumo (até 3 linhas)</strong></li>
+        <li>Pediu exemplos reais e de negócios: vieram tabela e casos de uso</li>
+        <li>Os parênteses juntam várias strings numa só, para o texto caber na tela</li>
+      </ul>
+      <div class="callout good" style="margin-top:10px">Quanto mais concreta a regra, mais fácil conferir se ela foi seguida.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>A resposta</span><span class="n">07</span></div>
+  <h2>De onde sai o <em>texto da resposta</em></h2>
+  <div class="par e">
+    <div>
+      <div class="lbl"><b>O caminho até o texto</b></div>
+      <pre class="code">chat_completion.choices[0].message.content</pre>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+        <div class="n"><b>choices</b>lista de respostas</div>
+        <div class="n"><b>[0]</b>a primeira (e única)</div>
+        <div class="n key"><b>message.content</b>o texto</div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>choices</code> é uma lista porque o formato da API permite pedir várias respostas</li>
+        <li>No Groq, só <code>n=1</code> é aceito: sempre há uma resposta, a de índice 0</li>
+        <li><code>message.role</code> vem como <code>"assistant"</code>: é essa mensagem que você guardaria no histórico</li>
+        <li>O texto chega em Markdown (<code>**negrito**</code>, tabelas com <code>|</code>); o <code>print</code> mostra as marcas cruas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">08</span></div>
+  <h2>Monte o seu <em>tutor</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> numa célula nova, crie um tutor de Python para iniciantes. O <code>system</code> deve exigir respostas curtas, um exemplo de código e uma pergunta no final para checar o entendimento.</p>
+      <div class="lbl"><b>Ponto de partida</b></div>
+      <pre class="code">resp = client.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[
+        {"role": "system", "content": "..."},
+        {"role": "user", "content": "O que é uma lista?"},
+    ],
+)
+print(resp.choices[0].message.content)</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Rode duas vezes e veja se as três regras foram cumpridas</li>
+        <li>Depois acrescente a resposta como <code>assistant</code> e uma nova pergunta do <code>user</code> ("E uma tupla?")</li>
+        <li>Teste tirar o <code>system</code>: o que muda?</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Cada execução consome cota do plano gratuito (aula 01). Prefira poucas execuções bem pensadas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">09</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Onde vão as regras de comportamento do modelo?</p>
+        <div class="opts"><div>A) user</div><div>B) system</div><div>C) assistant</div><div>D) model</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para o modelo lembrar a conversa, você:</p>
+        <div class="opts"><div>A) Não faz nada</div><div>B) Reenvia o histórico em messages</div><div>C) Aumenta a temperatura</div><div>D) Cria outro client</div></div>
+        <div class="answer"><b>B.</b> A API não guarda estado entre chamadas.</div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Uma mensagem com role "assistant" representa:</p>
+        <div class="opts"><div>A) O usuário</div><div>B) Uma regra</div><div>C) Uma resposta anterior do modelo</div><div>D) Um erro</div></div>
+        <div class="answer"><b>C.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O texto gerado fica em:</p>
+        <div class="opts"><div>A) chat_completion.text</div><div>B) choices[0].message.content</div><div>C) messages[0]</div><div>D) client.content</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Engenharia de Prompts</div>
+    <h1 style="font-size:40px">Quem fala o quê<br><em>na conversa</em></h1>
+    <p class="lead">O <code>system</code> define as regras, o <code>user</code> faz o pedido e o <code>assistant</code> guarda as respostas anteriores. A API não tem memória: o histórico é a própria lista <code>messages</code>. Um <code>system</code> com instruções concretas muda a forma da resposta de um jeito que dá para conferir.</p>
+    <div class="chips"><span>system</span><span>user</span><span>assistant</span><span>Histórico reenviado</span><span>choices[0].message.content</span></div>
+    <div class="next">Próxima aula → 05 · Entendendo os Parâmetros</div>
+    <div class="source">Fontes: console.groq.com/docs/text-chat; console.groq.com/docs/api-reference (chat completions: messages, n); console.groq.com/docs/openai, consultados em outubro de 2026. Código e saídas: notebook <code>01-roles.ipynb</code> desta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
