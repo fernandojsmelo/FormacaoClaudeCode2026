@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Benefícios da Adoção</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 07</div>
+    <h1>Benefícios<br><em>da adoção</em></h1>
+    <p class="lead">Quais ganhos a IA generativa realmente entrega, para quem e como provar? Esta aula separa os benefícios em <strong>produtividade</strong>, <strong>qualidade</strong>, <strong>experiência</strong> e <strong>aprendizado</strong>, mostra a evidência de estudos publicados, ensina a passar de "tempo economizado" para <strong>dinheiro</strong> e inclui um cálculo de retorno em Python, com a sensibilidade que decide se o projeto se paga.</p>
+    <div class="chips"><span>Produtividade</span><span>Qualidade</span><span>Experiência</span><span>Aprendizado</span><span>Payback</span><span>Sensibilidade</span><span>Linha de base</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado no estudo "Generative AI at Work" (NBER) e no AI Index Report 2025 (Stanford HAI), consultados em outubro de 2026 · Cálculo de retorno executado em <code>exemplos/</code>, com números hipotéticos</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Os benefícios</span><span class="n">01</span></div>
+  <h2>Quatro famílias <em>de ganho</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Produtividade</div><p>Fazer a mesma tarefa em menos tempo, ou mais tarefas no mesmo tempo: rascunhos, resumos, triagem, código.</p></div>
+    <div class="card"><div class="k">Qualidade e consistência</div><p>Respostas mais padronizadas, menos esquecimentos, melhor cobertura de regras. Depende de avaliação e revisão.</p></div>
+    <div class="card"><div class="k">Experiência</div><p>Clientes atendidos com mais rapidez e colaboradores com menos trabalho repetitivo.</p></div>
+    <div class="card"><div class="k">Aprendizado</div><p>Pessoas novas chegam mais rápido ao nível das experientes, com o modelo mostrando boas práticas.</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Nem todo benefício vira receita ou economia direta. Saber <strong>de qual família</strong> é o ganho esperado define como medir (seção 09).</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Evidência</span><span class="n">02</span></div>
+  <h2>O que um estudo <em>mediu em atendimento</em></h2>
+  <div class="par e">
+    <div>
+      <div class="grid g2">
+        <div class="card"><div class="k">Resolvidos por hora</div><div class="v">+14%</div><p>produtividade média</p></div>
+        <div class="card"><div class="k">Novatos e menos qualificados</div><div class="v">+34%</div><p>mesmo indicador</p></div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Estudo "Generative AI at Work" (NBER): assistente de IA para atendentes de suporte ao cliente</li>
+        <li>Efeito <strong>mínimo</strong> em quem era experiente e muito qualificado</li>
+        <li>O assistente parece difundir as práticas dos melhores atendentes e ajudar os novos a evoluir mais rápido</li>
+      </ul>
+      <p class="note">Fonte: nber.org/papers/w31161.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Além do tempo</span><span class="n">03</span></div>
+  <h2>Clientes e colaboradores <em>também ganharam</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>No mesmo estudo, a assistência de IA <strong>melhorou o sentimento dos clientes</strong></li>
+        <li>Aumentou a <strong>retenção de funcionários</strong></li>
+        <li>E pode levar a <strong>aprendizado</strong> dos próprios trabalhadores</li>
+      </ul>
+      <div class="callout" style="margin-top:10px">Rotatividade é um custo grande em atendimento (contratar, treinar, perder experiência). Um benefício que reduz a saída de pessoas pode valer mais do que o tempo economizado.</div>
+    </div>
+    <div>
+      <div class="callout warn"><strong>Limites da evidência:</strong> é um estudo, de uma empresa, num tipo de trabalho. O AI Index 2025 resume que a pesquisa confirma que a IA aumenta a produtividade e, na maioria dos casos, <em>reduz a diferença</em> entre trabalhadores de menor e maior qualificação. Mesmo assim, cada estudo cobre uma tarefa e um tipo de empresa: os efeitos podem variar.</div>
+      <p class="note" style="margin-top:8px">Fonte: AI Index Report 2025, Stanford HAI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Quem ganha mais</span><span class="n">04</span></div>
+  <h2>O benefício <em>não é igual para todos</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Perfil</th><th>Efeito típico segundo os estudos</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>Pessoa nova ou menos qualificada</td><td>Grande ganho de produtividade</td><td>Priorizar acesso e treinamento; usar como apoio de capacitação</td></tr>
+      <tr><td>Pessoa experiente</td><td>Ganho mínimo na tarefa medida</td><td>Direcionar para tarefas em que ela ganha (rascunho, documentação) e ouvir o que a IA ainda faz mal</td></tr>
+      <tr><td>Equipe como um todo</td><td>Padrão de desempenho mais uniforme</td><td>Medir a média <strong>e</strong> a dispersão, não só a média</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout good" style="margin-top:12px">Ao planejar o retorno, estime o ganho <strong>por perfil</strong>: aplicar o mesmo percentual a todos superestima o resultado se a maior parte da equipe é experiente.</div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Do tempo ao dinheiro</span><span class="n">05</span></div>
+  <h2>Tempo economizado <em>não é dinheiro no caixa</em></h2>
+  <div class="par e">
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>Tempo liberado</b>horas por pessoa</div>
+        <div class="n key"><b>Destino do tempo</b>mais volume, mais qualidade, outra tarefa, ou nada</div>
+        <div class="n"><b>Valor</b>só existe se o tempo tiver um uso</div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Se o tempo liberado vira <strong>mais atendimentos</strong> ou <strong>mais vendas</strong>, há receita</li>
+        <li>Se evita <strong>contratar</strong> para um crescimento previsto, há custo evitado</li>
+        <li>Se as pessoas ganham 20 minutos por dia e <strong>nada muda</strong>, não há valor financeiro</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Diga na proposta <strong>o que acontece com as horas liberadas</strong>. É o ponto mais questionado por quem financia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>A conta</span><span class="n">06</span></div>
+  <h2>Um cálculo de retorno <em>em Python</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>payback.py · parte 1</b></div>
+      <pre class="code"><span class="c"># Todos os numeros abaixo sao hipoteticos: troque pelos da sua empresa</span>
+atendentes = 20
+tickets_por_atendente_mes = 400
+minutos_por_ticket = 12
+custo_hora = 35.0            <span class="c"># R$ por hora, com encargos</span>
+ganho_tempo = 0.20           <span class="c"># 20% menos tempo com um assistente de IA</span>
+
+horas_mes = atendentes * tickets_por_atendente_mes * minutos_por_ticket / 60
+economia_mes = horas_mes * ganho_tempo * custo_hora
+custo_ferramenta_mes = atendentes * 120.0   <span class="c"># licenca por pessoa</span>
+custo_implantacao = 30000.0                 <span class="c"># integracao e treinamento</span>
+
+ganho_liquido = economia_mes - custo_ferramenta_mes
+print(f"horas de atendimento por mes: {horas_mes:,.0f}")
+print(f"economia bruta por mes:       R$ {economia_mes:,.0f}")
+print(f"custo da ferramenta por mes:  R$ {custo_ferramenta_mes:,.0f}")
+print(f"ganho liquido por mes:        R$ {ganho_liquido:,.0f}")
+print(f"payback: {custo_implantacao / ganho_liquido:.1f} meses")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Resultado desta parte</div>
+      <pre class="out">horas de atendimento por mes: 1,600
+economia bruta por mes:       R$ 11,200
+custo da ferramenta por mes:  R$ 2,400
+ganho liquido por mes:        R$ 8,800
+payback: 3.4 meses</pre>
+      <ul class="checklist" style="margin-top:10px">
+        <li>20 atendentes × 400 tickets × 12 min = <strong>1.600 horas</strong> por mês</li>
+        <li>20% de ganho × R$ 35 por hora = economia de <strong>R$ 11.200</strong></li>
+        <li>Menos R$ 2.400 de licenças = ganho líquido de R$ 8.800; os R$ 30.000 de implantação voltam em <strong>3,4 meses</strong></li>
+      </ul>
+      <p class="note">Todos os números são hipotéticos: troque pelos da sua empresa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Sensibilidade</span><span class="n">07</span></div>
+  <h2>E se o ganho for <em>menor que o esperado</em>?</h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>payback.py · parte 2</b></div>
+      <pre class="code">print("\nSe o ganho de tempo for menor:")
+for g in (0.05, 0.10, 0.20):
+    liquido = horas_mes * g * custo_hora - custo_ferramenta_mes
+    texto = (f"{custo_implantacao / liquido:.1f} meses"
+             if liquido &gt; 0 else "nao se paga")
+    print(f"  ganho de {g:.0%}: payback {texto}")</pre>
+    </div>
+    <div>
+      <div class="lbl s">Saída completa</div>
+      <pre class="out">horas de atendimento por mes: 1,600
+economia bruta por mes:       R$ 11,200
+custo da ferramenta por mes:  R$ 2,400
+ganho liquido por mes:        R$ 8,800
+payback: 3.4 meses
+
+Se o ganho de tempo for menor:
+  ganho de 5%: payback 75.0 meses
+  ganho de 10%: payback 9.4 meses
+  ganho de 20%: payback 3.4 meses</pre>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:10px">Com ganho de 20%, o projeto se paga em 3,4 meses; com 10%, em 9,4; com <strong>5%, só em 75 meses (mais de seis anos)</strong>. O ganho de tempo é a premissa mais sensível: meça no piloto (aula 06) em vez de assumir.</div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Custos da conta</span><span class="n">08</span></div>
+  <h2>O que entra do <em>lado do custo</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Custo</th><th>Exemplo</th><th>No cálculo anterior?</th></tr></thead>
+    <tbody>
+      <tr><td>Licenças ou tokens</td><td>Por usuário/mês ou por milhão de tokens (aula 02)</td><td>Sim (licenças)</td></tr>
+      <tr><td>Implantação</td><td>Integração, configuração, segurança</td><td>Sim (R$ 30.000)</td></tr>
+      <tr><td>Treinamento</td><td>Horas das pessoas para aprender a usar</td><td>Junto da implantação</td></tr>
+      <tr><td>Revisão humana</td><td>Tempo conferindo respostas da IA</td><td>Não: reduz o ganho líquido</td></tr>
+      <tr><td>Avaliação e manutenção</td><td>Conjunto de teste, ajuste de prompts, troca de modelo (aula 03)</td><td>Não</td></tr>
+      <tr><td>Governança e segurança</td><td>Políticas, auditoria, proteção de dados (aula 08)</td><td>Não</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout" style="margin-top:12px">Para ser conservador, <strong>desconte do ganho o tempo de revisão</strong>: se a revisão leva 5 dos 20% economizados, o ganho real é 15%.</div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Como medir</span><span class="n">09</span></div>
+  <h2>Uma métrica para cada <em>família de ganho</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ganho</th><th>Indicadores</th></tr></thead>
+    <tbody>
+      <tr><td><b>Produtividade</b></td><td>Tempo por tarefa, tarefas por pessoa, custo por tarefa</td></tr>
+      <tr><td><b>Qualidade</b></td><td>Taxa de erro, retrabalho, aderência ao padrão, nota de revisores</td></tr>
+      <tr><td><b>Experiência</b></td><td>Satisfação do cliente, tempo de espera, satisfação e retenção de colaboradores</td></tr>
+      <tr><td><b>Aprendizado</b></td><td>Tempo até a produtividade plena de novos contratados</td></tr>
+      <tr><td><b>Financeiro</b></td><td>Custo evitado, receita adicional, payback</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout good"><strong>Linha de base primeiro:</strong> meça o "antes" por algumas semanas. Sem ela não há como saber o que melhorou.</div>
+    <div class="callout">Prefira <strong>grupo de comparação</strong> (quem usa × quem não usa) a comparar "antes e depois" sozinho, que mistura o efeito da IA com sazonalidade.</div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Armadilhas</span><span class="n">10</span></div>
+  <h2>Como se enganar <em>com os benefícios</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Armadilha</th><th>Por que engana</th></tr></thead>
+    <tbody>
+      <tr><td>Medir só o tempo</td><td>Ignora qualidade, revisão e satisfação</td></tr>
+      <tr><td>Efeito novidade</td><td>O uso é alto nas primeiras semanas e cai depois; meça por mais tempo</td></tr>
+      <tr><td>Escolher os melhores usuários</td><td>Um grupo entusiasta não representa a empresa inteira</td></tr>
+      <tr><td>Contar economia que não vira dinheiro</td><td>Horas liberadas sem uso (seção 05)</td></tr>
+      <tr><td>Esquecer os custos escondidos</td><td>Revisão, manutenção e governança (seção 08)</td></tr>
+      <tr><td>Extrapolar um estudo único</td><td>Outro tipo de tarefa pode ter outro efeito</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">11</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. No estudo de atendimento, quem teve o maior ganho foi:</p>
+        <div class="opts"><div>A) O atendente mais experiente</div><div>B) Os novatos e menos qualificados</div><div>C) Ninguém</div><div>D) O gerente</div></div>
+        <div class="answer"><b>B.</b> +34% contra +14% de média.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Horas liberadas viram valor financeiro quando:</p>
+        <div class="opts"><div>A) Existem, e só isso</div><div>B) Têm um uso: mais volume, custo evitado ou outra tarefa</div><div>C) A IA é cara</div><div>D) O modelo é aberto</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. No cálculo, a premissa mais sensível foi:</p>
+        <div class="opts"><div>A) O custo da licença</div><div>B) O ganho de tempo</div><div>C) O número de atendentes</div><div>D) O nome da ferramenta</div></div>
+        <div class="answer"><b>B.</b> Com 5%, o payback vai a 75 meses.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Antes de começar o piloto, é preciso ter:</p>
+        <div class="opts"><div>A) Um relatório final</div><div>B) A linha de base das métricas</div><div>C) A decisão de escalar</div><div>D) O modelo escolhido para sempre</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Benefício é o que<br><em>se consegue provar</em></h1>
+    <p class="lead">Os ganhos reais existem e variam: maiores para quem é novo, menores para quem já é experiente, e nem sempre em dinheiro. Estime por perfil, diga o destino das horas liberadas, inclua os custos escondidos, teste a sensibilidade das premissas e meça no piloto com linha de base e grupo de comparação.</p>
+    <div class="chips"><span>+14% · +34%</span><span>Tempo ≠ dinheiro</span><span>Payback</span><span>Sensibilidade</span><span>Linha de base</span></div>
+    <div class="next">Próxima aula → 08 · Riscos da Adoção</div>
+    <div class="source">Fontes: nber.org/papers/w31161 (Generative AI at Work); hai.stanford.edu/ai-index/2025-ai-index-report, consultados em outubro de 2026. O cálculo de <code>payback.py</code> usa números hipotéticos e foi executado para esta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
