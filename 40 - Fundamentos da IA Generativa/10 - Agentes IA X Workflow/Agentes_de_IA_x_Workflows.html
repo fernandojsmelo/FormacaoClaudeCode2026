@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Agentes de IA × Workflows</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 10</div>
+    <h1>Agentes de IA<br>× <em>workflows</em></h1>
+    <p class="lead">Dois jeitos de montar sistemas com LLM: em um <strong>workflow</strong>, o <em>código</em> define a ordem dos passos; em um <strong>agente</strong>, o <em>modelo</em> decide os passos e as ferramentas, em laço. Esta aula mostra a diferença com um exemplo executável, os cinco padrões de workflow descritos pela Anthropic, quando cada abordagem compensa e por que o conselho é começar pela mais simples.</p>
+    <div class="chips"><span>Workflow</span><span>Agente</span><span>LLM aumentado</span><span>Encadeamento</span><span>Roteamento</span><span>Orquestrador</span><span>Simplicidade</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado em "Building effective agents" (Anthropic, anthropic.com/engineering) e no OWASP LLM Top 10 2025, consultados em outubro de 2026 · Exemplo executado em <code>exemplos/</code>: o "modelo" é uma simulação com regras, sem API</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>As definições</span><span class="n">01</span></div>
+  <h2>Quem decide <em>o próximo passo</em>?</h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Workflow</div><p>Sistema em que LLMs e ferramentas são orquestrados por <strong>caminhos de código predefinidos</strong>. Você escreve a sequência; o modelo executa cada etapa.</p></div>
+    <div class="card"><div class="k">Agente</div><p>Sistema em que o LLM <strong>dirige dinamicamente o próprio processo</strong> e o uso de ferramentas, mantendo o controle sobre como cumpre a tarefa.</p></div>
+  </div>
+  <div class="flow" style="grid-template-columns:repeat(2,1fr);margin-top:14px">
+    <div class="n"><b>Workflow</b>código → passo 1 → passo 2 → passo 3 (ordem fixa)</div>
+    <div class="n key"><b>Agente</b>modelo → escolhe ferramenta → observa → decide de novo, até concluir</div>
+  </div>
+  <p class="note" style="margin-top:8px">Definições da Anthropic, em "Building effective agents". Ambos são chamados de "sistemas agênticos"; a distinção é arquitetural.</p>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>O bloco básico</span><span class="n">02</span></div>
+  <h2>O <em>LLM aumentado</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>O bloco de construção dos dois é um LLM com <strong>aumentos</strong>: <strong>recuperação</strong> (RAG, aula 09), <strong>ferramentas</strong> e <strong>memória</strong></li>
+        <li>Os modelos atuais usam essas capacidades ativamente: geram as próprias buscas, escolhem ferramentas e decidem o que guardar</li>
+        <li>A Anthropic recomenda focar em adaptar essas capacidades ao seu caso e em dar ao modelo uma interface bem documentada</li>
+      </ul>
+    </div>
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(2,1fr)">
+        <div class="n"><b>Entrada</b>pedido do usuário</div>
+        <div class="n key"><b>LLM</b>+ busca · ferramentas · memória</div>
+      </div>
+      <p class="note" style="margin-top:8px">Fonte: anthropic.com/engineering/building-effective-agents.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Padrões de workflow</span><span class="n">03</span></div>
+  <h2>Cinco desenhos <em>de workflow</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Padrão</th><th>Como funciona</th><th>Quando usar</th></tr></thead>
+    <tbody>
+      <tr><td><b>Encadeamento de prompts</b></td><td>Divide a tarefa em etapas; cada chamada processa a saída da anterior, com verificações intermediárias</td><td>A tarefa se divide em subtarefas fixas; troca latência por precisão</td></tr>
+      <tr><td><b>Roteamento</b></td><td>Classifica a entrada e a envia a uma etapa especializada</td><td>Categorias distintas que rendem mais com prompts próprios</td></tr>
+      <tr><td><b>Paralelização</b></td><td>Subtarefas independentes em paralelo (seções) ou a mesma tarefa várias vezes (votação)</td><td>Ganho de velocidade ou necessidade de várias perspectivas</td></tr>
+      <tr><td><b>Orquestrador–trabalhadores</b></td><td>Um LLM central divide a tarefa de forma dinâmica, delega a outros LLMs e sintetiza</td><td>Subtarefas imprevisíveis (ex.: quantos arquivos mudar em código)</td></tr>
+      <tr><td><b>Avaliador–otimizador</b></td><td>Um LLM gera, outro avalia e dá retorno, em ciclo</td><td>Critérios claros e refinamento que melhora o resultado</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Resumo dos cinco padrões descritos em "Building effective agents" (Anthropic).</p>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Agentes</span><span class="n">04</span></div>
+  <h2>Um agente é, em essência, <em>um laço</em></h2>
+  <div class="par e">
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(4,1fr)">
+        <div class="n"><b>Pensar</b>o que falta?</div>
+        <div class="n key"><b>Agir</b>chama uma ferramenta</div>
+        <div class="n"><b>Observar</b>lê o resultado</div>
+        <div class="n key"><b>Decidir</b>concluir ou repetir</div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A Anthropic os descreve como "tipicamente apenas LLMs usando ferramentas com base no retorno do ambiente, em um laço"</li>
+        <li>Servem a <strong>problemas abertos</strong>, em que é difícil ou impossível prever o número de passos e não dá para fixar um caminho</li>
+        <li>Por isso o <strong>desenho das ferramentas e da sua documentação</strong> é crucial</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:12px">É o mesmo padrão ReAct do Guia do módulo 39: pensar, agir, observar, repetir.</div>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Código</span><span class="n">05</span></div>
+  <h2>O mesmo pedido: <em>workflow</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>workflow_vs_agente.py · o workflow</b></div>
+      <pre class="code"><span class="c"># ---------- WORKFLOW: o codigo decide a ordem ----------</span>
+def workflow(pergunta):
+    passos = ["classificar", "consultar pedido", "consultar politica", "responder"]
+    modelo("classificar a pergunta")
+    status = PEDIDOS.get("123", "nao encontrado")
+    politica = POLITICA
+    modelo("responder", f"{status} | {politica}")
+    return passos</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>A ordem está escrita no código: classificar → consultar pedido → consultar política → responder</li>
+        <li>Roda <strong>sempre</strong> os mesmos passos, seja qual for a pergunta</li>
+        <li>Previsível: dá para testar, medir custo e auditar cada etapa</li>
+        <li>Rígido: o pedido consultado está fixo no código (<code>"123"</code>)</li>
+      </ul>
+      <div class="callout warn" style="margin-top:10px">Aviso: o "modelo" do exemplo é uma <strong>simulação</strong> com regras simples, sem API. O objetivo é mostrar <em>quem decide</em> os passos, não a qualidade de uma IA real.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Código</span><span class="n">06</span></div>
+  <h2>O mesmo pedido: <em>agente</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl"><b>workflow_vs_agente.py · o agente</b></div>
+      <pre class="code">def decidir(pergunta, historico):
+    """Stub da decisao do modelo: qual ferramenta usar agora?"""
+    global chamadas
+    chamadas += 1
+    if "pedido" in pergunta and "consultar_pedido" not in historico:
+        return "consultar_pedido"
+    if "devol" in pergunta and "consultar_politica" not in historico:
+        return "consultar_politica"
+    return "responder"
+
+
+def agente(pergunta, max_passos=5):
+    historico = []
+    for _ in range(max_passos):
+        acao = decidir(pergunta, historico)
+        historico.append(acao)
+        if acao == "responder":
+            break
+    return historico</pre>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li><code>decidir</code> faz o papel do modelo: escolhe a <strong>próxima ação</strong> com base na pergunta e no que já foi feito</li>
+        <li>O laço repete até a ação <code>responder</code> ou até <code>max_passos</code></li>
+        <li>O número de passos <strong>muda com a pergunta</strong></li>
+        <li><code>max_passos</code> é um freio: sem ele, um agente confuso poderia girar sem parar (e gastar tokens)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>O resultado</span><span class="n">07</span></div>
+  <h2>O que a <em>execução mostra</em></h2>
+  <div class="par">
+    <div>
+      <div class="lbl s">Saída</div>
+      <pre class="out w">PERGUNTA: meu pedido 123 chegou? posso devolver?
+  workflow: ['classificar', 'consultar pedido', 'consultar politica', 'responder'] | chamadas ao modelo: 2
+  agente:   ['consultar_pedido', 'consultar_politica', 'responder'] | chamadas ao modelo: 3
+PERGUNTA: qual o horario de atendimento?
+  workflow: ['classificar', 'consultar pedido', 'consultar politica', 'responder'] | chamadas ao modelo: 2
+  agente:   ['responder'] | chamadas ao modelo: 1</pre>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Pergunta</th><th>Workflow</th><th>Agente</th></tr></thead>
+        <tbody>
+          <tr><td>Pedido e devolução</td><td>4 passos, 2 chamadas</td><td>3 passos, 3 chamadas</td></tr>
+          <tr><td>Horário de atendimento</td><td>Os mesmos 4 passos, 2 chamadas (consulta pedido à toa)</td><td>1 passo, 1 chamada</td></tr>
+        </tbody>
+      </table></div>
+      <ul class="checklist" style="margin-top:10px">
+        <li>O agente <strong>se adapta</strong>: pulou as ferramentas quando não eram necessárias</li>
+        <li>Mas, na pergunta complexa, gastou <strong>mais chamadas</strong> ao modelo (cada decisão é uma chamada)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Decidir</span><span class="n">08</span></div>
+  <h2>Quando usar <em>cada um</em></h2>
+  <div class="par e">
+    <div>
+      <div class="callout good"><strong>O conselho central da Anthropic:</strong> procure <strong>a solução mais simples possível</strong> e só aumente a complexidade quando for preciso. Isso pode significar nem construir um sistema agêntico. Sistemas agênticos costumam trocar <strong>latência e custo</strong> por melhor desempenho na tarefa: avalie se a troca vale a pena.</div>
+      <ul class="checklist" style="margin-top:10px">
+        <li><strong>Workflows</strong> oferecem previsibilidade e consistência para tarefas bem definidas</li>
+        <li><strong>Agentes</strong> são a melhor opção quando é preciso flexibilidade e decisão guiada pelo modelo, em escala</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Pergunta</th><th>Se "sim"</th></tr></thead>
+        <tbody>
+          <tr><td>Os passos são conhecidos e estáveis?</td><td>Workflow</td></tr>
+          <tr><td>Preciso auditar cada etapa?</td><td>Workflow</td></tr>
+          <tr><td>O custo e o tempo precisam ser previsíveis?</td><td>Workflow</td></tr>
+          <tr><td>Não dá para prever quantos passos?</td><td>Agente</td></tr>
+          <tr><td>A tarefa é aberta (investigar, depurar)?</td><td>Agente</td></tr>
+          <tr><td>Um erro é fácil de desfazer?</td><td>Agente é viável</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <p class="note">Fonte do conselho: anthropic.com/engineering/building-effective-agents. A tabela de perguntas é uma síntese didática desta aula.</p>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Exemplos</span><span class="n">09</span></div>
+  <h2>Casos de uso <em>e o desenho indicado</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Caso</th><th>Desenho</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>Responder dúvidas com a política da empresa</td><td>Workflow: roteamento + RAG</td><td>O caminho é conhecido: classificar, buscar, responder com fonte (aula 09)</td></tr>
+      <tr><td>Extrair campos de 10 mil notas fiscais</td><td>Workflow em paralelo</td><td>Tarefa idêntica repetida; precisa de custo previsível</td></tr>
+      <tr><td>Gerar um relatório com revisão de qualidade</td><td>Avaliador–otimizador</td><td>Há critérios claros e a revisão melhora o resultado</td></tr>
+      <tr><td>Corrigir um bug em um repositório</td><td>Agente</td><td>Arquivos e passos imprevisíveis; os testes dão retorno objetivo</td></tr>
+      <tr><td>Aprovar reembolsos</td><td>Workflow com humano no fim</td><td>Ação irreversível e regra de negócio fixa</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Casos ilustrativos desta aula, na linha dos exemplos de aplicação do artigo da Anthropic.</p>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Riscos</span><span class="n">10</span></div>
+  <h2>Mais autonomia, <em>mais cuidado</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Erros que se acumulam</div><p>Cada decisão se apoia na anterior: um erro no começo pode se propagar. Verifique resultados intermediários.</p></div>
+    <div class="card"><div class="k">Custo e tempo imprevisíveis</div><p>Quantos passos o agente dará? Defina limite de passos, de tokens e de tempo, e alertas.</p></div>
+    <div class="card"><div class="k">Agência excessiva</div><p>O OWASP (LLM06) alerta para ações danosas em resposta a entradas ambíguas ou manipuladas. Dê o <strong>mínimo de permissão</strong>.</p></div>
+    <div class="card"><div class="k">Difícil de auditar</div><p>Sem registro de cada pensamento, ação e observação, não dá para explicar o que o agente fez. Registre tudo.</p></div>
+  </div>
+  <div class="callout good" style="margin-top:12px"><strong>Controles mínimos:</strong> permissões por ferramenta (leitura primeiro), limite de passos, <strong>aprovação humana</strong> para ações irreversíveis, registro completo e testes com cenários de ataque (aula 08).</div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Caminho</span><span class="n">11</span></div>
+  <h2>Suba a escada <em>só quando precisar</em></h2>
+  <div class="steps">
+    <div class="step"><div class="b">1</div><div><h3>Uma chamada bem escrita</h3><p>Prompt com papel, formato e exemplos (módulo 39). Resolve mais casos do que parece.</p></div></div>
+    <div class="step"><div class="b">2</div><div><h3>Mais contexto</h3><p>Acrescente RAG (aula 09) quando faltar conhecimento da empresa.</p></div></div>
+    <div class="step"><div class="b">3</div><div><h3>Workflow</h3><p>Quando o problema se divide em etapas: encadeamento, roteamento, paralelização.</p></div></div>
+    <div class="step"><div class="b">4</div><div><h3>Agente</h3><p>Só quando os passos não puderem ser previstos e o ganho justificar o custo e o risco.</p></div></div>
+  </div>
+  <div class="callout" style="margin-top:12px">A cada degrau, <strong>meça</strong> (aula 03) se ele melhorou o resultado. Se não melhorou, volte ao anterior.</div>
+</section>
+
+<!-- 12 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">12</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. Num workflow, quem define a ordem dos passos é:</p>
+        <div class="opts"><div>A) O modelo</div><div>B) O código</div><div>C) O usuário final</div><div>D) A GPU</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Num agente, o laço termina quando:</p>
+        <div class="opts"><div>A) O modelo decide responder (ou o limite de passos é atingido)</div><div>B) A temperatura cai</div><div>C) O usuário fecha o navegador</div><div>D) Nunca</div></div>
+        <div class="answer"><b>A.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. Extrair campos de 10 mil documentos iguais pede, em geral:</p>
+        <div class="opts"><div>A) Um agente autônomo</div><div>B) Um workflow, que repete o mesmo caminho</div><div>C) Fine-tuning obrigatório</div><div>D) Nenhuma validação</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. O conselho da Anthropic é:</p>
+        <div class="opts"><div>A) Sempre usar agentes</div><div>B) Começar pela solução mais simples e subir só se for preciso</div><div>C) Evitar ferramentas</div><div>D) Usar o maior modelo</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Código decide,<br><em>ou o modelo decide</em></h1>
+    <p class="lead">Workflow é previsível e auditável porque o código manda; agente é flexível porque o modelo manda, ao custo de latência, dinheiro e risco. Comece pela solução mais simples, use workflows para problemas que se dividem em etapas, reserve agentes aos problemas abertos e, em todos os casos, limite permissões, registre tudo e meça o resultado.</p>
+    <div class="chips"><span>Workflow</span><span>Agente</span><span>Cinco padrões</span><span>Menor privilégio</span><span>Humano no ciclo</span><span>Simplicidade</span></div>
+    <div class="next">Próxima aula → 11 · Tomada de Decisão com IA</div>
+    <div class="source">Fontes: anthropic.com/engineering/building-effective-agents (definições, padrões de workflow, quando usar agentes); genai.owasp.org/llmrisk/llm062025-excessive-agency, consultados em outubro de 2026. O exemplo <code>workflow_vs_agente.py</code> usa um modelo simulado e foi executado para esta aula.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
