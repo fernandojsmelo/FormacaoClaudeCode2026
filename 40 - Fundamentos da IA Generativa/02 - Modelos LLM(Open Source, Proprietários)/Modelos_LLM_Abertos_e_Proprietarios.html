@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Modelos LLM: abertos e proprietários</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171310; --surface:#1F1A15; --surface-2:#271F18;
+  --border:#3A2F24; --border-2:#4A3C2D;
+  --ink:#F3ECE2; --muted:#AE9F8C;
+  --accent:#DE8B62; --accent-ink:#F0AB86; --accent-soft:#3A281F;
+  --good:#8FC0A8; --good-soft:#243128;
+  --warn:#DDB662; --warn-soft:#362A16;
+  --danger:#DE8A80; --danger-soft:#3A2321;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --display:'Fraunces', Georgia, serif;
+  --body-f:'Inter', system-ui, sans-serif;
+}
+@page{ size:960pt 540pt; margin:.5in .55in; background:#171310 }
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--body-f);font-size:13px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+section.block{page-break-before:always;break-before:page}
+section.block:first-child{page-break-before:auto;break-before:auto}
+
+/* cabeçalho de página */
+.pagehead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:14px}
+.pagehead .n{color:var(--accent-ink)}
+h2{font-family:var(--display);font-weight:600;font-size:25px;line-height:1.2;margin:0 0 6px}
+h2 em{color:var(--accent-ink);font-style:italic}
+.intro{color:var(--muted);margin:0 0 14px;font-size:13px;max-width:780px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+
+/* capa */
+.cover{min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .dot{width:10px;height:10px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+.cover h1{font-family:var(--display);font-weight:600;font-size:52px;line-height:1.08;margin:0 0 16px}
+.cover h1 em{color:var(--accent-ink);font-style:italic}
+.lead{color:var(--muted);font-size:15px;max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:10.5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--border-2);padding:4px 11px;border-radius:999px}
+.byline{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:26px}
+
+/* grids e cards */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.card h3{font-size:13.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+
+/* passos */
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.step .b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#171310;font-family:var(--mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:13.5px;margin:0 0 2px;font-weight:600}
+.step p{margin:0;color:var(--muted);font-size:12px}
+
+/* terminal */
+.term{background:#100D0A;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:11.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0}
+.term .c{color:var(--muted)}
+.term-title{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+/* tabelas */
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--surface-2);font-family:var(--mono);text-transform:uppercase;font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:8px 12px;font-weight:500}
+td{border-top:1px solid var(--border);padding:8px 12px;vertical-align:top;background:var(--surface)}
+td:first-child{font-weight:600}
+
+/* callouts e listas */
+.callout{border:1px solid var(--border-2);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:12.3px;margin-top:12px}
+.callout.good{background:var(--good-soft);border-color:#35493B}
+.callout.warn{background:var(--warn-soft);border-color:#54421F}
+.callout.danger{background:var(--danger-soft);border-color:#5A3431}
+.bullets{list-style:none;padding:0;margin:0}
+.bullets li{position:relative;padding-left:17px;margin:5px 0;font-size:12.3px;color:var(--ink)}
+.bullets li::before{content:"●";position:absolute;left:0;top:.15em;color:var(--accent);font-size:.7em}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding-left:20px;margin:6px 0;font-size:12.5px}
+.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:700}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.qtext{font-weight:600;font-size:13.3px;margin:0 0 9px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.opts div{border:1px solid var(--border);background:var(--surface-2);border-radius:7px;padding:6px 10px;font-size:12px}
+.answer{margin-top:9px;background:var(--good-soft);border:1px solid #35493B;border-radius:7px;padding:7px 11px;font-size:12px}
+.answer b{color:var(--good)}
+
+.next{font-family:var(--mono);font-size:11px;color:var(--accent-ink);margin-top:22px}
+.source{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<style>
+td{font-size:11.1px}
+.sim{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;padding:1px 6px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid #54421F;margin-left:6px;text-transform:uppercase;vertical-align:middle}
+.term{font-size:10.6px}
+.term .u{color:var(--accent-ink);font-weight:600}
+.term .b{color:var(--ink);font-weight:600}
+.term .ok{color:var(--good);font-weight:600}
+.shot{display:block;width:100%;border-radius:10px;border:1px solid var(--border-2)}
+.shot-cap{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.promptbox{background:#100D0A;border:1px solid var(--accent);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:10.3px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.promptbox .h{color:var(--accent-ink);font-weight:600}
+.code{background:#100D0A;border:1px solid var(--border-2);border-radius:10px;padding:10px 13px;font-family:var(--mono);font-size:9.8px;line-height:1.5;white-space:pre;color:var(--ink)}
+.code .c{color:var(--muted)}
+.code .k{color:var(--accent-ink)}
+.after{border:1px solid #35493B;background:var(--good-soft);border-radius:10px;padding:4px 12px 10px;margin-top:4px}
+.after .t{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:8px 0 6px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:6px 0 4px;align-items:stretch}
+.flow .n{position:relative;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:11px 12px;margin-right:18px;font-size:11.2px;line-height:1.42;color:var(--muted)}
+.flow .n:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:700;font-size:15px}
+.flow .n:last-child{margin-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:9.8px;color:var(--accent-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.flow .n.key{border-color:var(--good);background:var(--good-soft)}.flow .n.key b{color:var(--good)}
+.kbd{display:inline-block;font-family:var(--mono);font-size:.85em;padding:0 5px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);color:var(--ink);line-height:1.5}
+.g5{grid-template-columns:repeat(5,1fr)}
+</style>
+<style>
+.code{font-size:11.6px;line-height:1.55}
+.out{background:#0c0a08;border:1px solid #2f4a3a;border-radius:10px;padding:9px 13px;font-family:var(--mono);font-size:11.6px;line-height:1.55;white-space:pre;color:#cfe8d9;margin:0}
+.lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.lbl b{color:var(--accent-ink);font-weight:500;text-transform:none;letter-spacing:0}
+.lbl.s{color:var(--good)}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.par > div{min-width:0}
+.cmd{font-family:var(--mono);font-size:10.6px;color:var(--good)}
+.out.w{white-space:pre-wrap}
+.note{font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0 0}
+.par.e{grid-template-columns:1fr 1fr}
+.card .v{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);line-height:1.1}
+.card p{margin:2px 0 0}
+.code{white-space:pre-wrap;word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 7px;border-radius:999px;border:1px solid var(--border-2);color:var(--muted);margin-right:4px}
+</style>
+<div class="wrap">
+
+<!-- CAPA -->
+<section class="block">
+  <div class="cover">
+    <div class="eyebrow"><span class="dot"></span>Fundamentos da IA Generativa · Aula 02</div>
+    <h1>Modelos LLM:<br><em>abertos e proprietários</em></h1>
+    <p class="lead">Escolher um modelo é uma decisão de negócio, não só técnica. Nesta aula: o que significa "aberto" de verdade, o que são <strong>pesos abertos</strong>, como são os modelos proprietários por API, quanto cada um custa para um mesmo volume de uso e quais critérios usar para decidir (privacidade, custo, personalização, desempenho, suporte e risco de depender de um fornecedor).</p>
+    <div class="chips"><span>Open source</span><span>Pesos abertos</span><span>Proprietário</span><span>Custo por token</span><span>Critérios de escolha</span><span>Híbrido</span></div>
+    <div class="byline">Formação Claude Code 2026 · Baseado na Open Source AI Definition 1.0 (opensource.org), no cartão do modelo gpt-oss-120b (huggingface.co/openai), na página de modelos da Anthropic e na do Groq, consultados em outubro de 2026 · Preços mudam: confira nas páginas dos provedores</div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="block">
+  <div class="pagehead"><span>Duas famílias</span><span class="n">01</span></div>
+  <h2>Onde o modelo <em>roda e de quem é</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div class="card"><div class="k">Proprietário (fechado)</div><p>O fabricante guarda o modelo. Você usa por <strong>API</strong> ou por um produto e paga por uso. Exemplo: a família Claude, da Anthropic.</p><p style="margin-top:6px;color:var(--muted)">+ desempenho de ponta, sem infraestrutura, suporte<br>− dados passam pelo fornecedor, pouco controle, risco de dependência</p></div>
+    <div class="card"><div class="k">Pesos abertos (open weights)</div><p>Os <strong>pesos</strong> (os números do modelo) estão disponíveis para baixar, rodar e, em geral, ajustar. Exemplos: gpt-oss, da OpenAI, e Llama, da Meta.</p><p style="margin-top:6px;color:var(--muted)">+ controle, privacidade, personalização, custo previsível<br>− você cuida da operação ou paga um hospedeiro</p></div>
+  </div>
+  <div class="callout" style="margin-top:12px">Os dois tipos podem ser usados por API. A diferença está em <strong>quem controla</strong> o modelo e <strong>onde</strong> ele roda, e não em "ser uma API".</div>
+</section>
+
+<!-- 02 -->
+<section class="block">
+  <div class="pagehead"><span>Aberto de verdade?</span><span class="n">02</span></div>
+  <h2>"Open source" e "pesos abertos" <em>não são a mesma coisa</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li>A <strong>Open Source AI Definition 1.0</strong>, da Open Source Initiative, exige quatro liberdades: <strong>usar</strong> para qualquer fim, <strong>estudar</strong> e inspecionar, <strong>modificar</strong> e <strong>compartilhar</strong></li>
+        <li>Para exercer essas liberdades, a definição pede três coisas sob licenças aprovadas: <strong>informação sobre os dados</strong> de treino, o <strong>código</strong> de treino e execução e os <strong>parâmetros</strong> do modelo</li>
+        <li>Muitos modelos só liberam os parâmetros (e a licença). Esses são "pesos abertos", não "open source" pela definição</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Item</th><th>Open source (OSAID)</th><th>Pesos abertos</th><th>Proprietário</th></tr></thead>
+        <tbody>
+          <tr><td>Parâmetros</td><td>Sim</td><td>Sim</td><td>Não</td></tr>
+          <tr><td>Código de treino</td><td>Sim</td><td>Nem sempre</td><td>Não</td></tr>
+          <tr><td>Info dos dados</td><td>Sim</td><td>Em geral não</td><td>Não</td></tr>
+          <tr><td>Rodar em casa</td><td>Sim</td><td>Sim</td><td>Não</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">As linhas "nem sempre" e "em geral não" dependem de cada modelo: leia o cartão e a licença. A tabela resume a definição da OSI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="block">
+  <div class="pagehead"><span>Exemplo aberto</span><span class="n">03</span></div>
+  <h2>gpt-oss: um modelo <em>de pesos abertos</em></h2>
+  <div class="par e">
+    <div>
+      <div class="grid g2">
+        <div class="card"><div class="k">gpt-oss-120b</div><div class="v">117B</div><p>parâmetros no total, 5,1B ativos por token</p></div>
+        <div class="card"><div class="k">gpt-oss-20b</div><div class="v">21B</div><p>parâmetros no total, 3,6B ativos</p></div>
+      </div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Licença <strong>Apache 2.0</strong>: uso comercial livre, sem copyleft</li>
+        <li>"Parâmetros ativos" menores que o total: é uma arquitetura que usa só parte do modelo a cada token, o que reduz o custo de rodar</li>
+        <li>Com quantização MXFP4, o 120b roda em <strong>uma GPU de 80 GB</strong> e o 20b cabe em <strong>16 GB</strong> de memória</li>
+        <li>Esforço de raciocínio configurável (baixo, médio, alto) e acesso ao raciocínio completo</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Fonte: cartão do modelo openai/gpt-oss-120b no Hugging Face. É o mesmo modelo usado no módulo 39, hospedado no Groq.</p>
+</section>
+
+<!-- 04 -->
+<section class="block">
+  <div class="pagehead"><span>Exemplo proprietário</span><span class="n">04</span></div>
+  <h2>A família Claude <em>por API</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Indicado para</th><th>Preço (US$ por milhão de tokens)</th><th>Contexto</th></tr></thead>
+    <tbody>
+      <tr><td>Claude Fable 5.1</td><td>Raciocínio exigente e trabalho agêntico longo</td><td>10 entrada · 50 saída</td><td>1 mi</td></tr>
+      <tr><td>Claude Opus 5.5</td><td>Programação e trabalho de conhecimento de longa duração</td><td>4 entrada · 20 saída</td><td>1 mi</td></tr>
+      <tr><td>Claude Sonnet 5.5</td><td>Melhor combinação de velocidade e inteligência</td><td>2 entrada · 10 saída</td><td>1 mi</td></tr>
+      <tr><td>Claude Haiku 4.5</td><td>O mais rápido, com inteligência próxima da de ponta</td><td>1 entrada · 5 saída</td><td>200 mil</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="callout">Uma família com vários tamanhos permite escolher por tarefa: o maior para raciocínio difícil, o menor para volume e velocidade.</div>
+    <div class="callout warn"><strong>Modelos têm data de aposentadoria.</strong> A página da Anthropic indica, por exemplo, que o Haiku 4.5 não será retirado antes de 15/10/2026 e o Sonnet 5.5, não antes de 28/09/2027. Planeje a migração.</div>
+  </div>
+  <p class="note">Fonte: docs.anthropic.com/en/docs/about-claude/models/overview, outubro de 2026.</p>
+</section>
+
+<!-- 05 -->
+<section class="block">
+  <div class="pagehead"><span>Custo</span><span class="n">05</span></div>
+  <h2>O mesmo volume, <em>preços diferentes</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Cenário hipotético:</strong> um sistema que processa, por mês, <strong>100 milhões de tokens de entrada</strong> e <strong>20 milhões de saída</strong>.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Modelo (via)</th><th>Entrada</th><th>Saída</th><th>Total/mês</th></tr></thead>
+        <tbody>
+          <tr><td>gpt-oss-120b (Groq)</td><td>0,15</td><td>0,60</td><td><b>US$ 27</b></td></tr>
+          <tr><td>Claude Haiku 4.5</td><td>1</td><td>5</td><td><b>US$ 200</b></td></tr>
+          <tr><td>Claude Sonnet 5.5</td><td>2</td><td>10</td><td><b>US$ 400</b></td></tr>
+          <tr><td>Claude Opus 5.5</td><td>4</td><td>20</td><td><b>US$ 800</b></td></tr>
+          <tr><td>Claude Fable 5.1</td><td>10</td><td>50</td><td><b>US$ 2.000</b></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Conta: (100 × preço de entrada) + (20 × preço de saída), com preços em US$ por milhão de tokens</li>
+        <li>A diferença entre o mais barato e o mais caro é de <strong>quase 75 vezes</strong> (27 contra 2.000)</li>
+        <li><strong>Preço não é qualidade</strong>: o barato pode bastar para classificar e resumir; o caro pode compensar em tarefas difíceis</li>
+        <li>Rodar o modelo aberto em casa troca o preço por token por <strong>GPUs, energia e equipe</strong></li>
+      </ul>
+      <p class="note">Preço do gpt-oss-120b no Groq (US$ 0,15 entrada / US$ 0,60 saída) e dos modelos Claude, nas páginas dos provedores em outubro de 2026. Os volumes são fictícios.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="block">
+  <div class="pagehead"><span>Onde rodar</span><span class="n">06</span></div>
+  <h2>Três jeitos de <em>usar um modelo</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Jeito</th><th>Como funciona</th><th>Controle de dados</th><th>Esforço</th></tr></thead>
+    <tbody>
+      <tr><td><b>API do fabricante</b></td><td>Envia o prompt à nuvem do dono do modelo (ex.: Claude pela Anthropic)</td><td>Depende do contrato</td><td>Baixo</td></tr>
+      <tr><td><b>Hospedeiro de modelo aberto</b></td><td>Um terceiro roda o modelo aberto e vende acesso por API (ex.: gpt-oss no Groq)</td><td>Depende do contrato</td><td>Baixo</td></tr>
+      <tr><td><b>Infraestrutura própria</b></td><td>Você baixa os pesos e roda em servidores seus ou numa nuvem sua</td><td>Máximo</td><td>Alto</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout" style="margin-top:12px">O mesmo modelo aberto pode ser usado nos três últimos modos; o proprietário só no primeiro (ou em nuvens parceiras do fabricante, como Amazon Bedrock, Google Cloud e Microsoft Foundry, que a Anthropic lista na página de modelos).</div>
+</section>
+
+<!-- 07 -->
+<section class="block">
+  <div class="pagehead"><span>Critérios</span><span class="n">07</span></div>
+  <h2>Como decidir <em>com uma matriz</em></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Critério</th><th>Pergunta</th><th>Tende a favorecer</th></tr></thead>
+    <tbody>
+      <tr><td>Privacidade e conformidade</td><td>Os dados podem sair da empresa?</td><td>Aberto em infraestrutura própria</td></tr>
+      <tr><td>Desempenho</td><td>A tarefa exige o melhor modelo disponível?</td><td>Proprietário de ponta (teste: aula 03)</td></tr>
+      <tr><td>Custo</td><td>Qual o volume e o crescimento esperados?</td><td>Depende: baixo volume → API; alto e estável → avaliar aberto</td></tr>
+      <tr><td>Personalização</td><td>Precisa ajustar o modelo (fine-tuning)?</td><td>Aberto</td></tr>
+      <tr><td>Esforço e equipe</td><td>Existe time para operar GPUs e atualizar?</td><td>API</td></tr>
+      <tr><td>Dependência</td><td>E se o preço subir ou o modelo for retirado?</td><td>Aberto reduz; usar camada de abstração reduz nos dois</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Matriz de apoio à decisão elaborada para esta aula a partir das diferenças descritas nas seções anteriores; os pesos de cada critério são da sua empresa.</p>
+</section>
+
+<!-- 08 -->
+<section class="block">
+  <div class="pagehead"><span>Licença</span><span class="n">08</span></div>
+  <h2>Leia a licença <em>antes de adotar</em></h2>
+  <div class="par e">
+    <div>
+      <ul class="checklist">
+        <li><strong>Permissiva</strong> (ex.: Apache 2.0, a do gpt-oss): uso comercial livre, inclusive modificar e redistribuir, sem copyleft e com concessão de patentes</li>
+        <li><strong>Licenças próprias do fabricante</strong>: algumas famílias de pesos abertos trazem condições de uso, limites ou políticas de uso aceitável. Leia antes de colocar em produto</li>
+        <li>"Gratuito para baixar" não significa "gratuito para qualquer uso"</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout warn">Peça ao jurídico para revisar a licença de qualquer modelo que vá para um produto, e registre <strong>qual modelo, qual versão e qual licença</strong> cada sistema usa.</div>
+      <div class="callout" style="margin-top:10px">Isso também vale para os <strong>dados</strong>: a licença do modelo não resolve a origem do que você envia a ele (aula 08).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="block">
+  <div class="pagehead"><span>Na prática</span><span class="n">09</span></div>
+  <h2>O padrão <em>híbrido</em></h2>
+  <div class="par e">
+    <div>
+      <div class="flow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="n"><b>Tarefa simples</b>classificar, extrair, resumir</div>
+        <div class="n key"><b>Roteador</b>escolhe o modelo</div>
+        <div class="n"><b>Tarefa difícil</b>raciocínio, código, análise</div>
+      </div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Modelo pequeno ou aberto para o volume; modelo grande para o que realmente exige</li>
+        <li>Dados sensíveis vão para o modelo em infraestrutura própria; o resto pode ir por API</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout good"><strong>Camada de abstração:</strong> o seu código chama uma função própria (<code>responder(prompt, tarefa)</code>), e só ela conhece o fornecedor. Trocar de modelo vira uma configuração, não uma reescrita.</div>
+      <div class="callout" style="margin-top:10px">Esse é o mesmo princípio do roteamento da aula 10: um passo classifica a entrada e escolhe o caminho.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="block">
+  <div class="pagehead"><span>Pratique</span><span class="n">10</span></div>
+  <h2>Compare <em>dois modelos</em></h2>
+  <div class="par e">
+    <div>
+      <p class="intro" style="margin-bottom:8px"><strong>Exercício:</strong> escolha uma tarefa real da sua empresa (ex.: responder dúvidas de clientes) e preencha a matriz abaixo para dois modelos.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Critério</th><th>Modelo A</th><th>Modelo B</th></tr></thead>
+        <tbody>
+          <tr><td>Qualidade em 20 exemplos seus</td><td></td><td></td></tr>
+          <tr><td>Custo estimado por mês</td><td></td><td></td></tr>
+          <tr><td>Latência média</td><td></td><td></td></tr>
+          <tr><td>Dados saem da empresa?</td><td></td><td></td></tr>
+          <tr><td>Licença / contrato</td><td></td><td></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li>Use o mesmo prompt nos dois (módulo 39) e o mesmo conjunto de teste</li>
+        <li>Calcule o custo com a fórmula da seção 05 e o seu volume real</li>
+        <li>A aula 03 mostra por que 20 exemplos servem para comparar, mas não para concluir quem é "melhor"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="block">
+  <div class="pagehead"><span>Quiz de fixação</span><span class="n">11</span></div>
+  <h2>Teste o que <em>ficou</em></h2>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="qcard">
+        <p class="qtext">1. "Pesos abertos" significa que:</p>
+        <div class="opts"><div>A) O modelo é sempre open source pela OSI</div><div>B) Os parâmetros estão disponíveis para baixar</div><div>C) O modelo não custa nada</div><div>D) Os dados de treino são públicos</div></div>
+        <div class="answer"><b>B.</b> Open source pela OSI exige também dados e código.</div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">2. Para dados que não podem sair da empresa, tende a servir melhor:</p>
+        <div class="opts"><div>A) Qualquer API</div><div>B) Modelo aberto em infraestrutura própria</div><div>C) Nenhum modelo</div><div>D) O modelo mais caro</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+    <div>
+      <div class="qcard">
+        <p class="qtext">3. O menor custo por token garante:</p>
+        <div class="opts"><div>A) A melhor qualidade</div><div>B) Nada: é preciso testar qualidade, latência e risco</div><div>C) Menos alucinação</div><div>D) Mais privacidade</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+      <div class="qcard">
+        <p class="qtext">4. Para trocar de modelo sem reescrever o sistema, você usa:</p>
+        <div class="opts"><div>A) Temperatura maior</div><div>B) Uma camada de abstração</div><div>C) Mais tokens</div><div>D) Um prompt maior</div></div>
+        <div class="answer"><b>B.</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENCERRAMENTO -->
+<section class="block">
+  <div class="cover" style="min-height:560px">
+    <div class="eyebrow"><span class="dot"></span>Encerramento · Fundamentos da IA Generativa</div>
+    <h1 style="font-size:40px">Escolha por tarefa,<br><em>não por moda</em></h1>
+    <p class="lead">Modelos proprietários entregam desempenho e simplicidade por API; modelos de pesos abertos entregam controle e custo previsível, com mais trabalho de operação. "Open source" tem definição própria, e a licença importa. Decida por uma matriz de critérios, teste com os seus dados e mantenha o código pronto para trocar de modelo.</p>
+    <div class="chips"><span>Pesos abertos × proprietário</span><span>Custo por milhão de tokens</span><span>Licença</span><span>Matriz de critérios</span><span>Camada de abstração</span></div>
+    <div class="next">Próxima aula → 03 · Benchmark entre Modelos LLM</div>
+    <div class="source">Fontes: opensource.org/ai/open-source-ai-definition (OSAID 1.0); huggingface.co/openai/gpt-oss-120b; docs.anthropic.com/en/docs/about-claude/models/overview; console.groq.com/docs/models, consultados em outubro de 2026. Os totais mensais da seção 05 foram calculados para um volume hipotético.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
