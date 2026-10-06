@@ -1,0 +1,4 @@
+# Nunca suba a chave da API para o Git
+.env
+.venv/
+.ipynb_checkpoints/
