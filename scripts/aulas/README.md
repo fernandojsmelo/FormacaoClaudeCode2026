@@ -52,7 +52,7 @@ Se uma seção transbordar por causa de código longo, `python3 scripts/aulas/sa
 Quando o código da aula está num `.ipynb` que chama uma API com chave (módulo 39, Groq), o deck mostra o código e a **saída real gravada** no notebook, sem rodar de novo:
 
 ```bash
-python3 scripts/aulas/incluir_notebook.py corpo.html corpo.nb.html "39 - Engenharia de Pronpts"
+python3 scripts/aulas/incluir_notebook.py corpo.html corpo.nb.html "39 - Engenharia de Prompts"
 python3 scripts/aulas/build_aula.py corpo.nb.html "<aula>/Nome.html" --title "…"
 ```
 
