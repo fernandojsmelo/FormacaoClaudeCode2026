@@ -1,0 +1,26 @@
+{
+ "rp": "49",
+ "h1": "map, filter e compreensões de lista — e o salto para o Pandas",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e o Analista dos Laços Verbosos\": map e filter contra o laço com append, quando o map ainda vale a pena, o desafio dos dados de vendas, if/else dentro da compreensão de lista, leitura de um CSV real, a mesma tarefa com Pandas (filtros e exportação com to_csv) e o desafio do aluguel de carros.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 14:47",
+ "secs": [
+  "Links: listas em Python",
+  "map e filter na prática",
+  "Pandas agora ou depois?",
+  "Quando preferir o map",
+  "O desafio dos dados de vendas",
+  "Acertou em cheio",
+  "if/else dentro da compreensão",
+  "Lendo um CSV de verdade",
+  "O mesmo código com Pandas",
+  "Filtros no Pandas",
+  "Salvando o resultado em CSV",
+  "O desafio do aluguel de carros",
+  "Boa sorte no desafio",
+  "Revisão: map",
+  "Revisão: filter",
+  "Revisão: iteradores preguiçosos"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:11pt;line-height:1.68}\ntable{break-inside:avoid}"
+}

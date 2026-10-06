@@ -1,0 +1,22 @@
+{
+ "rp": "48",
+ "h1": "Iteradores, geradores e yield: memória sob controle",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e a Aluna que Travou a Memória com uma Lista Gigante\": a diferença entre lista e gerador na memória, o que o yield faz por trás (o frame congelado), ler arquivos gigantes linha a linha, o desafio do filtro de transações, iterável, iterador e gerador, expressões geradoras e as limitações dos geradores.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 14:34",
+ "secs": [
+  "Lista, gerador e memória",
+  "O que o yield faz por trás",
+  "Lendo um arquivo gigante",
+  "O desafio das transações",
+  "Hora de praticar",
+  "Iterável, iterador e gerador",
+  "Mostrando o código",
+  "Quase lá: 99%",
+  "Funcionou!",
+  "As duas formas de criar geradores",
+  "Onde os geradores não ajudam",
+  "Despedida"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas e chips de fontes) foram omitidos. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:11pt;line-height:1.68}\ntable{break-inside:avoid}"
+}

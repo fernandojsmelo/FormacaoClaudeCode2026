@@ -1,0 +1,20 @@
+{
+ "rp": "50",
+ "h1": "enumerate e zip: adeus, range(len(...))",
+ "lead": "Resumo da pesquisa feita durante a prática \"O Especialista em Python e o Aluno Preso no range(len(...))\": enumerate para ter índice e item juntos, zip para percorrer listas em paralelo, os dois combinados, o start=1, dict(zip()), o truncamento silencioso e o zip_longest, e por que zip e enumerate são preguiçosos.",
+ "byline": "Fernando Melo · 5 de outubro de 2026 · Pesquisa no Modo IA do Google, 15:02",
+ "secs": [
+  "Links: loops em Python",
+  "Exemplos de enumerate e zip",
+  "O que cada uma faz",
+  "Os dois juntos",
+  "Hora de testar",
+  "enumerate e o loop estilo C",
+  "Links: zip em Python",
+  "Exemplos de zip",
+  "Combinação e avaliação preguiçosa",
+  "Encerramento"
+ ],
+ "foot": "Respostas reproduzidas da pesquisa no Modo IA do Google, como no original. A página impressa começa no fim de uma lista de links: da primeira seção, só os dois últimos links aparecem. As perguntas aparecem truncadas como na página impressa; os elementos da interface (abas, chips de fontes e descrições dos cards de links) foram omitidos; na seção 07, a busca devolveu apenas a lista de links, reproduzida com título e fonte. Os blocos de código aparecem cortados à direita na página impressa e foram completados com o texto da transcrição da prática.",
+ "body_css": "body{font-size:11pt;line-height:1.68}\ntable{break-inside:avoid}"
+}

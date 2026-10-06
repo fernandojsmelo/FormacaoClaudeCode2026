@@ -99,3 +99,12 @@ Lições destes role plays:
 - No resumo, o código que não está na transcrição fica cortado à direita (como no original), mas com o recuo e os emojis do XML; registre isso no `foot`.
 - Gráficos do original podem ser redesenhados em SVG com os mesmos eixos e legendas (ver `exemplos/fix_res44.py`).
 - O `render_resumo.py` mantém a numeração de listas interrompidas por código (`<ol start>`), e o `render_rp.py` aceita `**negrito**` e `⏎` (quebra de linha) nas células de tabela.
+
+## Role plays 48 a 51
+
+- **`faltando.py rpNN.c.txt rpNN.fixed.txt`** lista as linhas do markup bruto que não aparecem no markup final. Linhas muito recuadas podem sumir do XML (texto fora da margem); confira cada ausência com o `pdftotext -layout` e recoloque à mão quando for conteúdo real (ver `exemplos/fix48.py`).
+- **`fences.recuo(xml, s)`** devolve o recuo dos blocos de código pelo XML; `para_code()` (em `exemplos/fix49.py`) transforma blocos "csv"/"python" que o parser leu como parágrafos (os que terminam em "Use o código com cuidado.") em blocos `code:`.
+- `Fix.headings(pdf)` já reconstrói títulos com palavras em fonte mono (ex.: "O que é esse <code>index=False</code>?"); confira antes de corrigi-los à mão.
+- `Fix.code_from(..., langs=(..., 'csv'))` aceita blocos com rótulo `csv`/`text` quando eles também existirem na transcrição.
+- Resumos que começam no meio de uma lista de links: abra a seção com a pergunta do cabeçalho da página 1, liste só os links visíveis e registre isso no `foot` (ver `exemplos/meta50.json`).
+- Os exemplos `fix48`–`fix51`, `fix_res48`–`fix_res51` e `meta48`–`meta51` estão em `exemplos/`.
